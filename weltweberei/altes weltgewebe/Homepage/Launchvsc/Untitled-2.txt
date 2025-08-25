@@ -1,0 +1,173 @@
+// --- Datei: index.html ---
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Weltweberei</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    html, body { height: 100%; margin: 0; }
+    #map { width: 100vw; height: 100vh; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script type="module" src="main.js"></script>
+</body>
+</html>
+
+// --- Datei: style.css ---
+
+body {
+  font-family: sans-serif;
+  background: #f8f8f8;
+}
+#map {
+  width: 100vw;
+  height: 100vh;
+}
+
+// --- Datei: main.js ---
+
+import { initKarte } from './leaflet-setup.js';
+import { startupLoader } from './startup-loader.js';
+import { registriereSymbolRenderEvents } from './init-events.js';
+
+registriereSymbolRenderEvents();
+
+async function startApp() {
+  const daten = await startupLoader();
+  const map = initKarte('map');
+  window.layerManager.setData(daten);
+  window.layerManager.renderActiveLayers();
+}
+
+startApp();
+
+// --- Datei: leaflet-setup.js ---
+
+import L from 'leaflet';
+
+export function initKarte(elementId) {
+  const mapElement = document.getElementById(elementId);
+  if (!mapElement) throw new Error('Karten-Element nicht gefunden!');
+  const map = L.map(elementId).setView([51.96, 7.62], 13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap'
+  }).addTo(map);
+  return map;
+}
+
+// --- Datei: startup-loader.js ---
+
+import { ladeKnotenDaten } from './data/data-knoten.js';
+import { ladeDiskursDaten } from './data/data-diskurs.js';
+import { ladeFinanzDaten } from './data/data-finanz.js';
+
+export async function startupLoader() {
+  const knoten = await ladeKnotenDaten();
+  const faeden = []; // Platzhalter
+  const garne = [];
+  const antraege = [];
+  const webkasse = await ladeFinanzDaten();
+  return { knoten, faeden, garne, antraege, webkasse };
+}
+
+// --- Datei: ui/layer/layer-manager.js ---
+
+export class LayerManager {
+  constructor() {
+    this.data = {};
+    this.renderCallbacks = new Map();
+    this.layerStates = new Map();
+  }
+
+  setData(data) {
+    this.data = data;
+  }
+
+  registerLayer(name, renderFn) {
+    this.renderCallbacks.set(name, renderFn);
+    this.layerStates.set(name, true);
+  }
+
+  renderActiveLayers() {
+    for (const [name, isActive] of this.layerStates.entries()) {
+      if (isActive) {
+        const renderFn = this.renderCallbacks.get(name);
+        if (renderFn) {
+          const layerData = this.data[name] || [];
+          renderFn(layerData);
+        }
+      }
+    }
+  }
+}
+
+window.layerManager = new LayerManager();
+
+// --- Datei: init-events.js ---
+
+import { renderKnoten } from './visual/render-knoten.js';
+import { renderGarne } from './visual/render-garne.js';
+import { renderAntraege } from './visual/render-antraege.js';
+import { renderWebkasse } from './visual/render-webkasse.js';
+
+export function registriereSymbolRenderEvents() {
+  window.layerManager.registerLayer('knoten', renderKnoten);
+  window.layerManager.registerLayer('garne', renderGarne);
+  window.layerManager.registerLayer('antraege', renderAntraege);
+  window.layerManager.registerLayer('webkasse', renderWebkasse);
+}
+
+// --- Datei: visual/render-knoten.js ---
+
+export function renderKnoten(knotenArray) {
+  console.log('Knoten werden gerendert:', knotenArray);
+  // Hier D3 oder Leaflet-Rendering einfügen
+}
+
+// --- Datei: visual/render-garne.js ---
+
+export function renderGarne(garneArray) {
+  console.log('Garne werden gerendert:', garneArray);
+  // Hier D3 oder Leaflet-Rendering einfügen
+}
+
+// --- Datei: visual/render-antraege.js ---
+
+export function renderAntraege(antraegeArray) {
+  console.log('Anträge werden gerendert:', antraegeArray);
+  // Hier D3 oder Leaflet-Rendering einfügen
+}
+
+// --- Datei: visual/render-webkasse.js ---
+
+export function renderWebkasse(webkasseObj) {
+  console.log('Webkasse wird gerendert:', webkasseObj);
+  // Hier D3 oder Leaflet-Rendering einfügen
+}
+
+// --- Datei: data/data-knoten.js ---
+
+export async function ladeKnotenDaten() {
+  // Beispiel-Daten
+  return [
+    { id: 1, name: 'Knoten A', lat: 51.96, lng: 7.62 },
+    { id: 2, name: 'Knoten B', lat: 51.97, lng: 7.63 }
+  ];
+}
+
+// --- Datei: data/data-diskurs.js ---
+
+export async function ladeDiskursDaten() {
+  return [];
+}
+
+// --- Datei: data/data-finanz.js ---
+
+export async function ladeFinanzDaten() {
+  return { saldo: 1000 };
+}

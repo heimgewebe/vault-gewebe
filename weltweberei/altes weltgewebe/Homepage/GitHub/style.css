@@ -1,0 +1,202 @@
+/* style.css — Version: Σ.v11.1.mobile-first */
+
+/* Grundlayout */
+body {
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    background: #fafafa;
+    color: #111;
+}
+
+#map {
+    position: absolute;
+    top: 0; bottom: 0; left: 0; right: 0;
+}
+
+/* Steuerbereich für mobile-first: absolut auf großen Screens, relativ auf kleinen */
+#controls {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 320px;
+    background: rgba(255,255,255,0.97);
+    padding: 1rem;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.15);
+    overflow-y: auto;
+    z-index: 1000;
+    border-radius: 8px;
+}
+
+/* Flexibles Umschalten für kleinere Screens */
+@media (max-width: 700px) {
+    #controls {
+        position: relative;
+        width: 100%;
+        box-shadow: none;
+        border-radius: 0;
+        top: 0;
+        left: 0;
+    }
+}
+
+/* Buttons */
+#controls button {
+    display: block;
+    width: 100%;
+    margin: 0.4rem 0;
+    padding: 0.6rem;
+    font-size: 1rem;
+    font-weight: bold;
+    background: #fff;
+    border: 2px solid #444;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#controls button:hover {
+    background: #f0f0f0;
+}
+
+#webkasse-stand {
+    font-weight: bold;
+    margin: 0.8rem 0;
+    padding: 0.5rem;
+    background: #f9f9f9;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    text-align: center;
+}
+
+/* Feedbacksystem */
+#form-feedback {
+    margin-top: 0.5rem;
+    transition: opacity 0.3s;
+    min-height: 1.5em;
+}
+
+#form-feedback.success { color: #2ECC40; }
+#form-feedback.error { color: #E74C3C; }
+#form-feedback[role="alert"] { font-weight: bold; }
+
+/* Formulare */
+.interaction-form label {
+    display: block;
+    margin-top: 0.5rem;
+    font-weight: 500;
+}
+
+.interaction-form input, 
+.interaction-form select, 
+.interaction-form textarea {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.25rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.valid { border-color: #4CAF50; }
+.invalid { border-color: #b00020; }
+.error-message {
+    color: #b00020;
+    font-size: 0.85rem;
+    margin-top: 0.2rem;
+    display: block;
+}
+
+/* Tooltip */
+.tooltip {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 1px solid #888;
+    padding: 8px 12px;
+    border-radius: 4px;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    z-index: 999;
+    max-width: 300px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.tooltip-close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+/* Fokusführung */
+button:focus, input:focus, select:focus, textarea:focus {
+    outline: 3px solid #0074D9;
+    outline-offset: 3px;
+}
+
+/* D3 Elemente */
+.garnrolle { fill: #0074D9; }
+.faden { stroke: #888; stroke-opacity: 0.7; }
+
+/* Overlay-Panel für mobile-first */
+#form-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#form-overlay[hidden] {
+    display: none;
+}
+
+#form-container {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+#form-close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: #fff;
+    border: 2px solid #444;
+    border-radius: 50%;
+    font-size: 1.4rem;
+    width: 2rem;
+    height: 2rem;
+    line-height: 1.4rem;
+    cursor: pointer;
+}
+
+/* Themenfilter Buttons */
+#theme-legend {
+    margin: 0.5rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+#theme-legend button {
+    border: 2px solid transparent;
+    color: #fff;
+    font-weight: bold;
+    padding: 0.5rem 0.8rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#theme-legend button.active {
+    border-color: #111;
+    transform: scale(1.05);
+}

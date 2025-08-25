@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://weltgewebe.net/schemas/node.json",
+  "title": "Knoten",
+  "type": "object",
+  "required": [
+    "id",
+    "lat",
+    "lng",
+    "title"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "lat": {
+      "type": "number"
+    },
+    "lng": {
+      "type": "number"
+    },
+    "title": {
+      "type": "string"
+    },
+    "public": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "private": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

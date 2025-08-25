@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weltweberei</title>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+  <div id="map" class="leaflet-container"></div>
+
+  <!-- UI-Container -->
+  <div id="ui-root">
+    <div id="zeitsteuerung"></div>
+    <div id="themenfilter"></div>
+    <div id="webkasse-container"></div>
+    <div id="knotenfenster"></div>
+    <div id="form-overlay"></div>
+    <div id="form-container"></div>
+    <div id="diskurs-container"></div>
+    <div id="zeitreise-ui"></div>
+    <div id="naehstuebchen-ui"></div>
+    <div id="webrat-ui"></div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-d3-svg-overlay@3.0.0/leaflet-d3-svg-overlay.min.js"></script>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+---
+- hosts: weltgewebe
+  become: yes
+  tasks:
+    - name: Platzhalter
+      debug:
+        msg: "Deploy wird hier implementiert."

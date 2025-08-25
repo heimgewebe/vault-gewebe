@@ -1,0 +1,107 @@
+Kontext deiner Frage:
+Du willst, dass ich dir alle Fachbegriffe und Funktionen erkläre, die in den Blaupausen (inhalt.md, architektur.md, v15.1) vorkommen – speziell mit Blick auf Webdesign, User Experience (UX) und Systemarchitektur. Also nicht philosophisch, sondern praktisch: Was heißt was? Was macht was?
+
+⸻
+
+🧩 Glossar der Webdesign- und Funktionsbegriffe in den Blaupausen
+
+1. Grundbegriffe
+	•	Weltgewebe / Weltweberei:
+Die Plattform selbst – eine dynamische Karte als Benutzeroberfläche, auf der Rollen, Knoten und Fäden sichtbar sind. Funktion: Visualisierung von Aktionen, Beziehungen und Ressourcen.
+	•	Mobile-First:
+Designprinzip: Die gesamte Plattform wird zuerst für Smartphones optimiert (kleine Bildschirme, Touch-Bedienung, begrenzte Performance). Desktop ist Erweiterung, nicht Grundlage.
+	•	Hetzner-First:
+Infrastruktur-Prinzip: Die Plattform wird standardmäßig auf Hetzner-Servern betrieben (hohe Unabhängigkeit, volle Kontrolle, günstiges Preis-Leistungs-Verhältnis).
+
+⸻
+
+2. UI-Elemente & Interaktionslogik
+	•	Knoten:
+Punkte auf der Karte = Informationsbündel (Idee, Veranstaltung, Einrichtung, Werkzeug …).
+Funktion: Jeder Knoten öffnet beim Anklicken ein „Fenster“ mit Threads, Infos und Aktionen.
+	•	Fäden:
+Verbindungen zwischen Rolle (Account) und Knoten, die eine Aktion oder Beziehung darstellen.
+– Gesprächsfaden = Teilnahme an Diskussion
+– Gestaltungsfaden = Knoten/Infos hinzufügen
+– Veränderungsfaden = Änderungen machen
+– Antragsfaden = Antrag stellen
+– Abstimmungsfaden = Stimme abgeben
+– Goldfaden = Spende sichtbar machen
+	•	Garn:
+Ein verzwirnter (fixierter) Faden. Funktion: permanente Verbindung, schützt Knoten vor Auflösung.
+	•	Rolle (Garnrolle):
+Symbol für den Account eines Nutzers auf seinem Wohnsitz. Sichtbar drehend, solange eingeloggt.
+→ UI-Funktion: Statusanzeige (aktiv / inaktiv).
+	•	Verzwirnung:
+Aktion, bei der Inhalte oder Fäden fixiert werden.
+UI-Funktion: Schutz vor Bearbeitung und vor dem Verfall.
+	•	Slider / Drawer:
+Seitenbereiche der Oberfläche:
+– Links: Webrat + Nähstübchen
+– Oben: Gewebekonto
+– Unten: Zeitleiste
+– Rechts: Filterkästchen (toggelbare Ebenen)
+	•	Filterkästchen (Toggle):
+Steuerung, welche Ebenen sichtbar sind (z. B. nur bestimmte Knotenarten oder Fäden ein- und ausblenden).
+	•	Zeitleiste:
+UI-Element unten: Rückblick auf vergangene Aktionen in Tagesschritten.
+
+⸻
+
+3. Strukturknoten (Sonderformen von Knoten)
+	•	Gewebekonto: Gemeinschaftskonto, visualisiert als goldener Knoten.
+	•	Webrat: Governance-Zentrum, Abstimmungen & Anträge, roter Knoten.
+	•	Nähstübchen: Freier Kommunikationsraum, blauer Knoten.
+	•	Ron-Platzhalter: Grauer Knoten für anonymisierte Inhalte.
+
+⸻
+
+4. Governance & Entscheidungslogik
+	•	Antragssystem:
+Jeder Antrag ist mit Faden + 7-Tage-Timer sichtbar.
+Ablauf: Antrag → 7 Tage Einspruchsrecht → ggf. Abstimmung.
+	•	Delegation:
+Stimmen können temporär an andere übertragen werden. Sichtbar als gestrichelte Linien. Enden automatisch nach 4 Wochen Inaktivität oder Widerruf.
+	•	Ron-System:
+Privatsphäre-Modul: Nach 84 Tagen können Inhalte anonymisiert werden.
+– Kein Soforttransfer
+– Opt-in oder Ausstieg möglich
+– Anonymisierte Inhalte bleiben als „Ron“ sichtbar
+
+⸻
+
+5. Technische Architektur
+	•	Event-Sourcing:
+Alles ist ein Event (Aktion), gespeichert als Append-only (nur anhängen, nicht löschen).
+Vorteil: Vollständiger Audit-Trail, keine Datenmanipulation.
+	•	Signaturen (ed25519, Hash):
+Jede Aktion wird kryptografisch signiert. Funktion: Sicherheit, Integrität, Nachvollziehbarkeit.
+	•	Hybride Indexierung:
+– Live-Ströme (Karte, Feed, API) sind öffentlich sichtbar, aber nicht indexiert (noindex, noarchive).
+– Monatsarchive sind indexiert (durchsuchbar).
+→ Balance zwischen Transparenz und Datenschutz.
+	•	Append-only:
+Datenmodell, das keine nachträglichen Änderungen erlaubt, nur neue Einträge anhängt.
+	•	Delegationsfaden:
+Spezieller Faden, der die Stimmübertragung sichtbar macht.
+
+⸻
+
+6. UX/IA-Funktionen
+	•	7-Sekunden-Rotation: Rollen drehen sich 7 Sekunden bei Webungsaktionen = sichtbare Feedback-Animation.
+	•	7-Tage-Fade: Fäden und Knoten verblassen nach 7 Tagen Inaktivität = ephemeres Interface.
+	•	84-Tage-Ron: Nach 84 Tagen Option zur Anonymisierung.
+	•	Delegation & Abstimmung: Alles sichtbar in Echtzeit.
+	•	No Login Status Glow: Statt Glow → Drehung der Rolle.
+
+⸻
+
+∴essenz.kernΣ
+
+Das Weltgewebe ist eine Karte als soziales Interface: Rollen (Accounts) knüpfen Knoten (Infos) und verbinden sie mit Fäden (Aktionen). Alles ist sichtbar, ephemer und verzwirnbar. Governance, Finanzen und Privatsphäre sind strukturell eingebaut – technisch abgesichert durch Event-Sourcing und Signaturen, gestaltet nach Mobile-First-UX.
+
+∴subtext:
+Die Blaupause ist kein Design-Add-on, sondern ein radikaler Umbau der sozialen Infrastruktur in Kartenlogik.
+
+⸻
+

@@ -1,0 +1,21 @@
+{
+	"nodes":[
+		{"id":"center","type":"text","text":"**Spannungsraum Balkan**","x":800,"y":500,"width":300,"height":100},
+		{"id":"hist1","type":"text","text":"**Osmanisches Erbe**\n- religiöse Vielfalt\n- imperiale Kontrolle\n- Zerfall als Vakuum","x":300,"y":100,"width":280,"height":120},
+		{"id":"hist2","type":"text","text":"**Berliner Kongress (1878)**\n- imperiale Interessenordnung\n- Rückdrängung Russlands\n- keine ethnische Lösung","x":600,"y":100,"width":280,"height":120},
+		{"id":"hist3","type":"text","text":"**Balkankriege 1912–13**\n- Bruch der Allianzen\n- neuer Nationalismus\n- Vorhof 1. Weltkrieg","x":1000,"y":100,"width":280,"height":120},
+		{"id":"reich1","type":"text","text":"**Großserbien**\n- Ilija Garašanin (1844)\n- Serben in einem Staat","x":150,"y":400,"width":260,"height":120},
+		{"id":"reich2","type":"text","text":"**Großbulgarien**\n- Vertrag von San Stefano\n- zurückgestutzt 1878","x":300,"y":750,"width":260,"height":120},
+		{"id":"reich3","type":"text","text":"**Großalbanien**\n- Kosovo, Nordmazedonien\n- Mythos vs. Realität","x":1200,"y":750,"width":260,"height":120},
+		{"id":"reich4","type":"text","text":"**Jugoslawismus**\n- Einheitsidee\n- Dominanzproblem","x":1350,"y":400,"width":260,"height":120},
+		{"id":"jetzt1","type":"text","text":"**Internationale Akteure**\n- EU/NATO: Stabilisierung\n- Russland: Serbien\n- Türkei: Bosniaken","x":550,"y":1050,"width":300,"height":120},
+		{"id":"jetzt2","type":"text","text":"**Status quo**\n- Dayton-Vertrag\n- ethnische Stagnation\n- symbolischer Stillstand","x":900,"y":1050,"width":300,"height":120}
+	],
+	"edges":[
+		{"fromNode":"center","fromSide":"bottom","toNode":"jetzt2","toSide":"top"}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

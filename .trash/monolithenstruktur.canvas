@@ -1,0 +1,117 @@
+{
+	"root":{
+		"id":"root",
+		"topic":"Der Monolith (zentral gesteuerte Weltordnung)",
+		"children":[
+			{
+				"topic":"Zentralinstanz",
+				"children":[
+					{"topic":"Unsichtbare Eigentümerstruktur","note":"Hochkonzentrierter Vermögenskern in dynastisch-okkulten Netzwerken; kein Name, nur Funktion"},
+					{
+						"topic":"Symbolische Steuerung",
+						"children":[
+							{"topic":"Allsehendes Auge"},
+							{"topic":"Doppeladler"},
+							{"topic":"Phönix (Reset)"},
+							{"topic":"Weltkugel/Orbis"}
+						],
+						"note":"Nicht Deko, sondern semantischer Anker: Wer die Symbole führt, steuert den Sinnraum"
+					}
+				]
+			},
+			{
+				"topic":"Exekutive Systeme",
+				"children":[
+					{
+						"topic":"Finanzsysteme",
+						"children":[
+							{"topic":"City of London (Kern)"},
+							{"topic":"Federal Reserve"},
+							{"topic":"EZB / BIS / IWF / Weltbank"}
+						],
+						"note":"Geldschöpfung ohne demokratische Kontrolle → totale Steuerung über Kreditvergabe und Zinspolitik"
+					},
+					{
+						"topic":"Digitale Infrastruktur",
+						"children":[
+							{"topic":"Alphabet"},
+							{"topic":"Meta"},
+							{"topic":"Amazon"},
+							{"topic":"Microsoft / OpenAI"}
+						],
+						"note":"Verhaltenserfassung, Realitätsschnitt, algorithmische Disziplinierung"
+					},
+					{
+						"topic":"Geopolitik & Krieg",
+						"children":[
+							{"topic":"NATO"},
+							{"topic":"Fünf Augen (Five Eyes)"},
+							{"topic":"Rüstungsindustrie"}
+						],
+						"note":"Kriege als Steuerungstools, nicht als Konflikte – jeder Krieg = Ordnungsverschiebung"
+					}
+				]
+			},
+			{
+				"topic":"Narrativkontrolle",
+				"children":[
+					{
+						"topic":"Massenmedien",
+						"children":[
+							{"topic":"Reuters"},
+							{"topic":"Associated Press"},
+							{"topic":"Bloomberg"}
+						],
+						"note":"Informationsfluss in einer Hand – Ereignisse werden nicht berichtet, sondern *geschrieben*"
+					},
+					{
+						"topic":"Wissenschaftslenkung",
+						"children":[
+							{"topic":"Gates Foundation"},
+							{"topic":"Rockefeller Foundation"},
+							{"topic":"Peer-Review-Kartelle"}
+						],
+						"note":"Was als Wissen gilt, entscheidet der Geldfluss. Erkenntnis wird verwaltet."
+					}
+				]
+			},
+			{
+				"topic":"Fassadeninstanzen",
+				"children":[
+					{
+						"topic":"Politik & NGO-Fassade",
+						"children":[
+							{"topic":"UN"},
+							{"topic":"EU"},
+							{"topic":"WHO"},
+							{"topic":"Greenpeace, WWF, Amnesty"}
+						],
+						"note":"Sieht aus wie Vielfalt – folgt aber Budget, Rahmung und Programmatik der Zentralinstanz"
+					},
+					{"topic":"Wahlen & Öffentlichkeit","note":"Kontrollierte Opposition, gelenkte Debatten, Ereignisdrift → 'Demokratie' als Designrahmen"}
+				]
+			},
+			{
+				"topic":"Endfunktion",
+				"children":[
+					{"topic":"Weltordnung durch Verschuldung","note":"Alle Staaten als Schuldner in der Hand einer Gläubigerelite. Keine Souveränität ohne Zustimmung."},
+					{
+						"topic":"Menschensteuerung",
+						"children":[
+							{"topic":"Sozialkreditsysteme"},
+							{"topic":"Digitale Identitäten"},
+							{"topic":"Verhaltensnudging"}
+						],
+						"note":"Nicht Kontrolle durch Gewalt, sondern durch Interface, Belohnung, Ausschluss – subtiler Totalitarismus"
+					}
+				]
+			}
+		]
+	},
+	"nodes":[],
+	"edges":[],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

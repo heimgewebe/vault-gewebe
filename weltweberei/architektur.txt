@@ -1,0 +1,82 @@
+Die generelle Architektur aus inhalt.md mit klarem Fokus auf Knoten als Kernelemente und Strukturknoten als besondere Knotenformen wird in die Blaupause wie folgt sinnvoll eingebettet:
+
+***
+
+## Ergänzung zur Blaupause: Generelle Architektur und Knotenfokus
+
+### 1. Kernkonzept: Das Weltgewebe als sichtbares, gemeinschaftliches Netzwerk  
+
+- Weltweberei bezeichnet ein **sichtbares, gemeinschaftlich ausgehandeltes Zusammenwirken von Nachbarschaften**, die sich um ein gemeinsames Konto (Ortsgewebekonto) versammeln.  
+- Das Weltgewebe (weltgewebe.net) ist die dynamische Karte, auf der Aktionen, Wünsche, Kommentare und Verantwortungsübernahmen als sich veränderndes **Geflecht von Knoten und Fäden visualisiert** werden.
+
+### 2. Knoten als Herzstück der Architektur  
+
+- **Knoten repräsentieren lokalisierte Informationsbündel, z. B. Ereignisse, Fragen, Ideen, Orte, Einrichtungen oder Werkzeuge.**  
+- Jeder Knoten öffnet einen eigenen Raum ("Fenster"), in dem Informationen, Threads, Kommentare nebeneinander gestaltet und bearbeitet werden können.  
+- Knoten sind **permanent solange sie Garne oder Fäden (sichtbare Verbindungen) haben**. Fäden (verblassen sukzessive binnen 7 Tagen) verbinden Rollen mit Knoten, Garne sind verzwirnte, permanente Fäden, die den Knoten vor Verfall schützen.  
+- **Verzwirnung innerhalb eines Knotens schützt Inhalte vor der Bearbeitung durch andere.
+- alles andere ist von allen jederzeit bearbeitbar
+
+### 3. Strukturknoten als besondere Knotenformen  
+
+- Strukturknoten sind **stabile, permanente Knoten mit besonderer Bedeutung**:  
+  - **Gewebekonto:** Gemeinschaftliches Finanzkonto, visualisiert als goldener Knoten.  
+  - **Webrat:** Governance-Hub mit Abstimmungs- und Antragsmanagement, roter Knoten.  
+  - **Nähstübchen:** Ortsunabhängiger Kommunikationsraum, blauer Knoten.  
+  - **Ron-Platzhalter:** Grauer Knoten für anonymisierte Ron-Inhalte, permanent.  
+- Diese Strukturknoten sind immer sichtbar, können nicht verfallen, und fungieren als Anker im Gewebe und Orientierungspunkte für Governance, Finanzen und Kommunikation.
+
+### 4. Rollen und Fäden  
+
+- Nutzer registrieren sich mit Namen und Wohnsitz und erhalten eine **Garn-Rolle**, die sie auf der Karte repräsentiert.  
+- Aktionen erzeugen Fäden von der Rolle zum jeweiligen Knoten, die Rotation der Rolle zeigt aktive Beteiligung.  
+- **Verschiedene Fadenarten** repräsentieren Gesprächsfaden, Gestaltungsfaden, Änderungsfaden, Antragsfaden, Abstimmungsfaden, Goldfaden (Spenden) und Delegationsfaden – alle farbkodiert.  
+- Fäden können zu Garnen verzwirnt werden, die Knoten dauerhaft erhalten.
+
+### 5. Governance und Interaktion  
+
+- Ortswebereien bilden die lokale Ausprägung des Weltgewebes, mit eigenen Unterseiten. 
+- Anträge können überall auf der Karte gestellt werden, sichtbar mit 7-Tage-Timer und Einspruchsmechanik.  
+- Stimmrechte können via Delegation weitergegeben werden, sichtbar als gestrichelte Pfeile auf der Karte, mit Laufzeit und Cycle-Detection.
+
+### 6. Datenschutz und Datenmodell  
+
+- Es gibt kein Tracking oder automatische Profilbildung. Personenbezogene Daten werden nur freiwillig sichtbar gemacht und können jederzeit geändert werden.  
+Alle Datenverarbeitung basiert auf Einwilligung oder berechtigtem Interesse gemäß DSGVO.  
+
+***
+
+Diese Publikation der Architektur betont das grundsätzliche Verständnis: **Knoten und deren Fäden sind der Kern des Weltgewebes**, Strukturknoten spezielle Knoten mit Ankerfunktion, und das gesamte System ist als sichtbares, dynamisches, nachbarschaftliches Netzwerk konzipiert.
+
+
+Verstanden, bei Punkt 3.4 Ron-System wird klargestellt, dass es **keinen Soforttransfer von Inhalten gibt, die jünger als 84 Tage sind**. Der Anonymisierungspfad folgt strikt der 84-Tage-Wartezeitregel.
+
+Ich ergänze die Blaupause in Abschnitt 3.4 entsprechend neu:
+
+***
+
+### 3.4 Ron-System für Privatsphäre und Ausstieg (korrigiert)
+- 84-Tage-Anonymisierungspfad: Inhalte werden erst nach einem Alter von 84 Tagen anonymisiert und zu Ron übertragen  
+- Kein Soforttransfer für jüngere Inhalte unter 84 Tagen, auch beim Ausstieg  
+- Optionale Aktivierung der Ron-Option, mit sofortiger Übertragung nur von bereits älteren berechtigten Inhalten  
+- Ausstieg via Ron-Prozess erzwingt die Ron-Option und startet 84-Tage-Wartezeit bis zur vollständigen Löschung der Rolle  
+- Anonymisierte Inhalte bleiben für die Gemeinschaft erhalten, Datenschutz durch zeitversetzten Identitätsschutz  
+- Ron-Platzhalter-Knoten visualisieren anonymisierte Inhalte dauerhaft  
+- Vollständige Transparenz über den Ausstiegsprozess, keine vorzeitige Löschung, keine Rücknahme des Ausstiegs möglich  
+
+***
+
+Wenn das so passt, kann ich die komplette überarbeitete Blaupause mit diesem korrigierten Punkt 3.4 textuell ausarbeiten. Soll ich fortfahren?Hier ist die überarbeitete Version von Abschnitt 3.4 Ron-System für Privatsphäre und Ausstieg mit klarem Hinweis, dass kein Soforttransfer von Inhalten unter 84 Tagen erfolgt:
+
+***
+
+### 3.4 Ron-System für Privatsphäre und Ausstieg (korrigiert)
+- Inhalte werden erst nach 84 Tagen automatisch anonymisiert und zu Ron übertragen.  
+- Es gibt keinen Soforttransfer von Inhalten, die jünger als 84 Tage sind. Diese Inhalte bleiben bis zum Erreichen der 84-Tage-Schwelle namentlich sichtbar.  
+- Die Ron-Option ist optional aktivierbar, ermöglicht aber nur die sofortige Übertragung bereits älterer, berechtigter Inhalte.  
+- Beim Ausstieg via Ron-Prozess wird die Ron-Option erzwungen, es erfolgt keine sofortige Anonymisierung aller Inhalte, sondern der reguläre 84-Tage-Pfad mit anschließender vollständiger Rollen-Entfernung.  
+- Anonymisierte Inhalte bleiben bestehen und sind für die Gemeinschaft sichtbar, jedoch ohne Namenszuordnung (durch Ron-Platzhalter visualisiert).  
+- Der gesamte Ausstiegsprozess mit Ron ist transparent und nachvollziehbar, eine Rücknahme ist nicht möglich.  
+
+***
+

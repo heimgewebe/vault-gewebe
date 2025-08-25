@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Weltweberei Σ.v11.4.identity</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Weltweberei</h1>
+        <div id="user-bar">
+            <button id="login-button">Login / Registrierung</button>
+            <button id="logout-button" hidden>Logout</button>
+            <span id="user-display"></span>
+        </div>
+    </header>
+
+    <main>
+        <div id="map" style="height: 100vh;"></div>
+
+        <section id="controls" aria-label="Steuerung">
+
+            <h2>Themenfilter</h2>
+            <div id="theme-legend" role="group" aria-label="Themenfilter">
+                <button class="theme-filter" data-theme="Gemeinschaft" style="background-color:#0074D9" aria-pressed="false" aria-label="Thema Gemeinschaft filtern">Gemeinschaft</button>
+                <button class="theme-filter" data-theme="Kultur" style="background-color:#FF851B" aria-pressed="false" aria-label="Thema Kultur filtern">Kultur</button>
+                <button class="theme-filter" data-theme="Mitwirkung" style="background-color:#FFDC00; color:#000" aria-pressed="false" aria-label="Thema Mitwirkung filtern">Mitwirkung</button>
+            </div>
+            <div id="theme-reset-container">
+                <button id="reset-themes" aria-label="Alle Themenfilter zurücksetzen">Alle zurücksetzen</button>
+            </div>
+
+            <h2>Aktionen</h2>
+            <button id="show-ereignis-form">Neues Ereignis</button>
+            <button id="show-zusage-form">Zusage</button>
+            <button id="show-goldfaden-form">Goldfaden</button>
+            <button id="show-spende-form">Spende</button>
+            <button id="show-auszahlung-form">Auszahlung</button>
+
+            <h2>Zeitsteuerung</h2>
+            <div id="current-date-label" aria-live="polite">Aktuelles Datum: <span id="current-date-display"></span></div>
+            <input type="date" id="time-slider" aria-label="Aktuelles Datum auswählen">
+            <label for="zeitfenster-tage">Zeitraum rückwärts (Tage):</label>
+            <input type="number" id="zeitfenster-tage" value="7" min="1" step="1">
+        </section>
+
+        <section id="webkasse-stand" aria-live="polite"></section>
+
+        <div id="form-overlay" role="dialog" aria-modal="true" aria-labelledby="form-heading" tabindex="-1" hidden>
+            <div id="form-container"></div>
+            <div id="form-feedback" role="alert"></div>
+            <button id="form-close-btn" aria-label="Formular schließen">×</button>
+        </div>
+
+        <!-- Login-Overlay -->
+        <div id="login-overlay" role="dialog" aria-modal="true" hidden>
+            <form id="login-form">
+                <h2>Login / Registrierung</h2>
+                <label for="login-name">Name:</label>
+                <input type="text" id="login-name" required>
+                <label><input type="checkbox" id="register-new"> Registrierung aktivieren</label>
+
+                <div id="registration-fields" hidden>
+                    <label for="login-wohnort">Wohnort:</label>
+                    <input type="text" id="login-wohnort">
+
+                    <label for="login-lat">Breitengrad:</label>
+                    <input type="number" id="login-lat" step="0.000001">
+
+                    <label for="login-lng">Längengrad:</label>
+                    <input type="number" id="login-lng" step="0.000001">
+                </div>
+
+                <div id="login-feedback"></div>
+                <button type="submit">Absenden</button>
+                <button type="button" onclick="document.getElementById('login-overlay').hidden=true">Abbrechen</button>
+            </form>
+        </div>
+
+    </main>
+
+    <script src="main.js" type="module"></script>
+
+</body>
+</html>

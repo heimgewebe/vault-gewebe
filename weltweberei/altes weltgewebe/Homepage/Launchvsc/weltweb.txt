@@ -1,0 +1,170 @@
+
+
+⸻
+
+Manifest der Weltweberei
+
+
+⸻
+
+🧶 Webung
+
+Webung bezeichnet jede Handlung, mit der ein Weber über seine Rolle in die Welt eingreift.
+	•	Die Rolle ist visuell verankert an einem festen Ort auf der Leaflet-Karte, identifiziert über eine ID bei Registrierung.
+	•	Eine Webung erzeugt eine Verbindung von der Rolle zu einem beliebigen Punkt auf der Karte – entweder:
+	•	als Faden: temporär (verblasst innerhalb von 7 Tagen)
+	•	als Garn: dauerhaft (bis zur aktiven Auflösung)
+
+Eine Webung entsteht z. B. durch:
+	•	Erstellen eines Knotens (Informationspunkt mit Kontext)
+	•	Teilnahme an einem Gespräch
+	•	Stellung eines Antrags
+	•	Abgabe einer Zusage
+
+	der Weber entscheidet selbst, ob er Faden oder Garn benutzt. Garn gilt als verbindliche Zusage.
+	auch im Nachhinein kann ein Weber seine Rolle mit einem Knoten verbinden, wenn er beispielsweise physisch an einem Ereignis zugegen war und seine Mitwirkung nun dokumentieren möchte
+⸻
+
+🪢 Knoten
+
+Ein Knoten entsteht, wenn ein Weber eine neue Webung mit Informationsinhalt an einem Ort auf der Karte vornimmt.
+	•	Der Knoten ist Träger:
+	•	von Informationen (z. B. Ankündigungen, Hinweise)
+	•	von Gesprächsmöglichkeiten (Diskurs)
+	•	von Anträgen (siehe unten)
+	•	Weitere Webungen anderer Weber verknüpfen sich automatisch mit dem Knoten.
+	•	Ein Knoten löst sich auf, wenn kein Faden und kein Garn mehr mit ihm verbunden ist.
+
+Darstellung:
+	•	Standardmäßig als visueller Knoten dargestellt
+	•	Material: abgeleitet aus den verbundenen Fäden und Garne
+	•	Visualisierung kann vom ursprünglichen Weber selbst angepasst werden
+
+⸻
+
+🧭 Webkasse
+
+Die Webkasse ist das Gemeinschaftskonto der Ortsweberei.
+Sie ist der exklusive Ort für Geldauszahlungsanträge.
+
+⸻
+
+🧾 Anträge
+	•	Können gestellt werden auf:
+	•	Geldauszahlung (→ nur über Knotenknüpfung auf Webkasse, heißen Goldantrag und sind mit goldenem Rand versehen)
+	•	Veränderung
+	•	Anschaffung
+	•	alles mögliche
+
+Visualisierung:
+	•	Blauer Faden bei Stellung
+	•	Lila Faden bei Einspruch (binnen 7 Tagen möglich)
+	•	Grüner Faden bei Annahme
+– automatisch 7 Tage nach Antragstellung (ohne Einspruch)
+– bei Einspruch: Abstimmung 7 Tage nach Einspruch
+	•	Roter Faden bei Ablehnung
+	•	Goldener Rand bei Goldanträgen
+	•	Jeder Antragsfaden verblasst 7 Tage nach Entscheidung
+
+⸻
+
+🧵 Extraräume
+	•	Nähstübchen → Raum zum freien Plaudern
+	•	Webrat → Diskussionen zu orts- und ereignisunabhängigen Themen
+
+⸻
+
+🗓️ Zeitleiste / Auditfunktion
+	•	Navigierbare Zeitleiste, um vergangene Webungen auditierbar zu halten
+	•	Zeitreise: Tag-für-Tag, einstellbare Geschwindigkeit
+	•	Statische Zeitfenster: frei wählbare Intervalle (z. B. 1 Woche, 1 Monat etc.)
+
+⸻
+
+📱 Mobile first!
+
+Alle Funktionalitäten und Interfaces sind von Grund auf für mobile Nutzung optimiert.
+
+
+Wenn ein Weber an einem Gespräch teilnimmt, dann webt sich automatisch ein Faden von seiner Rolle in den Gesprächsraum. Solch ein Faden verschwindet ja sukzessive wieder innerhalb einer Woche. Wenn ein Weber dann aber in diesem Zeitraum weitere Beiträge in demselben Knoten tätigt, dann wird der Faden dicker (immer proportional zu der zeitlich überlappenden Anzahl der Beiträge. Dabei ist jeder Faden (zumindest anteilig) visuell vertreten (mit seiner jeweiligen Farbe und Transparenz))
+Garn wiederum steht ja für verbindliche Zusagen und bleibt als stabile Verbindung zwischen Rolle und knoten, bis entweder der knoten Aufgelöst wird oder die Zusage abgebrochen wird. Garn erkennt man an der gezwirnten Optik (oder welche Optik Garn auch immer hat). Ist ein Ereignis vergangen (und hat sich also die Zusage in Tat umgewandelt) wird der knoten und die zu ihm führenden Fäden und Garne grau und verschwindet im laufe einer Woche sukzessive.
+
+weltweberei/
+├── index.html                    → Einstiegspunkt (Leaflet + UI-Struktur)
+├── style.css                    → Grundlayout, farblich Weberei-konform
+├── main.js                      → App-Starter: Kartenaufbau + Datenbindung
+├── startup-loader.js            → Initialdaten, UI-Init, Layer-Setup
+├── leaflet-setup.js             → Karte + Zeitachse + Keyevents
+
+├── core/
+    --- webung-engine.js
+│   ├── zeitlogik.js             → Blasszeiten, Garnhaltbarkeit, Zeitreise
+│   ├── knotenerkennung.js       → Logik zur Auflösung und Persistenzprüfung
+│   ├── verblasslogik.js         → Fadenverblassung etc.
+│   └── manifest.js              → Manifest-Logik (aus `weltweb.txt`)
+
+├── data/
+│   ├── data-model.js            → Datenstrukturen: Knoten, Fäden, Garne
+│   ├── data-knoten.js           → Knoten-spezifische Datenhaltung
+│   ├── data-diskurs.js          → Diskursdaten: Gespräche, Beiträge, etc.
+│   ├── data-finanz.js           → Webkassen-Datenhaltung
+│   └── persistence-service.js (+.client, +.server)  → Datei-/Serverpersistenz (Filesystem/Backend)
+
+├── services/
+│   ├── api-service.js           → Generische API-Schicht
+│   ├── api-diskurs.js           → Gesprächs-API
+│   ├── api-knoten.js            → Knotendaten-API
+│   ├── websocket-service.js     → Live-Daten
+│   ├── websocket-integration.js → Events live synchronisieren
+│   ├── auth-service.js          → Anmeldung & Rollenverknüpfung
+│   └── file-storage.js          → Lokale Dateioperationen├── api-antrag.js           → API für Anträge
+│   ├── api-verblassen.js       → API für Verblasslogik
+│   ├── api-webung.js           → API für allgemeine Webungen
+
+├── visual/
+│   ├── render-knoten.js             → Visualisierung der Knoten
+│   ├── render-faeden.js             → Darstellung aller Fäden
+│   ├── render-garne.js              → Darstellung aller Garne
+│   ├── render-antraege.js             → Darstellung Antragszyklen
+│   ├── render-webkasse.js           → Darstellung Webkasse
+│   └── colors.js                → Farbsemantik & Symbolfarben
+
+├── ui/
+│   ├── ui-core.js               → Grundinteraktionen & UI-Logik
+│   ├── ui-interactions.js       → Buttons, Events, UI-Flows
+│   ├── ui-themenfilter.js       → Filter für Knotentypen
+│   ├── ui-login.js              → Loginmaske + Identifikation
+│   ├── ui-ereignis.js           → Knoteninteraktionen
+│   ├── ui-finanz.js             → Webkasseninterface
+
+│   ├── knoten/
+│   │   ├── ui-knoten.js         → Knotendarstellung (Info + Visu)
+│   │   ├── knoten-engine.js     → Knotenanlage, Logik
+│   │   └── knoten-form.js       → Formular zur Knotenerstellung
+
+│   ├── diskurs/
+│   │   ├── ui-diskurs.js        → Gesprächsfenster
+│   │   ├── diskurs-engine.js    → Diskursverlauf + Webungslogik
+│   │   └── diskurs-form.js      → Beiträge hinzufügen, Antrag starten
+
+│   ├── antrag/
+│   │   ├── ui-antrag.js         → Antrag-UI
+│   │   ├── antrag-engine.js     → Zyklus-Logik
+│   │   └── antrag-form.js       → Antragsformular
+
+│   └── extras/
+│       ├── ui-zeitreise.js      → Zeitleistensteuerung
+│       ├── ui-webrat.js         → Ortunabhängige Debatte
+│       ├── ui-naehstuebchen.js  → Plauderbereich
+│       └── zeitleiste.js        → Visualisierung vergangener Webungen
+
+├── utils/
+│   ├── utility-core.js          → Allg. Hilfsfunktionen
+│   ├── utility-tooltip.js       → Tooltip-System
+│   ├── form-components.js       → Felder, Dropdowns etc.
+│   ├── validation.js            → Formprüfungen
+│   └── utils.js                 → Alles sonstige
+
+└── models/
+    ├── user-model.js            → Rollenstruktur, Fadenverhalten
+    └── knotentypen.js           → Definition & Farben aller Knotentypen

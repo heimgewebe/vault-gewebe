@@ -1,0 +1,66 @@
+/* Container für die Garnrolle */
+.rollen-icon-container.garnrolle {
+  width: 60px;
+  height: 60px;
+  position: relative;
+  transform-origin: center center;
+}
+
+/* Bild (Garnrolle) */
+.rollen-icon-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+/* SVG mit Text */
+.rollen-icon-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60px;
+  height: 60px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Schrift im Kreis */
+.rollen-svg-text {
+  font-size: 12px;
+  fill: black;
+  font-family: "Georgia", serif;
+  font-weight: bold;
+  letter-spacing: 0.4px;
+}
+
+/* Rotation: GANZES DIV dreht sich */
+.rollen-icon-container.garnrolle.rotating-icon {
+  animation: rotate 4s linear infinite;
+  transform-origin: center center;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Loginfeld */
+#login-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 999;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 8px;
+  border-radius: 4px;
+  box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
+
+#login-container input {
+  padding: 4px;
+  margin-right: 4px;
+}

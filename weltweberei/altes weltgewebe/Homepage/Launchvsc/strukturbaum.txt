@@ -1,0 +1,79 @@
+weltweberei/
+├── index.html                    → Einstiegspunkt (Leaflet + UI-Struktur)
+├── style.css                    → Grundlayout, farblich Weberei-konform
+├── main.js                      → App-Starter: Kartenaufbau + Datenbindung
+├── startup-loader.js            → Initialdaten, UI-Init, Layer-Setup
+├── leaflet-setup.js             → Karte + Zeitachse + Keyevents
+
+├── core/
+│   ├── zeitlogik.js             → Blasszeiten, Garnhaltbarkeit, Zeitreise
+│   ├── knotenerkennung.js       → Logik zur Auflösung und Persistenzprüfung
+│   ├── verblasslogik.js         → Fadenverblassung etc.
+│   └── manifest.js              → Manifest-Logik (aus `weltweb.txt`)
+
+├── data/
+│   ├── data-model.js            → Datenstrukturen: Knoten, Fäden, Garne
+│   ├── data-knoten.js           → Knoten-spezifische Datenhaltung
+│   ├── data-diskurs.js          → Diskursdaten: Gespräche, Beiträge, etc.
+│   ├── data-finanz.js           → Webkassen-Datenhaltung
+│   └── persistence-service.js (+.client, +.server)  → Datei-/Serverpersistenz (Filesystem/Backend)
+
+├── services/
+│   ├── api-service.js           → Generische API-Schicht
+│   ├── api-diskurs.js           → Gesprächs-API
+│   ├── api-knoten.js            → Knotendaten-API
+│   ├── websocket-service.js     → Live-Daten
+│   ├── websocket-integration.js → Events live synchronisieren
+│   ├── auth-service.js          → Anmeldung & Rollenverknüpfung
+│   └── file-storage.js          → Lokale Dateioperationen├── api-antrag.js           → API für Anträge
+│   ├── api-verblassen.js       → API für Verblasslogik
+│   ├── api-webung.js           → API für allgemeine Webungen
+
+
+├── visual/
+│   ├── render-knoten.js             → Visualisierung der Knoten
+│   ├── render-faeden.js             → Darstellung aller Fäden
+│   ├── render-garne.js              → Darstellung aller Garne
+│   ├── render-antraege.js             → Darstellung Antragszyklen
+│   ├── render-webkasse.js           → Darstellung Webkasse
+│   └── colors.js                → Farbsemantik & Symbolfarben
+
+├── ui/
+│   ├── ui-core.js               → Grundinteraktionen & UI-Logik
+│   ├── ui-interactions.js       → Buttons, Events, UI-Flows
+│   ├── ui-themenfilter.js       → Filter für Knotentypen
+│   ├── ui-login.js              → Loginmaske + Identifikation
+│   ├── ui-ereignis.js           → Knoteninteraktionen
+│   ├── ui-finanz.js             → Webkasseninterface
+
+│   ├── knoten/
+│   │   ├── ui-knoten.js         → Knotendarstellung (Info + Visu)
+│   │   ├── knoten-engine.js     → Knotenanlage, Logik
+│   │   └── knoten-form.js       → Formular zur Knotenerstellung
+
+│   ├── diskurs/
+│   │   ├── ui-diskurs.js        → Gesprächsfenster
+│   │   ├── diskurs-engine.js    → Diskursverlauf + Webungslogik
+│   │   └── diskurs-form.js      → Beiträge hinzufügen, Antrag starten
+
+│   ├── antrag/
+│   │   ├── ui-antrag.js         → Antrag-UI
+│   │   ├── antrag-engine.js     → Zyklus-Logik
+│   │   └── antrag-form.js       → Antragsformular
+
+│   └── extras/
+│       ├── ui-zeitreise.js      → Zeitleistensteuerung
+│       ├── ui-webrat.js         → Ortunabhängige Debatte
+│       ├── ui-naehstuebchen.js  → Plauderbereich
+│       └── zeitleiste.js        → Visualisierung vergangener Webungen
+
+├── utils/
+│   ├── utility-core.js          → Allg. Hilfsfunktionen
+│   ├── utility-tooltip.js       → Tooltip-System
+│   ├── form-components.js       → Felder, Dropdowns etc.
+│   ├── validation.js            → Formprüfungen
+│   └── utils.js                 → Alles sonstige
+
+└── models/
+    ├── user-model.js            → Rollenstruktur, Fadenverhalten
+    └── knotentypen.js           → Definition & Farben aller Knotentypen

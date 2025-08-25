@@ -1,0 +1,180 @@
+Technische Blaupause des Weltgewebes (v15.1+)
+
+Leitprinzipien und Architektur-Grundlagen
+
+Das Weltgewebe ist eine ko-konstruktive Plattform: Alle Inhalte werden gemeinschaftlich erstellt und können von allen bearbeitet werden – außer sie wurden explizit verzwirnt (fixiert) ￼. Dies fördert ein kooperatives Entwickeln der Inhalte und verhindert versteckte Machtstrukturen ￼ ￼. Die wichtigsten unverhandelbaren Prinzipien sind:
+	•	Alles ist Event: Jede Aktion im System erzeugt ein Ereignis in einem unveränderlichen, anhängbaren Event-Log ￼. Dieses Event Sourcing garantiert einen vollständigen Audit-Trail aller Änderungen und nutzt Hash-Ketten pro Aggregat und ed25519-Signaturen für Integrität und byzantinische Fehlertoleranz ￼. Es gibt keine direkten Überschreibungen von Daten – der Systemzustand ist immer eine Projektion aus der Event-Historie ￼ ￼.
+	•	Radikale Transparenz: Die Teilnahme erfolgt in dem Bewusstsein, dass alle Aktionen dauerhaft öffentlich sichtbar sind ￼. Es gibt keine privaten Aktionen oder versteckten Bereiche – vom Erstellen eines Knotens bis zur Stimmabgabe ist alles offen einsehbar ￼. Sichtbarkeit ist die Währung: Sichtbares Engagement, geleistete Beiträge und Ressourcen bestimmen den Wert und Status im Netzwerk ￼ ￼.
+	•	Freiwilligkeit & Aufklärung: Niemand wird zur Teilnahme gezwungen. Neue Nutzer:innen werden vorab umfassend aufgeklärt (u.a. über Transparenz und das Ron-System), sodass ihre Einwilligung informiert und freiwillig ist ￼. Ausstieg ist jederzeit möglich (siehe Ron-System), aber rückwirkende Entfernung eigener Aktionen ist durch die Transparenzprinzipien eingeschränkt.
+	•	Mobile-First Design: Die gesamte Anwendung ist primär für mobile Endgeräte konzipiert ￼. Dies spiegelt sich in einer responsiven, Touch-optimierten UI wider (einspaltiges Layout, große klickbare Elemente) und Performance-Budgets, die auf Smartphones abzielen (siehe UX-Sektion). Desktop-Ansichten sind Erweiterungen der Mobil-UI, nicht umgekehrt ￼.
+	•	Hetzner-First Infrastruktur: Die Server-Architektur ist auf Betrieb in der Hetzner Cloud optimiert ￼. Gründe sind Kosteneffizienz und Datenhoheit in der EU. Bereits Phase A (Initialbetrieb) soll mit einem einzelnen günstigen Server (< €200/Monat) voll funktionsfähig sein ￼. Durch Optimierung auf Hetzner-spezifische Angebote (z.B. kostengünstige Volumes, Traffic inklusive) werden die Betriebsziele erreicht ￼. Datenhaltung erfolgt vollständig in der EU (DSGVO-Konformität) ￼.
+	•	Small-Team-Ops: Die Architektur ist so einfach und robust gehalten, dass 1–2 Personen das System betreiben können ￼. Automatisierte Health-Checks (/health/live, /health/ready) und Runbooks ermöglichen einen MTTR (Mean Time To Recovery) von unter 15 Minuten ￼. Wichtige Prozesse (Governance-Timer, Delegations-Update, Ron-Transfers) laufen automatisch per Cronjobs im Hintergrund ￼.
+
+Diese Leitplanken sichern, dass die technische Architektur und das soziale Konzept übereinstimmen: Ein sichtbares, dynamisches Nachbarschafts-Netzwerk ohne zentrale Kontrolle ￼ ￼.
+
+Domänenmodell: Knoten, Fäden, Garne und Rollen
+
+Zentrales Element des Weltgewebes ist der Knoten – ein ortsbezogenes Informationsbündel auf der Karte ￼ ￼. Knoten können Ideen, Ereignisse, Fragen, Orte, Ressourcen etc. darstellen und sind jeweils in einer H3-Geozelle verortet (Hexagon-Gitter für effiziente räumliche Abfragen) ￼ ￼. Jeder Knoten öffnet beim Anklicken einen eigenen Raum (Fenster) für Inhalte: Hier finden sich parallele Threads, Dokumente/Medien, Termine oder Abstimmungen zum betreffenden Thema ￼.
+
+Fäden verbinden die Nutzer-Rollen (Accounts) mit den Knoten und visualisieren Aktionen oder Beziehungen ￼. Jede bewusste Nutzeraktion erzeugt automatisch einen Faden von der Garnrolle (dem Nutzer-Icon) zum betroffenen Knoten ￼ ￼. Es gibt verschiedene Fadenarten, jeweils farblich und semantisch unterschiedlich:
+
+Fadenart	Beschreibung / Auslöser	Visualisierung
+Gesprächsfaden	Beteiligung an einem Diskussionsthread	Linie (Farbe z.B. Grau)
+Gestaltungsfaden	Neuen Knoten knüpfen oder Inhalte hinzufügen	Linie (Farbe z.B. Grün)
+Änderungsfaden	Vorhandene Inhalte in einem Knoten verändern	Linie (Farbe z.B. Gelb)
+Antragsfaden	Einen formalen Antrag stellen	Orange leuchtende Linie mit Timer-Symbol ￼
+Abstimmungsfaden	Teilnahme an einer Abstimmung (Ja/Nein Stimme)	Linie (Farbe z.B. Rot/Violett)
+Goldfaden	Eine Spende ans Gemeinschaftskonto leisten	Goldfarbene Linie ￼
+Delegationsfaden	Stimme delegieren an andere Person	Gestrichelter Pfeil, grau ￼ ￼
+
+Jeder Faden verblasst nach 7 Tagen, falls er nicht in einen dauerhaften Zustand überführt wird ￼. Durch die Aktion Verzwirnung kann ein Faden oder bestimmter Inhalt jedoch in Garn umgewandelt werden – ein permanenter, fixierter Faden ￼. Garne schützen ihren Knoten vor dem Verfall: Solange ein Knoten wenigstens ein Garn (oder aktiven Faden) besitzt, bleibt er bestehen ￼. Garne werden auf der Karte sichtbar dicker dargestellt (und eventuell mit einem Symbol versehen), um die dauerhafte Bedeutung dieser Verbindung zu zeigen. Verzwirnung hat zudem zur Folge, dass der verzwirnte Inhalt gesperrt ist – nur der Verzwirner kann ihn wieder lösen; andere können ihn nicht bearbeiten ￼.
+
+Rollen (Garnrollen) repräsentieren Nutzeraccounts, jeweils an deren Wohnort auf der Karte verortet ￼ ￼. Eine Rolle erscheint als kleine Garnrolle-Markierung auf der Karte. Ist der Nutzer eingeloggt, rotiert seine Garnrolle langsam (und insbesondere 7 Sekunden lang schneller nach jeder Aktion, siehe unten) ￼ ￼. Rollen können öffentlich einsehbare Profilinformationen und einen privaten Bereich haben ￼. Die Verifizierung neuer Rollen erfolgt dezentral: Eine Verantwortlicher einer Ortsweberei bestätigt z.B. via ID-Check die Identität, bevor ein Account aktiv wird ￼.
+
+Strukturknoten sind spezielle, permanente Knoten mit systemischer Sonderfunktion ￼. Sie dienen als Ankerpunkte im Gewebe und sind immer sichtbar (verfallen nie):
+	•	Gewebekonto (goldener Knoten): Das gemeinschaftliche Konto der Ortsweberei. Hier laufen alle Goldfäden (Spenden) zusammen; Ein- und Auszahlungen sind transparent einsehbar ￼ ￼. Nutzer können am Gewebekonto Anträge auf Auszahlungen stellen, die dem gleichen 7+7 Tage Prozess unterliegen wie alle Anträge ￼.
+	•	Webrat (roter Knoten): Das Governance-Zentrum für Abstimmungen und Anträge ￼. Alle Antragsfäden führen zum Webrat, wo sie in Entscheidungsprozesse (Einspruch/Abstimmung) münden ￼ ￼. Der Webrat-Knoten stellt auch einen Delegationsmanager bereit (siehe Delegation).
+	•	Nähstübchen (blauer Knoten): Ein freier, ortsunabhängiger Chat- und Diskussionsraum ￼. Hier können die Weltweber ungezwungen plaudern oder übergeordnete Themen besprechen, ohne geografische Bindung ￼. Das Nähstübchen hat Threads wie ein Forum und dient dem sozialen Austausch.
+	•	Ron-Platzhalter (grauer Knoten): Ein spezieller Knoten, der als Sammelpunkt für anonymisierte Inhalte dient ￼. Beiträge von Nutzern, die anonymisiert wurden (über das Ron-System, s.u.), erscheinen hier unter dem neutralen Absender “Ron”. Der Ron-Knoten erlaubt, dass die inhaltliche Kontinuität erhalten bleibt, während die personenbezogenen Daten entfernt wurden ￼.
+
+Diese Strukturknoten sind integraler Bestandteil der Informationsarchitektur und immer zugänglich. Sie geben den Nutzern Orientierung für Finanzen, Governance, Kommunikation und Privatsphäre im Weltgewebe ￼.
+
+Sichtbarkeit, Zeitlichkeit und Interaktionsfeedback
+
+Das Weltgewebe kombiniert permanente Transparenz mit ephemeren Elementen, um eine lebendige, sich selbst bereinigende Dynamik zu schaffen. Wichtige zeitliche Mechanismen sind:
+	•	7-Sekunden-Rotation: Immer wenn eine Nutzerin eine Webungsaktion durchführt – sei es einen Kommentar schreiben, einen Faden spannen, einen Antrag stellen, etc. – beginnt die eigene Garnrolle 7 Sekunden lang zu rotieren ￼. Dieses kurze Aufleuchten der Aktivität ist global auf der Karte sichtbar und dient als unmittelbares Feedback für alle, dass hier jemand aktiv gewoben hat ￼. (Anstelle eines früher angedachten Leuchtens zeigt die Rotation den Online-Status an ￼.) Durch diese Animation erkennen Beobachter auch ohne Detailkenntnis, wo gerade Engagement stattfindet.
+	•	7-Tage-Fade-Out: Normale Fäden verblassen innerhalb von 7 Tagen ohne erneute Aktivität ￼. Ebenso lösen sich Knoten auf, wenn 7 Tage lang kein Faden mehr zu ihnen führt (bzw. bei Event-Knoten 7 Tage nach dem Ereignisdatum) ￼. Dieses automatisierte Verblassen dient als Aufmerksamkeitsschoner: Das Gewebe zeigt bevorzugt aktuelle, relevante Verbindungen. Inaktive Beziehungen verschwinden von selbst, sofern sie nicht per Verzwirnung als wichtig markiert wurden. Ein Knoten mit Garn bleibt unbegrenzt bestehen, bis das letzte Garn entfernt oder entzwirnt wird ￼.
+	•	84-Tage-Ron-Zyklus: Inhalte können nach 84 Tagen anonymisiert werden ￼. Dieser lange Zeithorizont des Ron-Systems balanciert Transparenz und Privatsphäre: Beiträge bleiben zunächst ca. 3 Monate lang mit ursprünglichem Namen sichtbar, um die öffentliche Diskussionshistorie intakt zu halten. Danach können sie (auf Wunsch des Nutzers oder bei dessen Ausstieg) automatisch dem Ron-Platzhalter zugeordnet werden ￼ ￼. Das bedeutet: Der Personenbezug wird entfernt, der Inhalt bleibt im Kontext erhalten (siehe unten Ron-System für Details).
+
+Zusätzlich gibt es eine Zeitleisten-Funktion: Am unteren Bildschirmrand kann man die Zeitachse tageweise zurückspulen, um vergangene „Webungen“ noch einmal anzuschauen ￼ ￼. Diese Timeline erlaubt es, den Zustand des Gewebes zu einem früheren Datum zu betrachten – praktisch eine Archivansicht – und macht die Geschichtlichkeit aller Aktionen erfahrbar, ohne die Echtzeit-Darstellung zu überfrachten.
+
+UX-Komponenten und UI-Layer (Mobile-First)
+
+Die Benutzeroberfläche ist als Vollbild-Kartenansicht realisiert, basierend auf MapLibre GL ￼. Auf dieser interaktiven Karte sind alle aktiven Rollen und Knoten sichtbar. Das UI folgt konsequent einem Mobile-First-Ansatz, was sich in Layout und Performance zeigt:
+	•	Karten-Zentralansicht: Bei Aufruf der Anwendung sieht man eine vollflächige Karte der Umgebung. Aktive Rollen erscheinen als kleine Garnrollen-Icons an ihren Wohnorten. Knoten sind als Punkte/Symbole an ihren Geo-Koordinaten sichtbar. Beim Tippen/Klicken auf einen Knoten öffnet sich ein Knoten-Fenster mit den Details und Inhalten dieses Knotens. Die Karte reagiert in Echtzeit auf neue Fäden: z.B. wenn jemand einen Antrag stellt, zieht ein orangener Faden von der Person zum Webrat-Knoten ￼.
+	•	Pull-Drawer (ausziehbare Seitenleisten): Es gibt zwei wichtige ein-/ausklappbare Seitenbereiche:
+	•	Linker Drawer – Webrat & Nähstübchen: Hier kann der/die Nutzer*in zwischen zwei Reitern wechseln ￼. Webrat: zeigt Governance-Inhalte (Liste der aktiven Anträge mit Timer, Abstimmungen, Delegationsmanagement). Nähstübchen: zeigt einen Chat/Konversationsbereich für ortsunabhängige Plaudereien. Beide Bereiche sind auf Mobilgeräten als modale Überlagerungen gestaltet (ca. 360px Breite auf Desktop) ￼. Im Webrat-Tab sind z.B. laufende Einspruchsphasen oder Abstimmungen sichtbar, inkl. Countdown und Buttons zum Einspruch oder zur Stimmabgabe.
+	•	Rechter Drawer – Filter & Ebenen: Diese Seitenleiste (ca. 300px am Desktop) enthält diverse Filtermöglichkeiten für die Kartenanzeige ￼. Nutzer können hier die Sichtbarkeit von Knotenarten (Ideen, Veranstaltungen, Schlafplätze, etc.) toggeln ￼ ￼. Ebenso lassen sich Fadenarten gezielt ein- oder ausblenden (z.B. nur Goldfäden anzeigen, alle Gesprächsfäden ausblenden) ￼. Weitere UI-Layer-Optionen:
+	•	Zeitfilter: Schnellumschaltung zwischen z.B. letzten 24 Stunden, 7 Tagen oder einem bestimmten Tages-Snapshot, um die Karte zeitlich einzuschränken ￼.
+	•	Delegationslinien: Sichtbarmachung oder Ausblendung der Delegationsfäden (gestrichelte Pfeile), falls die Visualisierung zu dicht wird ￼.
+	•	Ron-Toggle: Ein Schalter, um anonymisierte Ron-Inhalte ein- oder auszublenden ￼. So kann man bei Bedarf die Karte „entpersonalisieren“ und alle Alias-“Ron”-Beiträge ausblenden.
+	•	Governance-Marker: Filter für spezielle Marker, z.B. nur Knoten mit aktiven Anträgen hervorheben.
+	•	Mehrfachfäden-Anzeige: Option, um bei vielen identischen Fäden (gleiche Rolle ↔ Knoten) eine zusammengefasste Darstellung zu nutzen ￼ (ansonsten würden parallele Linien gezeichnet, die sich überlagern).
+	•	Obere Info-Leiste: Am oberen Rand der Karte sind zwei Elemente vorgesehen:
+	•	Top-Center Widget – Gewebekonto: Ein kleines Dashboard über dem Kartenmittelpunkt zeigt den Status des Gemeinschaftskontos ￼. Hier sieht man z.B. den aktuellen Kontostand, jüngste Bewegungen und hat Buttons für CSV/JSON-Export der Finanzdaten ￼. Ein Klick öffnet ggf. detailliertere Kontoinformationen oder die Möglichkeit, einen Antrag auf Mittelverwendung zu stellen.
+	•	Top-Right – Konto & Verifikation: Rechts oben befindet sich das Nutzerkonto-Menü ￼. Wenn eingeloggt, erscheint hier die eigene Garnrolle (ggf. mit kleinem Verifikations-Haken, wenn Peer-verifiziert) ￼. Ein Klick darauf öffnet den Profil-Drawer (Profil bearbeiten, Einstellungen, Logout). Im ausgeloggten Zustand wird ein graues Rollen-Icon mit „+“ angezeigt; ein Tipp darauf öffnet den Login/Registrierungsdialog inklusive Hinweise zur Transparenz (damit neue Nutzer die Prinzipien verstehen) ￼.
+	•	Performance und Barrierefreiheit: Die Webanwendung ist als Progressive Web App (PWA) umgesetzt, mit SvelteKit als Frontend-Framework ￼. Das initiale Bundle ist <90KB gzipped, und das Interface ist optimiert, um selbst auf einfachen Smartphones (z.B. Moto G4 mit 3G) in <2,5s interaktiv zu sein ￼. Features wie “prefers-reduced-motion” werden berücksichtigt – d.h. Animationen (z.B. die Rollen-Rotation) werden deaktiviert, wenn das OS des Nutzers reduzierte Bewegung wünscht ￼. Grundlegende Funktionen (Karte anschauen, Beiträge lesen) funktionieren auch mit deaktiviertem JavaScript, dank Progressive Enhancement.
+
+Zusammenfassend bietet das UI ein kartezentriertes, responsives Erlebnis: mobile Nutzer haben alle wichtigen Funktionen über wenige Icons/Drawer erreichbar, während Desktop-Nutzer zusätzliche Übersicht (gleichzeitige Sicht auf Karte + Drawer) nutzen können. Alle Interaktionsschritte sind sichtbar – sei es durch Animationsfeedback (Rotation), Timer-Anzeigen oder farbliche Markierungen – um die Transparenz auch auf UI-Ebene zu verankern.
+
+Governance-Prozess: Anträge, Abstimmungen und Delegation
+
+Im Weltgewebe gibt es keinen getrennten politischen Apparat – jeder Nutzerin kann überall Vorschläge einbringen. Das Governance-Modell basiert auf dem 7+7-Tage-Antragszyklus und optionaler Liquid Democracy durch Delegation.
+
+Überall-Anträge: Jeder Knoten der Karte kann zum Ausgangspunkt eines Antrags werden ￼. Praktisch bedeutet das: Nutzer können z.B. an einer Standort-Markierung für einen geplanten Gemeinschaftsgarten direkt einen Finanzierungsantrag stellen. Sobald ein Antrag erstellt wird, passiert Folgendes automatisch:
+	•	Visualisierung: Ein orangener Antragsfaden verbindet die Antragsteller-Rolle mit dem Webrat-Strukturknoten ￼. Am Webrat-Knoten erscheint ein Timer-Symbol. Im Webrat-Drawer wird der neue Antrag mitsamt Beschreibung sichtbar, inklusive eines 7-Tage-Countdowns ￼.
+	•	Einspruchsphase (Tage 0–7): Ab Einreichung läuft zunächst 7 Tage lang eine Einspruchsfrist ￼. In dieser Zeit kann jeder (jede Rolle in der betreffenden Ortsweberei) Einspruch gegen den Antrag einlegen – beispielsweise per Klick auf einen “Einspruch”-Button beim Antrag. Solange kein Einspruch erfolgt, tickt der Timer sichtbar runter.
+	•	Automatische Annahme: Verstreichen die ersten 7 Tage ohne Einspruch, gilt der Antrag am Ende von Tag 7 als angenommen ￼. Der Antragsfaden wird dann z.B. grün oder in einen Erfolgsstatus geändert, und die vorgeschlagene Maßnahme kann umgesetzt werden. (Je nach Art des Antrags könnte dies z.B. eine Auszahlung vom Gewebekonto auslösen, wenn es um eine Geldausgabe ging.)
+	•	Abstimmungsphase bei Einspruch (Tage 7–14): Legt auch nur eine Person Einspruch ein, wechselt der Antrag in die formale Abstimmung ￼. Der Timer wird verlängert um weitere 7 Tage. In dieser Abstimmungswoche können alle stimmberechtigten Rollen Ja oder Nein stimmen. Alle Stimmabgaben sind öffentlich sichtbar, inklusive ggf. eines Kommentars als Begründung ￼. Nach Ablauf der Frist (Tag 14) wird ausgezählt:
+	•	Einfache Mehrheit entscheidet den Antrag ￼ ￼. D.h. mehr Ja- als Nein-Stimmen = angenommen; bei Stimmgleichstand oder zu wenig Stimmen = abgelehnt (Status quo bleibt) ￼ ￼.
+	•	Das Ergebnis (angenommen oder abgelehnt) wird als Event festgehalten und ebenfalls als Systemaktion visualisiert (z.B. „Abstimmungsfaden“ an allen Teilnehmer-Rollen, oder Markierung am Knoten).
+	•	Transparenz: Jeder Schritt ist transparent: bereits der Antrag selbst eröffnet automatisch einen Thread zur Diskussion in dem Knoten, damit über den Vorschlag gesprochen werden kann ￼. Bei der Abstimmung sind alle abgegebenen Stimmen namentlich sichtbar. Das Ergebnis wird dokumentiert.
+
+Delegationssystem: Zur Vereinfachung der Beteiligung erlaubt das Weltgewebe Delegation von Stimmrechten im Sinne von flüssiger Demokratie (Liquid Democracy). Delegation ist optional – jede*r kann immer selbst abstimmen – aber bietet die Möglichkeit, vertrauenswürdige Personen temporär für sich abstimmen zu lassen ￼ ￼. Wichtige Aspekte des Delegationssystems:
+	•	1:1-Delegation (Phase A): In der ersten Ausbaustufe kann eine Rolle ihre Stimme an genau eine andere Rolle übertragen ￼. Diese Übertragung ist jederzeit widerrufbar. Die Delegation wird als grauer gestrichelter Pfeil (Delegationsfaden) von der delegierenden zur bevollmächtigten Rolle auf der Karte dargestellt ￼. So erkennt man visuell, wer wessen Stimme hält.
+	•	Automatisches Ablaufdatum: Jede Delegation erlischt automatisch, wenn der/die Delegierende 4 Wochen lang inaktiv ist (kein Login) ￼. Dies verhindert, dass „tote Seelen“ langfristig Stimmen weitertragen. Die Delegationslinien verschwinden entsprechend nach 4 Wochen ohne Aktion der delegierenden Person.
+	•	Überschreiben durch Eigenstimme: Wenn man trotz Delegation selbst abstimmt, hat die eigene Stimmabgabe Vorrang. D.h. die gerade aktive Stimme zählt und die Delegation für diesen Entscheid wird ignoriert (oder pausiert). Das System erlaubt also situativ, dass man bei wichtigen Abstimmungen doch persönlich eingreift, ohne die Delegation komplett aufheben zu müssen ￼ ￼.
+	•	Transitive Delegation (Phase B): In einer späteren Phase ist geplant, Delegationsketten zuzulassen (A delegiert an B, B an C, etc.), mit automatischer Cycle-Detection, sodass keine Endlosschleifen entstehen ￼ ￼. Dann kann eine Person stellvertretend für viele indirekt verbundene Personen stimmen. Im UI würde bei Rollen mit vielen empfangenen Delegationen ein Stimmgewicht-Indikator angezeigt werden (z.B. “5×” für fünf Stimmen).
+	•	Delegations-Manager: Im Webrat-Drawer gibt es ein Interface zum Verwalten von Delegationen ￼. Hier kann man eine Person aus der Mitgliederliste auswählen, an die man delegieren möchte, und bestehende Delegationen einsehen oder widerrufen. Dieses Interface zeigt auch an, wie lange eine Delegation noch aktiv ist (z.B. “läuft ab am…”).
+
+Insgesamt sorgt das Governance-Modul dafür, dass Entscheidungen dezentral, aber geordnet ablaufen. Jeder Vorschlag bekommt eine faire Chance (7 Tage), Blockaden werden durch den Fristenmechanismus minimiert, und Delegation ermöglicht flexible Beteiligungsgrade. Alle diese Prozesse sind durch Events rückverfolgbar (Antrag gestellt, Einspruch erhoben, Stimme abgegeben, etc.) und damit auch programmatisch nachvollziehbar.
+
+Ron-System: Datenschutz durch zeitversetzte Anonymisierung
+
+Um Privatsphäre im Rahmen der radikalen Transparenz zu ermöglichen, gibt es das Ron-System. Es erlaubt Nutzer*innen, ihre Beiträge nachträglich vom Klarnamen zu lösen, ohne sie aus dem Kontext der Gemeinschaft zu entfernen ￼. Kernelemente des Ron-Konzepts:
+	•	84-Tage-Schwelle: Kein Inhalt wird sofort anonymisiert. Nur Beiträge, die älter als 84 Tage sind, können auf “Ron” umgestellt werden ￼ ￼. Dieser Zeitraum wurde bewusst gewählt, um sicherzustellen, dass aktuelle Diskussionen und Entscheidungen immer alle Urheber klar ausweisen. Erst nach ~3 Monaten kann ein Beitrag als ausreichend „historisch“ gelten, um anonymisiert zu werden, ohne die laufende Kommunikation zu stören.
+	•	Ron-Option (Opt-In): Standardmäßig bleiben alle Inhalte personengebunden. Eine Nutzerin kann jedoch in den Profil-Einstellungen die Ron-Option aktivieren, um für alle eigenen Beiträge die zeitversetzte Anonymisierung einzuschalten ￼. Ist diese Option aktiv, prüft ein täglicher Hintergrundprozess alle Beiträge der Person und überträgt jene >84 Tage alten Inhalte auf den Ron-Account. Konkret passiert dabei:
+	•	Der ursprüngliche Beitrag im Event-Log bleibt unverändert (Transparenzprinzip), aber in der Live-Datenbank wird der Autor auf “Ron” geändert.
+	•	Visuell erscheinen die betreffenden Posts nun unter dem grauen Ron-Platzhalter-Knoten und die ursprüngliche Rolle verliert den Faden zu diesem Beitrag ￼.
+	•	Ron-Platzhalter übernimmt also als neuer „Besitzer“ dieser alten Inhalte. Für andere Nutzer sieht es so aus, als hätte “Ron” (eine fiktive neutrale Person) damals diesen Beitrag verfasst.
+	•	Ausstieg via Ron: Wenn jemand die Plattform verlassen möchte, kann er*sie einen Ausstiegsprozess initiieren, der die Ron-Anonymisierung aller berechtigten Inhalte einleitet. Wichtig: Es gibt keinen Sofort-Transfer aller Inhalte bei Ausstieg – v15.1 enthielt hier widersprüchliche Angaben, aber der konsolidierte Standard ist: Inhalte unter 84 Tagen bleiben zunächst namentlich sichtbar, auch wenn die Person ausgestiegen ist ￼ ￼. Die Rolle wird markiert als “exiting”, und erst nach Ablauf der 84 Tage werden die restlichen Inhalte ebenfalls zu Ron übertragen ￼. Danach wird die Nutzerrolle vollständig entfernt. Diese Verzögerung stellt sicher, dass das Transparenzprinzip nicht durch einen spontanen Ausstieg unterlaufen wird ￼. Alternativ könnte eine Community per Beschluss eine abweichende Regel (“Sofort-Ron bei Ausstieg”) einführen, doch dies erfordert spezielle Kennzeichnung im Protokoll und ist nicht Default ￼.
+	•	Darstellung und Folgen: Anonymisierte Inhalte bleiben als Teil des Weltgewebes erhalten, nur ohne Personenbezug. Der Ron-Platzhalter-Knoten zeigt an, wie viele Beiträge auf “Ron” übertragen wurden. Für die Gemeinschaft bleibt die Wissensbasis intakt, während die Privatsphäre der Ausgestiegenen gewahrt wird ￼ ￼. Ein einmal gestarteter Ron-Ausstieg ist irreversibel – dies wird den Nutzern klar kommuniziert ￼ ￼. Neue Beiträge können sie nach dem Ausstieg nicht mehr erstellen, da ihre Rolle ja entfernt wird.
+	•	Rechtliche Aspekte: Durch die 84-Tage-Frist wird auch rechtlich eine saubere Trennung erreicht – niemand kann sofort verlangen, rückwirkend alle Spuren zu tilgen, was dem Offenlegungsprinzip widersprechen würde. Stattdessen greifen Datenschutz und Recht auf Vergessenwerden in einer moderaten, Frist-gebundenen Form. Falls eine Community strengeren Datenschutz wünscht, kann sie wie erwähnt beschließen, den „Sofort-Ron“ zu aktivieren; dann müssten aber transparente Vermerke kenntlich machen, dass Beiträge nachträglich anonymisiert wurden (z.B. ein Ron-Stempel im Archiv) ￼.
+
+Zusammengefasst bietet das Ron-System einen ausbalancierten Anonymisierungs-Mechanismus: Es schützt persönliche Daten nach einer gewissen Zeit, ohne die offene Historie und Verantwortung völlig auszulöschen. Technisch wird dies durch Flaggen in den Events und spezielle Prozesse im RonManager umgesetzt (z.B. RonManager.initiateExitViaRon() setzt ein exit_complete_at Datum +84 Tage in der Zukunft und übergibt erst dann die Events an Ron) ￼.
+
+Technische Architektur: Event-Sourcing Backend und Infrastruktur
+
+Der Backend-Stack des Weltgewebes ist konsequent auf Event-Sourcing und skalierbare Echtzeit-Verarbeitung ausgerichtet. Alle Server-Komponenten sind kostenoptimiert für Hetzner ausgewählt und können stufenweise ausgebaut werden.
+
+Event-Backbone: Zentrales Herzstück ist ein NATS JetStream Server, der als Event Store fungiert ￼ ￼. Alle eintreffenden Events (z.B. AntragGestellt, EinspruchErhoben, StimmeAbgegeben, DelegationCreated, RonOptionEnabled, RoleExitViaRonInitiated etc.) werden in Streams gespeichert ￼ ￼. JetStream sorgt für Persistenz (speichert Events auf Disk) und ermöglicht Publish/Subscribe für verschiedene Dienste. Jedes Event enthält Metadaten wie eine ULID (sortierbare UUID), Zeitstempel, Signatur und den Hash des vorherigen Events im selben Aggregat ￼ ￼. Damit entsteht pro Aggregate (z.B. pro Antrag oder pro Rolle) eine manipulationssichere Ereigniskette ￼.
+
+{
+  "id": "01HZWXYZ...ABCDE",                // ULID des Events
+  "type": "AntragGestellt",
+  "aggregateId": "antrag-550e8400-e29b-41d4-a716-446655440000",
+  "ts": "2025-08-23T00:00:00.000Z",
+  "signature": "ed25519:cafebabe...",
+  "prevHash": "sha256:deadbeef...",
+  "payload": {
+    "antragId": "antrag-550e8400-e29b-41d4-a716-446655440000",
+    "title": "Gemeinschaftsgarten erweitern",
+    "authorRole": "rolle-1234-5678-90AB-CDEF...",
+    "location": "knoten-9XYZ...1234", 
+    "phase": "einspruch"
+  }
+}
+
+Beispiel eines Events – hier ein AntragGestellt-Event mit wichtigem Inhalt. Jedes Event wird ed25519-signiert, entweder vom Client (Benutzeraktion) oder vom Server (Systemevent), um die Authentizität sicherzustellen ￼ ￼. Kritische Operationen wie das Verzwirnen erfordern eventuell eine 2-von-N Peer-Bestätigung, d.h. zwei unabhängige Serverinstanzen müssen übereinstimmen, um das Event zu akzeptieren ￼. Dies erhöht die byzantinische Fehlertoleranz (Angriffe oder fehlerhafte Knoten werden erkannt/isoliert).
+
+Verarbeitung und Projektion: Über dem Event Store liegen verschiedene Services. Ein Command Handler (z.B. via Fastify API) nimmt Nutzeraktionen entgegen, validiert sie (z.B. mittels Zod-Schemas) und konvertiert sie in Events ￼. Die Events werden dann in Projektionsdatenbanken übertragen: Hauptsächlich eine PostgreSQL mit PostGIS für Geodaten sowie ein Redis Cache für schnelle Abfragen ￼ ￼. Die PostgreSQL-DB speichert Normalized Tables (z.B. Knoten, Rollen, Fäden, Anträge etc.) und nutzt PostGIS für Geo-Queries (Entfernungen, Punkt-in-H3-Zelle) ￼ ￼. Redis dient als Speed-Layer für z.B. aktuelle aktive Fäden und zur Session-Verwaltung ￼. Eine Besonderheit ist der hybride Indexierungsansatz: Live-Daten (die Karte und aktuellen Threads) werden nicht von öffentlichen Suchmaschinen indexiert (via meta noindex), aber monatliche Archive der Events können öffentlich durchsuchbar gemacht werden ￼ ￼. So bleibt die Transparenz global gewährleistet, ohne dass Live-Diskussionen sofort weltöffentlich in Suchergebnissen auftauchen.
+
+System-Komponenten und Deployment: Die Anwendung ist in SvelteKit (Frontend) und Node.js (Backend) geschrieben. Das Backend (Fastify Server) stellt REST/gRPC APIs bereit und kommuniziert intern über den Event-Bus. Für Hintergrund-Jobs (Timer, Ron-Überprüfung, Delegation-Expiry) wird BullMQ oder ein Cron-Dienst genutzt ￼. Logging/Monitoring läuft über Netdata oder Prometheus/Grafana, mit definierten Alerts (z.B. wenn ein Cron ausfällt, Speicher knapp wird, o.ä.) ￼ ￼.
+
+Die Infrastruktur ist in Phasen gedacht, um mit minimalen Kosten zu starten und dann zu skalieren ￼:
+	•	Phase A: Single-Server Deployment – Alles läuft auf einem einzigen Hetzner CX22 Cloud-Server (vCPU, 8GB RAM beispielsweise) ￼. Darauf laufen: NATS JetStream, PostgreSQL + PostGIS, Redis, und die Node/SvelteKit-App ￼. Backups werden auf einem separaten Storage (z.B. Hetzner Storage Box oder S3 kompatibler Storage) gesichert. Dieses Setup reicht für den Pilotbetrieb (Ziel: <€200/Monat Kosten) und vermeidet unnötige verteilte Komplexität.
+	•	Phase B: Gesteigerte Last, gleiche Region – Komponenten werden auf mehrere spezialisierte Instanzen verteilt: z.B. ein dedizierter CPX31 für den API-Server (Fastify), zwei CX32 VMs als Worker Nodes für intensivere Aufgaben und Redundanz, plus ein Load Balancer (LB11) vorneweg ￼ ￼. NATS kann als zentrales Backbone bleiben, evtl. mit Leafnodes falls nötig (für Föderation oder regionale Replikation) ￼. Diese Phase zielt auf <€400/Monat und erlaubt deutlich mehr aktive Nutzer.
+	•	Phase C: Dezentrale Skalierung – Betrieb über mehrere Rechenzentren (z.B. Hetzner Nürnberg + Helsinki) für Ausfallsicherheit ￼. Einsatz von Kubernetes oder Nomad zur Orchestrierung eines Clusters von API- und Worker-Services. Ein CDN verteilt statische Assets global, und NATS Leafnodes verbinden regionale Deployments, so dass evtl. verschiedene Ortswebereien lokal bedient werden können, aber global dennoch ein Myzel entsteht ￼. Diese Phase wird community-finanziert sein und ermöglicht weltweite Skalierung des Systems.
+
+Alle Phasen gemeinsam achten auf Observability: Metriken wie Kosten pro 1000 Events, API Latenzen (Ziel P95 <300ms), Datenbank-Latenzen (P95 <150ms) etc. werden erfasst ￼. Health-Checks und Alerts (z.B. „Governance Timer Backlog > 0“ oder „Kosten > Budget“) sind eingerichtet, damit das kleine Ops-Team schnell reagieren kann ￼ ￼.
+
+Datenmodell und Persistenz
+
+Im relationalen Kern-Datenmodell finden sich die wichtigsten Entitäten als Tabellen wieder, jeweils in Beziehung zu den Events:
+	•	rollen – Nutzeraccounts (RolleID, Name, Wohnort-Koordinaten H3, Status/aktiv, verifiziert? etc.)
+	•	knoten – Knoten (KnotenID, Typ, H3-Location, Titel, Beschreibung, ErstellerID, erstellt_am, entzwirnt_am, etc.)
+	•	faeden – Fäden (FadenID, Typ, von_Rolle → zu_Knoten, erstellt_am, verzwirnt_flag, verblasst_am, etc.)
+	•	antraege – Anträge (AntragID, gestellt_von (RolleID), knotenID (wo gestellt), Titel, Beschreibung, Status=Einspruchphase/Abstimmungsphase/Angenommen/Abgelehnt, gestellt_am, angenommen_abgelehnt_am, etc.)
+	•	einsprueche – Einspruch-Events (EinspruchID, AntragID, RolleID, zeitpunkt)
+	•	abstimmungen – Stimmabgaben (StimmeID, AntragID, RolleID, Entscheidung (Ja/Nein), zeitpunkt)
+	•	delegationen – Delegationsbeziehungen (DelegationID, von_Rolle, an_Rolle, erstellt_am, widerrufen_am, laeuft_ab_am)
+	•	ron_transfers – Ron-Übertragungen (TransferID, RollenID (die anonymisiert), EventIDs/Bereich, transfer_am)
+	•	governance_timers – Timer-Verwaltung (TimerID, Bezug (AntragID etc), typ (Einspruch/Abstimmung), start_am, ende_am, status)
+	•	events – Event-Tabelle (EventID, AggregatID, Event-Typ, Timestamp, Payload JSON, Metadata JSON, Signature, PrevHash, etc.) ￼ ￼.
+
+Wichtige Indizes im DB-Schema optimieren die Abfragen: z.B. Index auf faeden(verblasst_am) um schnell abgelaufene Fäden zu finden und zu entfernen; Index auf delegationen(laeuft_ab_am) für die täglichen Delegations-Expiry-Jobs; Index auf knoten(geolocation_h3) für Umkreis-Suchen; und auf events(aggregateId, id) für schnelle Event-Ketten-Abfragen ￼.
+
+Das Geo-Layout mit H3-Zellen ermöglicht es, die Karte in Zellen aufzuteilen. Jeder Knoten und jede Rolle hat eine H3-Zelle gespeichert ￼. Dadurch kann man z.B. „alle Knoten in Nachbarzellen von Zelle X“ effizient auswählen, was das Clustering von Markern auf der Karte und das Filtern nach Nähe vereinfacht.
+
+Beispiel: Delegations-Logik in SQL (vereinfachter Auszug)
+
+-- Finde alle aktuell gültigen Delegationen inklusive abgeleiteter Delegationsempfänger
+WITH RECURSIVE dg_chain AS (
+  SELECT von_rolle, an_rolle, laeuft_ab_am 
+  FROM delegationen 
+  WHERE widerrufen_am IS NULL AND CURRENT_DATE < laeuft_ab_am
+  UNION
+  SELECT dg.von_rolle, d2.an_rolle, d2.laeuft_ab_am
+  FROM dg_chain dg JOIN delegationen d2 ON dg.an_rolle = d2.von_rolle
+  WHERE d2.widerrufen_am IS NULL AND CURRENT_DATE < d2.laeuft_ab_am
+)
+SELECT von_rolle, an_rolle 
+FROM dg_chain;
+
+Im obigen (Pseudo-)SQL wird eine rekursive CTE genutzt, um transitive Delegationen zu ermitteln. So eine Query könnte im Delegationsmanager eingesetzt werden, um Zyklen zu erkennen oder um das effektive Stimmgewicht je Rolle anzuzeigen. (In Phase A, wo keine Weiterdelegation erlaubt ist, wäre dies trivialer – man würde nur direkte Delegationen betrachten.)
+
+Fazit
+
+Diese technische Blaupause des Weltgewebes v15.1+ vereint die konzeptuellen Visionen mit konkreten Umsetzungsdetails. Knoten, Fäden und Garne bilden das Grundgerüst der Datenstruktur und Visualisierung ￼, während Strukturknoten für Finanzverwaltung, Governance, Chat und Anonymität besondere Eckpfeiler setzen ￼. Die User Experience ist konsequent kartenbasiert, mobile-first und ermöglicht es den Nutzern, durch Filter und Layer ihre Sicht auf das Gewebe anzupassen ￼. Im Governance-Modul stellen Überall-Anträge und der 7+7-Tage-Prozess sicher, dass Entscheidungen effizient, aber demokratisch gefällt werden ￼. Delegation und Event-Sourcing sorgen dafür, dass das System sowohl menschlich flexibel als auch technisch revisionssicher bleibt ￼ ￼. Schließlich garantiert das Ron-System einen pragmatischen Weg, Privatsphäre herzustellen, ohne die Transparenzgrundlagen zu verlassen ￼ ￼.
+
+Mit dieser Blaupause können Entwickler:innen die interne Weiterentwicklung der Weltweberei gezielt vorantreiben – von der Datenbank bis zur Benutzeroberfläche sind alle Komponenten klar umrissen und integriert. Die Architektur ist bereit für einen Probe-Launch auf Hetzner (Phase A) und kann mit wachsender Community skaliert werden ￼. Alle Design-Entscheidungen folgen dem Leitmotiv der Weltweberei: ein sichtbares, gemeinschaftlich gewebtes Netzwerk aufzubauen, das technisch robust und gemeinschaftsgetragen zugleich ist. ￼ ￼

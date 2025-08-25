@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Karte</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    html, body, #map {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Wirkt direkt auf das Markerbild von Leaflet */
+    .leaflet-marker-icon {
+      transform: rotate(-18deg) scale(0.75);   /* Retro-Kippung + Verkleinerung */
+      transform-origin: 50% 95%;               /* Nadelspitze bleibt als Anker */
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    console.log("JS Log: Script starts.");
+    if (window.python && window.python.call) {
+      window.python.call('log', "Script starts, window.python.call is available.");
+    }
+
+    var map = L.map('map').setView([53.57, 10.07], 7);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap', maxZoom: 19
+    }).addTo(map);
+
+    // 🧷 Realistisches Stecknadel-Icon
+    var pinIcon = L.icon({
+      iconUrl: 'pin.png',         // Achtung: pin.png muss im gleichen Ordner liegen!
+      iconSize: [40, 60],
+      iconAnchor: [20, 58],       // Spitze fast ganz unten
+    });
+
+    var marker = L.marker([53.57, 10.07], {
+      draggable: true,
+      icon: pinIcon
+    }).addTo(map);
+
+    marker.on('dragend', function(e) {
+      var newPos = marker.getLatLng();
+      console.log("JS Log: Dragend event triggered. Lat: " + newPos.lat + ", Lng: " + newPos.lng);
+      if (window.python && window.python.call) {
+        window.python.call('log', "Dragend event. Lat: " + newPos.lat + ", Lng: " + newPos.lng);
+        window.python.call('markerDragged', newPos.lat, newPos.lng);
+      }
+    });
+
+    function setMarker(lat, lon) {
+      marker.setLatLng([lat, lon]);
+      map.setView([lat, lon], 14);
+      console.log("JS Log: setMarker called. Lat: " + lat + ", Lng: " + lon);
+      if (window.python && window.python.call) {
+        window.python.call('log', "setMarker called. Lat: " + lat + ", Lng: " + lon);
+      }
+    }
+
+    function getMarkerPos() {
+      var pos = marker.getLatLng();
+      console.log("JS Log: getMarkerPos called. Current Pos: " + pos.lat + ", " + pos.lng);
+      if (window.python && window.python.call) {
+        window.python.call('log', "getMarkerPos called. Current Pos: " + pos.lat + ", " + pos.lng);
+      }
+      return JSON.stringify([pos.lat, pos.lng]);
+    }
+
+    window.setMarker = setMarker;
+    window.getMarkerPos = getMarkerPos;
+    window._rolle_marker = marker;
+
+    console.log("JS Log: Script ends.");
+    if (window.python && window.python.call) {
+      window.python.call('log', "Script ends.");
+    }
+  </script>
+</body>
+</html>

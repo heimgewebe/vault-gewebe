@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://weltgewebe.net/schemas/event.json",
+  "title": "Event",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "ts",
+    "actor",
+    "payload",
+    "sig"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Event-ID (UUID v7)"
+    },
+    "type": {
+      "type": "string",
+      "description": "Event-Typ, z. B. KnotenErstellt, FadenGezogen"
+    },
+    "ts": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Zeitstempel (UTC)"
+    },
+    "actor": {
+      "type": "string",
+      "description": "Akteur (Garnrolle-ID oder System)"
+    },
+    "payload": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "prev": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Hash des Vorg\u00e4ngerevents (Hash-Kette)"
+    },
+    "sig": {
+      "type": "string",
+      "description": "ed25519-Signatur \u00fcber (id|type|ts|actor|payload|prev)"
+    }
+  },
+  "additionalProperties": false
+}

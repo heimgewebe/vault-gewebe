@@ -1,0 +1,19 @@
+{
+	"nodes":[
+		{"id":"epoche0","type":"text","text":"Machtachsen-Karte – Politik & Interessen","x":0,"y":0,"width":400,"height":80,"color":"1"},
+		{"id":"athen","type":"text","text":"Athen (5.–4. Jh. v. Chr.)\nLeitinteresse: Bürgerherrschaft, Seehandel\nKapital:3 | Gewalt:3 | Daten:2 | Narrativ:4 | Recht:3\nGegenkraft: Oligoi","x":0,"y":200,"width":350,"height":150,"color":"3"},
+		{"id":"rom","type":"text","text":"Rom (Republik/Frühkaiserzeit)\nLeitinteresse: Expansion, Patronage\nKapital:4 | Gewalt:5 | Daten:2 | Narrativ:3 | Recht:3\nGegenkraft: Volkstribunate","x":400,"y":200,"width":350,"height":150,"color":"3"},
+		{"id":"mittelalter","type":"text","text":"Mittelalter (Europa)\nLeitinteresse: Feudale Rente, Seelenheil\nKapital:2 | Gewalt:4 | Daten:3 | Narrativ:5 | Recht:2\nGegenkraft: Städte/Handel","x":800,"y":200,"width":350,"height":150,"color":"3"},
+		{"id":"fruehmoderne","type":"text","text":"Frühmoderne/Staatsraison\nLeitinteresse: Machterhalt Fürst\nKapital:3 | Gewalt:4 | Daten:3 | Narrativ:3 | Recht:3\nGegenkraft: Republiken/Stände","x":1200,"y":200,"width":350,"height":150,"color":"3"},
+		{"id":"industrie","type":"text","text":"Industrialisierung (19. Jh.)\nLeitinteresse: Rendite, Ordnung\nKapital:5 | Gewalt:3 | Daten:3 | Narrativ:3 | Recht:3\nGegenkraft: Arbeiterbewegung","x":1600,"y":200,"width":350,"height":150,"color":"3"},
+		{"id":"20jh","type":"text","text":"20. Jh. (Massenstaat/Blocksystem)\nLeitinteresse: Konzern–Militär–Exekutive\nKapital:4 | Gewalt:5 | Daten:3 | Narrativ:4 | Recht:3\nGegenkraft: Gewerkschaften, antikoloniale Bewegungen","x":2000,"y":200,"width":350,"height":150,"color":"3"},
+		{"id":"globalisierung","type":"text","text":"Globalisierung/Neoliberalismus\nLeitinteresse: Kapitalmobilität, Verschuldung\nKapital:5 | Gewalt:3 | Daten:3 | Narrativ:4 | Recht:3\nGegenkraft: Soziale Sicherung, Souveränität","x":2400,"y":200,"width":350,"height":150,"color":"3"},
+		{"id":"gegenwart","type":"text","text":"Gegenwart (Plattform-/Datenmacht)\nLeitinteresse: Datenextraktion, Verhaltenssteuerung\nKapital:4 | Gewalt:3 | Daten:5 | Narrativ:4 | Recht:3\nGegenkraft: Kartellrecht, Grundrechte","x":2800,"y":200,"width":350,"height":150,"color":"3"},
+		{"id":"diagnose","type":"text","text":"Diagnoseraster: Cui bono?\n1) Knappheit benennen\n2) Gewinner/Verlierer\n3) Achsen-Mapping\n4) Narrativ vs. Mechanik\n5) Rechtsökologie\n6) Lock-in/Exit\n7) Externalitäten\n8) Vergleichsraum\n\n⚠ Rote Flaggen:\n- Pathos statt Zahlen\n- Alternativlos-Rhetorik\n- Geheimklauseln\n- Unklare Datenflüsse","x":0,"y":500,"width":600,"height":400,"color":"2"}
+	],
+	"edges":[],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

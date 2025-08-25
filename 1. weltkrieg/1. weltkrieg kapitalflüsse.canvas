@@ -1,0 +1,21 @@
+{
+	"type":"canvas",
+	"nodes":[
+		{"id":"kapital","type":"text","text":"I. Kapitalflüsse 💰","x":-400,"y":-160,"width":220,"height":60},
+		{"id":"kapital_detail","type":"text","text":"- Kriegsanleihen: Deutschland (inländisch), Frankreich (USA+GB), Morgan als Finanzagent\n- Golddeckung = Vorwand, faktisch aufgehoben\n- Bankenverflechtungen: Rothschild ↔ Morgan ↔ City of London\n- Profiteure: Rüstung, Rohstoffe, Versicherungen","x":-400,"y":-100,"width":359,"height":309},
+		{"id":"ideologie","type":"text","text":"II. Ideologie 🧱","x":400,"y":-160,"width":169,"height":60},
+		{"id":"ideologie_detail","type":"text","text":"- Feindbilder: „Hunnen“ vs. „Barbaren“\n- Patriotismus durch Anleihewerbung\n- Kulturindustrie: Opfer, Heldentod, Reinigungsritual\n- Schule und Literatur militarisiert","x":400,"y":-100,"width":361,"height":156},
+		{"id":"gewinner","type":"text","text":"III. Strukturgewinner 🏛️","x":-400,"y":249,"width":238,"height":60},
+		{"id":"gewinner_detail","type":"text","text":"- Finanzeliten: Morgan, Rothschild, Barings, Banque de France\n- Staaten: USA wird Kredithalter, Dollar steigt auf\n- Versailles: Reparationen → neue Profitzyklen","x":-505,"y":308,"width":378,"height":229},
+		{"id":"symbole","type":"text","text":"IV. Subtextsymbole 🕯️","x":400,"y":240,"width":236,"height":60},
+		{"id":"symbole_detail","type":"text","text":"- Kriegsanleihe = Taufschein des Systems\n- Gold = ideologischer Schleier\n- Morgan = Architekt\n- Rothschild = Projektionsfläche & Strukturmotor\n- Krieg = Initiationsritual der Moderne","x":400,"y":300,"width":404,"height":189},
+		{"id":"kipppunkt","type":"text","text":"∴KipppunkteΣ","x":0,"y":440,"width":162,"height":60},
+		{"id":"kipppunkt_detail","type":"text","text":"- Feindbild ≠ Kapitalnetzwerk\n- Heldentod ↔ Renditelogik\n- Demokratie-Rhetorik ↔ Oligarchische Realität","x":0,"y":500,"width":286,"height":135},
+		{"id":"essenz","type":"text","text":"∴Essenz.kernΣ:\nDer Krieg war nicht der Bruch einer Ordnung – sondern die geheime Einlösung ihrer innersten Logik.","x":65,"y":61,"width":230,"height":183}
+	],
+	"edges":[],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

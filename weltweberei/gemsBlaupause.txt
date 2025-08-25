@@ -1,0 +1,319 @@
+Vereinte Blaupause Weltgewebe v15.1
+1. Leitplanken & Prinzipien
+Dieses Dokument definiert die konsolidierte Blaupause für das Projekt Weltgewebe in der Version 15.1. Es dient als maßgebliche Referenz für die Konzeption, Entwicklung und den Betrieb der Plattform. Die hier dargelegten Prinzipien sind die unverhandelbare Grundlage des Systems und leiten alle nachfolgenden architektonischen und funktionalen Entscheidungen.
+Philosophische und Technische Grundpfeiler
+Die Architektur und der soziale Vertrag des Weltgewebes ruhen auf einer Reihe von fundamentalen Leitplanken, die in ihrer Gesamtheit ein System für ko-konstruktive, transparente und dezentrale Gemeinschaften schaffen.
+Alles ist Event
+Das grundlegendste technische Prinzip des Weltgewebes ist, dass jede Zustandsänderung im System das Ergebnis eines aufgezeichneten Ereignisses ist. Das System ist als ein unveränderlicher, nur anfügbarer Ereignisstrom (Append-only Event Log) konzipiert. Diese Architektur stellt sicher, dass eine vollständige, überprüfbare und wiederholbare Historie aller Aktionen existiert. Jede logische Entität, wie die Rolle eines Nutzers, ein Antrag oder eine Delegation – im Folgenden als Aggregat bezeichnet – unterhält eine eigene Hash-Kette. Jedes neue Ereignis innerhalb dieses Aggregats enthält den Hash des vorherigen Ereignisses, was eine kryptografisch gesicherte, byzantinisch-tolerante Konsistenz gewährleistet und Manipulationen an der Historie nachweisbar macht.
+Die Entscheidung für Event Sourcing ist nicht nur eine technische, sondern eine philosophische. In einem System, das auf radikaler Transparenz und nachvollziehbarer Governance beruht, ist ein unbestreitbarer Audit-Trail keine Option, sondern eine Notwendigkeit. Ein traditionelles Datenbanksystem, das nur den aktuellen Zustand speichert, könnte diese Garantie nicht bieten. Der Ereignisstrom ist die Wahrheit des Systems; der sichtbare Zustand ist lediglich eine Projektion dieser Wahrheit zu einem bestimmten Zeitpunkt.
+Radikale Sichtbarkeit
+Die Teilnahme am Weltgewebe ist ein bewusster und informierter Akt der Zustimmung zu dauerhafter und öffentlicher Transparenz aller eigenen Handlungen innerhalb des Systems. Dieses Prinzip der radikalen Sichtbarkeit bildet das Fundament des Vertrauensmodells. Es gibt keine privaten Nachrichten, keine versteckten Gruppen und keine nicht-öffentlichen Aktionen. Jede Interaktion, von der Erstellung eines Knotens über die Teilnahme an einer Diskussion bis hin zur Stimmabgabe, wird Teil des öffentlichen, permanenten Gewebes. Die einzige Ausnahme von der direkten personengebundenen Sichtbarkeit ist das Ron-System, das eine zeitversetzte Anonymisierung nach 84 Tagen ermöglicht, jedoch nicht die Sichtbarkeit der Aktion selbst aufhebt.
+Dieses Prinzip hat weitreichende Konsequenzen für die Systemarchitektur. Es eliminiert eine ganze Klasse von Komplexität, die mit der Verwaltung von Berechtigungen, Zugriffskontrolllisten (ACLs) und privaten Datenzuständen verbunden ist. Ein System ohne diese komplexen Schichten hat weniger Fehlerquellen, ist einfacher zu verstehen, zu debuggen und zu betreiben. Die philosophische Entscheidung für radikale Sichtbarkeit ist somit eine direkte technische Voraussetzung für die Erreichbarkeit des Prinzips der "Small-Team-Ops".
+Freiwilligkeit
+Niemand wird zur Teilnahme am Weltgewebe gezwungen oder gedrängt. Der Beitritt ist eine vollständig freiwillige Entscheidung, die auf einer umfassenden Aufklärung über die Funktionsweise und die Konsequenzen der Teilnahme beruht. Vor der Registrierung werden potenzielle Mitglieder explizit über das Prinzip der radikalen Sichtbarkeit, die Unveränderlichkeit des Ereignisprotokolls und die Funktionsweise des Ron-Anonymisierungssystems informiert. Die Zustimmung zu diesen Bedingungen ist eine zwingende Voraussetzung für die Teilnahme.
+Small-Team-Ops
+Das System ist von Grund auf so konzipiert, dass es von einem sehr kleinen Team von ein bis zwei Personen betrieben und gewartet werden kann. Dieses Ziel wird durch mehrere strategische Entscheidungen erreicht:
+ * Architektonische Simplizität: Wie oben erwähnt, reduziert das Prinzip der radikalen Sichtbarkeit die systemische Komplexität erheblich.
+ * Automatisierung: Kritische Prozesse wie die Governance-Timer, die Delegationswartung und die Ron-Transfers werden durch automatisierte Hintergrund-Jobs (Cron-Jobs) gesteuert.
+ * Standardisierung: Der Betrieb stützt sich auf standardisierte Health-Checks (/health/live, /health/ready) und automatisierte Runbooks für Wiederherstellungsszenarien.
+ * Geringe Wiederherstellungszeit (MTTR): Das Ziel für die Mean Time To Recovery (MTTR) liegt bei unter 15 Minuten, was durch die Kombination aus einfacher Architektur und automatisierten Prozessen realisierbar ist.
+Hetzner-optimiert
+Die technische Architektur ist explizit auf maximale Kosteneffizienz und Performance auf der Hetzner Cloud-Plattform ausgerichtet. Dies ist keine bloße Präferenz für einen Anbieter, sondern eine strategische Entscheidung mit mehreren Vorteilen:
+ * Kosteneffizienz: Durch die gezielte Optimierung auf die spezifischen Produkte und Preismodelle von Hetzner können die Betriebskosten minimiert werden. Für die Startphase (Phase A) wird ein klares Kostenziel von unter 200 EUR pro Monat bei vollem Funktionsumfang angestrebt. Die Effizienz wird zudem über eine Key Performance Indicator (KPI) wie die Kosten pro 1.000 Ereignisse (< 0.01 EUR) gemessen.
+ * Datensouveränität und DSGVO-Konformität: Die Wahl eines deutschen/europäischen Anbieters wie Hetzner stellt sicher, dass alle Daten innerhalb der EU verbleiben. Dies vereinfacht die Einhaltung der Datenschutz-Grundverordnung (DSGVO) erheblich, da komplexe internationale Datentransferabkommen vermieden werden. Die technische Entscheidung für Hetzner löst somit proaktiv eine wesentliche rechtliche und operationelle Herausforderung.
+2. Domänenmodell: Knoten, Fäden, Garn, Strukturknoten
+Das Domänenmodell des Weltgewebes beschreibt die fundamentalen Entitäten, aus denen die digitale und soziale Landschaft der Plattform aufgebaut ist. Diese Entitäten und ihre Beziehungen zueinander bilden die "Grammatik" des Systems und spiegeln die Metapher des Webens wider.
+Kernentitäten des Gewebes
+Knoten
+Ein Knoten ist ein an einem geografischen Ort verankerter Container für Informationen, Diskussionen und Interaktionen. Technisch wird seine Position über eine H3-Zelle definiert, was effiziente räumliche Abfragen ermöglicht. Knoten sind die primären Orte des Geschehens auf der Karte und können vielfältige Zwecke erfüllen, beispielsweise :
+ * Veranstaltungen: Konzerte, Treffen, Märkte.
+ * Ideen: Vorschläge, die zur Diskussion gestellt werden.
+ * Orte: Gemeinschaftsgärten, Werkstätten, öffentliche Einrichtungen.
+ * Ressourcen: Teilbare Werkzeuge, Schlafplätze, Fahrzeuge.
+Standardmäßig sind Knoten ephemer. Sie beginnen zu verfallen, wenn der letzte Faden oder das letzte Garn, das mit ihnen verbunden ist, entfernt wird oder verblasst.
+Fäden
+Ein Faden ist die sichtbare Repräsentation einer einzelnen, absichtsvollen Aktion eines Nutzers. Jede signifikante Interaktion – wie das Erstellen eines Knotens, das Schreiben eines Kommentars, das Stellen eines Antrags oder eine Spende – erzeugt einen Faden, der von der "Garnrolle" (dem Avatar des Nutzers) zum Zielknoten führt. Fäden sind nach ihrem Zweck farblich kodiert, um die Art der Interaktion auf der Karte sofort erkennbar zu machen. Zu den Fadentypen gehören unter anderem:
+ * Gesprächsfaden: Teilnahme an einer Diskussion.
+ * Gestaltungsfaden: Erstellen oder Bearbeiten von Inhalten eines Knotens.
+ * Antragsfaden: Ein offizieller Governance-Vorschlag (orange leuchtend).
+ * Goldfaden: Eine finanzielle Spende an das Gewebekonto (goldfarben).
+ * Delegationsfaden: Die Übertragung des eigenen Stimmgewichts (grau gestrichelt).
+Fäden sind von Natur aus vergänglich und unterliegen dem 7-Tage-Verfall.
+Garn
+Garn ist ein permanenter Faden. Es entsteht durch eine explizite Aktion des "Verzwirnens" (verzwirnen), die eine breitere Zustimmung erfordert (z.B. eine 2-von-N Peer-Bestätigung). Ein Garn signalisiert, dass die Community den verbundenen Knoten oder dessen spezifischen Inhalt als wertvoll und erhaltenswert erachtet. Garn schützt einen Knoten und dessen verzwirnte Inhalte vor dem 7-tägigen Verfall. Solange auch nur ein Garn mit einem Knoten verbunden ist, bleibt dieser permanent bestehen.
+Dieses Faden/Garn-System ist mehr als nur eine Visualisierung; es ist ein dezentraler, gamifizierter Kurations- und Moderationsmechanismus. Anstatt dass Administratoren von oben herab entscheiden, welche Inhalte wichtig sind, bestimmt die kollektive Aufmerksamkeit und der explizite Konsens der Gemeinschaft (der Akt des Verzwirnens) über die Dauerhaftigkeit von Informationen. Dies ist eine direkte Implementierung des "ko-konstruktiven" Prinzips, bei dem die Gemeinschaft ihre eigene Informationslandschaft formt und pflegt.
+Strukturknoten
+Strukturknoten sind vier einzigartige, permanente und nicht verfallende Ankerpunkte auf der Karte. Sie sind als Singletons implementiert und dienen als zentrale Anlaufstellen für die Kernfunktionen des Systems.
+ * Gewebekonto (Gold): Das Finanzzentrum der Gemeinschaft. Alle Goldfäden (Spenden) enden hier. Der Knoten bietet eine transparente Echtzeit-Ansicht aller Einnahmen und Ausgaben.
+ * Webrat (Rot): Der Governance-Hub. Alle Antragsfäden führen zu diesem Knoten, wo sie für die Gemeinschaft sichtbar gemacht und verwaltet werden. Er visualisiert laufende Timer für Anträge und Abstimmungen.
+ * Nähstübchen (Blau): Ein ortsunabhängiger Raum für allgemeine, nicht an einen spezifischen geografischen Knoten gebundene Diskussionen und sozialen Austausch.
+ * Ron-Platzhalter (Grau): Der symbolische "Nutzer" und Sammelpunkt für alle Inhalte, die durch das Ron-System nach 84 Tagen anonymisiert wurden. Er gewährleistet, dass das Wissen erhalten bleibt, während die Verbindung zur ursprünglichen Person getrennt wird.
+Diese vier Strukturknoten geben dem ansonsten dynamischen und sich ständig verändernden Gewebe eine feste, verlässliche Struktur und Orientierung.
+3. Sichtbarkeit & Zeitlichkeit
+Die Dynamik des Weltgewebes wird maßgeblich durch drei zeitliche Rhythmen bestimmt. Diese Regeln steuern die Sichtbarkeit von Aktionen, den Lebenszyklus von Informationen und den Übergang von persönlicher zu anonymer Autorschaft. Sie sind keine willkürlichen Werte, sondern ein bewusst gestaltetes System zur Verwaltung von Aufmerksamkeit, Relevanz und Datenschutz in einer radikal transparenten Umgebung.
+Die drei Rhythmen des Systems
+7-Sekunden-Rotation: Der Puls der Gegenwart
+Nach jeder "Webungsaktion" – sei es das Spinnen eines Fadens, das Verzwirnen zu Garn, das Stellen eines Antrags oder eine Spende – führt die Garnrolle des agierenden Nutzers eine für alle im System sichtbare, 7-sekündige Drehung aus. Diese Rotation dient als unmittelbares, ambiente visuelles Feedback. Sie signalisiert systemweite Aktivität und schafft ein Gefühl eines lebendigen, atmenden Raumes, in dem Aktionen in Echtzeit stattfinden. Sie hebt hervor, was genau jetzt geschieht, und lenkt die Aufmerksamkeit auf den unmittelbaren Moment der Interaktion. Für den ausführenden Nutzer dient sie zudem als Bestätigung, dass seine Aktion erfolgreich im Netzwerk propagiert wurde.
+7-Tage-Fade: Der Filter der Relevanz
+Das Prinzip des 7-Tage-Verfalls (Fade) ist der natürliche "Vergessensmechanismus" des Systems. Unverzwirnte Fäden verblassen über einen Zeitraum von sieben Tagen visuell, bevor sie archiviert und von der aktiven Karte entfernt werden. Knoten, die nur noch von verblassenden Fäden gehalten werden, lösen sich ebenfalls auf, sobald der letzte Faden verschwunden ist. Dieser Mechanismus erfüllt eine entscheidende kuratorische Funktion: Er sorgt dafür, dass die Karte nicht mit veralteten oder irrelevanten Informationen überladen wird. Inhalte, die nicht genügend gemeinschaftliches Interesse oder Zustimmung finden, um zu permanentem Garn verzwirnt zu werden, treten auf natürliche Weise in den Hintergrund. Dies hält den Fokus auf aktuellen und für die Gemeinschaft relevanten Themen. Der 7-Tage-Rhythmus definiert somit den Horizont des mittelfristig Relevanten.
+84-Tage-Ron: Der Weg zur Anonymität
+Die 84-Tage-Schwelle ist die Grundlage des Ron-Anonymisierungssystems. Nutzer können sich per Opt-in dafür entscheiden, dass ihre Beiträge, die älter als 84 Tage (ca. 12 Wochen) sind, automatisch von ihrer persönlichen Rolle entkoppelt und dem neutralen Ron-Platzhalter zugeschrieben werden. Dieses Prinzip adressiert den Lebenszyklus von Informationen im Langzeitkontext. Es erkennt an, dass die permanente, namentliche Verknüpfung mit lange zurückliegenden Aussagen oder Aktionen eine soziale Belastung darstellen kann. Das Ron-System bietet einen Weg des "prinzipiengeleiteten Vergessens" – nicht durch Löschung, die dem gemeinschaftlichen Wissensschatz schaden würde, sondern durch Dissoziation. Die 84-Tage-Frist schafft eine Balance zwischen der für die Governance notwendigen kurz- und mittelfristigen Zurechenbarkeit und dem langfristigen Schutz der Privatsphäre des Einzelnen.
+Zusammengenommen bilden diese drei Zeitmechanismen eine ausgeklügelte, mehrschichtige Informationsarchitektur. Sie steuern den Informationsfluss von der unmittelbaren, pulsierenden Gegenwart (7 Sekunden) über die kuratierte, relevante mittlere Frist (7 Tage) bis hin zur bewahrten, aber anonymisierten Langzeitperspektive (84 Tage).
+4. UX / Informationsarchitektur (mobil-first)
+Die Benutzeroberfläche (User Experience, UX) und Informationsarchitektur (IA) des Weltgewebes sind konsequent nach dem "Mobile-First"-Prinzip gestaltet. Die gesamte Interaktion ist auf eine kartenbasierte, räumliche Metapher ausgerichtet, die das Konzept des "Webens" direkt erfahrbar macht.
+Interface-Design und Komponenten
+Primäre Ansicht: Die interaktive Karte
+Der Einstiegspunkt und die zentrale Interaktionsfläche ist eine Vollbildkarte, die mit der Open-Source-Bibliothek MapLibre GL realisiert wird. Diese Karte ist nicht nur eine passive Darstellung, sondern die aktive Leinwand, auf der das soziale Gewebe entsteht. Alle aktiven Teilnehmer, Knoten und Fäden sind hier in Echtzeit sichtbar, was dem Prinzip der radikalen Sichtbarkeit unmittelbar Ausdruck verleiht. Die Wahl einer kartenbasierten UI anstelle eines chronologischen Feeds oder einer Listenansicht ist eine bewusste Entscheidung, um die räumlichen und relationalen Aspekte der Gemeinschaft in den Vordergrund zu stellen.
+Navigationsmodell: Das Drawer-System
+Die Hauptnavigation und der Zugriff auf detaillierte Funktionen erfolgen über ausziehbare Seitenleisten, sogenannte "Drawer", die bei Bedarf über die Karte gelegt werden. Dieses Muster ist besonders für mobile Geräte geeignet, da es den Bildschirmplatz maximiert und gleichzeitig einen schnellen Zugriff auf kontextbezogene Werkzeuge ermöglicht.
+ * Linker Drawer: "Webrat & Nähstübchen"
+   Dieser Drawer ist das Zentrum für Governance und Kommunikation. Er bündelt alle Funktionen, die mit dem Webrat- und Nähstübchen-Strukturknoten verbunden sind. Nutzer finden hier eine Liste aktiver Anträge mit Live-Timern, die den Fortschritt der 7-Tage-Fristen visualisieren, ein Interface zur Stimmabgabe, den Delegations-Manager zur Verwaltung von Stimmübertragungen sowie die ortsunabhängigen Chat-Threads des Nähstübchens.
+ * Rechter Drawer: "Filter & Ebenen"
+   Dieser Drawer dient der Steuerung der auf der Karte dargestellten Informationen. Er fungiert als "visuelles Kontrollpult" und erlaubt es den Nutzern, die Komplexität der Ansicht an ihre aktuellen Bedürfnisse anzupassen. Über Schalter (Toggles) können verschiedene Ebenen ein- und ausgeblendet werden, darunter:
+   * Knoten- und Fadenarten (z.B. nur Anträge oder nur Goldfäden anzeigen).
+   * Zeitfenster (z.B. nur Aktivitäten der letzten 24 Stunden).
+   * Delegationsverbindungen.
+   * Ron-anonymisierte Inhalte.
+Top-Widgets für Statusinformationen
+Am oberen Bildschirmrand sind permanent zugängliche Widgets für systemkritische Statusinformationen platziert:
+ * Oben Mitte: "Gewebekonto-Visualisierung"
+   Dieses Widget ist direkt mit dem Gewebekonto-Strukturknoten verknüpft und bietet eine Live-Dashboard-Ansicht des Gemeinschaftsvermögens. Es zeigt den aktuellen Saldo, die letzten Transaktionen und bietet Exportfunktionen für Finanzdaten im CSV- oder JSON-Format, um vollständige finanzielle Transparenz zu gewährleisten.
+ * Oben Rechts: "Konto-Zugriff mit Peer-Verifikation"
+   Dieses Element dient der Authentifizierung und dem Profilzugriff. Im eingeloggten Zustand zeigt es die eigene Garnrolle mit der 7-Sekunden-Webungs-Rotation und einem Haken, der den Status der Peer-Verifikation anzeigt. Im ausgeloggten Zustand dient es als Einstiegspunkt zum Login, der mit der obligatorischen Aufklärung über die Transparenzprinzipien verbunden ist.
+Performance- und Zugänglichkeitsstandards
+Die Mobile-First-Strategie wird durch strenge technische Vorgaben untermauert, um eine performante und zugängliche Nutzung auch auf weniger leistungsfähigen Geräten und in schlechten Netzbedingungen zu garantieren :
+ * Performance-Budgets: Die initiale Ladezeit wird durch strikte Budgets für kritische Ressourcen begrenzt (z.B. JavaScript ≤ 90 KB Gzip, CSS ≤ 25 KB Gzip). Die Time-To-Interactive (TTI) soll selbst unter 3G-Fast-Bedingungen im 95. Perzentil unter 2,5 Sekunden liegen.
+ * UI-Design: Alle interaktiven Elemente müssen eine Mindestgröße von 44x44 Pixeln haben, um die Bedienung auf Touchscreens zu erleichtern.
+ * Barrierefreiheit: Das System respektiert die prefers-reduced-motion-Einstellung des Betriebssystems, um Animationen wie die 7-Sekunden-Rotation für empfindliche Nutzer zu deaktivieren oder durch dezentere Effekte zu ersetzen.
+5. Governance 7+7
+Das Governance-Modell des Weltgewebes, bezeichnet als "7+7", ist ein dezentralisierter, agiler und transparenter Entscheidungsprozess. Es ist darauf ausgelegt, bürokratische Hürden zu minimieren und Entscheidungsblockaden zu verhindern, indem es einen klaren, zeitbasierten Ablauf für Vorschläge, Einsprüche und Abstimmungen vorgibt.
+Das Entscheidungsprotokoll
+Überall-Anträge: Dezentralisierung der Initiative
+Das Kernprinzip ist die Möglichkeit der "Überall-Anträge" (Überall-Anträge). Jeder Teilnehmer kann an jedem beliebigen Knoten im System einen formellen Governance-Antrag stellen. Die Initiative zur Veränderung ist somit nicht auf ein zentrales Gremium oder einen speziellen Ort beschränkt, sondern kann organisch aus jedem Kontext der Gemeinschaft heraus entstehen. Sobald ein Antrag gestellt wird, manifestiert er sich visuell als ein leuchtend oranger Antragsfaden, der vom Knoten des Antragstellers zum Webrat-Strukturknoten führt. Gleichzeitig startet ein für alle sichtbarer 7-Tage-Timer.
+Phase 1: Die 7-tägige Einspruchsfrist – Konsens durch Schweigen
+Die erste Phase des Prozesses ist eine 7-tägige Einspruchsfrist. Das innovative und für die Agilität des Systems entscheidende Merkmal ist die Regel der automatischen Annahme: Verstreicht die 7-Tage-Frist, ohne dass ein Mitglied der Gemeinschaft formell Einspruch erhebt, gilt der Antrag als angenommen und wird automatisch vom System umgesetzt.
+Dieses Modell kehrt die traditionelle Beweislast um. Anstatt dass ein Antragsteller aktiv eine Mehrheit für seinen Vorschlag organisieren muss, wird von einem Grundkonsens ausgegangen. Die Verantwortung liegt bei denjenigen, die mit einem Vorschlag nicht einverstanden sind, aktiv zu werden. Dies senkt die Hürde für konstruktive Veränderungen erheblich und verhindert, dass gute Ideen allein an mangelnder Mobilisierung oder Teilnahmeträgheit scheitern. Es ist ein System, das für Aktion und kontinuierliche Weiterentwicklung optimiert ist.
+Phase 2: Die 7-tägige Abstimmungsphase – Konsens durch explizite Entscheidung
+Ein einziger formeller Einspruch genügt, um den Prozess in die zweite Phase zu überführen. Der Einspruch verlängert die Entscheidungsfrist um weitere sieben Tage, die nun für eine öffentliche Abstimmung vorgesehen sind. In dieser Phase gelten folgende Regeln:
+ * Transparenz: Jede abgegebene Stimme ist öffentlich und wird mit dem Namen des Abstimmenden sowie einer optionalen Begründung angezeigt. Dies fördert eine verantwortungsvolle und nachvollziehbare Entscheidungsfindung.
+ * Entscheidungsregel: Ein Antrag wird durch eine einfache Mehrheit der abgegebenen Stimmen angenommen (mehr Ja- als Nein-Stimmen).
+ * Tie-Breaker: Bei einem Stimmengleichstand gilt der Antrag als abgelehnt. Dies stellt sicher, dass für eine Veränderung ein klares positives Votum vorliegen muss, sobald ein Dissens formalisiert wurde.
+Delegation: Partizipation durch Stimmübertragung
+Das Delegationssystem ermöglicht es den Mitgliedern, ihre Stimmkraft zu bündeln und die Partizipation auch für weniger aktive Teilnehmer zu erleichtern.
+ * Funktionsweise: Jeder Nutzer kann sein Stimmrecht an einen anderen Nutzer übertragen. Diese Delegation wird auf der Karte als grauer, gestrichelter Pfeil visualisiert. Der Empfänger der Delegation stimmt dann mit dem kombinierten Gewicht (eigene Stimme plus alle erhaltenen delegierten Stimmen) ab.
+ * Phase A: In der initialen Phase ist die Delegation auf eine 1:1-Beziehung beschränkt (jeder kann seine Stimme an genau eine andere Person delegieren).
+ * Phase B: Für spätere Phasen ist eine transitive Delegation geplant, bei der delegierte Stimmen weiterdelegiert werden können. Dies erfordert eine robuste Zykluserkennung, um Endlosschleifen zu verhindern.
+ * Verfall: Eine Delegation verfällt automatisch nach vier Wochen Inaktivität des Delegierenden, um sicherzustellen, dass die Stimmübertragung auf einer aktuellen Vertrauensbasis beruht.
+ * Überschreibung: Ein Nutzer, der seine Stimme delegiert hat, kann jederzeit selbst an einer Abstimmung teilnehmen. Die direkte Stimmabgabe überschreibt für diese spezifische Abstimmung die Delegation.
+6. Ron-System (Option, Transfer, Ausstieg) – Δ Konsistenz-Fix
+Das Ron-System ist die Antwort des Weltgewebes auf die Spannung zwischen radikaler Transparenz und dem langfristigen Bedürfnis nach Privatsphäre. Es bietet einen Mechanismus zur zeitversetzten Anonymisierung von Beiträgen. Diese Blaupause formalisiert eine entscheidende Konsistenzkorrektur bezüglich des Verhaltens des Systems beim Austritt eines Nutzers.
+Die Anonymisierungs-Option
+Jeder Nutzer hat die Möglichkeit, in seinen Einstellungen die "Ron-Option" zu aktivieren. Ist diese Option aktiv, prüft ein täglicher Hintergrund-Job alle Beiträge des Nutzers. Sobald ein Beitrag die Altersgrenze von 84 Tagen überschreitet, wird die Autorschaft automatisch von der persönlichen Rolle des Nutzers auf den neutralen "Ron-Platzhalter" übertragen. Der Inhalt selbst bleibt erhalten und ist weiterhin im Gewebe sichtbar, aber er ist nicht mehr mit dem ursprünglichen Autor verknüpft.
+Klärung der Widersprüchlichkeit in v15.1
+Die ursprüngliche Spezifikation v15.1 enthielt widersprüchliche Angaben zum Verhalten des Ron-Systems beim Austritt eines Nutzers (Ausstieg). Während die textuellen Beschreibungen und UI-Mockups einen verzögerten Prozess andeuteten, implizierte der Beispielcode eine sofortige Übertragung aller Inhalte an Ron, unabhängig von ihrem Alter.
+Die verbindliche Default-Regelung (v15.1 konsolidiert)
+Diese Blaupause legt als verbindlichen Standard fest, dass beim Einleiten des Austrittsprozesses keine sofortige Anonymisierung von Inhalten stattfindet, die jünger als 84 Tage sind.
+Diese Entscheidung wird aus drei wesentlichen Gründen getroffen:
+ * Wahrung der Prinzipienkonsistenz: Das Kernprinzip der "Radikalen Sichtbarkeit" erfordert, dass Aktionen für eine definierte Zeit nachvollziehbar bleiben. Eine sofortige, rückwirkende Anonymisierung bei Austritt würde dieses Prinzip untergraben und könnte missbraucht werden, um sich der Verantwortung für kürzlich getätigte, kontroverse Beiträge zu entziehen.
+ * Integrität des Audit-Trails: Die Unveränderlichkeit und Kohärenz des Event-Protokolls ist von höchster Bedeutung. Der Austritt eines Nutzers ist ein Ereignis, das die Zukunft betrifft (die Rolle wird in 84 Tagen gelöscht), aber es sollte nicht die jüngste Vergangenheit rückwirkend verändern. Die Event-Historie bleibt somit konsistent.
+ * Rechtliche Klarheit: Der Widerruf der Einwilligung zur Teilnahme (Ausstieg) führt zur Löschung der personenbezogenen Daten nach einer definierten Frist. Er begründet jedoch keinen Anspruch auf die sofortige, rückwirkende Anonymisierung von Inhalten, die im Rahmen der zuvor gültigen Einwilligung rechtmäßig veröffentlicht wurden. Die fristbasierte Anonymisierung schafft hier eine klare und verteidigbare Position.
+Der formale Austrittsprozess
+Der Prozess des Austritts aus dem Weltgewebe ist wie folgt definiert:
+ * Ein Nutzer initiiert den Austritt in seinen Profileinstellungen.
+ * Die Rolle des Nutzers wird im System sofort als is_exiting (im Austritt befindlich) markiert. Dies ist für andere Nutzer sichtbar, z.B. durch eine spezielle Kennzeichnung des Avatars.
+ * Ein Zeitstempel exit_complete_at wird auf den Zeitpunkt in 84 Tagen in der Zukunft gesetzt.
+ * Während dieser 84-tägigen Übergangsphase bleibt die Rolle mit ihren Beiträgen sichtbar. Der tägliche Ron-Job läuft weiter und anonymisiert nur jene Inhalte, die während dieser Zeit die 84-Tage-Altersgrenze überschreiten.
+ * Nach Ablauf der 84 Tage wird die Rolle des Nutzers vollständig und unwiderruflich aus dem System entfernt. Alle zu diesem Zeitpunkt noch verbliebenen, namentlich zugeordneten Inhalte (also alle, die jünger als 84 Tage sind) werden in einem letzten Schritt an den Ron-Platzhalter übertragen.
+Konfigurierbare Alternative für Gemeinschaften
+Es wird anerkannt, dass bestimmte Gemeinschaften einen stärkeren Fokus auf den Datenschutz legen könnten. Daher wird die Möglichkeit einer sofortigen Anonymisierung bei Austritt als eine per Governance-Beschluss aktivierbare Option vorgesehen. Technisch ist dies über das Feature-Flag FEATURE_IMMEDIATE_RON_ON_EXIT umsetzbar. Wenn eine Gemeinschaft diese Option aktiviert, muss der Mechanismus sicherstellen, dass diese rückwirkende Änderung im öffentlichen Index klar als solche gekennzeichnet wird, um die Nachvollziehbarkeit zu wahren.
+7. Event-Sourcing & Signaturen
+Die technische Grundlage des Weltgewebes ist eine Event-Sourcing-Architektur. Dieses Modell ist die direkte Umsetzung des Prinzips "Alles ist Event" und stellt die Integrität, Auditierbarkeit und Transparenz des Systems auf kryptografischer Ebene sicher.
+Die Architektur des Event-Stores
+Unveränderlicher Ereignisstrom
+Die einzige Quelle der Wahrheit (Single Source of Truth) im System ist der Event-Store, ein nur anfügbares Protokoll aller stattgefundenen Aktionen. Anstatt den aktuellen Zustand von Objekten zu speichern und zu überschreiben, wird jede einzelne Zustandsänderung als ein eigenständiges, unveränderliches Ereignis aufgezeichnet. Der aktuelle Zustand eines jeden Objekts im System (z.B. der Inhalt eines Knotens oder der Status eines Antrags) wird jederzeit durch das Abspielen und Anwenden der relevanten Ereignisse aus dem Protokoll rekonstruiert.
+Struktur eines Events
+Jedes Ereignis im System folgt einem standardisierten Schema, das Metadaten für die Verarbeitung und Verifizierung enthält :
+ * id: Ein global eindeutiger, lexikografisch sortierbarer Identifikator (ULID).
+ * type: Der Typ des Ereignisses (z.B. AntragGestellt, StimmeAbgegeben).
+ * aggregateId: Der Identifikator der Entität, auf die sich das Ereignis bezieht (z.B. die ID des Antrags).
+ * ts: Ein präziser Zeitstempel der Ereigniserstellung (in UTC).
+ * payload: Die eigentlichen Daten des Ereignisses (z.B. der Text des Antrags).
+ * prev_hash: Der SHA256-Hash des vorherigen Ereignisses desselben Aggregats, der die Ereignisse zu einer unveränderlichen Kette verbindet.
+ * signature: Eine ed25519-Signatur des Ereignisses, erstellt mit dem privaten Schlüssel des auslösenden Nutzers.
+Logische Event-Streams
+Obwohl alle Ereignisse in einem einzigen logischen Protokoll gespeichert werden, sind sie in thematische Ströme (Streams) unterteilt. Dies ermöglicht es verschiedenen Subsystemen (den "Projektoren"), nur die für sie relevanten Ereignisse zu abonnieren und zu verarbeiten. Typische Streams sind Governance, Delegation, Ron, Finanzen (für das Gewebekonto) und Map (für Interaktionen auf der Karte). Als technologische Basis für den Event-Store und die Stream-Verarbeitung dient NATS JetStream, das Persistenz, garantierte Zustellung und Replikation bietet.
+Kryptografische Integrität und Verifikation
+Ed25519-Signaturen
+Jede Aktion, die einen Zustand im System verändert, muss vom auslösenden Nutzer kryptografisch signiert werden. Dies stellt die Authentizität und Nichtabstreitbarkeit sicher. Es ist jederzeit beweisbar, wer eine bestimmte Aktion ausgeführt hat. Die Überprüfung dieser Signaturen ist ein integraler Bestandteil der Event-Verarbeitung.
+Hash-Ketten
+Die Verknüpfung von Ereignissen, die sich auf dasselbe Aggregat beziehen, über einen prev_hash schafft eine manipulationssichere Historie. Würde ein einzelnes Ereignis in der Mitte der Kette verändert, würde sein Hash nicht mehr mit dem prev_hash des nachfolgenden Ereignisses übereinstimmen, und die Kette wäre gebrochen. Dies macht die gesamte Historie eines Antrags, einer Rolle oder eines Knotens kryptografisch verifizierbar.
+Peer-Verifikation
+Für besonders kritische Aktionen, die den permanenten Zustand des Gewebes verändern, wird eine zusätzliche Sicherheitsebene eingeführt. Die Aktion des "Verzwirnens", die einen Faden zu permanentem Garn macht und somit Inhalte vor dem Verfall schützt, erfordert eine 2-von-N Peer-Bestätigung. Das bedeutet, dass neben dem Initiator eine definierte Anzahl anderer Netzwerkteilnehmer die Aktion ebenfalls signieren muss, bevor sie als gültig anerkannt wird. Dies bietet Schutz vor byzantinischen Fehlern und böswilligen Akteuren und stellt sicher, dass Permanenz im System auf einem dezentralen Konsens beruht.
+8. Technische Architektur (Hetzner-First) & Kosten
+Die technische Architektur des Weltgewebes ist pragmatisch und zielgerichtet auf die Prinzipien der Kosteneffizienz, der einfachen Skalierbarkeit und des Betriebs durch ein kleines Team ausgelegt. Die Wahl von Hetzner Cloud als primäre Infrastrukturplattform ist eine strategische Entscheidung, die diese Ziele unterstützt und gleichzeitig die Datensouveränität innerhalb der EU gewährleistet.
+Der Technologie-Stack
+Der Kern des Systems besteht aus einer sorgfältig ausgewählten Kombination von Open-Source-Technologien, die für ihre Leistung, Stabilität und einfache Handhabung bekannt sind :
+ * Frontend: Eine Progressive Web App (PWA), entwickelt mit SvelteKit, die eine reaktive und performante Benutzeroberfläche bietet. MapLibre GL wird für die interaktive Kartenvisualisierung verwendet.
+ * Backend-API: Ein leichtgewichtiger und hochperformanter API-Server, implementiert mit Fastify auf Node.js. Er verarbeitet alle Nutzeranfragen, validiert sie (mit Zod) und publiziert die resultierenden Befehle als Ereignisse.
+ * Event-Store: NATS JetStream dient als persistenter und replizierter Event-Backbone, der die Integrität und Verfügbarkeit des Ereignisprotokolls sicherstellt.
+ * Read-Model-Datenbank: Eine PostgreSQL-Datenbank mit der PostGIS-Erweiterung speichert die aus den Ereignissen generierten, für Abfragen optimierten Lese-Modelle (Projektionen).
+ * Caching & Job-Queue: Redis wird für Caching-Zwecke, zur Verwaltung von Benutzersitzungen und in Kombination mit BullMQ als robuste Warteschlange für die Ausführung von Hintergrund-Jobs (wie Timer-Verarbeitung und Ron-Transfers) eingesetzt.
+Phasenbasierte Infrastruktur und Kosten
+Die Infrastruktur ist so geplant, dass sie mit der Community wachsen kann, wobei die Kosten in jeder Phase kontrolliert und transparent bleiben.
+Phase A: Initial-Setup (0-200 Nutzer)
+In dieser Phase wird der gesamte Technologie-Stack auf einem einzigen, kosteneffizienten Hetzner Cloud Server (Typ CX22) betrieben. Dies minimiert die Komplexität und die monatlichen Kosten. Backups der PostgreSQL-Datenbank und Archive des Event-Stores werden auf den separaten Hetzner Object Storage ausgelagert.
+ * Zielkosten: Unter 200 EUR / Monat.
+ * Fokus: Schnelle Iteration und Bereitstellung der Kernfunktionalität für eine erste Nutzergruppe.
+Phase B: Skalierung (200-1.000 Nutzer)
+Wenn die Nutzerzahl und die Last steigen, wird die Architektur horizontal skaliert. Der monolithische Aufbau wird in eine verteilte Struktur überführt:
+ * Ein Hetzner Load Balancer (LB11) verteilt den eingehenden Verkehr.
+ * Ein dedizierter API-Server (CPX31) verarbeitet die Nutzeranfragen.
+ * Zwei oder mehr Worker-Nodes (CX32) sind ausschließlich für die rechenintensive Verarbeitung der Event-Streams (Projektionen) und die Ausführung der Hintergrund-Jobs zuständig.
+ * Die PostgreSQL-Datenbank wird auf ein dediziertes, hochverfügbares Block Storage Volume ausgelagert, um die I/O-Leistung zu verbessern.
+ * Zielkosten: 200 - 400 EUR / Monat.
+Phase C: Community-Finanzierung (1.000+ Nutzer)
+Für das Wachstum über 1.000 Nutzer hinaus wird eine weitere Skalierung angestrebt, die durch die Gemeinschaft selbst über das Gewebekonto finanziert wird. Mögliche Erweiterungen umfassen:
+ * Einsatz von dedizierten Hetzner-Servern (CCX-Linie) für maximale Performance.
+ * Ein Multi-Region-Setup (z.B. mit Servern in Nürnberg und Helsinki), um die Ausfallsicherheit und globale Latenz zu verbessern.
+ * Integration eines Content Delivery Networks (CDN) für die Auslieferung statischer Assets.
+Die folgende Tabelle fasst die Infrastrukturphasen zusammen:
+| Phase | Nutzerziel | Compute-Ressourcen | Storage | Netzwerk | Geschätzte mtl. Kosten (€) |
+|---|---|---|---|---|---|
+| A | 0 - 200 | 1x Hetzner CX22 (All-in-One) | Hetzner Object Storage (Backups) | Floating IP | 90 - 200 |
+| B | 200 - 1.000 | 1x CPX31 (API), 2x CX32 (Worker) | Block Storage (DB), Object Storage | Load Balancer LB11 | 200 - 400 |
+| C | 1.000+ | Dedizierte CCX-Server oder CPX-Cluster | Skalierbarer Block/Object Storage | Multi-Region, CDN | Community-finanziert |
+Automatisierte Hintergrund-Jobs
+Die Zuverlässigkeit des Systems hängt von einer Reihe von automatisierten Hintergrund-Jobs ab, die kritische, zeitgesteuerte Funktionen ausführen :
+ * Governance-Timer-Job (minütlich): Überprüft alle aktiven Anträge und führt deren Statusübergänge durch (z.B. automatische Annahme nach 7 Tagen ohne Einspruch).
+ * Delegations-Wartungs-Job (täglich): Deaktiviert abgelaufene oder durch Inaktivität ungültig gewordene Delegationen.
+ * Ron-Transfer-Job (täglich, 02:00 Uhr): Führt die Anonymisierung von Inhalten durch, die die 84-Tage-Schwelle überschritten haben, und schließt Austrittsprozesse ab.
+ * Kosten-Tracking-Job (täglich, 03:00 Uhr): Ruft die aktuellen Infrastrukturkosten über die Hetzner API ab und speist sie in das Monitoring-System ein.
+9. Datenmodell & Performance
+Das Datenmodell ist für ein System mit Event Sourcing als primärem Schreibmechanismus optimiert. Die PostgreSQL-Datenbank dient als "Read Model" oder "Projektion", das für schnelle Lesezugriffe und komplexe Abfragen, insbesondere für die Darstellung auf der Karte, strukturiert ist. Dies entspricht einem CQRS-Muster (Command Query Responsibility Segregation), bei dem Schreib- und Lesepfade getrennt sind.
+Datenbank-Schema (PostgreSQL)
+Das Schema ist darauf ausgelegt, die aus den Ereignissen abgeleiteten Zustände effizient zu speichern.
+Kerntabellen
+ * rollen: Speichert die Profile der Nutzer, einschließlich ihres Status (is_active, is_exiting), der aktivierten Ron-Option und ihrer geografischen Position (als GEOGRAPHY(POINT) und H3-Index).
+ * antraege: Enthält alle Governance-Anträge mit ihrem aktuellen Status (phase), den relevanten Zeitstempeln (einspruch_bis, abstimmung_bis) und dem Endergebnis.
+ * einsprueche: Protokolliert jeden Einspruch gegen einen Antrag, verknüpft mit dem Antrag und der einsprechenden Rolle.
+ * abstimmungen: Speichert jede einzelne Stimme zu einem Antrag, einschließlich der Wahl (choice), des Stimmgewichts (vote_weight) und der IDs der delegierenden Rollen. Eine UNIQUE-Beschränkung stellt sicher, dass jede Rolle nur einmal pro Antrag abstimmen kann.
+ * delegationen: Verwaltet die Stimmübertragungen. Eine UNIQUE-Beschränkung auf from_rolle setzt die 1:1-Delegation in Phase A um.
+ * faeden: Die zentrale Tabelle für alle Interaktionen, die eine Verbindung zwischen einer Rolle und einem Knoten darstellen. Sie enthält den Subtyp, Zeitstempel und Flags für den Status (z.B. is_garn, transferred_to_ron).
+ * konto_ledger: Das Hauptbuch für das Gewebekonto, das alle finanziellen Transaktionen als unveränderliche Einträge speichert.
+ * governance_timers: Eine dedizierte Tabelle zur Verwaltung der von den Hintergrund-Jobs zu verarbeitenden Timer, um die Haupt-antraege-Tabelle nicht mit prozessinternen Status zu überladen.
+ * events: Eine optionale, aber empfohlene Tabelle, um eine Kopie des Event-Streams direkt in der Datenbank für Audits und Wiederherstellungen vorzuhalten.
+Indizes und Geospatiale Abfragen
+ * Performance-Indizes: Das Schema wird durch gezielte Indizes ergänzt, um die Leistung kritischer Abfragen zu gewährleisten. Dazu gehören Indizes auf Zeitstempel-Felder für die Timer-Verarbeitung, auf is_active-Flags für Delegationen und auf created_at für die Ermittlung von Ron-berechtigten Inhalten.
+ * H3 für Geospatiale Daten: Die Verwendung von H3-Indizes in den rollen- und (zukünftigen) knoten-Tabellen ist eine Schlüsseloptimierung. Anstatt rechenintensive geometrische Berechnungen bei jeder Kartenanfrage durchzuführen, können Abfragen schnell auf einem BIGINT-Feld gefiltert werden, was für eine performante Darstellung von Tausenden von Markern auf der Karte unerlässlich ist.
+Performance-Budgets
+Um die "Mobile-First"-Anforderung zu erfüllen, werden strenge Performance-Budgets als Qualitätsziele für die Entwicklung und den Betrieb definiert. Diese Budgets sind messbare Kriterien, die sicherstellen, dass die Nutzererfahrung schnell und reaktionsschnell bleibt.
+ * Frontend-Ladezeit:
+   * Initiales JavaScript-Bundle: \le 90 KB (Gzip-komprimiert).
+   * Kritisches CSS: \le 25 KB (Gzip-komprimiert).
+   * Time To Interactive (TTI) für das 95. Perzentil der Nutzer: < 2.5 Sekunden auf einer simulierten "3G Fast"-Verbindung.
+ * Backend-Antwortzeiten:
+   * API-Endpunkte (95. Perzentil): \le 300 ms.
+   * Datenbankabfragen (95. Perzentil): \le 150 ms.
+ * Rendering-Performance:
+   * Die Kartenansicht muss in der Lage sein, mindestens 1.000 Marker bei einer flüssigen Bildrate von 60 Bildern pro Sekunde (fps) darzustellen. Dies wird durch serverseitige Aggregationstechniken und die Verwendung von Tile-Binning erreicht, bei denen nahe beieinander liegende Marker auf dem Server zu Clustern zusammengefasst werden, bevor die Daten an den Client gesendet werden.
+10. Moderation & Recht
+Das Weltgewebe verfolgt einen neuartigen Ansatz für Moderation und die Einhaltung rechtlicher Vorgaben, der die Prinzipien der Dezentralisierung und Transparenz respektiert und gleichzeitig Mechanismen für den Umgang mit problematischen und illegalen Inhalten bereitstellt.
+Moderation als Governance-Prozess
+Im Weltgewebe gibt es keine traditionellen Moderatoren oder Administratoren mit privilegierten Rechten zur einseitigen Inhaltsänderung oder -löschung. Jede Moderationsmaßnahme, wie das Ausblenden eines beleidigenden Kommentars oder die Sperrung eines Knotens, muss als regulärer Antrag über den 7+7-Governance-Prozess eingebracht werden. Das bedeutet, die Gemeinschaft selbst entscheidet transparent und nachvollziehbar über ihre eigenen Regeln und deren Durchsetzung. Stilles, intransparentes Löschen von Inhalten ist durch die Systemarchitektur ausgeschlossen.
+Umgang mit strafbaren Inhalten: Das Legal-Freeze-Protokoll
+Für den Umgang mit Inhalten, die eindeutig gegen geltendes Recht verstoßen (z.B. Volksverhetzung, illegale Inhalte nach dem NetzDG in Deutschland), existiert ein separates Notfallprotokoll, der "Legal-Freeze". Dieses Protokoll schafft eine Balance zwischen der gesetzlichen Pflicht zur Entfernung solcher Inhalte und dem Grundsatz der dezentralen Kontrolle.
+ * Meldung und Prüfung: Nach Meldung eines potenziell strafbaren Inhalts erfolgt eine Prüfung durch eine rechtlich beauftragte Stelle.
+ * Einfrieren (Freeze): Wird der Inhalt als rechtlich problematisch eingestuft, wird er sofort für die Öffentlichkeit unsichtbar gemacht ("eingefroren"). Dies geschieht ohne einen Governance-Prozess, um gesetzlichen Fristen nachzukommen.
+ * Beweissicherung: Der Inhalt und alle zugehörigen Metadaten werden gerichtsfest und unveränderlich gesichert, um sie den Strafverfolgungsbehörden zur Verfügung stellen zu können.
+ * Transparenz durch Governance: Nach dem Einfrieren wird ein öffentlicher Antrag im Webrat gestellt, der die Gemeinschaft über den Vorfall informiert (in anonymisierter Form, um rechtliche Vorgaben zu wahren) und über weitere Maßnahmen (z.B. den Ausschluss des verantwortlichen Nutzers) abstimmen lässt.
+Dieses zweistufige Verfahren trennt die unmittelbare rechtliche Notwendigkeit (das Unsichtbarmachen) von der gemeinschaftlichen Konsequenz (die soziale Sanktion), wodurch das System rechtskonform agieren kann, ohne seine dezentralen Prinzipien zu verletzen.
+Sichtbarkeit in Suchmaschinen: Das Hybrid-Index-Modell
+Um die Privatsphäre in laufenden Diskussionen zu schützen und gleichzeitig eine langfristige öffentliche Rechenschaftspflicht zu ermöglichen, wird ein hybrides Indexierungsmodell für Suchmaschinen verfolgt.
+ * Live-Inhalte (noindex): Alle dynamischen und sich in Echtzeit verändernden Inhalte, wie aktive Diskussionen in Knoten oder laufende Anträge, werden mit den Meta-Tags noindex und noarchive versehen. Dies verhindert, dass unfertige oder flüchtige Gespräche von Suchmaschinen erfasst und dauerhaft archiviert werden.
+ * Monatsarchive (index): Am Ende jedes Monats wird ein statischer, unveränderlicher Schnappschuss des öffentlichen Zustands des Gewebes erstellt. Diese Archive sind für die Indexierung durch Suchmaschinen freigegeben. Dies ermöglicht eine langfristige, weltweite Nachvollziehbarkeit von abgeschlossenen Entscheidungen und permanentem Wissen (Garn), ohne die "Werkstatträume" der Live-Interaktion zu exponieren.
+11. Monitoring & Metriken
+Ein umfassendes Monitoring ist entscheidend, um die Gesundheit, Performance und die sozio-ökonomische Dynamik des Weltgewebes zu verstehen und den "Small-Team-Ops"-Ansatz zu ermöglichen. Die Metriken sind darauf ausgelegt, proaktiv auf Probleme hinzuweisen und datengestützte Entscheidungen über die Weiterentwicklung der Plattform zu treffen.
+Kategorien der Überwachung
+Die Metriken werden in logische Kategorien unterteilt, die jeweils einen anderen Aspekt des Systems beleuchten.
+Governance-Metriken
+Diese Metriken geben Aufschluss über die Vitalität des dezentralen Entscheidungsprozesses:
+ * Aktive Anträge: Anzahl der laufenden Anträge, aufgeschlüsselt nach Phase (einspruch_phase, abstimmung_phase) und Dringlichkeit.
+ * Einspruchsquote: Das Verhältnis von Anträgen, die einen Einspruch erhalten, zu allen gestellten Anträgen. Eine hohe Quote könnte auf kontroverse Themen oder mangelnden Vorkonsens hindeuten.
+ * Timer-Verarbeitungslatenz: Die Zeit, die der Governance-Job benötigt, um fällige Timer zu verarbeiten. Anstiege hier deuten auf Performance-Engpässe hin.
+ * Durchschnittliches Stimmgewicht: Das durchschnittliche Gewicht einer Stimme unter Berücksichtigung von Delegationen. Dies kann auf eine Machtkonzentration hinweisen.
+Ron-System-Metriken
+Diese Metriken überwachen die Funktion und Akzeptanz des Anonymisierungssystems:
+ * Tägliche Ron-Transfers: Anzahl der pro Tag an Ron übertragenen Inhaltselemente, aufgeschlüsselt nach Auslöser (automatisch, manuell, Austritt).
+ * Ron-Options-Nutzer: Der prozentuale Anteil der Nutzer, die die Ron-Option aktiviert haben.
+ * Durchschnittliches Inhaltsalter bei Transfer: Das Alter von Inhalten zum Zeitpunkt ihrer Anonymisierung.
+Kosten-Metriken
+Diese Metriken stellen die finanzielle Nachhaltigkeit sicher und validieren das "Hetzner-optimiert"-Prinzip:
+ * Gesamte Hetzner-Kosten: Die monatlichen Gesamtkosten, aufgeschlüsselt nach Ressourcentyp (Compute, Storage, Netzwerk).
+ * Kosten pro aktivem Nutzer: Eine Schlüsselmetrik zur Bewertung der Skaleneffizienz.
+ * Ressourcenauslastung: CPU-, Speicher- und Festplattenauslastung der Hetzner-Server.
+Performance-Metriken
+Diese Metriken messen die technische Leistungsfähigkeit und Nutzererfahrung:
+ * API-Antwortzeiten: Histogramme der Latenzzeiten für alle API-Endpunkte.
+ * Datenbank-Query-Latenzen: Histogramme der Ausführungszeiten für Datenbankabfragen.
+ * Karten-Projektionszeiten: Die serverseitige Zeit, die benötigt wird, um die Daten für eine bestimmte Kartenansicht zu aggregieren und vorzubereiten.
+Alarmierungsregeln (Alerting)
+Basierend auf diesen Metriken werden automatische Alarme definiert, um das Betriebsteam bei kritischen Abweichungen zu benachrichtigen. Beispiele für Alarmregeln sind:
+ * Infrastruktur: Server nicht erreichbar, CPU- oder Speicherauslastung über 85% für mehr als 10 Minuten.
+ * Kosten: Überschreitung des für die aktuelle Phase definierten Kostenbudgets.
+ * Governance: Ein Rückstau (Backlog) von mehr als 50 unverarbeiteten Governance-Timern.
+ * Ron-System: Ausbleiben von Ron-Transfers über mehrere Stunden, obwohl Nutzer die Option aktiviert haben.
+ * Performance: Das 95. Perzentil der API-Antwortzeiten überschreitet 1000 ms für mehr als 5 Minuten.
+12. Roadmap → Gates
+Die Entwicklung und Einführung des Weltgewebes v15.1 folgt einem phasenbasierten Plan. Jede Phase hat klar definierte Ziele, einen Zeitrahmen und messbare Qualitätskriterien ("Gates"), die erfüllt sein müssen, bevor die nächste Phase beginnt.
+Phase A: Governance-Start (0–12 Wochen)
+Diese Phase konzentriert sich auf die Implementierung des Kernsystems auf einer schlanken, kosteneffizienten Infrastruktur.
+ * Wochen 1-2: Aufbau der Hetzner-Grundinfrastruktur (CX22-Server) mittels Terraform. Implementierung des Event-Stores mit NATS und des Ron-Systems (mit dem korrigierten Austritts-Default).
+ * Wochen 3-4: Entwicklung der dezentralen Governance-Engine mit dem "Überall-Anträge"-Prinzip und dem 7-Tage-Timer.
+ * Wochen 5-6: Implementierung des 1:1-Delegationssystems mit 28-tägigem Verfall bei Inaktivität.
+ * Wochen 7-8: Erstellung der mobilen MapLibre-Benutzeroberfläche, einschließlich der Drawer für Governance und Filterung.
+ * Wochen 9-10: Implementierung des täglichen Ron-Jobs für die 84-Tage-Anonymisierung und des formalen Austrittsprozesses.
+ * Wochen 11-12: Einrichtung des Monitorings (Netdata, Prometheus), der Alarmierungsregeln und des Kosten-Trackings.
+Qualitäts-Gates für Phase A
+Der Übergang zu Phase B erfolgt nur, wenn folgende Kriterien nachweislich erfüllt sind :
+ * Kosten: Die monatlichen Betriebskosten auf Hetzner liegen stabil unter 200 EUR.
+ * Performance: Die API-Antwortzeiten (P95) liegen unter 300 ms, und die mobile Time-To-Interactive (P95) liegt unter 2,5 Sekunden.
+ * Stabilität der Governance: Das 7+7-System, einschließlich der automatischen Annahme und der 1:1-Delegation, funktioniert zuverlässig.
+ * Stabilität des Ron-Systems: Der 84-Tage-Transfer-Job läuft fehlerfrei, und der Austrittsprozess ist verifiziert.
+Phase B: Skalierung & Features (12–24 Wochen)
+Nach erfolgreichem Abschluss von Phase A konzentriert sich diese Phase auf die Skalierung der Infrastruktur und die Erweiterung der Funktionalität für eine wachsende Community.
+ * Infrastruktur: Umstellung auf das Multi-Server-Setup mit Load Balancer, dediziertem API-Server und Worker-Nodes.
+ * Features: Implementierung der transitiven Delegation (Phase B), Einführung von Antragskategorien und Dringlichkeitsstufen, Entwicklung von Analyse-Dashboards für die Governance.
+ * Performance: Optimierung der Karten-Performance für 1.000+ Marker und Partitionierung des Event-Stores.
+Phase C: Community-Finanzierung (ab 24 Wochen)
+Diese Phase markiert den Übergang zu einem vollständig von der Gemeinschaft getragenen und gesteuerten Modell.
+ * Infrastruktur: Weitere Skalierung nach Bedarf, potenziell mit Multi-Region-Setup (Nürnberg, Helsinki) für erhöhte Ausfallsicherheit.
+ * Features: Entwicklung von Funktionen, die von der Gemeinschaft über den Governance-Prozess priorisiert und über das Gewebekonto finanziert werden, z.B. eine API für Drittanbieter oder eine native mobile App.
+13. Offene Entscheidungen & Defaults
+Dieses abschließende Kapitel dient als Referenz für wichtige Systemparameter und dokumentiert die getroffenen Entscheidungen für Standardkonfigurationen. Es soll Klarheit schaffen und als Grundlage für zukünftige Anpassungen durch den Governance-Prozess dienen.
+System-Defaults
+ * Ron-System bei Austritt: Der verbindliche Standard ist kein sofortiger Transfer von Inhalten, die jünger als 84 Tage sind. Eine sofortige Anonymisierung ist eine optionale Konfiguration, die von der Gemeinschaft per Beschluss aktiviert werden muss.
+ * Governance-Abstimmungen:
+   * Quorum: Es gibt kein Quorum. Eine einfache Mehrheit der abgegebenen Stimmen ist ausreichend.
+   * Gleichstand: Bei Stimmengleichstand gilt ein Antrag als abgelehnt.
+ * Delegation:
+   * Phase A: Strikt 1:1 (eine ausgehende Delegation pro Rolle).
+   * Verfall: Automatisch nach 28 Tagen Inaktivität des Delegierenden. Eine aktive Verlängerung ist möglich.
+ * Suchmaschinen-Indexierung: Live-Streams und aktive Diskussionen sind auf noindex, noarchive gesetzt. Finalisierte Monatsarchive sind indexierbar.
+ * Finanzielle Transparenz: Spendenbeträge sind standardmäßig öffentlich sichtbar. Eine anonyme Spende ist eine explizit zu wählende Option.
+Identifizierte Risiken und nächste Schritte mit hoher Priorität
+Die Konsolidierung der Blaupause hat eine Reihe von Risiken und noch zu implementierenden Aufgaben mit hoher Priorität aufgedeckt, die für einen sicheren und robusten Start entscheidend sind :
+ * Authentifizierung & Sicherheit:
+   * Die temporäre x-role-id-Header-Authentifizierung muss durch ein sicheres System wie WebAuthn/Passkeys in Kombination mit Sessions/JWTs ersetzt werden.
+   * Mutierende API-Endpunkte (POST, PUT) müssen durch einen Idempotenz-Mechanismus (z.B. Idempotency-Key-Header) gegen wiederholte Ausführung geschützt werden.
+ * Kryptografie:
+   * Die Verifizierung der ed25519-Signaturen muss serverseitig konsequent implementiert werden.
+   * Die Validierung der Hash-Ketten (prev_hash) muss bei jedem Anhängen eines Events erfolgen.
+ * Datenbank und Zeit:
+   * Die PostgreSQL-Extension pgcrypto muss für die Generierung von UUIDs aktiviert werden.
+   * Eine strikte UTC-Disziplin muss in der gesamten Anwendung durchgesetzt werden, um Zeitzonenprobleme zu vermeiden.
+ * Governance-Robustheit:
+   * Ein verteilter Lock (z.B. über Redis) für den Governance-Timer-Job ist erforderlich, sobald mehr als ein Worker-Node (Phase B) betrieben wird, um Race Conditions zu verhindern.
+ * Betrieb und Geheimnisverwaltung:
+   * Das Management von Geheimnissen (API-Keys, Passwörter) muss von Klartext in Konfigurationsdateien auf eine sichere Lösung wie Docker Secrets, SOPS oder den Hetzner Secret Manager umgestellt werden.
+ * Missbrauchsprävention:
+   * Rate-Limiting für kritische API-Endpunkte muss implementiert werden, um Spam und Denial-of-Service-Angriffe zu erschweren.

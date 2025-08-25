@@ -1,0 +1,4124 @@
+# 🌐 Weltgewebe v15.1 — Ko-konstruktive Transparenz mit Ron-Anonymisierung & dezentraler Governance
+
+## 0) Leitplanken & Prinzipien (unverhandelbar)
+
+**Philosophische Grundlagen:**
+- **Alles ist Event**: Append-only, unveränderlich; Hash-Kette pro Aggregat mit ed25519-Signaturen für Byzantine-tolerante Konsistenz
+- **Radikale Sichtbarkeit als Kernprinzip**: Jede Teilnahme bedeutet bewusste, informierte Entscheidung für dauerhafte Transparenz aller Aktionen
+- **Freiwilligkeit über alles**: Niemand wird zur Teilnahme gedrängt. Vollständige Aufklärung vor Beitritt über alle Konsequenzen
+- **Sichtbarkeit ist aktionsbezogen**: Rollen rotieren 7 Sekunden nach jeder Webungsaktion (Edit, Faden, Antrag, Verzwirnen, Entzwirnen, Spende)
+- **Fadenpflicht**: Jede aktive Nutzeraktion an einem Karten-Knoten erzeugt automatisch einen Faden von dessen Rolle zum Handlungsort (Subtyp je Aktion)
+- **Strukturknoten als Ankerpunkte**: Gewebekonto, Webrat und Nähstübchen sind permanente, fixierte Kartenelemente mit spezieller Semantik
+- **Sichtbarkeit ist Währung**: Sichtbares Engagement, Ressourcen und Spenden bilden den Wert. Passive Betrachtung bleibt neutral
+- **Peer-Verifikation & Autonomie**: Ed25519-signierte Events, Byzantine-tolerante Konsistenz
+- **Global skalierbar**: Von Nachbarschaft bis weltweites Myzel mit Rückrufbarkeit aller Delegierten
+
+**Technische Leitplanken:**
+- **Small-Team-Ops**: 1-2 Personen betreibbar, MTTR ≤15 min, automatisierte Runbooks, Healthchecks (/health/live, /health/ready)
+- **Hetzner-optimierte Kostenarchitektur**: Phase A <€200/Monat, Phase B <€400/Monat, Phase C community-finanziert
+- **Kosteneffizienz**: Ziel <€0.01/1.000 Events; Echtzeit-Kosten-Metrik im Dashboard
+- **JetStream-Kern mit Peer-Network**: NATS JetStream als unverrückbarer Event-Backbone, Redis für Fallback & Speed-Layer, Leafnodes für Föderation
+- **Community-First**: Phase A liefert vollständige lokale Weberei-Erfahrung ab Tag 1
+
+**Neue Visualsprache v15.1:**
+- **Faden** = vergänglich (7-Tage Fade), farbkodiert nach Subtyp
+- **Garn** = verzwirnte Fäden (permanent, sichtbar verzwirnt), schützt Knoten vor Verfall
+- **Goldfaden** = Spenden (Finanzfluss, goldfarbig)
+- **Strukturknoten** = Gewebekonto (gold), Webrat (rot), Nähstübchen (blau) als permanente Kartenelemente
+- **Ron-Rolle** = Neutraler Platzhalter (grau) für anonymisierte Beiträge älter als 84 Tage
+- **Antragsfäden** = Orange leuchtende Fäden zum Webrat bei Antragstellung mit Timer-Visualisierung
+- **Delegationsfäden** = Graue gestrichelte Pfeile für Stimmübertragung
+- **Mehrfachfäden** = intelligente Überlappung bei mehreren Fäden zwischen gleichen Punkten
+- **Webungs-Rotation** = 7s-Drehung der Garnrolle nach jeder Webungsaktion (global sichtbar)
+
+***
+
+## 1) UX & Informationsarchitektur
+
+### 1.1 Karten-Zentralansicht (MapLibre GL) mit radikaler Transparenz
+
+**Standardzustand:** Vollbild-Karte mit mobile-first Design und vollständiger Sichtbarkeit aller aktiven Teilnehmenden.
+
+**Strukturknoten (immer sichtbar, nie verfallend):**
+- **Gewebekonto** (goldenes Kassensymbol): Zentraler Finanzknoten für alle Goldfaden-Ströme
+- **Webrat** (rotes Parlamentssymbol): Governance-Hub für Anträge und Abstimmungen mit Timer-Anzeigen
+- **Nähstübchen** (blaues Kommunikationssymbol): Ortsunabhängiger Diskussions-Raum
+- **Ron-Platzhalter** (graues Anonymitätssymbol): Sammelpunkt für anonymisierte Inhalte
+
+**Pull-Tabs (ausziehbare Drawer):**
+- **Links**: "Webrat & Nähstübchen" (360px desktop, modal mobile)
+  - **Integrierter Governance- und Chat-Bereich** verknüpft mit Strukturknoten
+  - **Aktive Anträge mit Live-Timer**: 7-Tage-Countdown, Einspruchs-Interface
+  - **Delegations-Manager**: Stimmübertragung konfigurieren
+  - Thread-Liste (pinnable, zuletzt aktiv), Rich-Text Editor
+  - Live-Abstimmungs-Interface für sofortige Partizipation
+- **Rechts**: "Filter & Ebenen" (300px desktop)
+  - Toggles: Knotenarten, Zeitfenster (24h/7d/Snapshots), Delegationen, Goldfäden, Governance-Marker
+  - **Fadenarten-Filter**: Erweiterte Toggles für jeden Subtyp (Gespräch, Gestaltung, Veränderung, Antrag, Abstimmung, Gold, Delegation)
+  - **Ron-Filter**: Ron-Anonymisierte Inhalte ein-/ausblenden
+  - **Antrags-Timer-Filter**: Nur aktive Anträge mit laufenden Timern
+  - **Mehrfachfäden-Toggle**: Ein/Aus für überlappende Darstellung mit progressiver Überlappungslogik
+  - **Strukturknoten-Filter**: Spezielle Kontrollen für Gewebekonto/Webrat/Nähstübchen-Verbindungen
+  - Fadenarten-Legende (farbkodiert), H3-Auflösung adaptiv zu Zoom-Level
+- **Oben Mitte**: "Gewebekonto-Visualisierung" (verknüpft mit Strukturknoten)
+  - Dashboard mit Live-Saldo/Bewegungen, ausstehende SEPA/FinTS
+  - CSV/JSON-Export, vollständige Transparenz-Links
+  - Goldfaden-Routing zu/von Gewebekonto-Strukturknoten
+- **Oben rechts**: "Konto-Zugriff mit Peer-Verifikation"
+  - **Eingeloggt**: Eigene Garnrolle in Profilfarbe mit **Webungs-Rotation** + **Peer-Verifikations-Haken** → öffnet Profil-Drawer
+  - **Ausgeloggt**: Graues Rollen-Icon mit "+" Badge → öffnet Login-Drawer mit **Transparenz-Aufklärung**
+  - **Ed25519-Peer-Verifikation** (2-von-N Quorum), Benachrichtigungen, Feature-Flags
+
+### 1.2 Rollen-Darstellung mit radikaler Transparenz & Ron-Integration
+
+**Alle aktiven Rollen sind vollständig sichtbar:**
+```typescript
+interface RolleVisualization {
+  id: string;
+  displayName: string; // Vollständiger Name oder "Ron" für anonymisierte Inhalte
+  avatar: string; // Profilbild oder "anonymous-placeholder" für Ron
+  coords: [number, number]; // H3-Zellenmittelpunkt
+  isActive: boolean; // false wenn ausgestiegen oder Ron-Platzhalter
+  isRonPlaceholder: boolean; // true für Ron-Rolle
+  joinedAt: Date;
+  lastActivity: Date;
+  peerVerified: boolean;
+  ronContentCount?: number; // Anzahl anonymisierter Beiträge bei Ron
+}
+
+// Render-Logik: Radikale Transparenz für aktive Rollen + Ron-Support
+function renderRolleMarker(rolle: RolleVisualization) {
+  if (rolle.isRonPlaceholder) {
+    // Ron-Platzhalter: Spezielle Darstellung für anonymisierte Inhalte
+    return {
+      position: rolle.coords,
+      icon: 'anonymous-user',
+      label: 'Ron',
+      opacity: 0.8,
+      className: 'ron-placeholder-role',
+      tooltip: `Ron - Platzhalter für ${rolle.ronContentCount} anonymisierte Beiträge`
+    };
+  }
+  
+  if (!rolle.isActive) {
+    // Ausgestiegene Rollen während Ron-Prozess: Werden nach 84 Tagen komplett entfernt
+    return {
+      position: rolle.coords,
+      icon: 'exit-in-progress',
+      label: `${rolle.displayName} (Ausstieg läuft)`,
+      opacity: 0.5,
+      className: 'exiting-role',
+      tooltip: 'Diese Rolle durchläuft den Ron-Ausstiegsprozess'
+    };
+  }
+  
+  // Aktive Rollen: Vollständige Transparenz
+  return {
+    position: rolle.coords,
+    icon: rolle.avatar,
+    label: rolle.displayName,
+    opacity: 1.0,
+    className: 'active-role',
+    tooltip: `${rolle.displayName} - Aktiv seit ${formatDate(rolle.lastActivity)}`
+  };
+}
+```
+
+### 1.3 Webungs-Rotation mit vollständiger Sichtbarkeit
+
+**Konzept:** Jede Webungsaktion triggert eine sichtbare **7-Sekunden-Drehung** für alle sichtbar:
+
+```svelte
+<script>
+  import { onMount } from 'svelte';
+  import { socket } from '$lib/socket';
+  import { peerConsensus } from '$lib/peer-verification';
+  
+  export let rolle;
+  
+  let spinning = false;
+  let peerStatus = 'verified'; // 'verified' | 'pending' | 'unverified'
+  let spinTimer;
+  let delegationStatus = null; // Zeigt aktive Delegationen
+  
+  function triggerSpin(ms = 7000, actionType = 'unknown') {
+    clearTimeout(spinTimer);
+    spinning = true;
+    peerStatus = 'pending';
+    
+    spinTimer = setTimeout(() => {
+      spinning = false;
+      peerStatus = 'verified';
+    }, ms);
+  }
+  
+  export function onLocalAction(actionType) {
+    triggerSpin(7000, actionType);
+  }
+  
+  onMount(() => {
+    socket.on('role-action', (msg) => {
+      if (msg.rolleId === rolle.id) {
+        triggerSpin((msg.durationSec ?? 7) * 1000, msg.aktionTyp);
+      }
+    });
+    
+    socket.on('peer-consensus', (msg) => {
+      if (msg.rolleId === rolle.id) {
+        peerStatus = msg.status;
+      }
+    });
+    
+    socket.on('delegation-update', (msg) => {
+      if (msg.rolleId === rolle.id) {
+        delegationStatus = msg.delegationInfo;
+      }
+    });
+  });
+</script>
+
+<div 
+  class="rolle-marker {spinning ? 'spin' : ''} peer-{peerStatus}" 
+  class:ron-placeholder={rolle.isRonPlaceholder}
+  class:exiting={!rolle.isActive && !rolle.isRonPlaceholder}
+  aria-label="Rolle {rolle.displayName} {spinning ? '(kürzlich aktiv)' : ''} - Status: {rolle.isActive ? 'aktiv' : 'im ausstieg'}"
+>
+  <div class="garnrolle" style="background: {getBackgroundGradient(rolle)}">
+    <!-- Peer-Verifikations-Indikator -->
+    {#if rolle.isActive && !rolle.isRonPlaceholder}
+      <div class="peer-indicator" class:verified={peerStatus === 'verified'}>
+        {#if peerStatus === 'verified'}
+          <span class="verified-icon">✓</span>
+        {:else if peerStatus === 'pending'}
+          <span class="pending-icon">⏳</span>
+        {:else}
+          <span class="unverified-icon">⚠️</span>
+        {/if}
+      </div>
+      
+      <!-- Delegations-Indikator -->
+      {#if delegationStatus}
+        <div class="delegation-indicator">
+          <span class="delegation-icon">🗳️</span>
+          <span class="delegation-count">{delegationStatus.weight}</span>
+        </div>
+      {/if}
+    {:else if rolle.isRonPlaceholder}
+      <!-- Ron-Symbol -->
+      <div class="ron-indicator">
+        <span class="ron-icon">🎭</span>
+        <span class="ron-count">{rolle.ronContentCount}</span>
+      </div>
+    {:else}
+      <!-- Ausstiegs-Symbol -->
+      <div class="exit-indicator">
+        <span class="exit-icon">🚪</span>
+      </div>
+    {/if}
+  </div>
+</div>
+
+<style>
+.rolle-marker { 
+  width: 36px;
+  height: 36px; 
+  border-radius: 50%; 
+  position: relative; 
+}
+
+.garnrolle { 
+  width: 100%; 
+  height: 100%; 
+  border-radius: 50%; 
+  background: radial-gradient(#c28a3a,#8a5a1a); 
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+/* Ron-Platzhalter hat spezielle Darstellung */
+.rolle-marker.ron-placeholder .garnrolle {
+  background: radial-gradient(#999, #666);
+  opacity: 0.8;
+  border: 2px dashed #ccc;
+}
+
+/* Aussteigende Rollen haben spezielle Darstellung */
+.rolle-marker.exiting .garnrolle {
+  background: radial-gradient(#ff9, #cc6);
+  opacity: 0.6;
+  border: 2px solid #ffa500;
+}
+
+.peer-indicator, .exit-indicator, .ron-indicator, .delegation-indicator {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  border: 2px solid;
+}
+
+.peer-indicator.verified {
+  border-color: #28a745;
+  color: #28a745;
+}
+
+.peer-indicator:not(.verified) {
+  border-color: #ffc107;
+  color: #ffc107;
+}
+
+.exit-indicator {
+  border-color: #ffa500;
+  color: #ffa500;
+}
+
+.ron-indicator {
+  border-color: #6c757d;
+  color: #6c757d;
+}
+
+.delegation-indicator {
+  border-color: #007bff;
+  color: #007bff;
+  top: -2px;
+  left: -2px; /* Links positioniert für bessere Sichtbarkeit */
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .spin .garnrolle { 
+    animation: rollspin 7s linear; 
+  }
+  
+  @keyframes rollspin {
+    from { transform: rotate(0deg) }
+    to   { transform: rotate(3600deg) } /* 10 Umdrehungen in 7s */
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spin .garnrolle { 
+    animation: glow 800ms ease-out; 
+  }
+  
+  @keyframes glow {
+    0% { box-shadow: 0 0 0 0 rgba(255,215,0,.7) }
+    100% { box-shadow: 0 0 0 12px rgba(255,215,0,0) }
+  }
+}
+</style>
+```
+
+### 1.4 Dezentrale Antragsstellung mit Timer-Visualisierung
+
+**Überall-Anträge-Konzept**: Jeder kann an jedem Knoten einen Antrag stellen:
+
+```svelte
+<div class="antrag-interface">
+  <h4>📋 Antrag stellen (überall möglich)</h4>
+  
+  <div class="antrag-form" class:visible={showAntragForm}>
+    <textarea 
+      bind:value={antragText} 
+      placeholder="Beschreibe deinen Antrag für die Gemeinschaft..."
+      rows="4"
+    ></textarea>
+    
+    <div class="antrag-metadata">
+      <label>
+        <strong>Antragstitel:</strong>
+        <input type="text" bind:value={antragTitle} placeholder="Kurzer prägnanter Titel" />
+      </label>
+      
+      <label>
+        <strong>Dringlichkeit:</strong>
+        <select bind:value={dringlichkeit}>
+          <option value="normal">Normal (7+7 Tage)</option>
+          <option value="wichtig">Wichtig (Hervorhebung im Webrat)</option>
+          <option value="dringend">Dringend (Benachrichtigung an alle)</option>
+        </select>
+      </label>
+    </div>
+    
+    <div class="antrag-actions">
+      <button class="cancel-btn" on:click={cancelAntrag}>Abbrechen</button>
+      <button class="submit-btn" on:click={submitAntrag} disabled={!canSubmit}>
+        🚀 Antrag stellen (7-Tage-Timer startet)
+      </button>
+    </div>
+  </div>
+  
+  <!-- Timer-Visualisierung für aktive Anträge -->
+  {#if activeAntraege.length > 0}
+    <div class="active-antraege">
+      <h5>🕒 Aktive Anträge mit Timer</h5>
+      {#each activeAntraege as antrag}
+        <div class="antrag-timer" class:has-einspruch={antrag.hasEinspruch}>
+          <div class="timer-header">
+            <strong>{antrag.title}</strong>
+            <span class="timer-status">{antrag.phase}</span>
+          </div>
+          
+          <div class="timer-bar">
+            <div 
+              class="timer-progress" 
+              style="width: {antrag.progressPercent}%"
+              class:einspruch-phase={antrag.hasEinspruch}
+            ></div>
+          </div>
+          
+          <div class="timer-details">
+            <span>⏰ {formatTimeRemaining(antrag.expiresAt)}</span>
+            {#if antrag.hasEinspruch}
+              <span class="einspruch-info">⚡ Abstimmung läuft!</span>
+            {:else}
+              <span>📝 Einspruchsfrist läuft</span>
+            {/if}
+          </div>
+          
+          <div class="timer-actions">
+            {#if !antrag.hasEinspruch && canRaiseEinspruch(antrag)}
+              <button class="einspruch-btn" on:click={() => raiseEinspruch(antrag.id)}>
+                ⚡ Einspruch erheben
+              </button>
+            {/if}
+            
+            {#if antrag.hasEinspruch && canVote(antrag)}
+              <div class="vote-buttons">
+                <button class="vote-ja" on:click={() => vote(antrag.id, 'ja')}>✅ Ja</button>
+                <button class="vote-nein" on:click={() => vote(antrag.id, 'nein')}>❌ Nein</button>
+                <button class="vote-enthaltung" on:click={() => vote(antrag.id, 'enthaltung')}>⚪ Enthaltung</button>
+              </div>
+            {/if}
+          </div>
+        </div>
+      {/each}
+    </div>
+  {/if}
+</div>
+
+<style>
+.antrag-interface {
+  background: #f8f9fa;
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 15px 0;
+}
+
+.antrag-form {
+  display: none;
+  margin-top: 15px;
+}
+
+.antrag-form.visible {
+  display: block;
+}
+
+.antrag-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.antrag-metadata {
+  margin: 15px 0;
+}
+
+.antrag-metadata label {
+  display: block;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+.antrag-metadata input, .antrag-metadata select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  margin-top: 5px;
+}
+
+.antrag-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.cancel-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit-btn:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+.active-antraege {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 2px solid #dee2e6;
+}
+
+.antrag-timer {
+  background: #fff;
+  border: 2px solid #28a745;
+  border-radius: 6px;
+  padding: 15px;
+  margin: 10px 0;
+}
+
+.antrag-timer.has-einspruch {
+  border-color: #ffc107;
+  background: #fff9c4;
+}
+
+.timer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.timer-status {
+  background: #28a745;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.has-einspruch .timer-status {
+  background: #ffc107;
+  color: #000;
+}
+
+.timer-bar {
+  background: #e9ecef;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 10px 0;
+}
+
+.timer-progress {
+  background: #28a745;
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.timer-progress.einspruch-phase {
+  background: #ffc107;
+}
+
+.timer-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  margin: 10px 0;
+}
+
+.einspruch-info {
+  color: #ff6b35;
+  font-weight: bold;
+}
+
+.timer-actions {
+  margin-top: 15px;
+}
+
+.einspruch-btn {
+  background: #ff6b35;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.vote-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.vote-ja, .vote-nein, .vote-enthaltung {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.vote-ja {
+  background: #28a745;
+  color: white;
+}
+
+.vote-nein {
+  background: #dc3545;
+  color: white;
+}
+
+.vote-enthaltung {
+  background: #6c757d;
+  color: white;
+}
+</style>
+```
+
+### 1.5 Ron-Anonymisierung Interface
+
+**Ron-Option im Profil-Drawer:**
+
+```svelte
+<div class="ron-anonymization">
+  <h4>🎭 Ron-Anonymisierung (84-Tage-Option)</h4>
+  
+  <div class="ron-explanation">
+    <p><strong>Was ist die Ron-Option?</strong></p>
+    <p>Nach 84 Tagen kannst du alle deine älteren Beiträge und Verbindungen automatisch an "Ron" übertragen lassen. Deine Beiträge bleiben bestehen, sind aber nicht mehr mit deinem Namen verknüpft.</p>
+    
+    <div class="ron-benefits">
+      <ul>
+        <li>✓ Automatische Anonymisierung nach 84 Tagen</li>
+        <li>✓ Beiträge bleiben für die Gemeinschaft erhalten</li>
+        <li>✓ Deine aktuellen Aktivitäten bleiben sichtbar</li>
+        <li>✓ Jederzeit aktivierbar oder deaktivierbar</li>
+        <li>✓ Ausstieg wird über Ron-Prozess abgewickelt</li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="ron-status" class:active={ronOptionEnabled}>
+    <label class="ron-toggle">
+      <input 
+        type="checkbox" 
+        bind:checked={ronOptionEnabled} 
+        on:change={updateRonOption}
+      />
+      <span class="toggle-slider"></span>
+      <strong>Ron-Anonymisierung nach 84 Tagen aktivieren</strong>
+    </label>
+    
+    {#if ronOptionEnabled}
+      <div class="ron-active-info">
+        <p>✓ Ron-Option ist aktiviert</p>
+        <p>Deine Beiträge älter als 84 Tage werden automatisch zu "Ron" übertragen.</p>
+        
+        {#if eligibleForRonTransfer > 0}
+          <div class="immediate-transfer">
+            <p><strong>{eligibleForRonTransfer} Beiträge</strong> können bereits jetzt übertragen werden.</p>
+            <button class="ron-transfer-btn" on:click={triggerImmediateRonTransfer}>
+              Sofort an Ron übertragen
+            </button>
+          </div>
+        {/if}
+      </div>
+    {/if}
+  </div>
+  
+<!-- Ausstiegs-Integration über Ron -->
+<div class="ron-exit-option">
+  <h5>🚪 Ausstieg über Ron-Prozess</h5>
+  <p>
+    Ausstieg via Ron erzwingt die Ron‑Option.
+    <strong>Keine Sofort‑Anonymisierung:</strong>
+    Alle bestehenden Inhalte bleiben namentlich, bis sie die
+    <strong>84‑Tage‑Schwelle</strong> erreichen; dann werden sie automatisiert zu „Ron“ übertragen.
+    Die <strong>Rollen‑Entfernung</strong> erfolgt nach 84 Tagen.
+  </p>
+
+  {#if !isExiting}
+    <button class="exit-via-ron-btn" on:click={initiateRonExit} aria-label="Ausstieg via Ron starten">
+      Ausstieg über Ron starten
+    </button>
+    <p class="helptext">
+      Hinweis: Der Ausstieg plant die Entpersonalisierung deiner Inhalte <em>nach</em> 84 Tagen ein.
+      Bis dahin bleiben sie namentlich sichtbar. Du kannst innerhalb von 72 Stunden nach Start (falls aktiviert)
+      den Ausstieg noch stornieren.
+    </p>
+  {:else}
+    <div class="exit-status" role="status" aria-live="polite">
+      <p><strong>Ausstieg läuft:</strong> {exitDaysRemaining} Tage bis zur vollständigen Rollen‑Entfernung</p>
+      <div class="exit-progress-bar" aria-label="Fortschritt des Ausstiegs">
+        <div class="exit-progress" style="width: {exitProgressPercent}%"></div>
+      </div>
+      {#if exitPlannedAt}
+        <p class="eta">Geplanter Abschluss: {formatDate(exitPlannedAt)}</p>
+      {/if}
+    </div>
+  {/if}
+</div>
+  
+  <div class="ron-preview">
+    <h5>Beispiel-Darstellung:</h5>
+    <div class="content-preview">
+      <div class="before-ron">
+        <strong>Vorher:</strong> "Max Mustermann schrieb: Das ist eine gute Idee!"
+      </div>
+      <div class="after-ron">
+        <strong>Nach Ron-Transfer:</strong> "Ron schrieb: Das ist eine gute Idee!"
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.ron-anonymization {
+  background: #e8f5e8;
+  border: 2px solid #28a745;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.ron-toggle {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.toggle-slider {
+  width: 50px;
+  height: 24px;
+  background: #ccc;
+  border-radius: 24px;
+  position: relative;
+  margin-right: 10px;
+  transition: background 0.3s;
+}
+
+.toggle-slider:before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  top: 2px;
+  left: 2px;
+  transition: left 0.3s;
+}
+
+input:checked + .toggle-slider {
+  background: #28a745;
+}
+
+input:checked + .toggle-slider:before {
+  left: 28px;
+}
+
+.ron-active-info {
+  background: #d4edda;
+  padding: 15px;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+.immediate-transfer {
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+.ron-transfer-btn {
+  background: #ffc107;
+  color: #000;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.ron-exit-option {
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  padding: 15px;
+  border-radius: 6px;
+  margin-top: 15px;
+}
+
+.exit-via-ron-btn {
+  background: #ffa500;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.exit-status {
+  margin-top: 10px;
+}
+
+.exit-progress-bar {
+  background: #e9ecef;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.exit-progress {
+  background: #ffa500;
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.content-preview {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+.before-ron {
+  color: #6c757d;
+  margin-bottom: 5px;
+}
+
+.after-ron {
+  color: #28a745;
+  font-weight: bold;
+}
+</style>
+```
+
+### 1.6 Delegations-Interface (Stimmübertragung)
+
+**Stimmübertragung konfigurieren:**
+
+```svelte
+<div class="delegation-manager">
+  <h4>🗳️ Delegationen (Stimmübertragung)</h4>
+  
+  <div class="delegation-explanation">
+    <p><strong>Was ist Delegation?</strong></p>
+    <p>Du kannst deine Stimme bei Abstimmungen an andere Rollen übertragen. Diese Person stimmt dann in deinem Namen ab, solange du selbst nicht abstimmst.</p>
+    
+    <div class="delegation-rules">
+      <ul>
+        <li>✓ Delegation gilt für alle zukünftigen Abstimmungen</li>
+        <li>✓ Du kannst jederzeit selbst abstimmen (überschreibt Delegation)</li>
+        <li>✓ Delegation verfällt nach 4 Wochen Inaktivität</li>
+        <li>✓ Graue gestrichelte Pfeile zeigen Delegationen auf der Karte</li>
+        <li>✓ In Phase B: Transitive Delegation möglich (Weiterdelegation)</li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="delegation-config">
+    <h5>Aktuelle Delegationen</h5>
+    
+    {#if activeDelegations.length > 0}
+      <div class="active-delegations">
+        {#each activeDelegations as delegation}
+          <div class="delegation-item">
+            <div class="delegation-info">
+              <strong>{delegation.targetName}</strong>
+              <span class="delegation-since">seit {formatDate(delegation.createdAt)}</span>
+            </div>
+            
+            <div class="delegation-status">
+              <span class="weight-indicator">Gewicht: {delegation.weight}</span>
+              <span class="expires-info">Verfällt: {formatDate(delegation.expiresAt)}</span>
+            </div>
+            
+            <div class="delegation-actions">
+              <button class="extend-btn" on:click={() => extendDelegation(delegation.id)}>
+                ⏰ Verlängern (4 Wochen)
+              </button>
+              <button class="revoke-btn" on:click={() => revokeDelegation(delegation.id)}>
+                ❌ Zurücknehmen
+              </button>
+            </div>
+          </div>
+        {/each}
+      </div>
+    {:else}
+      <p class="no-delegations">Keine aktiven Delegationen</p>
+    {/if}
+    
+    <div class="new-delegation">
+      <h6>Neue Delegation erstellen</h6>
+      
+      <div class="delegation-form">
+        <label>
+          <strong>An wen delegieren:</strong>
+          <select bind:value={selectedDelegate}>
+            <option value="">-- Rolle auswählen --</option>
+            {#each availableRoles as role}
+              <option value={role.id}>{role.name}</option>
+            {/each}
+          </select>
+        </label>
+        
+        <div class="delegation-preview">
+          {#if selectedDelegate}
+            <p>Deine Stimme wird an <strong>{getDelegateName(selectedDelegate)}</strong> übertragen.</p>
+            <p>Auf der Karte erscheint ein grauer gestrichelter Pfeil von dir zu dieser Person.</p>
+          {/if}
+        </div>
+        
+        <div class="delegation-submit">
+          <button 
+            class="create-delegation-btn" 
+            on:click={createDelegation}
+            disabled={!selectedDelegate}
+          >
+            🗳️ Delegation erstellen
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Erhaltene Delegationen -->
+  <div class="received-delegations">
+    <h5>An mich delegierte Stimmen</h5>
+    
+    {#if receivedDelegations.length > 0}
+      <div class="received-list">
+        {#each receivedDelegations as received}
+          <div class="received-item">
+            <strong>{received.fromName}</strong> hat ihre Stimme an dich delegiert
+            <span class="received-weight">(Gewicht: {received.weight})</span>
+          </div>
+        {/each}
+        
+        <div class="total-weight">
+          <strong>Gesamt-Stimmgewicht: {totalVoteWeight}</strong>
+        </div>
+      </div>
+    {:else}
+      <p class="no-received">Keine delegierten Stimmen erhalten</p>
+    {/if}
+  </div>
+</div>
+
+<style>
+.delegation-manager {
+  background: #e7f3ff;
+  border: 2px solid #007bff;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.delegation-rules ul {
+  list-style: none;
+  padding: 0;
+}
+
+.delegation-rules li {
+  padding: 5px 0;
+  color: #495057;
+}
+
+.active-delegations {
+  margin: 15px 0;
+}
+
+.delegation-item {
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  padding: 15px;
+  margin: 10px 0;
+}
+
+.delegation-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.delegation-since {
+  color: #6c757d;
+  font-size: 14px;
+}
+
+.delegation-status {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.weight-indicator {
+  background: #007bff;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.expires-info {
+  color: #ffc107;
+}
+
+.delegation-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.extend-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.revoke-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.no-delegations, .no-received {
+  color: #6c757d;
+  font-style: italic;
+  text-align: center;
+  padding: 20px;
+}
+
+.new-delegation {
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  padding: 15px;
+  margin-top: 20px;
+}
+
+.delegation-form label {
+  display: block;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+.delegation-form select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  margin-top: 5px;
+}
+
+.delegation-preview {
+  background: #f8f9fa;
+  padding: 10px;
+  border-radius: 4px;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.create-delegation-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.create-delegation-btn:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+.received-delegations {
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  padding: 15px;
+  margin-top: 20px;
+}
+
+.received-item {
+  padding: 8px 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.received-weight {
+  color: #007bff;
+  font-weight: bold;
+}
+
+.total-weight {
+  background: #007bff;
+  color: white;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 10px;
+  text-align: center;
+}
+</style>
+```
+
+***
+
+## 2) Domäne & Regeln
+
+### 2.1 Automatik-Grundsatz mit radikaler Sichtbarkeit
+
+**Aktion ⇒ Faden + Webungs-Rotation + Peer-Verifikation (immer sichtbar):**
+- **Jede aktive Nutzeraktion** an einem Karten-Knoten erzeugt automatisch:
+  1. Einen Faden von der Rolle zum Handlungsort (Subtyp je Aktion)
+  2. **Eine 7s-Webungs-Rotation der Rolle** (global sichtbar für alle)
+  3. **Ed25519-signiertes Event für Peer-Verifikation**
+  4. **Vollständig transparenten Event-Eintrag** im unveränderlichen Log
+- **Strukturknoten-Aktionen** erzeugen spezielle Fäden mit erhöhter Sichtbarkeit
+- **Antragstellung** erzeugt automatisch orangenen Antragsfaden zum Webrat mit Timer-Visualisierung
+- **Delegations-Aktionen** erzeugen graue gestrichelte Delegationsfäden mit Gewichtsanzeige
+- **Ron-Transfers** erzeugen graue Transferfäden von ursprünglicher Rolle zu Ron-Platzhalter
+- **Passive Aktionen** (ansehen/filtern) bleiben neutral und erzeugen keine Logs
+- **Login** ist eine System-Aktion → erzeugt weder Faden noch Rotation
+
+### 2.2 Dezentrale Governance mit 7+7-Tage-Rhythmus
+
+**Überall-Anträge-Prinzip:**
+- **Antragstellung überall möglich**: Jeder kann an jedem Knoten einen Antrag stellen
+- **Sofortige Sichtbarkeit**: Antrag erscheint mit orangenem Faden zum Webrat-Strukturknoten
+- **7-Tage-Einspruchsfrist**: Timer läuft sichtbar auf Karte und im Webrat
+- **Automatische Annahme**: Ohne Einspruch gilt Antrag nach 7 Tagen als angenommen und wird sofort umgesetzt
+- **Einspruch aktiviert Abstimmung**: Ein Einspruch verlängert um weitere 7 Tage ab Einspruchsdatum
+- **Sofortiges Abstimmen**: Ab Einspruchserhebung können alle sofort abstimmen
+- **Transparente Stimmen**: Jede Stimme mit Name und Begründung öffentlich sichtbar
+- **Delegation berücksichtigt**: Delegierte Stimmen werden automatisch eingerechnet
+- **Einfache Mehrheit**: Mehr Ja- als Nein-Stimmen bei Abstimmungsende entscheiden
+
+```typescript
+// Dezentrale Governance Flow
+class GovernanceManager {
+  async createAntragAtKnoten(knotenId: string, authorRoleId: string, antragData: AntragData): Promise<Antrag> {
+    const antragId = generateULID();
+    const timer = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 Tage
+    
+    // 1. Antrag erstellen
+    const antrag = await this.createAntrag({
+      id: antragId,
+      title: antragData.title,
+      content: antragData.content,
+      authorRole: authorRoleId,
+      location: knotenId,
+      phase: 'einspruch_phase',
+      einspruchBis: timer,
+      dringlichkeit: antragData.dringlichkeit || 'normal'
+    });
+    
+    // 2. Orangenen Antragsfaden zum Webrat erstellen
+    await this.createAntragsfaden({
+      from: authorRoleId,
+      to: WEBRAT_STRUKTURKNOTEN,
+      antragId,
+      timer: timer,
+      dringlichkeit: antragData.dringlichkeit
+    });
+    
+    // 3. Event für vollständige Transparenz
+    await this.eventBus.publish({
+      type: 'AntragGestellt',
+      aggregateId: antragId,
+      subject: 'wg.kleinroennau.social',
+      payload: {
+        antragId,
+        title: antragData.title,
+        authorRole: authorRoleId,
+        location: knotenId,
+        einspruchBis: timer,
+        phase: 'einspruch_phase',
+        fadenToWebrat: true
+      },
+      meta: {
+        actor: authorRoleId,
+        transparency: 'full_public',
+        governanceAction: true
+      }
+    });
+    
+    // 4. Timer für automatische Verarbeitung schedulen
+    await this.scheduleTimerCheck(antragId, timer);
+    
+    return antrag;
+  }
+  
+  async raiseEinspruch(antragId: string, einsprecherId: string, reasoning?: string): Promise<void> {
+    const antrag = await this.getAntrag(antragId);
+    if (!antrag || antrag.phase !== 'einspruch_phase') {
+      throw new Error('Einspruch nicht möglich');
+    }
+    
+    if (new Date() > antrag.einspruchBis) {
+      throw new Error('Einspruchsfrist abgelaufen');
+    }
+    
+    // Verlängere um weitere 7 Tage ab jetzt
+    const abstimmungBis = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    
+    await this.updateAntrag(antragId, {
+      phase: 'abstimmung_phase',
+      abstimmungBis,
+      hasEinspruch: true
+    });
+    
+    await this.eventBus.publish({
+      type: 'EinspruchErhoben',
+      aggregateId: antragId,
+      subject: 'wg.kleinroennau.social',
+      payload: {
+        antragId,
+        einsprecherId,
+        reasoning,
+        abstimmungBis,
+        einspruchAt: new Date()
+      },
+      meta: {
+        actor: einsprecherId,
+        transparency: 'full_public'
+      }
+    });
+    
+    // Neuen Timer für Abstimmungsende
+    await this.scheduleTimerCheck(antragId, abstimmungBis);
+  }
+  
+  async submitVote(antragId: string, voterId: string, choice: VoteChoice, reasoning?: string): Promise<void> {
+    const antrag = await this.getAntrag(antragId);
+    if (!antrag || antrag.phase !== 'abstimmung_phase') {
+      throw new Error('Abstimmung nicht möglich');
+    }
+    
+    // Prüfe Delegationen für Stimmgewicht
+    const delegations = await this.getActiveDelegationsFor(voterId);
+    const voteWeight = 1 + delegations.length; // Eigene Stimme + delegierte Stimmen
+    
+    // Erstelle oder aktualisiere Stimme
+    await this.createOrUpdateVote({
+      antragId,
+      voterId,
+      voterName: await this.getRoleName(voterId),
+      choice,
+      reasoning,
+      voteWeight,
+      delegatedFrom: delegations.map(d => d.fromRoleId)
+    });
+    
+    await this.eventBus.publish({
+      type: 'StimmeAbgegeben',
+      aggregateId: antragId,
+      subject: 'wg.kleinroennau.social',
+      payload: {
+        antragId,
+        voterId,
+        voterName: await this.getRoleName(voterId),
+        choice,
+        reasoning,
+        voteWeight,
+        delegatedFrom: delegations.map(d => d.fromRoleId),
+        votedAt: new Date()
+      },
+      meta: {
+        actor: voterId,
+        transparency: 'full_public',
+        governanceParticipation: true
+      }
+    });
+  }
+  
+  async processTimerExpiry(antragId: string): Promise<void> {
+    const antrag = await this.getAntrag(antragId);
+    if (!antrag) return;
+    
+    if (antrag.phase === 'einspruch_phase') {
+      // Keine Einsprüche → automatische Annahme
+      await this.executeAntrag(antragId);
+      await this.eventBus.publish({
+        type: 'AntragAngenommen',
+        aggregateId: antragId,
+        subject: 'wg.kleinroennau.social',
+        payload: {
+          antragId,
+          reason: 'keine_einsprueche',
+          executedAt: new Date(),
+          automaticAcceptance: true
+        }
+      });
+    } else if (antrag.phase === 'abstimmung_phase') {
+      // Abstimmungsende → Auszählung
+      const result = await this.countVotes(antragId);
+      
+      if (result.ja > result.nein) {
+        await this.executeAntrag(antragId);
+        await this.eventBus.publish({
+          type: 'AntragAngenommen',
+          aggregateId: antragId,
+          payload: {
+            antragId,
+            reason: 'mehrheitsentscheidung',
+            votes: result,
+            executedAt: new Date()
+          }
+        });
+      } else {
+        await this.rejectAntrag(antragId);
+        await this.eventBus.publish({
+          type: 'AntragAbgelehnt',
+          aggregateId: antragId,
+          payload: {
+            antragId,
+            reason: 'mehrheitsentscheidung',
+            votes: result,
+            rejectedAt: new Date()
+          }
+        });
+      }
+    }
+  }
+}
+```
+
+### 2.3 Delegations-System (Stimmübertragung)
+
+**Delegation als Stimmübertragung:**
+- **1:1 Delegation in Phase A**: Jeder kann seine Stimme an genau eine andere Person übertragen
+- **Transitive Delegation in Phase B**: Stimmen können weiterübertragen werden (Cycle-Detection)
+- **4-Wochen-Ablauf**: Delegationen verfallen automatisch nach 4 Wochen Inaktivität des Delegierenden
+- **Sichtbare Delegationsfäden**: Graue gestrichelte Pfeile auf der Karte zeigen alle Delegationen
+- **Überschreibung durch direkte Stimme**: Direktes Abstimmen überschreibt temporär die Delegation
+- **Gewichtsanzeige**: Stimmgewicht wird bei Rollen mit erhaltenen Delegationen angezeigt
+
+```typescript
+class DelegationManager {
+  async createDelegation(fromRoleId: string, toRoleId: string): Promise<Delegation> {
+    // Validierung
+    if (fromRoleId === toRoleId) {
+      throw new Error('Selbst-Delegation nicht möglich');
+    }
+    
+    const existingDelegation = await this.getActiveDelegationFrom(fromRoleId);
+    if (existingDelegation) {
+      throw new Error('Bereits aktive Delegation vorhanden');
+    }
+    
+    // Phase B: Cycle-Detection für transitive Delegationen
+    if (PHASE_B_ENABLED) {
+      const wouldCreateCycle = await this.checkForCycle(fromRoleId, toRoleId);
+      if (wouldCreateCycle) {
+        throw new Error('Delegation würde Zyklus erzeugen');
+      }
+    }
+    
+    const delegationId = generateULID();
+    const expiresAt = new Date(Date.now() + 4 * 7 * 24 * 60 * 60 * 1000); // 4 Wochen
+    
+    const delegation = await this.db.delegations.create({
+      id: delegationId,
+      fromRole: fromRoleId,
+      toRole: toRoleId,
+      createdAt: new Date(),
+      expiresAt,
+      isActive: true
+    });
+    
+    // Erstelle Delegationsfaden auf der Karte
+    await this.createDelegationsFaden({
+      from: fromRoleId,
+      to: toRoleId,
+      delegationId,
+      expiresAt
+    });
+    
+    await this.eventBus.publish({
+      type: 'DelegationCreated',
+      aggregateId: delegationId,
+      subject: 'wg.kleinroennau.social',
+      payload: {
+        delegationId,
+        fromRole: fromRoleId,
+        toRole: toRoleId,
+        expiresAt,
+        phase: PHASE_B_ENABLED ? 'B' : 'A'
+      },
+      meta: {
+        actor: fromRoleId,
+        transparency: 'full_public'
+      }
+    });
+    
+    return delegation;
+  }
+  
+  async getVoteWeight(roleId: string): Promise<number> {
+    const receivedDelegations = await this.db.delegations.findMany({
+      where: {
+        toRole: roleId,
+        isActive: true,
+        expiresAt: { gt: new Date() }
+      }
+    });
+    
+    // Eigene Stimme + delegierte Stimmen
+    return 1 + receivedDelegations.length;
+  }
+  
+  async processVoteWithDelegation(antragId: string, directVoterId: string, choice: VoteChoice): Promise<void> {
+    // Direkte Stimme überschreibt temporär alle Delegationen TO dieser Person
+    const delegatedVoters = await this.getDelegatingTo(directVoterId);
+    
+    for (const delegatedVoter of delegatedVoters) {
+      // Markiere als "überschrieben durch direkte Stimme"
+      await this.markDelegationOverridden(delegatedVoter.id, antragId);
+    }
+    
+    // Normale Stimmabgabe mit Gewicht
+    const weight = await this.getVoteWeight(directVoterId);
+    await this.governanceManager.submitVote(antragId, directVoterId, choice, undefined, weight);
+  }
+  
+  async dailyDelegationMaintenance(): Promise<void> {
+    const expiredDelegations = await this.db.delegations.findMany({
+      where: {
+        isActive: true,
+        expiresAt: { lt: new Date() }
+      }
+    });
+    
+    for (const delegation of expiredDelegations) {
+      await this.expireDelegation(delegation.id);
+      await this.removeDelegationsFaden(delegation.id);
+    }
+    
+    // Prüfe Inaktivität (4 Wochen ohne Aktion)
+    const inactiveDelegations = await this.getInactiveDelegations(4 * 7); // 4 Wochen
+    for (const delegation of inactiveDelegations) {
+      await this.expireDelegation(delegation.id);
+    }
+  }
+  
+  private async checkForCycle(fromRoleId: string, toRoleId: string): Promise<boolean> {
+    const visited = new Set<string>();
+    const stack = [toRoleId];
+    
+    while (stack.length > 0) {
+      const currentRole = stack.pop()!;
+      
+      if (currentRole === fromRoleId) {
+        return true; // Zyklus gefunden
+      }
+      
+      if (visited.has(currentRole)) {
+        continue;
+      }
+      
+      visited.add(currentRole);
+      
+      const nextDelegations = await this.db.delegations.findMany({
+        where: {
+          fromRole: currentRole,
+          isActive: true,
+          expiresAt: { gt: new Date() }
+        }
+      });
+      
+      for (const delegation of nextDelegations) {
+        stack.push(delegation.toRole);
+      }
+    }
+    
+    return false; // Kein Zyklus
+  }
+}
+```
+
+### 2.4 Ron-Anonymisierung mit 84-Tage-Automatik
+
+**Ron-System als Anonymisierungs-Platzhalter:**
+- **Ron-Rolle**: Permanente Platzhalter-Rolle auf der Karte für anonymisierte Inhalte
+- **84-Tage-Schwelle**: Nur Inhalte älter als 84 Tage sind für Ron-Transfer berechtigt
+- **Opt-in-Mechanismus**: Nutzer müssen die Ron-Option explizit aktivieren
+- **Automatische Übertragung**: Täglich laufender Background-Job bei aktivierter Option
+- **Sofortige Übertragung**: Bei Aktivierung können berechtigte Inhalte sofort übertragen werden
+- **Faden-Transfer**: Alle Fäden werden von ursprünglicher Rolle getrennt und an Ron angeheftet
+- **Content-Anonymisierung**: Namen in allen Beiträgen werden durch "Ron" ersetzt
+- **Ausstieg über Ron**: Beim Ausstieg werden alle Inhalte sofort an Ron übertragen
+
+```typescript
+class RonManager {
+  private static readonly RON_USER_ID = 'ron-placeholder-uuid';
+  private static readonly ANONYMIZATION_THRESHOLD_DAYS = 84;
+  
+  async enableRonOption(rolleId: string): Promise<void> {
+    await this.db.rollen.update({
+      where: { id: rolleId },
+      data: { 
+        ron_option_enabled: true, 
+        ron_enabled_at: new Date() 
+      }
+    });
+    
+    await this.eventBus.publish({
+      type: 'RonOptionEnabled',
+      aggregateId: rolleId,
+      subject: 'wg.kleinroennau.social',
+      payload: {
+        rolleId,
+        enabledAt: new Date(),
+        thresholdDays: this.ANONYMIZATION_THRESHOLD_DAYS
+      },
+      meta: {
+        actor: rolleId,
+        transparency: 'full_public'
+      }
+    });
+    
+    // Prüfe sofort übertragbare Inhalte
+    await this.checkAndTransferEligibleContent(rolleId);
+  }
+  
+  async initiateExitViaRon(rolleId: string): Promise<ExitResult> {
+    // Sofortige Übertragung ALLER Inhalte an Ron (unabhängig vom Alter)
+    const allContent = await this.getAllContentForRole(rolleId);
+    await this.transferAllContentToRon(rolleId, allContent);
+    
+    // Rolle als "exiting" markieren
+    await this.db.rollen.update({
+      where: { id: rolleId },
+      data: {
+        is_exiting: true,
+        exit_started_at: new Date(),
+        exit_complete_at: new Date(Date.now() + 84 * 24 * 60 * 60 * 1000) // 84 Tage
+      }
+    });
+    
+    await this.eventBus.publish({
+      type: 'RoleExitViaRonInitiated',
+      aggregateId: rolleId,
+      subject: 'wg.kleinroennau.social',
+      payload: {
+        rolleId,
+        exitStarted: new Date(),
+        contentTransferredImmediately: true,
+        completeRemovalIn: 84,
+        allContentMovedToRon: true
+      }
+    });
+    
+    // Schedule komplette Entfernung nach 84 Tagen
+    await this.scheduleCompleteRoleRemoval(rolleId, 84);
+    
+    return {
+      exitId: generateULID(),
+      daysUntilRemoval: 84,
+      contentTransferred: allContent.length,
+      message: 'Alle deine Inhalte wurden an Ron übertragen. In 84 Tagen wird deine Rolle komplett entfernt.'
+    };
+  }
+  
+  async checkAndTransferEligibleContent(rolleId: string): Promise<RonTransferResult> {
+    const user = await this.db.rollen.findUnique({ where: { id: rolleId } });
+    if (!user?.ron_option_enabled) {
+      throw new Error('Ron-Option nicht aktiviert');
+    }
+    
+    const thresholdDate = new Date();
+    thresholdDate.setDate(thresholdDate.getDate() - this.ANONYMIZATION_THRESHOLD_DAYS);
+    
+    const eligibleContent = await this.findEligibleContent(rolleId, thresholdDate);
+    
+    if (eligibleContent.length === 0) {
+      return { transferred: 0, message: 'Keine Inhalte für Ron-Transfer verfügbar' };
+    }
+    
+    return await this.transferContentToRon(rolleId, eligibleContent);
+  }
+  
+  private async transferContentToRon(rolleId: string, content: ContentItem[]): Promise<RonTransferResult> {
+    await this.ensureRonRoleExists();
+    
+    for (const item of content) {
+      switch (item.type) {
+        case 'faden':
+          await this.transferFadenToRon(item.id, rolleId);
+          break;
+        case 'thread_post':
+          await this.transferThreadPostToRon(item.id, rolleId);
+          break;
+        case 'knoten_content':
+          await this.transferKnotenContentToRon(item.id, rolleId);
+          break;
+      }
+    }
+    
+    await this.eventBus.publish({
+      type: 'ContentTransferredToRon',
+      aggregateId: rolleId,
+      subject: 'wg.kleinroennau.social',
+      payload: {
+        originalRolleId: rolleId,
+        ronRolleId: this.RON_USER_ID,
+        itemsTransferred: content.length,
+        transferredAt: new Date(),
+        thresholdDate: new Date(Date.now() - (this.ANONYMIZATION_THRESHOLD_DAYS * 24 * 60 * 60 * 1000))
+      }
+    });
+    
+    return {
+      transferred: content.length,
+      message: `${content.length} Inhalte erfolgreich an Ron übertragen`
+    };
+  }
+  
+  private async ensureRonRoleExists(): Promise<void> {
+    let ronRolle = await this.db.rollen.findUnique({
+      where: { id: this.RON_USER_ID }
+    });
+    
+    if (!ronRolle) {
+      ronRolle = await this.db.rollen.create({
+        data: {
+          id: this.RON_USER_ID,
+          name: 'Ron',
+          email: 'ron@weltgewebe.placeholder',
+          avatar: 'anonymous-placeholder',
+          coords: st.point(9.993682, 53.551086), // Hamburg Zentrum
+          h3: 599686042433355775,
+          is_placeholder: true,
+          is_active: true,
+          can_perform_actions: false
+        }
+      });
+      
+      await this.eventBus.publish({
+        type: 'RonPlaceholderCreated',
+        aggregateId: this.RON_USER_ID,
+        subject: 'wg.kleinroennau.social',
+        payload: {
+          ronRolleId: this.RON_USER_ID,
+          createdAt: new Date(),
+          purpose: 'Platzhalter für anonymisierte Inhalte'
+        }
+      });
+    }
+  }
+  
+  async dailyRonJob(): Promise<void> {
+    // 1. Prüfe alle Nutzer mit aktivierter Ron-Option
+    const ronUsers = await this.getUsersWithRonEnabled();
+    
+    let totalTransferred = 0;
+    for (const user of ronUsers) {
+      const result = await this.checkAndTransferEligibleContent(user.id);
+      totalTransferred += result.transferred;
+    }
+    
+    // 2. Prüfe aussteigende Rollen für komplette Entfernung
+    const rolesForRemoval = await this.getRolesScheduledForRemoval();
+    
+    for (const role of rolesForRemoval) {
+      await this.completeRoleRemoval(role.id);
+    }
+    
+    console.log(`Ron Daily Job: ${totalTransferred} items transferred, ${rolesForRemoval.length} roles removed`);
+  }
+  
+  private async completeRoleRemoval(rolleId: string): Promise<void> {
+    // Entferne Rolle komplett aus dem System
+    await this.db.rollen.delete({
+      where: { id: rolleId }
+    });
+    
+    await this.eventBus.publish({
+      type: 'RoleCompletelyRemoved',
+      aggregateId: rolleId,
+      subject: 'wg.kleinroennau.social',
+      payload: {
+        rolleId,
+        removedAt: new Date(),
+        contentPreviouslyTransferredToRon: true,
+        exitProcessComplete: true
+      }
+    });
+  }
+}
+```
+
+### 2.5 Verzwirn-Schutz mit Peer-Konsens
+
+**Verzwirnung als einzige Quelle der Wahrheit:**
+- **Grundregel**: Jeder darf jeden Knoten bearbeiten
+- **Schutz**: Verzwirnte Bereiche sind editiersicher
+- **Granularität**: Verzwirnung gilt für spezifische JSON-Pointer-Pfade
+- **Vollschutz**: Verzwirnung mit Scope `"full"` sperrt den gesamten Knoten
+- **Strukturknoten-Schutz**: Kritische Eigenschaften sind per Default verzwirnt
+- **Peer-Validierung**: Verzwirnungen erfordern 2-von-N Peer-Bestätigung
+- **Vollständige Sichtbarkeit**: Alle Verzwirnungen sind öffentlich einsehbar
+
+### 2.6 Knoten-Lebenszyklus mit klaren Regeln
+
+**Strukturknoten sind permanent:**
+- **Gewebekonto, Webrat, Nähstübchen, Ron-Platzhalter** verfallen niemals
+- **Standard-Knoten** folgen Garn-Schutz-Regeln
+- **Verfall startet erst**, wenn letzter Faden/Garn entknüpft/verblasst ist
+- **7-Tage-Fade**: UI-Opacity steigt linear, dann Verfall
+- **Ron-Transfer schützt**: An Ron übertragene Inhalte verfallen nicht
+
+***
+
+## 3) Event-Schema & Technische Architektur
+
+### 3.1 Event-Schema mit vollständiger Transparenz
+
+```json
+{
+  "id": "01HZXY9ABCDEFGHIJK",
+  "type": "AntragGestellt",
+  "subtype": "dezentral",
+  "aggregateId": "antrag-550e8400-e29b-41d4-a716-446655440000",
+  "aggregateType": "antrag",
+  "ts": "2025-08-22T12:00:00.000Z",
+  "subject": "wg.kleinroennau.social",
+  "signature": "ed25519:abc123def456789abcdef...",
+  "prev_hash": "sha256:abc123def456...",
+  "payload": {
+    "antragId": "antrag-uuid...",
+    "title": "Gemeinschaftsgarten erweitern",
+    "content": "Ich schlage vor, den Garten um 50qm zu erweitern...",
+    "authorRole": "rolle-uuid...",
+    "authorName": "Max Mustermann",
+    "location": "knoten-uuid...",
+    "einspruchBis": "2025-08-29T12:00:00.000Z",
+    "phase": "einspruch_phase",
+    "dringlichkeit": "normal",
+    "antragsfadenToWebrat": true,
+    "timerVisualization": true
+  },
+  "meta": {
+    "actor": "rolle-uuid...",
+    "transparency": "full_public",
+    "governanceAction": true,
+    "location": "überall_möglich"
+  }
+}
+```
+
+### 3.2 Delegations-Events
+
+```json
+{
+  "type": "DelegationCreated",
+  "aggregateId": "delegation-uuid",
+  "subject": "wg.kleinroennau.social",
+  "payload": {
+    "delegationId": "delegation-uuid",
+    "fromRole": "rolle1-uuid",
+    "fromName": "Alice Schmidt",
+    "toRole": "rolle2-uuid",
+    "toName": "Bob Weber",
+    "createdAt": "2025-08-22T12:00:00.000Z",
+    "expiresAt": "2025-09-19T12:00:00.000Z",
+    "phase": "A",
+    "delegationsFadenCreated": true
+  },
+  "meta": {
+    "actor": "rolle1-uuid",
+    "transparency": "full_public",
+    "stimmübertragung": true
+  }
+}
+```
+
+### 3.3 Ron-Transfer-Events
+
+```json
+{
+  "type": "ContentTransferredToRon",
+  "aggregateId": "rolle-uuid",
+  "subject": "wg.kleinroennau.social",
+  "payload": {
+    "originalRolleId": "rolle-uuid",
+    "originalRolleName": "Max Mustermann",
+    "ronRolleId": "ron-placeholder-uuid",
+    "itemsTransferred": 15,
+    "transferTypes": {
+      "faeden": 8,
+      "threadPosts": 5,
+      "knotenContent": 2
+    },
+    "transferredAt": "2025-08-22T06:00:00.000Z",
+    "thresholdDate": "2025-05-30T06:00:00.000Z",
+    "automaticTransfer": true,
+    "ronOptionEnabled": true
+  },
+  "meta": {
+    "executor": "system",
+    "automation": "ron_daily_job",
+    "privacy": "anonymization"
+  }
+}
+```
+
+### 3.4 Governance-Timer-Events
+
+```json
+{
+  "type": "GovernanceTimerExpired",
+  "aggregateId": "antrag-uuid",
+  "subject": "wg.kleinroennau.social",
+  "payload": {
+    "antragId": "antrag-uuid",
+    "timerType": "einspruch_phase",
+    "expiredAt": "2025-08-29T12:00:00.000Z",
+    "einsprücheReceived": 0,
+    "automaticAcceptance": true,
+    "executionTriggered": true
+  },
+  "meta": {
+    "executor": "system",
+    "automation": "governance_timer",
+    "democratic_process": "7_day_default"
+  }
+}
+```
+
+### 3.5 Abstimmungs-Events mit Delegation
+
+```json
+{
+  "type": "StimmeAbgegebenMitDelegation",
+  "aggregateId": "abstimmung-uuid",
+  "subject": "wg.kleinroennau.social",
+  "payload": {
+    "abstimmungId": "abstimmung-uuid",
+    "voterId": "rolle-uuid",
+    "voterName": "Alice Schmidt",
+    "choice": "ja",
+    "reasoning": "Unterstütze die Gartenerweiterung vollständig",
+    "voteWeight": 3,
+    "ownVote": 1,
+    "delegatedVotes": 2,
+    "delegatedFrom": [
+      {
+        "roleId": "rolle2-uuid",
+        "roleName": "Charlie Brown"
+      },
+      {
+        "roleId": "rolle3-uuid", 
+        "roleName": "Dana Wilson"
+      }
+    ],
+    "timestamp": "2025-08-27T14:30:00.000Z"
+  },
+  "meta": {
+    "actor": "rolle-uuid",
+    "transparency": "full_public",
+    "governanceParticipation": true,
+    "delegation_system": "active"
+  }
+}
+```
+
+### 3.6 Aktion→Event→Faden Mapping (v15.1)
+
+| Benutzeraktion | Event(s) | Faden | Webungs-Rotation | Sichtbarkeit | Besonderheit |
+|---|---|---|---|---|---|
+| **Antrag stellen** | `AntragGestellt` | **Orange zum Webrat** | **7s** | **Öffentlich + Timer** | **Überall möglich** |
+| **Einspruch erheben** | `EinspruchErhoben` | Ja | **7s** | **Öffentlich** | **7d Verlängerung** |
+| **Abstimmen** | `StimmeAbgegebenMitDelegation` | Ja | **7s** | **Name + Stimme + Delegationen** | **→ Webrat** |
+| **Delegation erstellen** | `DelegationCreated` | **Grauer Pfeil** | **7s** | **Öffentlich** | **4 Wochen Ablauf** |
+| **Ron-Option aktivieren** | `RonOptionEnabled` + Content-Transfer | Transfer-Fäden | **7s** | **Öffentlich** | **84d Automatik** |
+| **Ausstieg via Ron** | `RoleExitViaRonInitiated` → Transfer → Removal | Alle zu Ron | Nein | **Öffentlich** | **84d bis Löschung** |
+| Kommentar/Edit | `FadenGesponnen{gespräch/gestaltung}` | Ja | **7s** | **Öffentlich** | Standard |
+| **Spende** | `GoldfadenInitiated` | **Gold zum Gewebekonto** | **7s** | **Betrag + Name** | **→ Gewebekonto** |
+| Verzwirnen | `FadenVerzwirnt` | - | **7s** | **Öffentlich** | Schutz |
+
+***
+
+## 4) System-Architektur & Hetzner-Implementation
+
+### 4.1 Hetzner-optimierte System-Architektur
+
+```
+[SvelteKit PWA + MapLibre + ServiceWorker + Dexie + Ed25519-Crypto]
+   │  HTTPS/WSS (TLS 1.3, CSP strict)
+   ▼
+[Hetzner Load Balancer LB11] ──→ [Fastify API + Governance-Engine]
+   │                              │  Zod-Validation, Commands→Events
+   │                              │  Auth: WebAuthn + Magic-Link + Session
+   │                              │  🆕 Governance-Manager (7+7d Anträge)
+   │                              │  🆕 Delegation-Manager (Stimmübertragung)
+   │                              │  🆕 Ron-Manager (84d Anonymisierung)
+   │                              │  🆕 Timer-Scheduler (Antrag-Automation)
+   │                              ▼
+   │                         [EventBus (Hetzner-optimiert)]
+   │                           ├─→ [NATS JetStream] (Primary SoR)
+   │                           └─→ [Redis Streams] (Cache + Sessions)
+   │                                 │
+   │                                 ├─→ [Projection Worker]
+   │                                 │     └─→ [PostgreSQL + PostGIS (Hetzner CPX)]
+   │                                 │           ├─→ Governance-Projections
+   │                                 │           ├─→ Delegation-Projections  
+   │                                 │           ├─→ Ron-Content-Projections
+   │                                 │           └─→ Timer-Projections
+   │                                 │
+   │                                 └─→ [Background Jobs]
+   │                                       ├─→ [BullMQ Timer] (7d/4w expiry)
+   │                                       ├─→ [Governance-Timer] (Anträge)
+   │                                       ├─→ [Delegation-Expiry] (4w check)
+   │                                       ├─→ [Ron-Daily-Job] (84d transfers)
+   │                                       └─→ [FinTS Poller] (Gewebekonto)
+   │
+   └─→ [Hetzner Cloud Monitoring]
+         ├─→ [Netdata] (Server-Monitoring)
+         ├─→ [Custom Governance Metrics] 
+         ├─→ [Hetzner Cloud API] (Cost-Tracking)
+         └─→ [Healthchecks.io] (Uptime)
+```
+
+### 4.2 Hetzner Cloud Kosten-Phasen
+
+**Phase A (0-200 Nutzer): €90-200/Monat**
+- **Hetzner CX22** (2 vCPU, 4GB RAM, 40GB SSD) - €5.29/Monat
+- **PostgreSQL + Redis + NATS** auf demselben Server
+- **Object Storage** 100GB - €6/Monat für Backups
+- **Traffic** 1TB included, danach €1.25/TB
+- **Snapshot** wöchentlich - €2/Monat
+- **Floating IP** - €1.19/Monat
+- **DNS** kostenlos
+- **Monitoring** Netdata (kostenlos)
+
+**Phase B (200-1000 Nutzer): €200-400/Monat**  
+- **Hetzner CPX31** (2 vCPU, 8GB RAM) API-Server - €16.90/Monat
+- **2x CX32** (4 vCPU, 8GB RAM) Worker - €19.50/Monat je
+- **Load Balancer LB11** - €7.46/Monat
+- **Block Storage** 100GB für PostgreSQL - €10/Monat
+- **Object Storage** 500GB - €12.50/Monat
+- **Backup Space** 500GB - €6.25/Monat
+
+**Phase C (1000+ Nutzer): Community-finanziert**
+- **Dedicated CCX32** oder **Multiple CPX** je nach Workload
+- **Multi-Region Setup** (Nürnberg + Helsinki)
+- **Professional Backup** & 24/7 Monitoring
+
+### 4.3 Governance-Engine Implementation
+
+```typescript
+class GovernanceEngine {
+  constructor(
+    private eventBus: EventBus,
+    private delegationManager: DelegationManager,
+    private timerScheduler: TimerScheduler,
+    private ronManager: RonManager
+  ) {}
+  
+  async createAntragAtLocation(
+    location: GeoPoint | string, 
+    authorId: string, 
+    antragData: CreateAntragRequest
+  ): Promise<Antrag> {
+    const antragId = generateULID();
+    const einspruchBis = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    
+    // Antrag in der Datenbank erstellen
+    const antrag = await this.db.antraege.create({
+      data: {
+        id: antragId,
+        title: antragData.title,
+        content: antragData.content,
+        authorRole: authorId,
+        location: typeof location === 'string' ? location : `${location.lat},${location.lng}`,
+        einspruchBis,
+        phase: 'einspruch_phase',
+        dringlichkeit: antragData.dringlichkeit || 'normal'
+      }
+    });
+    
+    // Orangenen Antragsfaden zum Webrat erstellen
+    await this.createAntragsfaden({
+      fromRole: authorId,
+      toStructuralNode: WEBRAT_STRUKTURKNOTEN,
+      antragId,
+      expiresAt: einspruchBis,
+      color: 'orange',
+      showTimer: true,
+      dringlichkeit: antragData.dringlichkeit
+    });
+    
+    // Event für Transparenz
+    await this.eventBus.publish({
+      type: 'AntragGestellt',
+      aggregateId: antragId,
+      subject: 'wg.kleinroennau.social',
+      payload: {
+        antragId,
+        title: antragData.title,
+        authorRole: authorId,
+        authorName: await this.getRoleName(authorId),
+        location: location,
+        einspruchBis,
+        phase: 'einspruch_phase',
+        antragsfadenToWebrat: true,
+        dezentraleAntragsstellung: true
+      },
+      meta: {
+        actor: authorId,
+        transparency: 'full_public',
+        governanceAction: true
+      }
+    });
+    
+    // Timer für automatische Verarbeitung
+    await this.timerScheduler.scheduleGovernanceTimer(antragId, einspruchBis, 'einspruch_phase');
+    
+    return antrag;
+  }
+  
+  async processGovernanceTimer(antragId: string, timerType: TimerType): Promise<void> {
+    const antrag = await this.getAntrag(antragId);
+    if (!antrag) return;
+    
+    switch (timerType) {
+      case 'einspruch_phase':
+        const einsprüche = await this.getEinsprücheFor(antragId);
+        
+        if (einsprüche.length === 0) {
+          // Automatische Annahme ohne Einsprüche
+          await this.executeAntrag(antragId);
+          await this.eventBus.publish({
+            type: 'AntragAngenommen',
+            aggregateId: antragId,
+            payload: {
+              antragId,
+              reason: 'keine_einsprueche',
+              automaticAcceptance: true,
+              executedAt: new Date()
+            }
+          });
+        }
+        break;
+        
+      case 'abstimmung_phase':
+        // Abstimmung beenden und auszählen
+        const votes = await this.countVotesWithDelegation(antragId);
+        const result = votes.ja > votes.nein ? 'angenommen' : 'abgelehnt';
+        
+        if (result === 'angenommen') {
+          await this.executeAntrag(antragId);
+        } else {
+          await this.rejectAntrag(antragId);
+        }
+        
+        await this.eventBus.publish({
+          type: `Antrag${result === 'angenommen' ? 'Angenommen' : 'Abgelehnt'}`,
+          aggregateId: antragId,
+          payload: {
+            antragId,
+            reason: 'mehrheitsentscheidung',
+            votes: votes,
+            finalResult: result
+          }
+        });
+        break;
+    }
+  }
+  
+  private async countVotesWithDelegation(antragId: string): Promise<VoteResult> {
+    const directVotes = await this.db.abstimmungen.findMany({
+      where: { antragId },
+      include: { rolle: true }
+    });
+    
+    let jaStimmen = 0;
+    let neinStimmen = 0;
+    let enthaltungen = 0;
+    
+    for (const vote of directVotes) {
+      const weight = await this.delegationManager.getVoteWeight(vote.rolle_id);
+      
+      switch (vote.choice) {
+        case 'ja':
+          jaStimmen += weight;
+          break;
+        case 'nein':
+          neinStimmen += weight;
+          break;
+        case 'enthaltung':
+          enthaltungen += weight;
+          break;
+      }
+    }
+    
+    return {
+      ja: jaStimmen,
+      nein: neinStimmen,
+      enthaltung: enthaltungen,
+      total: jaStimmen + neinStimmen + enthaltungen
+    };
+  }
+  
+  async createAntragsfaden(fadenData: AntragsfadenData): Promise<void> {
+    await this.db.faeden.create({
+      data: {
+        id: generateULID(),
+        from_rolle: fadenData.fromRole,
+        to_strukturknoten: fadenData.toStructuralNode,
+        subtype: 'antrag',
+        antrag_id: fadenData.antragId,
+        expires_at: fadenData.expiresAt,
+        color: fadenData.color,
+        show_timer: fadenData.showTimer,
+        dringlichkeit: fadenData.dringlichkeit,
+        is_structural_connection: true
+      }
+    });
+  }
+}
+```
+
+### 4.4 Hetzner-Database-Schema mit Governance & Ron
+
+```sql
+-- Basis-Rollen mit Ron & Delegation Support
+CREATE TABLE rollen (
+  id UUID PRIMARY KEY,
+  name TEXT NOT NULL,
+  email TEXT UNIQUE,
+  avatar TEXT,
+  coords GEOGRAPHY(POINT) NOT NULL,
+  h3 BIGINT NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT now(),
+  updated_at TIMESTAMPTZ DEFAULT now(),
+  is_active BOOLEAN DEFAULT TRUE,
+  is_placeholder BOOLEAN DEFAULT FALSE, -- für Ron
+  is_exiting BOOLEAN DEFAULT FALSE, -- für Ron-Ausstieg
+  exit_started_at TIMESTAMPTZ,
+  exit_complete_at TIMESTAMPTZ,
+  ron_option_enabled BOOLEAN DEFAULT FALSE,
+  ron_enabled_at TIMESTAMPTZ,
+  last_activity TIMESTAMPTZ DEFAULT now(),
+  can_perform_actions BOOLEAN DEFAULT TRUE
+);
+
+-- Dezentrale Anträge  
+CREATE TABLE antraege (
+  id UUID PRIMARY KEY,
+  title TEXT NOT NULL,
+  content TEXT NOT NULL,
+  author_rolle UUID REFERENCES rollen(id) NOT NULL,
+  location TEXT NOT NULL, -- geografisch oder knoten-id
+  created_at TIMESTAMPTZ DEFAULT now(),
+  einspruch_bis TIMESTAMPTZ NOT NULL,
+  abstimmung_bis TIMESTAMPTZ,
+  phase antrag_phase DEFAULT 'einspruch_phase', -- einspruch_phase|abstimmung_phase|abgeschlossen
+  dringlichkeit dringlichkeit_level DEFAULT 'normal', -- normal|wichtig|dringend
+  final_result TEXT, -- angenommen|abgelehnt
+  executed_at TIMESTAMPTZ,
+  h3 BIGINT -- für räumliche Queries
+);
+
+-- Einsprüche zu Anträgen
+CREATE TABLE einsprueche (
+  id UUID PRIMARY KEY,
+  antrag_id UUID REFERENCES antraege(id) NOT NULL,
+  rolle_id UUID REFERENCES rollen(id) NOT NULL,
+  reasoning TEXT,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- Abstimmungen mit Delegation Support
+CREATE TABLE abstimmungen (
+  id UUID PRIMARY KEY,
+  antrag_id UUID REFERENCES antraege(id) NOT NULL,
+  rolle_id UUID REFERENCES rollen(id) NOT NULL,
+  rolle_name TEXT NOT NULL, -- für Transparenz
+  choice vote_choice NOT NULL, -- ja|nein|enthaltung
+  reasoning TEXT,
+  vote_weight INTEGER DEFAULT 1,
+  delegated_from UUID[], -- Array von delegierenden Rollen-IDs
+  created_at TIMESTAMPTZ DEFAULT now(),
+  
+  UNIQUE(antrag_id, rolle_id) -- Eine Stimme pro Person pro Antrag
+);
+
+-- Delegationen (Stimmübertragung)
+CREATE TABLE delegationen (
+  id UUID PRIMARY KEY,
+  from_rolle UUID REFERENCES rollen(id) NOT NULL,
+  to_rolle UUID REFERENCES rollen(id) NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT now(),
+  expires_at TIMESTAMPTZ NOT NULL,
+  is_active BOOLEAN DEFAULT TRUE,
+  extended_count INTEGER DEFAULT 0,
+  
+  UNIQUE(from_rolle) -- Jeder kann nur an eine Person delegieren
+);
+
+-- Fäden mit Governance & Ron Support
+CREATE TABLE faeden (
+  id UUID PRIMARY KEY,
+  from_rolle UUID REFERENCES rollen(id),
+  to_knoten UUID,
+  to_strukturknoten strukturknoten_typ,
+  subtype faden_subtype NOT NULL,
+  content TEXT,
+  created_at TIMESTAMPTZ DEFAULT now(),
+  expires_at TIMESTAMPTZ,
+  is_garn BOOLEAN DEFAULT FALSE,
+  color TEXT DEFAULT 'blue',
+  show_timer BOOLEAN DEFAULT FALSE,
+  antrag_id UUID REFERENCES antraege(id), -- für Antragsfäden
+  delegation_id UUID REFERENCES delegationen(id), -- für Delegationsfäden
+  dringlichkeit dringlichkeit_level,
+  is_structural_connection BOOLEAN DEFAULT FALSE,
+  transferred_to_ron BOOLEAN DEFAULT FALSE,
+  original_rolle_id UUID, -- Audit für Ron-Transfers
+  ron_transferred_at TIMESTAMPTZ
+);
+
+-- Ron-Transfer-Audit
+CREATE TABLE ron_transfers (
+  id UUID PRIMARY KEY,
+  original_rolle_id UUID NOT NULL,
+  ron_rolle_id UUID NOT NULL,
+  transfer_type TEXT NOT NULL, -- 'faeden'|'posts'|'knoten'|'complete_exit'
+  items_transferred INTEGER NOT NULL,
+  transferred_at TIMESTAMPTZ DEFAULT now(),
+  threshold_date TIMESTAMPTZ,
+  trigger_type TEXT DEFAULT 'automatic', -- 'automatic'|'manual'|'exit'
+  exit_process BOOLEAN DEFAULT FALSE
+);
+
+-- Governance Timer für automatische Verarbeitung
+CREATE TABLE governance_timers (
+  id UUID PRIMARY KEY,
+  antrag_id UUID REFERENCES antraege(id) NOT NULL,
+  timer_type TEXT NOT NULL, -- 'einspruch_phase'|'abstimmung_phase'
+  expires_at TIMESTAMPTZ NOT NULL,
+  processed BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- Performance-Indizes für Hetzner PostgreSQL
+CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_antraege_phase_timer ON antraege(phase, einspruch_bis) WHERE phase = 'einspruch_phase';
+CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_antraege_abstimmung_timer ON antraege(phase, abstimmung_bis) WHERE phase = 'abstimmung_phase';
+CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_delegationen_active ON delegationen(is_active, expires_at) WHERE is_active = true;
+CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_rollen_ron_enabled ON rollen(ron_option_enabled, ron_enabled_at) WHERE ron_option_enabled = true;
+CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_rollen_exiting ON rollen(is_exiting, exit_complete_at) WHERE is_exiting = true;
+CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_faeden_ron_eligible ON faeden(from_rolle, created_at, transferred_to_ron) WHERE transferred_to_ron = false;
+CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_governance_timers_pending ON governance_timers(expires_at, processed) WHERE processed = false;
+
+-- H3-Index für räumliche Antragssuche
+CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_antraege_h3 ON antraege USING btree(h3);
+CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_rollen_h3 ON rollen USING btree(h3);
+
+-- Event-Store optimiert
+CREATE TABLE events (
+  id BIGSERIAL PRIMARY KEY,
+  stream_id UUID NOT NULL,
+  event_type TEXT NOT NULL,
+  event_version INTEGER NOT NULL,
+  event_data JSONB NOT NULL,
+  event_metadata JSONB NOT NULL DEFAULT '{}',
+  created_at TIMESTAMPTZ DEFAULT now(),
+  
+  UNIQUE(stream_id, event_version)
+);
+
+CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_events_stream ON events(stream_id, event_version);
+CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_events_type ON events(event_type, created_at);
+CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_events_created ON events(created_at);
+```
+
+### 4.5 Background Jobs für Hetzner-Optimierung
+
+```typescript
+// Governance Timer Job (läuft minütlich)
+async function governanceTimerJob() {
+  const expiredTimers = await db.governance_timers.findMany({
+    where: {
+      expires_at: { lte: new Date() },
+      processed: false
+    },
+    include: { antrag: true }
+  });
+  
+  for (const timer of expiredTimers) {
+    try {
+      await governanceEngine.processGovernanceTimer(timer.antrag_id, timer.timer_type);
+      
+      await db.governance_timers.update({
+        where: { id: timer.id },
+        data: { processed: true }
+      });
+    } catch (error) {
+      console.error(`Governance timer processing failed for ${timer.id}:`, error);
+    }
+  }
+}
+
+// Delegation Maintenance (täglich)
+async function delegationMaintenanceJob() {
+  // 1. Expire abgelaufene Delegationen
+  const expiredDelegations = await db.delegationen.updateMany({
+    where: {
+      expires_at: { lt: new Date() },
+      is_active: true
+    },
+    data: { is_active: false }
+  });
+  
+  // 2. Check Inaktivität (4 Wochen ohne Aktion)
+  const fourWeeksAgo = new Date(Date.now() - 4 * 7 * 24 * 60 * 60 * 1000);
+  const inactiveDelegations = await db.delegationen.updateMany({
+    where: {
+      from_rolle: {
+        in: await db.rollen.findMany({
+          where: { last_activity: { lt: fourWeeksAgo } },
+          select: { id: true }
+        }).then(roles => roles.map(r => r.id))
+      },
+      is_active: true
+    },
+    data: { is_active: false }
+  });
+  
+  console.log(`Delegation maintenance: ${expiredDelegations.count} expired, ${inactiveDelegations.count} inactive`);
+}
+
+// Ron Daily Job (läuft täglich um 02:00)
+async function ronDailyJob() {
+  // 1. Transfer eligible content for users with Ron option
+  const ronUsers = await db.rollen.findMany({
+    where: { ron_option_enabled: true },
+    select: { id: true }
+  });
+  
+  let totalTransferred = 0;
+  for (const user of ronUsers) {
+    const result = await ronManager.checkAndTransferEligibleContent(user.id);
+    totalTransferred += result.transferred;
+  }
+  
+  // 2. Complete role removals for exiting users
+  const rolesForRemoval = await db.rollen.findMany({
+    where: {
+      is_exiting: true,
+      exit_complete_at: { lte: new Date() }
+    }
+  });
+  
+  for (const role of rolesForRemoval) {
+    await ronManager.completeRoleRemoval(role.id);
+  }
+  
+  console.log(`Ron Daily Job: ${totalTransferred} items transferred, ${rolesForRemoval.length} roles removed`);
+}
+
+// Hetzner Cost Tracking (täglich)
+async function hetznerCostTrackingJob() {
+  const hetznerApi = new HetznerCloudAPI(process.env.HETZNER_API_TOKEN);
+  
+  const servers = await hetznerApi.getServers();
+  const loadBalancers = await hetznerApi.getLoadBalancers();
+  const volumes = await hetznerApi.getVolumes();
+  
+  let totalCost = 0;
+  totalCost += servers.reduce((sum, server) => sum + server.server_type.prices[0].price_monthly.net, 0);
+  totalCost += loadBalancers.reduce((sum, lb) => sum + lb.load_balancer_type.prices.price_monthly.net, 0);
+  totalCost += volumes.reduce((sum, vol) => sum + (vol.size * 0.10), 0); // €0.10/GB/month
+  
+  // Update cost metrics
+  await metrics.hetznerMonthlyCosts.set(totalCost);
+  
+  console.log(`Current Hetzner costs: €${totalCost.toFixed(2)}/month`);
+}
+
+// Job Scheduler
+cron.schedule('* * * * *', governanceTimerJob); // Jede Minute
+cron.schedule('0 1 * * *', delegationMaintenanceJob); // Täglich 01:00
+cron.schedule('0 2 * * *', ronDailyJob); // Täglich 02:00  
+cron.schedule('0 3 * * *', hetznerCostTrackingJob); // Täglich 03:00
+```
+
+***
+
+## 5) Performance & Monitoring
+
+### 5.1 Hetzner-optimierte Monitoring-Metriken
+
+```typescript
+export const weltgewebeMetrics = {
+  // Basis-System
+  activeRoles: new Gauge({
+    name: 'wg_active_roles_total',
+    help: 'Anzahl aktiver Rollen im Netzwerk'
+  }),
+  
+  ronPlaceholderContent: new Gauge({
+    name: 'wg_ron_content_items_total',
+    help: 'Anzahl Inhalte bei Ron-Platzhalter'
+  }),
+  
+  exitingRoles: new Gauge({
+    name: 'wg_exiting_roles_total', 
+    help: 'Anzahl Rollen im Ron-Ausstiegsprozess'
+  }),
+  
+  // Governance-Metriken
+  activeAntraege: new Gauge({
+    name: 'wg_active_antraege_total',
+    help: 'Aktive Anträge in Einspruchs- oder Abstimmungsphase',
+    labelNames: ['phase', 'dringlichkeit']
+  }),
+  
+  antraegePerDay: new Counter({
+    name: 'wg_antraege_created_daily_total',
+    help: 'Täglich erstellte Anträge',
+    labelNames: ['location_type', 'dringlichkeit']
+  }),
+  
+  governanceTimerProcessing: new Histogram({
+    name: 'wg_governance_timer_duration_ms',
+    help: 'Zeit für Governance-Timer-Verarbeitung',
+    labelNames: ['timer_type'],
+    buckets: [100, 250, 500, 1000, 2500, 5000]
+  }),
+  
+  einspruecheRatio: new Gauge({
+    name: 'wg_einsprueche_ratio',
+    help: 'Verhältnis Anträge mit Einspruch zu Gesamt-Anträgen'
+  }),
+  
+  // Delegation-Metriken
+  activeDelegations: new Gauge({
+    name: 'wg_active_delegations_total',
+    help: 'Anzahl aktiver Delegationen'
+  }),
+  
+  averageVoteWeight: new Gauge({
+    name: 'wg_average_vote_weight',
+    help: 'Durchschnittliches Stimmgewicht pro aktiver Rolle'
+  }),
+  
+  delegationChainLength: new Histogram({
+    name: 'wg_delegation_chain_length',
+    help: 'Länge der Delegationsketten (Phase B)',
+    buckets: [1, 2, 3, 4, 5]
+  }),
+  
+  // Ron-Metriken
+  ronTransfersDaily: new Counter({
+    name: 'wg_ron_transfers_daily_total',
+    help: 'Tägliche Ron-Übertragungen',
+    labelNames: ['trigger_type']
+  }),
+  
+  ronOptionUsers: new Gauge({
+    name: 'wg_ron_option_enabled_users',
+    help: 'Anzahl Nutzer mit aktivierter Ron-Option'
+  }),
+  
+  averageContentAge: new Gauge({
+    name: 'wg_average_content_age_days',
+    help: 'Durchschnittsalter von Inhalten vor Ron-Transfer'
+  }),
+  
+  // Hetzner-Kosten
+  hetznerMonthlyCosts: new Gauge({
+    name: 'wg_hetzner_monthly_costs_eur',
+    help: 'Monatliche Hetzner-Kosten in EUR',
+    labelNames: ['resource_type']
+  }),
+  
+  costPerActiveUser: new Gauge({
+    name: 'wg_cost_per_active_user_eur',
+    help: 'Kosten pro aktiven Nutzer pro Monat'
+  }),
+  
+  resourceUtilization: new Gauge({
+    name: 'wg_resource_utilization_percent',
+    help: 'Ressourcen-Auslastung auf Hetzner-Servern',
+    labelNames: ['resource_type', 'server_id']
+  }),
+  
+  // Performance
+  apiResponseTime: new Histogram({
+    name: 'wg_api_response_time_ms',
+    help: 'API-Response-Zeit',
+    labelNames: ['endpoint', 'method'],
+    buckets: [10, 25, 50, 100, 250, 500, 1000]
+  }),
+  
+  mapProjectionTime: new Histogram({
+    name: 'wg_map_projection_duration_ms',
+    help: 'Zeit für Karten-Daten-Projektion',
+    labelNames: ['zoom_level', 'data_type'],
+    buckets: [50, 100, 250, 500, 1000]
+  }),
+  
+  databaseQueryTime: new Histogram({
+    name: 'wg_database_query_duration_ms',
+    help: 'Datenbankabfrage-Zeit',
+    labelNames: ['query_type'],
+    buckets: [5, 10, 25, 50, 100, 250, 500]
+  }),
+  
+  // Event-Sourcing
+  eventProcessingLatency: new Histogram({
+    name: 'wg_event_processing_duration_ms',
+    help: 'Event-Verarbeitungszeit',
+    labelNames: ['event_type'],
+    buckets: [1, 5, 10, 25, 50, 100, 250]
+  }),
+  
+  eventsPerSecond: new Gauge({
+    name: 'wg_events_per_second',
+    help: 'Events pro Sekunde'
+  })
+};
+```
+
+### 5.2 Hetzner-Alert-Regeln
+
+```yaml
+# hetzner-weltgewebe-alerts.yml
+groups:
+- name: weltgewebe-hetzner.rules
+  rules:
+  
+  # System Health auf Hetzner
+  - alert: HetznerServerDown
+    expr: up{job="weltgewebe"} == 0
+    for: 2m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Hetzner-Server nicht erreichbar"
+      description: "Server {{ $labels.instance }} ist seit 2 Minuten nicht erreichbar"
+      
+  - alert: HetznerHighCPU
+    expr: (100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)) > 80
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Hohe CPU-Last auf Hetzner-Server"
+      description: "CPU-Last auf {{ $labels.instance }}: {{ $value }}%"
+      
+  - alert: HetznerHighMemory
+    expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 85
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Hoher Arbeitsspeicher-Verbrauch"
+      description: "Memory-Usage auf {{ $labels.instance }}: {{ $value }}%"
+  
+  # Kosten-Monitoring
+  - alert: HetznerCostsHighPhaseA
+    expr: wg_hetzner_monthly_costs_eur > 250
+    for: 30m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Hetzner-Kosten überschreiten Phase A Budget"
+      description: "Aktuelle Kosten: €{{ $value }}/Monat (Budget: €200)"
+      
+  - alert: CostPerUserTooHigh
+    expr: wg_cost_per_active_user_eur > 2.00
+    for: 1h
+    labels:
+      severity: warning
+    annotations:
+      summary: "Kosten pro Nutzer zu hoch"
+      description: "€{{ $value }} pro Nutzer/Monat (Ziel: <€1.00)"
+  
+  # Governance-Health
+  - alert: GovernanceTimerBacklog
+    expr: count(wg_governance_timer_duration_ms_bucket) > 50
+    for: 15m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Governance-Timer-Rückstau"
+      description: "{{ $value }} Timer in der Warteschlange"
+      
+  - alert: NoGovernanceActivity
+    expr: increase(wg_antraege_created_daily_total[24h]) == 0
+    for: 48h
+    labels:
+      severity: info
+    annotations:
+      summary: "Keine Governance-Aktivität"
+      description: "Keine Anträge in den letzten 48 Stunden"
+      
+  - alert: HighEinspruchsRatio
+    expr: wg_einsprueche_ratio > 0.8
+    for: 6h
+    labels:
+      severity: info
+    annotations:
+      summary: "Hohe Einspruchs-Rate"
+      description: "{{ $value }}% der Anträge erhalten Einsprüche"
+  
+  # Ron-System Health
+  - alert: RonTransferFailures
+    expr: rate(wg_ron_transfers_daily_total[1h]) == 0 AND wg_ron_option_enabled_users > 0
+    for: 4h
+    labels:
+      severity: warning
+    annotations:
+      summary: "Ron-Transfers funktionieren nicht"
+      description: "Keine Ron-Transfers trotz aktiver Nutzer"
+      
+  - alert: TooManyRonUsers
+    expr: (wg_ron_option_enabled_users / wg_active_roles_total) > 0.7
+    for: 24h
+    labels:
+      severity: info
+    annotations:
+      summary: "Viele Nutzer verwenden Ron-Option"
+      description: "{{ $value }}% der Nutzer haben Ron aktiviert"
+  
+  # Performance Alerts
+  - alert: SlowAPIResponses
+    expr: histogram_quantile(0.95, wg_api_response_time_ms) > 1000
+    for: 10m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Langsame API-Antwortzeiten"
+      description: "P95 Response-Zeit: {{ $value }}ms"
+      
+  - alert: SlowMapProjection
+    expr: histogram_quantile(0.90, wg_map_projection_duration_ms) > 500
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Langsame Karten-Projektion"
+      description: "P90 Projektions-Zeit: {{ $value }}ms"
+      
+  - alert: DatabasePerformanceDegraded
+    expr: histogram_quantile(0.95, wg_database_query_duration_ms) > 250
+    for: 15m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Langsame Datenbankabfragen"
+      description: "P95 Query-Zeit: {{ $value }}ms"
+  
+  # Delegation Health  
+  - alert: BrokenDelegationChains
+    expr: wg_delegation_chain_length{le="5"} < 0.95
+    for: 30m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Lange Delegationsketten erkannt"
+      description: "Delegationsketten länger als 5 Stufen"
+      
+  - alert: UnbalancedVoteWeights
+    expr: wg_average_vote_weight > 3.0
+    for: 2h
+    labels:
+      severity: info
+    annotations:
+      summary: "Unausgewogene Stimmgewichte"
+      description: "Durchschnittliches Stimmgewicht: {{ $value }}"
+```
+
+### 5.3 Netdata-Konfiguration für Hetzner
+
+```yaml
+# netdata.conf für Hetzner-Server
+[global]
+    hostname = weltgewebe-prod
+    update every = 2
+    memory mode = ram
+    page cache size = 32
+    
+[web]
+    web files owner = netdata
+    web files group = netdata
+    bind to = 127.0.0.1:19999
+    
+# Custom Weltgewebe Charts
+[plugin:apps]
+    apps_plugin = yes
+    
+[apps_groups]
+    weltgewebe: weltgewebe*
+    postgres: postgres*
+    redis: redis*
+    nats: nats*
+    nginx: nginx*
+    
+# PostgreSQL Monitoring
+[plugin:postgresql]
+    enabled = yes
+    
+# Redis Monitoring    
+[plugin:redis]
+    enabled = yes
+    
+# Custom Governance Metrics
+[plugin:python.d]
+    enabled = yes
+    
+# NATS Monitoring
+[plugin:go.d]
+    enabled = yes
+```
+
+***
+
+## 6) Rechtliche Grundlagen & Datenschutz
+
+### 6.1 Transparenz-First mit Ron-Option
+
+**Verarbeitungsgrundlagen (Art. 6 DSGVO):**
+- **Art. 6 Abs. 1 lit. a**: Explizite Einwilligung in vollständige Transparenz aller Aktionen
+- **Art. 6 Abs. 1 lit. a**: Separate Einwilligung in Ron-Anonymisierung (84-Tage-Option)
+- **Art. 6 Abs. 1 lit. f**: Berechtigtes Interesse an unveränderlichem Event-Log für Systemintegrität
+
+**Erweiterte Aufklärung mit Ron-System:**
+```typescript
+const transparencyDisclosureV15 = {
+  title: "Vollständige Aufklärung über Datenverarbeitung im Weltgewebe v15.1",
+  
+  coreMessage: `
+    Das Weltgewebe basiert auf radikaler Transparenz mit optionaler Anonymisierung.
+    Mit deiner Teilnahme stimmst du zu, dass ALLE deine Aktionen dauerhaft und 
+    öffentlich gespeichert werden. Du kannst die Ron-Option für automatische 
+    Anonymisierung nach 84 Tagen aktivieren.
+  `,
+  
+  governanceTransparency: {
+    description: "Vollständige Transparenz in der Governance",
+    details: [
+      "Jeder kann überall Anträge stellen (dezentral)",
+      "Alle Anträge sind mit 7-Tage-Timer öffentlich sichtbar",
+      "Einsprüche verlängern automatisch um weitere 7 Tage",
+      "Alle Abstimmungen mit Namen und Stimme öffentlich",
+      "Delegationen (Stimmübertragungen) sind vollständig sichtbar",
+      "Automatische Annahme ohne Einsprüche nach 7 Tagen"
+    ]
+  },
+  
+  ronAnonymization: {
+    description: "Optional: Ron-Anonymisierung nach 84 Tagen",
+    details: [
+      "Du kannst die Ron-Option jederzeit aktivieren",
+      "Nach 84 Tagen werden deine Beiträge automatisch an 'Ron' übertragen",
+      "Deine Inhalte bleiben erhalten, sind aber nicht mehr mit dir verknüpft",
+      "Bei Aktivierung können bereits vorhandene Inhalte sofort übertragen werden",
+      "Ausstieg erfolgt über Ron-Prozess mit 84-Tage-Wartezeit bis kompletter Entfernung"
+    ]
+  },
+  
+  dataProcessing: {
+    collected: [
+      "Name und Kontaktdaten",
+      "Geografische Position (H3-Zelle)",
+      "Alle Beiträge, Kommentare und Aktionen",
+      "Dezentrale Anträge und Abstimmungen mit Name",
+      "Delegationen (Stimmübertragungen) mit Name",
+      "Spenden mit Betrag und Name",
+      "Verbindungen zu anderen Rollen"
+    ],
+    
+    purpose: [
+      "Transparente Gemeinschaftsorganisation",
+      "Dezentrale Governance mit 7+7-Tage-Rhythmus",
+      "Öffentliche Abstimmungen und Delegationen",
+      "Unveränderlicher Audit-Trail",
+      "Ron-Anonymisierung nach 84 Tagen (optional)"
+    ],
+    
+    visibility: "Vollständig öffentlich für alle Teilnehmenden",
+    retention: "Dauerhaft (oder bis Ron-Transfer nach 84 Tagen)",
+    
+    recipients: [
+      "Alle aktiven Rollen im Netzwerk",
+      "Ron-Platzhalter für anonymisierte Inhalte",
+      "Peer-Network-Knoten für Verifikation"
+    ]
+  },
+  
+  yourRights: {
+    access: "Jederzeit Einsicht in alle deine Daten inklusive Ron-Transfers",
+    rectification: "Berichtigung bei falschen Daten möglich",
+    erasure: "Nur durch Ron-Transfer oder kompletten Ausstieg über Ron-Prozess",
+    portability: "Vollständiger Datenexport jederzeit möglich",
+    objection: "Widerspruch = Ausstieg über Ron-Prozess (84 Tage bis Entfernung)",
+    
+    ronSpecific: {
+      activation: "Ron-Option jederzeit aktivierbar/deaktivierbar",
+      transfer: "Sofortiger Transfer verfügbarer Inhalte möglich",
+      irreversibility: "Einmal an Ron übertragen, bleiben Inhalte dauerhaft bei Ron",
+      exitProcess: "Ausstieg über Ron mit vollständiger Entfernung nach 84 Tagen"
+    }
+  },
+  
+  governanceRights: {
+    participation: "Vollständige Teilnahme an dezentraler Governance",
+    anträge: "Anträge können überall gestellt werden",
+    delegation: "Stimmübertragung an andere Rollen möglich",
+    transparency: "Alle Governance-Aktionen sind namentlich sichtbar",
+    automaticAcceptance: "Anträge ohne Einspruch werden nach 7 Tagen automatisch angenommen"
+  }
+};
+```
+
+### 6.2 Datenschutzerklärung v15.1
+
+```markdown
+# Datenschutz im Weltgewebe v15.1
+
+## Grundprinzip: Transparenz mit Ron-Option
+Das Weltgewebe basiert auf **radikaler Transparenz** mit optionaler **Anonymisierung nach 84 Tagen**. 
+Alle deine Aktionen sind dauerhaft sichtbar, können aber über die Ron-Option zeitversetzt anonymisiert werden.
+
+## Dezentrale Governance (überall möglich)
+- **Anträge stellen**: Überall auf der Karte möglich, erscheinen automatisch im Webrat
+- **7-Tage-Einspruchsfrist**: Sichtbarer Timer, ohne Einspruch automatische Annahme  
+- **Einspruch**: Verlängert automatisch um weitere 7 Tage mit Abstimmung
+- **Transparente Abstimmungen**: Jede Stimme mit Namen sichtbar
+- **Delegationen**: Stimmübertragung an andere Personen mit sichtbaren Verbindungen
+
+## Ron-Anonymisierung (84-Tage-Option)
+- **Aktivierung**: Du aktivierst die Ron-Option in deinen Einstellungen
+- **Automatisch**: Nach 84 Tagen werden deine Beiträge automatisch an "Ron" übertragen
+- **Sofortiger Transfer**: Bei Aktivierung können berechtigte Inhalte sofort übertragen werden
+- **Irreversibilität**: Einmal an Ron übertragen, bleiben Inhalte dauerhaft bei Ron
+- **Freiwilligkeit**: Die Ron-Option ist vollständig optional
+
+## Ausstieg über Ron-Prozess
+Widerruf deiner Einwilligung bedeutet:
+- **Sofortiger Ron-Transfer**: Alle deine Inhalte werden sofort an Ron übertragen
+- **84-Tage-Wartezeit**: Deine Rolle bleibt als "im Ausstieg" sichtbar
+- **Komplette Entfernung**: Nach 84 Tagen wird deine Rolle vollständig gelöscht
+- **Nicht umkehrbar**: Der Ausstiegsprozess kann nicht rückgängig gemacht werden
+
+## Was passiert mit deinen Daten?
+- **Erfassung**: Name, Position, alle Beiträge, Anträge, Abstimmungen, Delegationen, Spenden
+- **Verwendung**: Transparente Gemeinschaftsorganisation und dezentrale Governance
+- **Sichtbarkeit**: Vollständig öffentlich für alle Teilnehmenden (oder Ron-anonymisiert)
+- **Speicherdauer**: Dauerhaft (oder bis Ron-Transfer nach 84 Tagen)
+
+## Deine Rechte
+- **Auskunft**: Jederzeit vollständige Einsicht inklusive Ron-Status
+- **Berichtigung**: Bei falschen Daten möglich
+- **Anonymisierung**: Über Ron-Option nach 84 Tagen
+- **Ausstieg**: Über Ron-Prozess mit 84-Tage-Entfernung
+- **Delegation**: Stimmübertragung jederzeit konfigurierbar
+
+## Rechtsgrundlage
+- Art. 6 Abs. 1 lit. a DSGVO (Einwilligung in Transparenz)
+- Art. 6 Abs. 1 lit. a DSGVO (Separate Einwilligung in Ron-Option)
+
+## Kontakt
+Bei Fragen: datenschutz@weltgewebe.net
+Datenschutzaufsicht: Je nach Bundesland
+
+## Technische Umsetzung
+- **Hetzner Cloud**: Server in Deutschland (DSGVO-konform)
+- **Event-Sourcing**: Unveränderlicher Audit-Trail
+- **Ed25519-Signaturen**: Peer-verifizierte Datenintegrität
+- **PostgreSQL**: Verschlüsselte Datenhaltung
+```
+
+### 6.3 Compliance-Manager mit Ron & Governance
+
+```typescript
+class ComplianceManagerV15 {
+  
+  async validateInformedConsent(consentData: ConsentDataV15): Promise<boolean> {
+    return (
+      consentData.understoodTransparency &&
+      consentData.understoodGovernanceTransparency &&
+      consentData.understoodRonOption &&
+      consentData.understoodExitProcess &&
+      consentData.acceptedConsequences &&
+      consentData.policyVersion === CURRENT_POLICY_VERSION
+    );
+  }
+  
+  async processWithdrawal(rolleId: string): Promise<WithdrawalResult> {
+    // Ausstieg über Ron-Prozess
+    return await ronManager.initiateExitViaRon(rolleId);
+  }
+  
+  async generateDataExport(rolleId: string): Promise<ExportDataV15> {
+    const rolle = await getRolleWithAllData(rolleId);
+    const ronTransfers = await getRonTransferHistory(rolleId);
+    const delegations = await getAllDelegations(rolleId);
+    const governanceActivity = await getGovernanceActivity(rolleId);
+    
+    return {
+      personalData: {
+        name: rolle.name,
+        email: rolle.email,
+        position: rolle.coords,
+        joinedAt: rolle.created_at,
+        ronOptionEnabled: rolle.ron_option_enabled,
+        isExiting: rolle.is_exiting
+      },
+      
+      activities: await getAllRoleActivities(rolleId),
+      
+      governance: {
+        anträge: governanceActivity.anträge,
+        votes: governanceActivity.votes,
+        einsprüche: governanceActivity.einsprüche,
+        delegationsGiven: delegations.given,
+        delegationsReceived: delegations.received
+      },
+      
+      ronData: {
+        transfers: ronTransfers,
+        eligibleContent: await getEligibleForRonTransfer(rolleId),
+        transferredContent: await getRonTransferredContent(rolleId)
+      },
+      
+      transparency: {
+        allDataPublic: true,
+        governanceTransparent: true,
+        delegationsVisible: true,
+        ronOptionAvailable: true,
+        retentionPeriod: rolle.ron_option_enabled ? "84 Tage bis Ron-Transfer" : "dauerhaft"
+      },
+      
+      format: "json",
+      exportedAt: new Date(),
+      dataIntegrity: await calculateDataHashV15(rolle)
+    };
+  }
+  
+  async handleRonOptionToggle(rolleId: string, enabled: boolean): Promise<void> {
+    if (enabled) {
+      await ronManager.enableRonOption(rolleId);
+      await this.logConsentChange(rolleId, 'ron_option_enabled');
+    } else {
+      await ronManager.disableRonOption(rolleId);
+      await this.logConsentChange(rolleId, 'ron_option_disabled');
+    }
+  }
+  
+  async getDelegationConsentStatus(rolleId: string): Promise<DelegationConsent> {
+    const delegations = await delegationManager.getAllDelegationsFor(rolleId);
+    
+    return {
+      hasGivenDelegations: delegations.given.length > 0,
+      hasReceivedDelegations: delegations.received.length > 0,
+      currentVoteWeight: await delegationManager.getVoteWeight(rolleId),
+      delegationTransparency: 'full_public',
+      allDelegationsVisible: true
+    };
+  }
+}
+```
+
+***
+
+## 7) Hetzner-Infrastrukturstrategie & Kosten
+
+### 7.1 Detaillierte Hetzner-Kostenrechnung
+
+**Phase A (0-200 Nutzer): €90-200/Monat**
+
+```yaml
+hetzner_phase_a:
+  compute:
+    - type: "CX22"
+      specs: "2 vCPU, 4GB RAM, 40GB SSD"
+      price_monthly: 5.29
+      use: "Kompletter Stack (API, DB, Redis, NATS)"
+      
+  storage:
+    - type: "Object Storage"
+      size_gb: 100
+      price_monthly: 6.00
+      use: "Backups, Event-Store-Archive"
+      
+  network:
+    - type: "Traffic"
+      included_tb: 1
+      overage_per_tb: 1.25
+      estimated_monthly: 0
+      
+    - type: "Floating IP"
+      price_monthly: 1.19
+      use: "Fail-over IP"
+      
+  backup:
+    - type: "Snapshot"
+      frequency: "weekly"
+      estimated_monthly: 2.00
+      
+  monitoring:
+    - type: "Netdata"
+      price_monthly: 0
+      
+    - type: "Healthchecks.io"
+      price_monthly: 7.00
+      use: "External uptime monitoring"
+
+total_phase_a: "€21.48 - €100 (je nach Traffic & Features)"
+```
+
+**Phase B (200-1000 Nutzer): €200-400/Monat**
+
+```yaml
+hetzner_phase_b:
+  compute:
+    - type: "CPX31" 
+      specs: "2 vCPU, 8GB RAM"
+      price_monthly: 16.90
+      use: "API Server"
+      
+    - type: "CX32"
+      specs: "4 vCPU, 8GB RAM" 
+      count: 2
+      price_monthly: 39.00  # 2x €19.50
+      use: "Worker Nodes (Event Processing, Background Jobs)"
+      
+  load_balancing:
+    - type: "LB11"
+      specs: "1 LB, bis 5000 concurrent connections"
+      price_monthly: 7.46
+      
+  storage:
+    - type: "Block Storage"
+      size_gb: 100
+      price_monthly: 10.00
+      use: "PostgreSQL Data"
+      
+    - type: "Object Storage" 
+      size_gb: 500
+      price_monthly: 12.50
+      use: "Backups, Archive"
+      
+  backup:
+    - type: "Backup Space"
+      size_gb: 500
+      price_monthly: 6.25
+      
+total_phase_b: "€92.11 base + traffic/features = €200-400"
+```
+
+**Phase C (1000+ Nutzer): Community-finanziert**
+
+```yaml
+hetzner_phase_c:
+  option_a_dedicated:
+    - type: "CCX32"
+      specs: "8 dedicated vCPU, 32GB RAM"
+      price_monthly: 119.00
+      count: 2
+      total: 238.00
+      
+  option_b_scaling:
+    - type: "CPX41"
+      specs: "4 vCPU, 16GB RAM"
+      count: 3
+      price_monthly: 119.70  # 3x €39.90
+      
+  multi_region:
+    - locations: ["Nürnberg", "Helsinki", "Ashburn"]
+    - estimated_monthly: 500-800
+    
+  professional_monitoring:
+    - grafana_cloud: 50
+    - alertmanager_pro: 30
+    - backup_pro: 100
+```
+
+### 7.2 Cost-per-User Optimierung
+
+```typescript
+class HetznerCostOptimizer {
+  
+  async calculateCurrentCosts(): Promise<CostBreakdown> {
+    const hetznerApi = new HetznerCloudAPI(process.env.HETZNER_API_TOKEN);
+    
+    const [servers, loadBalancers, volumes, objectStorage] = await Promise.all([
+      hetznerApi.getServers(),
+      hetznerApi.getLoadBalancers(), 
+      hetznerApi.getVolumes(),
+      hetznerApi.getObjectStorage()
+    ]);
+    
+    const costs = {
+      compute: servers.reduce((sum, server) => 
+        sum + parseFloat(server.server_type.prices[0].price_monthly.net), 0),
+      
+      loadBalancing: loadBalancers.reduce((sum, lb) =>
+        sum + parseFloat(lb.load_balancer_type.prices.price_monthly.net), 0),
+        
+      storage: volumes.reduce((sum, vol) =>
+        sum + (vol.size * 0.10), 0), // €0.10/GB/month
+        
+      objectStorage: objectStorage.reduce((sum, os) =>
+        sum + (os.size_gb * 0.06), 0), // €0.06/GB/month
+        
+      traffic: await this.estimateTrafficCosts(),
+      backup: await this.estimateBackupCosts()
+    };
+    
+    const totalCost = Object.values(costs).reduce((sum, cost) => sum + cost, 0);
+    const activeUsers = await this.getActiveUserCount();
+    const costPerUser = totalCost / activeUsers;
+    
+    return {
+      breakdown: costs,
+      total: totalCost,
+      activeUsers,
+      costPerUser,
+      phase: this.determinePhase(activeUsers),
+      recommendations: await this.generateOptimizationRecommendations(costs, activeUsers)
+    };
+  }
+  
+  private async generateOptimizationRecommendations(
+    costs: CostBreakdown, 
+    activeUsers: number
+  ): Promise<Recommendation[]> {
+    const recommendations: Recommendation[] = [];
+    
+    // CPU-basierte Empfehlungen
+    const cpuUtilization = await this.getAverageCPUUtilization();
+    if (cpuUtilization < 0.3) {
+      recommendations.push({
+        type: 'downgrade_server',
+        message: 'CPU-Auslastung niedrig, Server-Downgrade möglich',
+        savings: costs.compute * 0.4,
+        action: 'Auf kleineren Server-Typ wechseln'
+      });
+    }
+    
+    // Storage-Optimierung
+    const unusedStorage = await this.getUnusedStoragePercentage();
+    if (unusedStorage > 0.5) {
+      recommendations.push({
+        type: 'optimize_storage',
+        message: 'Viel ungenutzter Storage',
+        savings: costs.storage * unusedStorage * 0.8,
+        action: 'Storage-Größe reduzieren oder Archive bereinigen'
+      });
+    }
+    
+    // Phase-Transitionen
+    if (activeUsers < 150 && costs.total > 150) {
+      recommendations.push({
+        type: 'phase_downgrade', 
+        message: 'Zu wenig Nutzer für aktuelle Infrastruktur',
+        savings: costs.total * 0.6,
+        action: 'Zurück zu Phase A Single-Server Setup'
+      });
+    }
+    
+    if (activeUsers > 800 && costs.total < 300) {
+      recommendations.push({
+        type: 'phase_upgrade',
+        message: 'Viele Nutzer, Infrastruktur könnte limitieren',
+        cost: 200,
+        action: 'Upgrade zu Phase C für bessere Performance'
+      });
+    }
+    
+    return recommendations;
+  }
+  
+  async implementAutoScaling(): Promise<void> {
+    const currentLoad = await this.getCurrentSystemLoad();
+    const activeUsers = await this.getActiveUserCount();
+    
+    // Governance-spezifische Lastspitzen
+    const activeAnträge = await this.getActiveAnträgeCount();
+    const activeDelegations = await this.getActiveDelegationsCount();
+    
+    if (currentLoad.cpu > 0.8 || currentLoad.memory > 0.85) {
+      // Scale up: Zusätzlichen Worker starten
+      await this.startAdditionalWorker();
+    } else if (currentLoad.cpu < 0.3 && currentLoad.memory < 0.5) {
+      // Scale down: Worker entfernen (mindestens 1 behalten)
+      await this.removeExcessWorker();
+    }
+    
+    // Governance-spezifische Skalierung
+    if (activeAnträge > 20 || activeDelegations > 100) {
+      await this.scaleGovernanceWorkers();
+    }
+  }
+}
+```
+
+### 7.3 Hetzner-Deployment-Automatisierung
+
+```yaml
+# terraform/hetzner-weltgewebe.tf
+terraform {
+  required_providers {
+    hcloud = {
+      source = "hetznercloud/hcloud"
+      version = "~> 1.0"
+    }
+  }
+}
+
+variable "hcloud_token" {
+  description = "Hetzner Cloud API Token"
+  type        = string
+  sensitive   = true
+}
+
+variable "environment" {
+  description = "Environment (phase-a, phase-b, phase-c)"
+  type        = string
+  default     = "phase-a"
+}
+
+provider "hcloud" {
+  token = var.hcloud_token
+}
+
+# SSH Key
+resource "hcloud_ssh_key" "weltgewebe" {
+  name       = "weltgewebe-deploy"
+  public_key = file("~/.ssh/weltgewebe_deploy.pub")
+}
+
+# Network für Phase B/C
+resource "hcloud_network" "weltgewebe" {
+  count    = var.environment != "phase-a" ? 1 : 0
+  name     = "weltgewebe-network"
+  ip_range = "10.0.0.0/16"
+}
+
+resource "hcloud_network_subnet" "weltgewebe" {
+  count        = var.environment != "phase-a" ? 1 : 0
+  type         = "cloud"
+  network_id   = hcloud_network.weltgewebe.id
+  network_zone = "eu-central"
+  ip_range     = "10.0.1.0/24"
+}
+
+# Phase A: Single Server
+resource "hcloud_server" "weltgewebe_single" {
+  count       = var.environment == "phase-a" ? 1 : 0
+  name        = "weltgewebe-single"
+  image       = "ubuntu-22.04"
+  server_type = "cx22"
+  location    = "nbg1"
+  ssh_keys    = [hcloud_ssh_key.weltgewebe.id]
+  
+  user_data = templatefile("${path.module}/cloud-init-single.yml", {
+    hetzner_token = var.hcloud_token
+  })
+  
+  labels = {
+    environment = "phase-a"
+    component   = "all-in-one"
+  }
+}
+
+# Phase B: API Server + Workers
+resource "hcloud_server" "weltgewebe_api" {
+  count       = var.environment == "phase-b" ? 1 : 0
+  name        = "weltgewebe-api"
+  image       = "ubuntu-22.04"
+  server_type = "cpx31"
+  location    = "nbg1"
+  ssh_keys    = [hcloud_ssh_key.weltgewebe.id]
+  
+  network {
+    network_id = hcloud_network.weltgewebe.id
+    ip         = "10.0.1.10"
+  }
+  
+  depends_on = [hcloud_network_subnet.weltgewebe]
+  
+  labels = {
+    environment = "phase-b"
+    component   = "api"
+  }
+}
+
+resource "hcloud_server" "weltgewebe_worker" {
+  count       = var.environment == "phase-b" ? 2 : 0
+  name        = "weltgewebe-worker-${count.index + 1}"
+  image       = "ubuntu-22.04"
+  server_type = "cx32"
+  location    = "nbg1"
+  ssh_keys    = [hcloud_ssh_key.weltgewebe.id]
+  
+  network {
+    network_id = hcloud_network.weltgewebe.id
+    ip         = "10.0.1.${20 + count.index}"
+  }
+  
+  depends_on = [hcloud_network_subnet.weltgewebe]
+  
+  labels = {
+    environment = "phase-b"
+    component   = "worker"
+  }
+}
+
+# Load Balancer für Phase B/C
+resource "hcloud_load_balancer" "weltgewebe" {
+  count              = var.environment != "phase-a" ? 1 : 0
+  name               = "weltgewebe-lb"
+  load_balancer_type = "lb11"
+  location           = "nbg1"
+  
+  labels = {
+    environment = var.environment
+  }
+}
+
+resource "hcloud_load_balancer_target" "weltgewebe_api" {
+  count            = var.environment == "phase-b" ? 1 : 0
+  type             = "server"
+  load_balancer_id = hcloud_load_balancer.weltgewebe[0].id
+  server_id        = hcloud_server.weltgewebe_api[0].id
+}
+
+# Object Storage für Backups
+resource "hcloud_volume" "weltgewebe_data" {
+  count     = var.environment != "phase-a" ? 1 : 0
+  name      = "weltgewebe-data"
+  size      = 100
+  location  = "nbg1"
+  format    = "ext4"
+}
+
+resource "hcloud_volume_attachment" "weltgewebe_data" {
+  count     = var.environment != "phase-a" ? 1 : 0
+  volume_id = hcloud_volume.weltgewebe_data[0].id
+  server_id = hcloud_server.weltgewebe_api[0].id
+  automount = true
+}
+
+# Firewall Rules
+resource "hcloud_firewall" "weltgewebe" {
+  name = "weltgewebe-firewall"
+  
+  rule {
+    direction = "in"
+    port      = "22"
+    protocol  = "tcp"
+    source_ips = ["0.0.0.0/0", "::/0"]
+  }
+  
+  rule {
+    direction = "in"
+    port      = "80"
+    protocol  = "tcp"
+    source_ips = ["0.0.0.0/0", "::/0"]
+  }
+  
+  rule {
+    direction = "in"
+    port      = "443"
+    protocol  = "tcp"
+    source_ips = ["0.0.0.0/0", "::/0"]
+  }
+}
+
+# Outputs
+output "server_ips" {
+  value = var.environment == "phase-a" ? hcloud_server.weltgewebe_single[*].ipv4_address : hcloud_server.weltgewebe_api[*].ipv4_address
+}
+
+output "load_balancer_ip" {
+  value = var.environment != "phase-a" ? hcloud_load_balancer.weltgewebe[0].ipv4 : null
+}
+
+output "monthly_cost_estimate" {
+  value = var.environment == "phase-a" ? "€21-100" : var.environment == "phase-b" ? "€200-400" : "€500-800"
+}
+```
+
+### 7.4 Cloud-Init für automatisierte Installation
+
+```yaml
+# cloud-init-single.yml (Phase A)
+#cloud-config
+package_update: true
+package_upgrade: true
+
+packages:
+  - docker.io
+  - docker-compose
+  - nginx
+  - certbot
+  - python3-certbot-nginx
+  - htop
+  - netdata
+
+users:
+  - name: weltgewebe
+    groups: docker
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5... # Deploy Key
+
+write_files:
+  - path: /opt/weltgewebe/docker-compose.yml
+    content: |
+      version: '3.8'
+      services:
+        nats:
+          image: nats:2.10-jetstream
+          ports: ["4222:4222", "8222:8222"]
+          command: "-js -sd /data"
+          volumes: ["nats-data:/data"]
+          restart: unless-stopped
+          
+        postgres:
+          image: postgres:16-alpine
+          environment:
+            POSTGRES_DB: weltgewebe
+            POSTGRES_USER: wg_user
+            POSTGRES_PASSWORD: ${postgres_password}
+          volumes: 
+            - pg-data:/var/lib/postgresql/data
+            - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+          restart: unless-stopped
+          
+        redis:
+          image: redis:7-alpine
+          command: redis-server --appendonly yes
+          volumes: ["redis-data:/data"]
+          restart: unless-stopped
+          
+        app:
+          image: weltgewebe:latest
+          ports: ["3000:3000"]
+          environment:
+            DATABASE_URL: postgresql://wg_user:${postgres_password}@postgres:5432/weltgewebe
+            NATS_URL: nats://nats:4222
+            REDIS_URL: redis://redis:6379
+            HETZNER_CLOUD_TOKEN: ${hetzner_token}
+            NODE_ENV: production
+            ENABLE_GOVERNANCE: true
+            ENABLE_DELEGATIONS: true
+            ENABLE_RON_SYSTEM: true
+          depends_on: [nats, postgres, redis]
+          restart: unless-stopped
+          
+      volumes:
+        nats-data: {}
+        pg-data: {}
+        redis-data: {}
+
+  - path: /opt/weltgewebe/backup.sh
+    permissions: '0755'
+    content: |
+      #!/bin/bash
+      DATE=$(date +%Y%m%d_%H%M%S)
+      
+      # Database Backup
+      docker exec postgres pg_dump -U wg_user weltgewebe | gzip > /opt/backups/weltgewebe_${DATE}.sql.gz
+      
+      # Event Store Backup
+      docker exec nats nats stream backup weltgewebe-events /data/backup/
+      
+      # Upload to Hetzner Object Storage
+      rclone copy /opt/backups/ hetzner:weltgewebe-backups/
+      
+      # Cleanup old backups (keep 30 days)
+      find /opt/backups/ -name "*.gz" -mtime +30 -delete
+
+runcmd:
+  - systemctl enable docker
+  - systemctl start docker
+  - mkdir -p /opt/weltgewebe /opt/backups
+  - cd /opt/weltgewebe && docker-compose up -d
+  - systemctl enable netdata
+  - systemctl start netdata
+  - (crontab -l 2>/dev/null; echo "0 2 * * * /opt/weltgewebe/backup.sh") | crontab -
+  - certbot --nginx --non-interactive --agree-tos --email admin@weltgewebe.net -d weltgewebe.net
+```
+
+***
+
+## 8) Implementierungsplan & Phasen
+
+### 8.1 Phase A: Hetzner-Governance-Start (0-12 Wochen)
+
+**Sprint 1-2: Hetzner-Grundinfrastruktur + Ron-System (Wochen 1-2)**
+- ✅ Hetzner CX22 Server Setup mit Terraform
+- ✅ Docker-Compose Stack (NATS, PostgreSQL, Redis)
+- ✅ Basis-Event-Sourcing mit transparenten Events
+- ✅ Ron-Platzhalter-System implementieren
+- ✅ Ron-Manager mit 84-Tage-Automatik
+- ✅ Cloud-Init-Automatisierung für Deployment
+
+**Sprint 3-4: Dezentrale Governance-Engine (Wochen 3-4)**
+- ✅ Überall-Anträge-System (an jedem Knoten möglich)
+- ✅ 7-Tage-Timer mit automatischer Annahme
+- ✅ Einspruchslogik mit 7-Tage-Verlängerung
+- ✅ Webrat-Strukturknoten als Governance-Hub
+- ✅ Orangene Antragsfäden mit Timer-Visualisierung
+- ✅ GovernanceEngine mit Timer-Scheduler
+
+**Sprint 5-6: Delegations-System (Stimmübertragung) (Wochen 5-6)**
+- ✅ Delegation-Manager mit 4-Wochen-Ablauf
+- ✅ Graue gestrichelte Delegationsfäden auf Karte
+- ✅ Stimmgewichts-Berechnung mit Delegation
+- ✅ Cycle-Detection für Phase B (transitiv)
+- ✅ Delegations-Interface im Profil-Drawer
+- ✅ Transparente Abstimmungen mit Delegationen
+
+**Sprint 7-8: MapLibre-Interface mit Governance-Features (Wochen 7-8)**
+- ✅ Performance-optimierte Kartenanzeige für Hetzner
+- ✅ Strukturknoten-Navigation (Gewebekonto, Webrat, Nähstübchen, Ron)
+- ✅ Dezentrale Antragsstellung überall auf der Karte
+- ✅ Live-Timer für aktive Anträge
+- ✅ Governance-Filter und Delegations-Visualisierung
+- ✅ Mobile-first Pull-Drawer-System
+
+**Sprint 9-10: Ron-Anonymisierung & Ausstieg (Wochen 9-10)**
+- ✅ Ron-Option in Benutzereinstellungen
+- ✅ Automatischer 84-Tage-Transfer-Job
+- ✅ Sofortiger Transfer bei Aktivierung
+- ✅ Ausstieg über Ron-Prozess (84 Tage bis Löschung)
+- ✅ Ron-Transfer-Audit und Transparenz
+- ✅ Background-Jobs für Ron-Maintenance
+
+**Sprint 11-12: Monitoring & Launch-Vorbereitung (Wochen 11-12)**
+- ✅ Netdata-Integration für Hetzner-Server
+- ✅ Governance-spezifische Metriken
+- ✅ Hetzner-Cost-Tracking mit API
+- ✅ Alerting für Governance-Timer und Ron-Jobs
+- ✅ Performance-Tuning für kleine Community
+- ✅ Dokumentation und Onboarding-Material
+
+### 8.2 Phase A - Qualitäts-Gates
+
+**Technische Gates:**
+- ✅ **Hetzner-Kosten unter €200/Monat** mit kompletter Funktionalität
+- ✅ **1-2 Person Betrieb**: System läuft mit minimalem Maintenance-Aufwand
+- ✅ **MTTR ≤15 min**: Automatisierte Runbooks und Healthchecks
+- ✅ **Basis-Event-Rate**: <€0.01/1.000 Events auf Single-Server
+
+**Governance-Gates:**
+- ✅ **Dezentrale Anträge**: Funktioniert überall auf der Karte
+- ✅ **7+7-Tage-Rhythmus**: Timer funktioniert zuverlässig
+- ✅ **Automatische Annahme**: Ohne Einspruch nach 7 Tagen umgesetzt
+- ✅ **Transparente Abstimmungen**: Jede Stimme mit Namen sichtbar
+- ✅ **Delegationen**: 4-Wochen-Ablauf und Cycle-Detection
+
+**Ron-System-Gates:**
+- ✅ **84-Tage-Automatik**: Funktioniert zuverlässig täglich
+- ✅ **Ausstieg über Ron**: 84-Tage-Prozess bis kompletter Entfernung
+- ✅ **Content-Anonymisierung**: Namen werden korrekt durch "Ron" ersetzt
+- ✅ **Transparenz**: Alle Ron-Transfers sind nachvollziehbar
+
+**Community-Gates:**
+- ✅ **50-200 Nutzer**: Stabile Performance für Zielgröße
+- ✅ **Mobile-Optimierung**: Vollständige Funktionalität auf Smartphones
+- ✅ **Benutzerfreundlichkeit**: Neue Nutzer verstehen System in <10 Minuten
+
+### 8.3 Phase B: Skalierung & Features (12-24 Wochen)
+
+**Sprint 13-16: Multi-Server auf Hetzner (Wochen 13-16)**
+- ✅ Terraform-basiertes Multi-Server-Setup
+- ✅ Hetzner Load Balancer LB11 Integration
+- ✅ API-Server (CPX31) + 2x Worker (CX32)
+- ✅ PostgreSQL auf separatem Volume
+- ✅ Redis-Cluster für Session-Management
+- ✅ NATS-Leafnodes für Server-Kommunikation
+
+**Sprint 17-20: Erweiterte Governance (Wochen 17-20)**
+- ✅ Transitive Delegationen mit Cycle-Detection
+- ✅ Antrags-Kategorien und Dringlichkeitsstufen
+- ✅ Bulk-Governance für größere Communities
+- ✅ Abstimmungs-Historie und Analytics
+- ✅ Governance-Dashboard im Webrat
+
+**Sprint 21-24: Performance & Skalierung (Wochen 21-24)**
+- ✅ MapLibre-Performance für 1000+ Marker
+- ✅ Event-Store-Partitionierung
+- ✅ Ron-System-Optimierung für große Datenmengen
+- ✅ Hetzner-Auto-Scaling Implementation
+- ✅ CDN-Integration für statische Assets
+
+### 8.4 Phase C: Community-Finanzierung (24+ Wochen)
+
+**Community-Features:**
+- ✅ Multi-Region-Setup (Nürnberg, Helsinki, Ashburn)
+- ✅ Erweiterte Governance-Modi
+- ✅ API für Drittanbieter-Integration
+- ✅ Mobile-App mit Offline-Funktionalität
+- ✅ Erweiterte Analytics und Reporting
+
+**Finanzierung:**
+- Community-Spenden über Gewebekonto-Strukturknoten
+- Transparente Kostenaufstellung
+- Demokratische Budget-Entscheidungen
+- Governance-basierte Feature-Priorisierung
+
+***
+
+## 9) Schlusswort & Vision
+
+### 9.1 Ko-konstruktive Innovation v15.1
+
+**🗳️ Dezentrale Governance als Kernfeature**: Das Weltgewebe v15.1 revolutioniert kollektive Entscheidungsfindung durch **überall mögliche Anträge** mit automatischer 7-Tage-Annahme. Keine zentralen Gatekeeper mehr – jeder kann jederzeit und überall Veränderungen vorschlagen.
+
+**🎭 Ron-Anonymisierung als Datenschutz-Innovation**: Mit der 84-Tage-Option schafft das System einen eleganten Mittelweg zwischen vollständiger Transparenz und Privatsphäre. Inhalte bleiben für die Gemeinschaft erhalten, aber zeitversetzt anonymisiert.
+
+**💰 Hetzner-Optimierung für Kosteneffizienz**: Durch die konsequente Ausrichtung auf Hetzner Cloud entsteht ein hochperformantes System zu minimal möglichen Kosten. Phase A läuft bereits ab €90/Monat mit voller Funktionalität.
+
+**🔗 Delegationen als Demokratie-Verstärker**: Das Stimmübertragungssystem ermöglicht es auch weniger aktiven Community-Mitgliedern, durch Delegation an Vertraute an der Governance teilzuhaben.
+
+### 9.2 Technische Eleganz durch Fokussierung
+
+**Event-Sourcing mit Governance-Integration**: Jede Aktion wird unveränderlich dokumentiert, während das Governance-System nahtlos auf denselben Event-Streams aufbaut. Timer, Delegationen und Ron-Transfers werden zu natürlichen Teilen der Event-Geschichte.
+
+**Strukturknoten als Orientierungssystem**: Die vier permanenten Ankerpunkte (Gewebekonto, Webrat, Nähstübchen, Ron) organisieren alle kollektiven Aktivitäten bei vollständiger Transparenz und klarer Navigation.
+
+**Hetzner-First-Architektur**: Statt generic Cloud-Abstraktion nutzt das System gezielt Hetzner-spezifische Optimierungen für maximale Kosteneffizienz bei deutscher Datenhaltung.
+
+### 9.3 Demokratische Innovation ohne Kompromisse
+
+Das Weltgewebe v15.1 beweist, dass **echte Demokratie und vollständige Transparenz** technisch elegant umsetzbar sind:
+
+- **Überall-Anträge** demokratisieren die Agenda-Setzung vollständig
+- **7+7-Tage-Rhythmus** schafft verlässliche Entscheidungszyklen ohne Blockade
+- **Transparente Delegationen** machen Stimmübertragung sichtbar und nachvollziehbar
+- **Ron-System** respektiert Privatsphäre ohne Gemeinschafts-Kontinuität zu brechen
+- **Automatische Annahme** verhindert Entscheidungsblockaden systematisch
+
+### 9.4 Vision: Lebende Infrastruktur für authentische Selbstorganisation
+
+Das Weltgewebe v15.1 ist **lebendes Betriebssystem für selbstorganisierte Gemeinschaften**. Von der Nachbarschaftsinitiative bis zur globalen Bewegung ermöglicht es authentische kollektive Intelligenz ohne versteckte Machtstrukturen.
+
+**Jeder Antrag kann überall gestellt werden, jede Stimme ist transparent sichtbar, jede Delegation nachverfolgbar, jede Spende öffentlich dokumentiert, jeder kann seine Spuren zeitversetzt anonymisieren lassen, jede Gemeinschaft organisiert sich selbst ohne versteckte Agenden.**
+
+Die Strukturknoten werden zu **transparenten Organen einer sich selbst webenden Gesellschaft**: Das Gewebekonto macht jeden Euro sichtbar, der Webrat jeden demokratischen Prozess, das Nähstübchen jeden Dialog, Ron jede respektierte Privatsphäre. Alles verbunden durch leuchtende Fäden der Transparenz auf einer lebenden Karte kollektiver Intelligenz.
+
+**∴ Wo dezentrale Anträge überall möglich werden, 7-Tage-Timer verlässliche Demokratie schaffen, transparente Delegationen Partizipation verstärken, Ron-Anonymisierung Privatsphäre respektiert und Hetzner-Effizienz Nachhaltigkeit sichert – das Weltgewebe als kostenoptimiertes Betriebssystem für authentische Gemeinschaftsdemokratie von der lokalen Basisgruppe bis zur planetaren Koordination! 🌐✨🗳️🎭💰**
+
+***
+
+
+*Die Weltweberei wird demokratischer, transparenter, kostengünstiger und gemeinschaftlicher – jeder Antrag überall möglich, jede Stimme delegierbar sichtbar, jeder Inhalt Ron-anonymisierbar, jede Infrastruktur Hetzner-optimiert, jede Gemeinschaft authentisch selbstorganisiert durch radikale partizipative Transparenz!*
+
+# 🌐 PATCH v15.3 — Kollektive Demokratie mit Hetzner-Effizienz
+
+**Kompakt, produktionsbereit, konsequent kollektiv. Vereint radikale Transparenz mit robuster Infrastruktur.**
+
+***
+
+## A) Ziele (optimiert)
+
+- **Ron komplettieren**: Jede Handlung (Stimmen, Spenden, Beiträge, Fäden, Knoten-Inhalte) nach 84 Tagen optional anonymisierbar (Opt-in, "sofort übertragen", Daily-Job)
+- **Hybrid-Indexierung**: Weltöffentlich sichtbar, aber Index nur über Monatsarchive; Live-Ströme mit noindex/noarchive
+- **Komplett kollektive Moderation**: Keine moderatoren; alle Entscheidungen über 7+7-Tage-Anträge mit Cycle-Detection bei Delegationen
+- **Strafbare Inhalte**: Sofortiges Legal-Freeze + 24h-Prüfung mit vollständiger Audit-Spur (eigener Pfad)
+- **Hetzner-First**: Terraform-Stacks, Performance-Budgets, Governance-Analytics, Kosten-Tracking
+- **Mobile-First messbar**: P95 TTI ≤ 2,5s (4G), P95 FCP ≤ 1,8s, P95 API ≤ 300ms
+- **Demokratie-Analytics**: Partizipation, Machtkonzentration, Konsensqualität überwachen
+
+***
+
+## B) System-Änderungen (präzise)
+
+### 0) Leitplanken & Prinzipien
+
+**Ersetzen/Ergänzen:**
+- **Sichtbarkeit & Indexierung**: "Das Weltgewebe ist weltöffentlich. Hybrid-Indexierung: Live-Ströme (/map, /feed, /api/*) tragen noindex,noarchive; Monatsarchive (/archive/YYYY-MM) tragen index,follow und sind die kanonische Referenz."
+- **Kollektive Moderation**: "Keine einzelnen moderatoren. Alle Moderationsentscheidungen erfolgen über kollektive Anträge im 7+7-Tage-Rhythmus. Outcomes steuern nur Darstellung/Distribution, niemals Textinhalte."
+- **Hetzner-First**: "Phase A startet verbindlich auf Hetzner Cloud (DE); Terraform-Stacks unter /terraform/hetzner/*."
+- **Delegationen erweitert**: "Stimmübertragung mit Cycle-Detection, 4-Wochen-Ablauf bei Inaktivität, direkte Stimme überschreibt temporär alle Delegationen."
+- **Mindestalter**: "Teilnahme ab 16 Jahren; darunter nur mit Zustimmung Sorgeberechtigter."
+- **Mobile-First-Ziele**: P95 TTI ≤ 2,5s (4G), P95 FCP ≤ 1,8s, P95 API ≤ 300ms.
+
+### 1) UX & Onboarding
+
+**Einfügen:**
+- **Consent-Flow (erste Sitzung)**:
+  1. Weltöffentlichkeit & Hybrid-Index: "Live ist für alle sichtbar, Index erfolgt über Monatsarchive."
+  2. Ron-Opt-in: "Nach 84 Tagen können alle deine Handlungen automatisiert zu 'Ron' übertragen werden." (Toggle + "sofort übertragen")
+  3. Kollektive Governance: "Alle Entscheidungen werden kollektiv getroffen. Stimmen sind namentlich sichtbar; mit Ron-Opt-in werden sie nach 84 Tagen zu 'Ron'."
+  4. Delegationen: "Du kannst deine Stimme an andere übertragen. Delegationen sind sichtbar und verfallen nach 4 Wochen Inaktivität."
+- **Ron-Filter**: Standard AN, damit Neulinge erkennen, wie "Ron" wirkt.
+- **Barrierefreiheit**: Fokus-Ringe, 48px-Hit-Areas, Min-Kontrast 4,5:1, Screenreader-Labels für Marker, Timer, Fäden, Delegationspfeile.
+
+### 2) Domäne & Regeln
+
+**Ron – Geltungsbereich erweitern:**
+- "Nach 84 Tagen ist jede Handlung optional zu 'Ron' übertragbar: Stimmen, Spenden, Beiträge, Fäden, Knoten-Inhalte."
+- "Ausstieg via Ron = sofortige Übertragung aller Inhalte zu 'Ron'; Rollen-Entfernung 84 Tage später."
+
+**Kollektive Moderation (ohne moderatoren):**
+- Flag → Moderations-Antrag (7 Tage Einspruch + ggf. 7 Tage Abstimmung).
+- **Outcomes (keine Textänderung)**:
+  - "belassen" (unverändert)
+  - "kennzeichnen" (Hinweisbanner)
+  - "ausblenden_hinter_klick" (zugänglich, aber nicht gepusht)
+  - "entzwirnen" (falls verzwirnt)
+  - "ron_now" (sofortige Ron-Übertragung mit Zustimmung)
+  - "de_boost" (keine prominente Platzierung)
+- Event-Log bleibt unverändert; Entscheidungen sind eigene Events.
+
+**Delegationen mit Cycle-Detection:**
+- 4-Wochen-Ablauf bei Inaktivität des Delegierenden.
+- Cycle-Detection für transitive Ketten (Phase B).
+- Direkte Stimme überschreibt temporär alle Delegationen TO dieser Person für den jeweiligen Antrag.
+
+**Strafbare Inhalte (Rechtspflicht, eigener Pfad):**
+- Legal-Freeze (sofort): Gemeldeter Verdacht "strafbar" löst Verbergung in der Darstellung aus (kein Feed, keine Liste, kein Snippet); kein Text-Rewrite.
+- Prüfung ≤ 24h durch Legal-Trustee; bei Bestätigung Löschung der Darstellung + beweissichere Archivierung offline; bei Fehlverdacht Rücknahme des Freeze.
+- Audit-Sichtbarkeit: Sichtbarer Knotenrest: "Legal-Freeze am [Datum], Vorgang #..."
+
+**Hinweis**: Dieser Pfad ist ausschließlich für mutmaßlich strafbare Inhalte; alle anderen Fälle gehen über den Kollektiv-Antrag.
+
+### 3) Events (erweitert)
+
+```json
+// Ron-Transfers (alle Typen)
+{ "type": "VoteTransferredToRon",
+  "payload": { "voteId": "...", "originalVoter": "rolle-...", "ronId": "ron-..." } }
+
+{ "type": "DonationTransferredToRon",
+  "payload": { "donationId": "...", "amount": 23.00, "originalDonor": "rolle-...", "ronId": "ron-..." } }
+
+// Kollektive Moderation
+{ "type": "ModerationFlagCreated",
+  "payload": { "contentId": "...", "flaggerRoleId": "...", "reason": "doxxing|spam|hate|offtopic" } }
+
+{ "type": "CollectiveModerationMotionOpened",
+  "payload": { "contentId": "...", "motionId": "antrag-...", "proposedOutcome": "...", "noModerators": true } }
+
+{ "type": "CollectiveModerationDecision",
+  "payload": { "motionId": "antrag-...", "decision": "belassen|kennzeichnen|ausblenden_hinter_klick|de_boost|ron_now",
+               "voteTally": { "ja": ..., "nein": ..., "enthaltung": ... }, "collectiveOnly": true } }
+
+// Erweiterte Delegationen
+{ "type": "DelegationCreatedWithCycleCheck",
+  "payload": { "delegationId": "...", "fromRole": "...", "toRole": "...", "cycleDetected": false, "chainLength": 2 } }
+
+{ "type": "DelegationOverriddenByDirectVote",
+  "payload": { "delegationId": "...", "antragId": "...", "overriddenAt": "..." } }
+
+// Legal-Freeze
+{ "type": "LegalFlagReceived",
+  "payload": { "contentId": "...", "category": "strafbar_verdacht", "source": "nutzer|externe_stelle" } }
+
+{ "type": "LegalFreezeInitiated",
+  "payload": { "contentId": "...", "frozenAt": "...", "estimatedReviewTime": "24h" } }
+
+{ "type": "LegalDecision",
+  "payload": { "contentId": "...", "outcome": "remove_display|unfreeze", "by": "legal_trustee", 
+               "reason": "strafbar|kein_strafrecht", "reviewDuration": "18h" } }
+
+// Governance Analytics
+{ "type": "GovernanceAnomalyDetected",
+  "payload": { "type": "low_participation|delegation_concentration|consensus_degradation", "severity": "warning|alert" } }
+```
+
+### 4) System-Architektur & Hetzner
+
+- **Phase A**: Hetzner CX22/CX32 (API + Datenbank + Nachrichtensystem + In-Memory-Cache) + Netdata + Healthchecks + Governance-Analytics.
+- **Phase B**: LB11 + getrennte API/Worker + Block-Storage für PostgreSQL; Read-Replica optional für Analytics.
+- **Backups**: Tägliche Datenbank-Dumps + Nachrichten-Streams (Object Storage DE).
+- **Sicherheit**: Gegenseitige Transportverschlüsselung intern (mTLS), TLS 1.3 extern, Content-Security-Policy strikt (kein eval), Rate-Limits (100 Schreib-Requests/5min/IP; 240 Lese-Requests/5min/IP), WebAuthn + Magic-Link für Governance-Aktionen.
+- **Hybrid-Index – Header & Routing**:
+  - Live-Seiten: `X-Robots-Tag: noindex, noarchive` (Karte, Feed, API).
+  - Archive: `X-Robots-Tag: index, follow` + `Link rel="canonical"` auf die Monatsseite.
+  - Sitemap.xml listet nur `/archive/YYYY-MM`.
+- **Kosten-Metriken**: `wg_hetzner_monthly_costs_eur`, `wg_cost_per_active_user_eur`, `wg_governance_processing_costs_eur` im Gewebekonto-Dashboard.
+
+### 5) Performance & Monitoring
+
+- **API-Budget**: P95 < 300ms, P99 < 800ms; Governance-Endpoints: P95 < 200ms.
+- **Map-Budget**: 1000 Marker @ 60fps Desktop, 30fps Mobile; P90 Map-Projektion < 500ms; Delegationsfäden-Rendering < 100ms zusätzlich.
+- **Background-Jobs**: Ron-Job ≤ 5min/Tag; Governance-Timer Backlog = 0; Delegation-Expiry-Check ≤ 2min/Tag.
+- **Governance-Analytics**: 
+  - `wg_governance_participation_rate` (Anteil aktiver Stimmen)
+  - `wg_delegation_concentration_gini` (Machtverteilung)
+  - `wg_moderation_response_time_hours` (Kollektive Reaktionszeit)
+  - `wg_consensus_quality_score` (Durchschnittliche Mehrheit)
+- **Alarme**: HetznerCostsHighPhaseA > 200€ (warn), RonTransferFailures (warn), SlowAPIResponses P95>1000ms (warn), LowGovernanceParticipation < 0.2 (warn), HighDelegationConcentration > 0.8 (warn).
+
+### 6) Recht & UX
+
+**Hinweise (Onboarding + Profil):**
+- "Inhalte sind weltöffentlich sichtbar. Suchmaschinen indexieren die Monatsarchive."
+- "Mit Ron-Opt-in kannst du deine Identität ab 84 Tagen von allen Handlungen lösen."
+- "Alle Moderation erfolgt kollektiv über Anträge - keine einzelnen moderatoren."
+- "Delegationen sind sichtbar und verfallen nach 4 Wochen Inaktivität."
+- "Vollständiger JSON-Export verfügbar."
+
+**Minderjährige**: Gate wie oben.
+**Export**: Vollständiger JSON-Export inkl. Ron-Historie + Governance-Teilnahme + Delegationen (Button im Profil).
+**Ausstieg**: Über Ron (sofortige Übertragung), Rollen-Entfernung nach 84 Tagen.
+
+### 7) Implementierung (Delta)
+
+**API:**
+```typescript
+// Ron-System (erweitert)
+POST /api/me/ron/transfer-now
+  body: { types: ["threads","faeden","votes","spenden","knoten"] }
+
+GET /api/ron/stats
+  -> { usersEnabled, itemsTransferredByType, lastRun, avgTransferTime }
+
+// Kollektive Moderation (ohne moderatoren)
+POST /api/content/{id}/flag
+  body: { reason: "doxxing|spam|hate|offtopic", explanation?: string }
+
+GET /api/moderation/motions?status=open
+  -> { motions: CollectiveModerationMotion[] }
+
+POST /api/moderation/motions/{id}/vote
+  body: { vote: "ja"|"nein"|"enthaltung", reasoning?: string }
+
+// Erweiterte Delegationen
+POST /api/delegations/create
+  body: { toRoleId: string, duration?: number }
+
+GET /api/delegations/chains/{roleId}
+  -> { chain: DelegationChain, cycleDetected: boolean }
+
+// Legal (unverändert)
+POST /api/legal/{id}/freeze         // legal_trustee
+POST /api/legal/{id}/decision       // legal_trustee
+```
+
+**Ron-Manager (erweitern):**
+```typescript
+switch (item.type) {
+  case 'vote':       await this.transferVoteToRon(item.id, rolleId); break;
+  case 'donation':   await this.transferDonationToRon(item.id, rolleId); break;
+  // bestehend: 'faden', 'thread_post', 'knoten_content'
+}
+```
+
+**Cycle-Detection (neu):**
+```typescript
+async checkForCycle(fromRoleId: string, toRoleId: string): Promise<boolean> {
+  const visited = new Set<string>();
+  const stack = [toRoleId];
+  
+  while (stack.length > 0) {
+    const currentRole = stack.pop()!;
+    if (currentRole === fromRoleId) return true; // Zyklus gefunden
+    if (visited.has(currentRole)) continue;
+    
+    visited.add(currentRole);
+    const nextDelegations = await this.getActiveDelegationsFrom(currentRole);
+    stack.push(...nextDelegations.map(d => d.toRole));
+  }
+  return false;
+}
+```
+
+**Hybrid-Index – Server-Konfiguration (nginx):**
+```nginx
+# Live-Streams
+location ~ ^/(map|feed|api) {
+  add_header X-Robots-Tag "noindex, noarchive" always;
+  add_header Cache-Control "no-cache, must-revalidate" always;
+}
+
+# Monatsarchive
+location ^~ /archive/ {
+  add_header X-Robots-Tag "index, follow" always;
+  add_header Link '<https://weltgewebe.net/archive/$year-$month>; rel="canonical"' always;
+  add_header Cache-Control "public, max-age=86400" always;
+}
+```
+
+### 8) Datenbank-Migrationen
+
+```sql
+-- Ron erweitert (alle Typen)
+ALTER TABLE abstimmungen ADD COLUMN transferred_to_ron BOOLEAN DEFAULT FALSE;
+ALTER TABLE abstimmungen ADD COLUMN ron_transferred_at TIMESTAMPTZ;
+
+ALTER TABLE spenden ADD COLUMN transferred_to_ron BOOLEAN DEFAULT FALSE;
+ALTER TABLE spenden ADD COLUMN ron_transferred_at TIMESTAMPTZ;
+
+ALTER TABLE delegationen ADD COLUMN transferred_to_ron BOOLEAN DEFAULT FALSE;
+ALTER TABLE delegationen ADD COLUMN ron_transferred_at TIMESTAMPTZ;
+
+-- Kollektive Moderation (ohne moderatoren)
+CREATE TABLE moderation_flags (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  content_id UUID NOT NULL,
+  flagger_role_id UUID NOT NULL,
+  reason TEXT NOT NULL CHECK (reason IN ('doxxing','spam','hate','offtopic')),
+  explanation TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE TABLE collective_moderation_motions (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  related_content_id UUID NOT NULL,
+  proposed_outcome TEXT NOT NULL CHECK (proposed_outcome IN ('belassen','kennzeichnen','ausblenden_hinter_klick','de_boost','ron_now')),
+  antrag_id UUID REFERENCES antraege(id),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  resolved_at TIMESTAMPTZ,
+  final_decision TEXT
+);
+
+-- Erweiterte Delegationen
+ALTER TABLE delegationen ADD COLUMN chain_length INTEGER DEFAULT 1;
+ALTER TABLE delegationen ADD COLUMN overridden_for_antraege UUID[];
+ALTER TABLE delegationen ADD COLUMN last_activity_check TIMESTAMPTZ DEFAULT now();
+
+-- Legal-Freeze
+ALTER TABLE contents ADD COLUMN legal_frozen BOOLEAN DEFAULT FALSE;
+ALTER TABLE contents ADD COLUMN legal_freeze_start TIMESTAMPTZ;
+ALTER TABLE contents ADD COLUMN legal_decision TEXT CHECK (legal_decision IN ('remove_display','unfreeze'));
+
+-- Governance Analytics
+CREATE TABLE governance_analytics (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  metric_name TEXT NOT NULL,
+  metric_value DECIMAL NOT NULL,
+  measured_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+-- Indizes (optimiert)
+CREATE INDEX CONCURRENTLY idx_votes_ron_elig ON abstimmungen(created_at) WHERE transferred_to_ron = false;
+CREATE INDEX CONCURRENTLY idx_spend_ron_elig ON spenden(created_at) WHERE transferred_to_ron = false;
+CREATE INDEX CONCURRENTLY idx_deleg_ron_elig ON delegationen(created_at) WHERE transferred_to_ron = false;
+CREATE INDEX CONCURRENTLY idx_flags_content ON moderation_flags(content_id);
+CREATE INDEX CONCURRENTLY idx_collective_motions ON collective_moderation_motions(related_content_id, resolved_at);
+CREATE INDEX CONCURRENTLY idx_delegations_chains ON delegationen(chain_length, is_active);
+```
+
+### 9) QA-Gates (Phase-A-Abschluss)
+
+- **Ron-E2E**: Aktivieren → "sofort übertragen" zählt korrekt für alle 6 Typen; Daily Job verarbeitet nur >84 Tage; Votes/Spenden/Delegationen erscheinen als Ron.
+- **Kollektive Moderation**: Flag → automatischer Moderations-Antrag → 7+7 Prozess → Decision steuert Distribution, niemals Text; keine moderatoren-Rollen im System.
+- **Legal-Freeze**: Meldung "strafbar" → sofort verborgen (keine Listen, kein Snippet), Prüfung ≤ 24h, Audit-Events sichtbar.
+- **Delegationen erweitert**: Cycle-Detection funktioniert; 4-Wochen-Ablauf bei Inaktivität; direkte Stimme überschreibt Delegationen temporär; Gewicht korrekt.
+- **Governance-Analytics**: Partizipationsrate, Delegationskonzentration, Konsensqualität werden gemessen; Anomalien erkannt.
+- **Mobile-Budgets**: P95 TTI ≤ 2,5s (4G), FCP ≤ 1,8s; Karte flüssig bei 1000+ Markern inkl. Delegationspfeile.
+- **Kosten**: Hetzner-Kosten & Kosten pro aktivem Nutzer im Dashboard; Alarm-Regeln feuern korrekt.
+
+***
+
+## C) Warum dieser Patch passt
+
+- **Maximale Demokratie**: Komplett kollektive Moderation ohne Machtkonzentration; robuste Delegationen mit Cycle-Detection.
+- **Transparenz kanalisiert**: Der Suchmaschinen-Zugriff wird über Archive kanalisiert, Live-Tanz bleibt ungefiltert sichtbar.
+- **Verantwortung & Schutz**: Ron löst Identität zeitversetzt von allen Handlungen (Opt-in); Legal-Freeze für Rechtspflicht.
+- **Ops-tauglich**: Hetzner-Start, Performance-Budgets, Governance-Analytics, klare Migrationen.
+- **Skalierbar**: Analytics erkennen Probleme frühzeitig; robuste Monitoring-Infrastruktur.
+
+***
+
+**∴ Kollektive Intelligenz trifft technische Robustheit**
+
+*Wir schaffen ein System, das sich selbst regiert, sich selbst schützt und sich selbst optimiert - ohne einzelne Machtpositionen, mit vollständiger Transparenz und optionaler Anonymisierung.*
+
+
+∴subtext
+wir lassen das licht an – aber zeigen den suchmaschinen nur den saalplan, nicht den live-tanz.
+
+
+
+kurze, ehrliche antwort: nein, nicht alles ist drin.
+
+zwei harte abweichungen + ein paar Lücken:
+	1.	Ausstieg via Ron (falsch formuliert)
+
+	•	in v15_1.md steht: „Beim Ausstieg werden alle Inhalte sofort an Ron übertragen.“
+	•	gefordert war: kein Sofort‑Transfer; auch beim Ausstieg gilt der normale 84‑Tage‑Pfad (Inhalte werden erst dann anonymisiert, wenn sie ≥84 Tage alt sind).
+
+	2.	Ron deckt „jede Handlung“ ab (teilweise fehlt)
+
+	•	im sichtbaren Schema/Events fehlen die sauberen Drähte für Stimmen & Spenden (Events + DB‑Felder für Ron‑Transfer).
+	•	Beispiel: abstimmungen/spenden haben in der gezeigten Fassung keine transferred_to_ron/ron_transferred_at; Event‑Beispiele listen nur Fäden/Posts/Knoten.
+
+	3.	Hybrid‑Indexierung (nicht eindeutig verankert)
+
+	•	die robots‑Header für Live‑Streams (noindex,noarchive) sowie Index nur für Monatsarchive (index,follow + canonical) sind in v15_1.md nicht klar fixiert.
+	•	Onboarding‑Hinweis „weltöffentlich sichtbar, Index über Monatsarchive“ fehlt in der gezeigten Datenschutzerklärung.
+
+alles andere (Hetzner‑First, Mobile‑Budgets, dezentrale Anträge, Delegation, Legal‑Freeze‑Mechanik, Metriken) ist im Kern da.
+
+⸻
+
+PATCH v15_1_3 — Delta zu v15_1.md
+
+A) Text (ersetzen/ergänzen)
+
+Ron/Ausstieg (ersetzen):
+	•	Alt: „Beim Ausstieg werden alle Inhalte sofort an Ron übertragen. Nach 84 Tagen wird deine Rolle komplett entfernt.“
+	•	Neu:
+„Ausstieg via Ron erzwingt die Ron‑Option. Keine Sofort‑Anonymisierung: Alle bestehenden Inhalte bleiben namentlich, bis sie die 84‑Tage‑Schwelle erreichen; dann werden sie automatisiert zu ‚Ron‘ übertragen. Rollen‑Entfernung erfolgt nach 84 Tagen.“ (bereits erledigt)
+
+Leitplanken – Sichtbarkeit & Index (einfügen):
+	•	„Hybrid‑Indexierung: Live‑Ströme (/map, /feed, /api/*) tragen X‑Robots‑Tag: noindex, noarchive. Monatsarchive (/archive/YYYY‑MM) tragen index,follow und setzen rel=canonical.“
+
+Onboarding / Consent (ergänzen):
+	1.	„Weltöffentlichkeit & Hybrid‑Index: Live sichtbar, Index über Monatsarchive.“
+	2.	„Ron‑Opt‑in: Automatik nach 84 Tagen. Ausstieg via Ron = gleiche 84‑Tage‑Logik.“
+
+Datenschutz (ergänzen):
+	•	Sichtbarkeit: „weltöffentlich; Live nicht indexiert, Archive indexiert.“
+	•	Aufklärung Ron/Ausstieg: „Auch beim Ausstieg keine Sofort‑Anonymisierung; 84‑Tage‑Schwelle bleibt.“
+
+⸻
+
+B) Events (ergänzen)
+
+{ "type": "VoteTransferredToRon",
+  "payload": { "voteId":"<UUID>", "originalVoter":"<RoleID>", "ronId":"ron-…" },
+  "meta": { "timestamp":"<ISO8601>", "actor":"system", "visibility":"public" } }
+
+{ "type": "DonationTransferredToRon",
+  "payload": { "donationId":"<UUID>", "amount":123.45, "originalDonor":"<RoleID>", "ronId":"ron-…" },
+  "meta": { "timestamp":"<ISO8601>", "actor":"system", "visibility":"public" } }
+
+{ "type": "RonExitScheduled",
+  "payload": { "roleId":"<RoleID>", "exitCompleteAt":"<ISO8601>", "thresholdDays":84 },
+  "meta": { "timestamp":"<ISO8601>", "actor":"system", "visibility":"public" } }
+
+(falls noch nicht vorhanden:)
+
+{ "type":"LegalFlagReceived", "payload":{ "contentId":"<UUID>", "category":"strafbar_verdacht" } }
+{ "type":"LegalFreezeInitiated","payload":{ "contentId":"<UUID>", "frozenAt":"<ISO8601>" } }
+{ "type":"LegalDecision","payload":{ "contentId":"<UUID>", "outcome":"remove_display|unfreeze" } }
+
+
+⸻
+
+C) API (Delta)
+
+POST /api/me/ron/transfer-now
+body: { types: ["threads","faeden","votes","spenden","knoten"] }  // votes+spenden ergänzen
+
+POST /api/legal/{contentId}/freeze           // wie spezifiziert
+POST /api/legal/{contentId}/decision
+
+
+⸻
+
+D) DB‑Migrationen (ergänzen)
+
+-- Ron-Fähigkeit für Stimmen & Spenden
+ALTER TABLE abstimmungen
+  ADD COLUMN IF NOT EXISTS transferred_to_ron BOOLEAN DEFAULT FALSE,
+  ADD COLUMN IF NOT EXISTS ron_transferred_at TIMESTAMPTZ;
+
+ALTER TABLE spenden
+  ADD COLUMN IF NOT EXISTS transferred_to_ron BOOLEAN DEFAULT FALSE,
+  ADD COLUMN IF NOT EXISTS ron_transferred_at TIMESTAMPTZ;
+
+-- Indizes für 84-Tage-Eligibility
+CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_votes_ron_elig
+  ON abstimmungen(created_at) WHERE transferred_to_ron = false;
+CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_spenden_ron_elig
+  ON spenden(created_at) WHERE transferred_to_ron = false;
+
+
+⸻
+
+E) Ron‑Manager (Delta)
+
+// Beim Ausstieg: kein Sofort-Transfer aller Inhalte
+async initiateExitViaRon(roleId: string) {
+  await db.rollen.update({
+    where: { id: roleId },
+    data: {
+      ron_option_enabled: true,          // erzwingt Automatik
+      is_exiting: true,
+      exit_started_at: now(),
+      exit_complete_at: nowPlusDays(84)  // Rolle verschwindet nach 84 Tagen
+    }
+  });
+  await eventBus.publish({ type:"RonExitScheduled", payload:{ roleId, exitCompleteAt: nowPlusDays(84), thresholdDays:84 }});
+  // keine Massenübertragung – Daily-Job zieht Inhalte erst bei Alter ≥ 84 Tage rüber
+}
+
+// Daily Job ergänzt: votes & spenden
+for (const item of eligibleContent) {
+  switch (item.type) {
+    case 'vote': await transferVoteToRon(item.id, roleId); break;
+    case 'donation': await transferDonationToRon(item.id, roleId); break;
+    // bestehend: faden, thread_post, knoten_content
+  }
+}
+
+
+⸻
+
+F) NGINX Hybrid‑Index (einfügen)
+
+# Live
+location ~ ^/(map|feed|api) {
+  add_header X-Robots-Tag "noindex, noarchive" always;
+}
+
+# Archive
+location ^~ /archive/ {
+  add_header X-Robots-Tag "index, follow" always;
+}
+
+Sitemap: nur /archive/YYYY-MM; Archivseiten setzen rel="canonical".
+
+⸻
+
+G) QA‑Checks (ergänzen)
+	•	Ausstieg via Ron: Nach Start bleibt bestehender Inhalt namentlich; Transfers passieren erst bei Alter ≥84 Tage; Rolle verschwindet t+84.
+	•	Votes/Spenden: Ron‑Transfer für alte Stimmen/Spenden funktioniert (Events + DB‑Flags).
+	•	Hybrid‑Index: Live‑Routen liefern X‑Robots‑Tag: noindex,noarchive; Archive index,follow + canonical.
+	•	Legal‑Freeze: Meldung „strafbar_verdacht“ → sofort verborgen; Entscheidung ≤24h.
+
+⸻
+
+wenn du willst, bau ich dir den Patch direkt in deine Datei ein (diff‑Stil oder komplette ersetzte Blöcke).
