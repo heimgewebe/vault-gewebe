@@ -1,0 +1,4 @@
+advanzia: 5401871724818305
+
+IBAN: DE63500240244105040601
+		Kreditinstitut: C24 Smartkonto 

@@ -1,0 +1,25 @@
+{
+	"nodes":[
+		{"id":"2","type":"text","text":"② Auseinandersetzung mit der Projektinitiative\n• Diskussion: lohnt sich das?\n• Voraussetzungen prüfen\n• Interessen abgleichen","x":400,"y":0,"width":320,"height":140},
+		{"id":"3","type":"text","text":"③ Gemeinsame Entwicklung des Betätigungsgebietes (Projektplan)\n• Sammlung & Strukturierung\n• Aufgaben, Rollen, Methoden, Zeitrahmen","x":850,"y":0,"width":350,"height":140},
+		{"id":"4","type":"text","text":"④ Projektdurchführung\n• Praktisches Tun\n• Forschen, Bauen, Gestalten, Erkunden\n• Eigenverantwortung","x":1350,"y":0,"width":320,"height":120},
+		{"id":"5","type":"text","text":"⑤ Abschluss des Projekts\n• Präsentation\n• Dokumentation\n• Gemeinsames Erreichen eines Endes","x":1750,"y":0,"width":300,"height":120},
+		{"id":"6","type":"text","text":"⚑ Metainteraktion / Zwischengespräch\n• Reflexion während des Projekts\n• Steuerung & Korrektur","x":850,"y":250,"width":320,"height":120},
+		{"id":"7","type":"text","text":"⚑ Fixpunkte\n• Geplante Haltepunkte\n• Zwischenbilanz & Auswertung","x":1350,"y":250,"width":280,"height":120},
+		{"id":"8","type":"text","text":"⑥ Varianten des Abschlusses\n• (1) bewusster Abschluss\n• (2) Rückkopplung zur Projektinitiative\n• (3) Auslaufen lassen","x":1750,"y":250,"width":340,"height":140},
+		{"id":"1","type":"file","file":"projektinitiative2.md.md","x":0,"y":0,"width":300,"height":120}
+	],
+	"edges":[
+		{"id":"e1","fromNode":"1","fromSide":"right","toNode":"2","toSide":"left"},
+		{"id":"e2","fromNode":"2","fromSide":"right","toNode":"3","toSide":"left"},
+		{"id":"e3","fromNode":"3","fromSide":"right","toNode":"4","toSide":"left"},
+		{"id":"e4","fromNode":"4","fromSide":"right","toNode":"5","toSide":"left"},
+		{"id":"e5","fromNode":"5","fromSide":"bottom","toNode":"8","toSide":"top"},
+		{"id":"e6","fromNode":"3","fromSide":"bottom","toNode":"6","toSide":"top"},
+		{"id":"e7","fromNode":"4","fromSide":"bottom","toNode":"7","toSide":"top"}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

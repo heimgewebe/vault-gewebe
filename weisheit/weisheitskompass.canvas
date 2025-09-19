@@ -1,0 +1,51 @@
+{
+	"nodes":[
+		{"id":"w1","type":"text","text":"1. Erkenne dich selbst.\n→ Fundament jeder Entscheidung; ohne Selbstkenntnis bist du steuerbar.","x":0,"y":0,"width":340,"height":100},
+		{"id":"w2","type":"text","text":"2. Nicht die Dinge beunruhigen uns, sondern unsere Meinungen über sie. (Epiktet)\n→ Zwischen Reiz und Reaktion liegt Freiheit.","x":400,"y":-200,"width":340,"height":110},
+		{"id":"w3","type":"text","text":"3. Alles fließt. (Heraklit)\n→ Wandel ist Normalzustand; lerne zu surfen, nicht zu zementieren.","x":800,"y":0,"width":340,"height":100},
+		{"id":"w4","type":"text","text":"4. Was du nicht willst, das man dir tu’, das füg auch keinem andern zu. (Goldene Regel)\n→ Empathie als Basiskalibrierung.","x":0,"y":300,"width":340,"height":110},
+		{"id":"w5","type":"text","text":"5. Es gibt nichts Gutes, außer: man tut es. (Kästner)\n→ Moral misst sich an Handlung, nicht an Absicht.","x":400,"y":500,"width":340,"height":100},
+		{"id":"w6","type":"text","text":"6. Misstraue deinen sichersten Überzeugungen.\n→ Antidot gegen Dogmatismus; hält den Geist beweglich.","x":800,"y":300,"width":340,"height":100},
+		{"id":"w7","type":"text","text":"7. Stille ist nicht Leere.\n→ Tiefe Wahrnehmung braucht Räume ohne Lärm.","x":400,"y":-500,"width":340,"height":100},
+		{"id":"w8","type":"text","text":"8. Wandle im Bewusstsein deiner Sterblichkeit. (Memento mori)\n→ Prioritäten-Schärfer; verhindert Lebensaufschub.","x":-400,"y":-300,"width":340,"height":110},
+		{"id":"w9","type":"text","text":"9. Halte den Geist leer genug, um Neues aufzunehmen. (Zen)\n→ Lernfähigkeit statt Rechthaberei.","x":800,"y":-400,"width":340,"height":110},
+		{"id":"w10","type":"text","text":"10. Miss eine Handlung an Absicht und Wirkung.\n→ Korrigiert naiven Idealismus; Feedback ist Pflicht.","x":-400,"y":500,"width":340,"height":110},
+		{"id":"w11","type":"text","text":"11. Wahre Macht ist, auf sie verzichten zu können. (nach Laozi)\n→ Selbstkontrolle > Machtausübung.","x":1200,"y":500,"width":340,"height":100},
+		{"id":"w12","type":"text","text":"12. Dankbarkeit ist die Kunst, genug zu haben.\n→ Gegenmittel zu Gier und Dauervergleich.","x":-400,"y":100,"width":340,"height":100},
+		{"id":"w14","type":"text","text":"14. Wer nicht irrt, lernt nichts.\n→ Irrtum als Rohstoff von Erkenntnis.","x":1200,"y":-500,"width":340,"height":100},
+		{"id":"w15","type":"text","text":"15. Die goldene Mitte. (Aristoteles)\n→ Balance zwischen Extremen; Risiko: Mittelmaß aus Bequemlichkeit.","x":-800,"y":0,"width":340,"height":120},
+		{"id":"w16","type":"text","text":"16. Handle nur nach der Maxime, die allgemeines Gesetz werden kann. (Kant)\n→ Universalisierbarkeit als Prüfstein; Risiko: Starre in Zielkonflikten.","x":-800,"y":300,"width":340,"height":130},
+		{"id":"w17","type":"text","text":"17. Die beste Zeit, einen Baum zu pflanzen, war vor 20 Jahren. Die zweitbeste ist jetzt.\n→ Handlungsstart statt Reue; Risiko: Beruhigungsfloskel.","x":-800,"y":-300,"width":340,"height":130},
+		{"id":"w18","type":"text","text":"18. Wer ein Warum zum Leben hat, erträgt fast jedes Wie. (Nietzsche)\n→ Sinn als Tragekraft; Risiko: Leid-Verklärung.","x":-800,"y":-600,"width":340,"height":130},
+		{"id":"w19","type":"text","text":"19. Wer zwei Hasen jagt, fängt keinen.\n→ Fokus schützt Energie; Risiko: falsche Entweder-Oder-Logik.","x":-1200,"y":-300,"width":340,"height":120},
+		{"id":"w20","type":"text","text":"20. Alles, was du besitzt, besitzt am Ende dich. (Thoreau)\n→ Wachsamkeit gegenüber Bindungen; Risiko: Asketen-Positur.","x":-1200,"y":0,"width":340,"height":120},
+		{"id":"w21","type":"text","text":"21. Das Leben ist, was passiert, während du Pläne machst.\n→ Gegenwarts-Reminder; Risiko: passiv werden.","x":-1200,"y":300,"width":340,"height":110},
+		{"id":"w22","type":"text","text":"22. Kein Feind ist schlimmer als der im Kopf.\n→ Innere Arbeit zuerst; Risiko: äußere Machtverhältnisse unterschätzen.","x":-1200,"y":600,"width":340,"height":120},
+		{"id":"w23","type":"text","text":"23. Wer immer glücklich sein will, muss sich oft verändern.\n→ Anpassungsfähigkeit; Risiko: Selbstverrat.","x":-800,"y":600,"width":340,"height":120},
+		{"id":"w24","type":"text","text":"24. Wir sehen die Dinge nicht, wie sie sind, sondern wie wir sind.\n→ Perspektivkritik; Risiko: Wahrheitsbegriff verwässern.","x":-400,"y":800,"width":340,"height":120},
+		{"id":"w25","type":"text","text":"25. Erst wenn der letzte Baum gerodet… (Cree)\n→ Ökologische Zwinglogik; Risiko: Katastrophenmüdigkeit.","x":0,"y":800,"width":340,"height":120},
+		{"id":"w26","type":"text","text":"26. Glück ist nur echt, wenn man es teilt. (McCandless)\n→ Sozialdimension von Freude; Risiko: nicht für alle gültig.","x":400,"y":800,"width":340,"height":110},
+		{"id":"w27","type":"text","text":"27. Misstraue der Mehrheit – Wahrheit ist selten populär. (Kierkegaard)\n→ Herdentrieb-Korrektiv; Risiko: Außenseiterpose.","x":800,"y":800,"width":340,"height":120},
+		{"id":"w13","type":"text","text":"13. Loslassen ist oft schwerer als Festhalten – und oft klüger.\n→ Freiheit durch geordneten Verzicht.","x":1388,"y":-286,"width":340,"height":110}
+	],
+	"edges":[
+		{"id":"e1","fromNode":"w1","fromSide":"top","toNode":"w2","toSide":"bottom","label":"Selbstkenntnis ↔ Deutungsfreiheit"},
+		{"id":"e2","fromNode":"w2","fromSide":"bottom","toNode":"w3","toSide":"top","label":"Deutung ↔ Wandel"},
+		{"id":"e3","fromNode":"w3","fromSide":"bottom","toNode":"w6","toSide":"top","label":"Wandel ↔ Zweifel"},
+		{"id":"e4","fromNode":"w4","fromSide":"bottom","toNode":"w5","toSide":"top","label":"Empathie ↔ Handeln"},
+		{"id":"e5","fromNode":"w5","fromSide":"top","toNode":"w6","toSide":"bottom","label":"Handeln ↔ kritisches Denken"},
+		{"id":"e6","fromNode":"w2","fromSide":"top","toNode":"w7","toSide":"bottom","label":"Deutung ↔ Stille"},
+		{"id":"e7","fromNode":"w7","fromSide":"bottom","toNode":"w1","toSide":"top","label":"Stille ↔ Selbstkenntnis"},
+		{"id":"e8","fromNode":"w8","fromSide":"bottom","toNode":"w1","toSide":"top","label":"Sterblichkeit ↔ Priorität"},
+		{"id":"e9","fromNode":"w9","fromSide":"bottom","toNode":"w2","toSide":"top","label":"Geist-Leere ↔ Deutung"},
+		{"id":"e10","fromNode":"w10","fromSide":"right","toNode":"w5","toSide":"left","label":"Absicht & Wirkung ↔ Handlung"},
+		{"id":"e11","fromNode":"w11","fromSide":"top","toNode":"w6","toSide":"bottom","label":"Machtverzicht ↔ Zweifel"},
+		{"id":"e12","fromNode":"w12","fromSide":"right","toNode":"w1","toSide":"left","label":"Dankbarkeit ↔ Selbstkenntnis"},
+		{"id":"e13","fromNode":"w13","fromSide":"bottom","toNode":"w3","toSide":"top","label":"Loslassen ↔ Wandel"},
+		{"id":"e14","fromFloating":false,"fromNode":"w14","fromSide":"bottom","toNode":"w6","toSide":"top","label":"Irrtum ↔ Zweifel"}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

@@ -1,0 +1,10 @@
+{
+	"nodes":[
+		{"id":"r1","type":"text","text":"Rothschild Subnetzwerk:\n• Europäische Zentralbankkontakte\n• Goldhandel\n• Einfluss auf Staatsanleihen\n• Verflechtung mit Monarchien","x":0,"y":0,"width":400,"height":200}
+	],
+	"edges":[],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

@@ -1,0 +1,21 @@
+{
+	"nodes":[
+		{"id":"1","type":"text","text":"**Zentraler Spannungsraum Balkan**\nImperiale Zersetzung × Ethnonationale Projekte × Europäische Kontrollmechanismen","x":0,"y":0,"width":400,"height":120},
+		{"id":"2","type":"text","text":"**Osmanisches Erbe**\n- Kontrollverlust im 19. Jh\n- Orthodoxie vs. Islam\n- „Orientalische Frage“","x":0,"y":200,"width":300,"height":150},
+		{"id":"3","type":"text","text":"**Berliner Kongress 1878**\n- Rückdrängung Russlands\n- Neuordnung durch Bismarck\n- Entstehung halber Nationalstaaten","x":400,"y":200,"width":300,"height":150},
+		{"id":"4","type":"text","text":"**Balkankriege (1912–13)**\n- Erste Anti-Osmanische Allianz\n- Sofortige Brüche unter den „Befreiern“\n- Startschuss für spätere Nationalismen","x":800,"y":200,"width":300,"height":150},
+		{"id":"5","type":"text","text":"**Imperiale Trümmerträume**\n- Großserbien\n- Großbulgarien\n- Großalbanien\n- Jugoslawismus","x":1200,"y":200,"width":300,"height":150},
+		{"id":"6","type":"text","text":"**Nachkriegsfragmentierung**\n- Dayton-Vertrag\n- Republika Srpska\n- Ethnokratie vs. Demokratie","x":1600,"y":200,"width":300,"height":150},
+		{"id":"7","type":"text","text":"**Externe Interessen**\n- EU/NATO: Stabilisierung?\n- Russland: Einfluss durch Serbien\n- Türkei: Schutzmacht Bosniaken\n- USA: Kontrollierter Stillstand","x":0,"y":450,"width":400,"height":140},
+		{"id":"8","type":"text","text":"**Bulgarien & Rumänien**\n- EU-integriert, aber identitär instabil\n- Konflikte mit Nachbarn (z. B. Nordmazedonien)\n- postkommunistische Restwellen","x":450,"y":450,"width":400,"height":140},
+		{"id":"9","type":"text","text":"**Gegenwart**\n- Flucht der Jugend\n- politische Stagnation\n- Korruption als Systemventil","x":900,"y":450,"width":400,"height":140},
+		{"id":"10","type":"text","text":"**Symbolischer Zustand**\n„Gleichzeitigkeit von Vergangenheit und Zukunft, aber keine Gegenwart“","x":1350,"y":450,"width":400,"height":140}
+	],
+	"edges":[
+		{"fromNode":"1","fromSide":"bottom","toNode":"10","toSide":"left"}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

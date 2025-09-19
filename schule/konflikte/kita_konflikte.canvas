@@ -1,0 +1,73 @@
+{
+	"nodes":[
+		{"id":"1","type":"text","text":"Kita Ahrensburger Weg\nOffenes Konzept\n80 Kinder","x":0,"y":0,"width":300,"height":120},
+		{"id":"4","type":"text","text":"Praktikantin Selma\n• Neu in Kita\n• Vorher Grundschule\n• Unsicherheit: Offenes Konzept","x":-107,"y":-390,"width":320,"height":160},
+		{"id":"2","type":"text","text":"Funktionsräume\n• Atelier\n• Bewegungsraum / Musik\n• Rollenspielraum\n• Bauraum\n• Kinderbibliothek","x":531,"y":-181,"width":300,"height":160},
+		{"id":"5","type":"text","text":"Bauraum Situation\n• Robert: will Krankenhaus bauen\n• Mila & Nora: dagegen\n• Martina: lässt Robert bauen\n• Streit: Gebäude stürzt ein\n• Robert schlägt Nadya\n• Selma schickt Robert raus\n• Konflikt mit Martina","x":-488,"y":-63,"width":350,"height":240},
+		{"id":"9","type":"text","text":"Team/Konzept\n• 12 Erzieher:innen + SPAs\n• FSJler + Praktikantinnen\n• Umstellung angeordnet vom Träger\n• Furkan: Befürworter\n• Martina: vorsichtig, Kinderrechte wichtig","x":209,"y":302,"width":320,"height":220},
+		{"id":"6","type":"text","text":"Rollenspielraum Situation\n• Stammgruppe: Rosa, Merdan, Hannah, Marie\n• Spiel: Restaurant\n• Rollen verteilt\n• Jorge (3;6) darf mitmachen\n• Hannah kommandiert\n• Jorge schubst, Hannah zurück\n• Selma unsicher","x":-399,"y":347,"width":350,"height":220},
+		{"id":"8","type":"text","text":"Hannah (5;9)\n• Seit Krippe in Kita\n• Früher feste Freunde (Atelier)\n• Schwierigkeiten mit neuem Konzept\n• Familie: Mutter + Schwester, Vater getrennt","x":-891,"y":357,"width":300,"height":200},
+		{"id":"7","type":"text","text":"Robert (4;7)\n• Einzelkind, liebevolle Eltern\n• Fußball, Burgen bauen\n• Opa im Krankenhaus\n• Spielpartner: Tom","x":-917,"y":-32,"width":280,"height":180},
+		{"id":"c1","type":"text","text":"Konflikt Bauraum\n• Mitbestimmung: Wer entscheidet über Bauideen?\n• Gerechtigkeit vs. Individualwunsch\n• Aggression nach Frust (Robert schlägt Nadya)\n• Unterschiedliche pädagogische Haltung (Selma vs. Martina)","x":-844,"y":-440,"width":360,"height":240},
+		{"id":"c2","type":"text","text":"Konflikt Rollenspielraum\n• Machtgefälle Hannah – Jorge\n• Ausgrenzung jüngerer Kinder\n• Eskalation: Schubsen\n• Selmas Unsicherheit: eingreifen oder beobachten?","x":-448,"y":734,"width":340,"height":200},
+		{"id":"c3","type":"text","text":"Team-/Konzeptkonflikt\n• Uneinheitliche Umsetzung offenes Konzept\n• Furkan: Befürworter\n• Martina: Kinderrechte im Blick, skeptisch\n• Praktikanten erhalten widersprüchliche Signale","x":374,"y":667,"width":360,"height":220},
+		{"id":"3","type":"text","text":"Ablauf\n• Ankunft 6-9:30\n• Frühstück 8-9\n• Morgenkreis 9:30\n• Freispiel 10-13\n• Mittag 11-13\n• Angebote / Außengelände","x":554,"y":61,"width":320,"height":200}
+	],
+	"edges":[
+		{"id":"e1","fromFloating":false,"fromNode":"1","fromSide":"top","toNode":"2","toSide":"left"},
+		{"id":"e2","fromNode":"1","fromSide":"right","toNode":"3","toSide":"left"},
+		{"id":"e4","fromNode":"1","fromSide":"left","toNode":"5","toSide":"right"},
+		{"id":"e5","fromNode":"1","fromSide":"bottom","toNode":"6","toSide":"top"},
+		{"id":"e8","fromNode":"1","fromSide":"bottom","toNode":"9","toSide":"top"},
+		{"id":"7d0c55a3b17f22bb","fromNode":"6","fromSide":"left","toNode":"8","toSide":"right"},
+		{"id":"0c30945141beaf2f","fromNode":"5","fromSide":"left","toNode":"7","toSide":"right"},
+		{
+			"id":"ec1",
+			"fromFloating":false,
+			"styleAttributes":{"path":"dotted"},
+			"toFloating":false,
+			"fromNode":"5",
+			"fromSide":"top",
+			"toNode":"c1",
+			"toSide":"bottom",
+			"color":"1",
+			"label":"Konflikt"
+		},
+		{
+			"id":"ec2",
+			"fromFloating":false,
+			"styleAttributes":{"path":"dotted"},
+			"fromNode":"6",
+			"fromSide":"bottom",
+			"toNode":"c2",
+			"toSide":"top",
+			"color":"1",
+			"label":"Konflikt"
+		},
+		{
+			"id":"ec3",
+			"toFloating":false,
+			"fromFloating":false,
+			"styleAttributes":{"path":"dotted"},
+			"fromNode":"9",
+			"fromSide":"bottom",
+			"toNode":"c3",
+			"toSide":"top",
+			"color":"1",
+			"label":"Konflikt"
+		},
+		{
+			"id":"29c53757556cccc1",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"1",
+			"fromSide":"top",
+			"toNode":"4",
+			"toSide":"bottom"
+		}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}
