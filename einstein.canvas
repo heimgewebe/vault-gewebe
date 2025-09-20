@@ -5,28 +5,141 @@
       "type": "text",
       "x": 0,
       "y": 0,
-      "width": 600,
-      "height": 200,
-      "text": "# Albert Einstein\nPhysiker · Philosoph · Kritiker"
+      "width": 800,
+      "height": 220,
+      "text": "# Albert Einstein – Rollen & Felder\nPublic Intellectual · Physiker · Wissenschaftsphilosoph · Ethiker · Politik- & Gesellschaftskritiker"
     },
     {
       "id": "physik",
       "type": "text",
-      "x": -400,
-      "y": 200,
-      "width": 400,
-      "height": 160,
-      "text": "## Physik\nRelativität, Quantenkritik, Nobelpreis"
+      "x": -900,
+      "y": -400,
+      "width": 600,
+      "height": 320,
+      "text": "## Physik\n- Spezielle Relativität (1905)\n- Allgemeine Relativität (1915)\n- Nobelpreis 1921 (Photoeffekt)\n- EPR-Paradoxon (1935)\n- Vereinheitlichungsversuche\n\nKernspannung: Determinismus vs. Quantenindeterminismus"
+    },
+    {
+      "id": "wissphilo",
+      "type": "text",
+      "x": -100,
+      "y": -500,
+      "width": 640,
+      "height": 320,
+      "text": "## Wissenschaftsphilosophie\n- Realismus vs. Kopenhagener Deutung (\"Gott würfelt nicht\")\n- Theoriegeladenheit von Messung\n- Einfachheit/Schönheit als Heuristik\n- Wissenschaft & Ethik"
+    },
+    {
+      "id": "ethik",
+      "type": "text",
+      "x": 800,
+      "y": -400,
+      "width": 680,
+      "height": 340,
+      "text": "## Ethik & Gesellschaft\n- Humanismus & Universalismus\n- Antirassismus (NAACP, Rede Princeton 1946)\n- Antisemitismus-Erfahrung → Exil\n- Pazifismus (mit Bruch im NS-Kontext)\n- Akademische Freiheit"
+    },
+    {
+      "id": "politik",
+      "type": "text",
+      "x": 1200,
+      "y": 80,
+      "width": 760,
+      "height": 360,
+      "text": "## Politik & Öffentlichkeit\n- Brief an Roosevelt 1939 → Manhattan Project\n- Why Socialism? (1949)\n- Russell–Einstein-Manifest (1955)\n- McCarthy-Kritik / Bürgerrechte\n- Paradox: Atomprojekt angeschoben → später Abrüstung"
+    },
+    {
+      "id": "israel",
+      "type": "text",
+      "x": 300,
+      "y": 400,
+      "width": 700,
+      "height": 340,
+      "text": "## Israel & Zionismus\n- Förderung Hebräische Universität\n- Skepsis gegenüber Nationalismus\n- NYT-Brief 1948 gegen Cherut/Begin\n- 1952 Präsidentschaftsangebot → Absage\n- Wunsch: kulturell-moralische Orientierung statt Militarismus"
+    },
+    {
+      "id": "bildung",
+      "type": "text",
+      "x": -600,
+      "y": 400,
+      "width": 600,
+      "height": 280,
+      "text": "## Bildung & Kultur\n- Populäre Vermittlung\n- Musik (Violine) als Denkraum\n- Förderung junger Forschender\n- Kritik an Autoritätskult"
+    },
+    {
+      "id": "stil",
+      "type": "text",
+      "x": -1200,
+      "y": 40,
+      "width": 600,
+      "height": 280,
+      "text": "## Persönlichkeit & Stil\n- Ironie & Unabhängigkeit\n- Kosmopolitisch verwurzelt\n- Öffentlich unbequem\n- Humorvolle Schärfe"
+    },
+    {
+      "id": "timeline",
+      "type": "text",
+      "x": -200,
+      "y": 750,
+      "width": 700,
+      "height": 360,
+      "text": "## Zeitleiste (Auswahl)\n1905: Annus mirabilis\n1915: Allgemeine Relativität\n1921: Nobelpreis\n1933: Emigration USA\n1939: Brief an Roosevelt\n1948: NYT-Brief\n1949: Why Socialism?\n1952: Absage Präsidentschaft\n1955: Russell–Einstein-Manifest, Tod"
+    },
+    {
+      "id": "docs",
+      "type": "text",
+      "x": 700,
+      "y": 760,
+      "width": 720,
+      "height": 340,
+      "text": "## Schlüsseldokumente\n- (1939) Brief an Roosevelt\n- (1948) Offener Brief NYT\n- (1949) Why Socialism?\n- (1952) Absagebrief an Abba Eban\n- (1955) Russell–Einstein-Manifest"
+    },
+    {
+      "id": "kontrovers",
+      "type": "text",
+      "x": -1000,
+      "y": 760,
+      "width": 660,
+      "height": 320,
+      "text": "## Kontroversen & Paradoxa\n- Pazifist → Atomforschung mit angestoßen\n- Kosmopolit ↔ Zionist\n- Realismus ↔ Quanten-Erfolg\n- Öffentliche Autorität ↔ Ablehnung von Ämtern"
+    },
+    {
+      "id": "wirkung",
+      "type": "text",
+      "x": 1600,
+      "y": -200,
+      "width": 760,
+      "height": 320,
+      "text": "## Wirkung & Rezeption\n- Wissenschaft: Paradigmenwechsel\n- Politik: Abrüstungssymbol\n- Bildung: Ikone kritischen Denkens\n- Israel: verehrt, aber auch kritisiert"
+    },
+    {
+      "id": "zitate",
+      "type": "text",
+      "x": -1000,
+      "y": -700,
+      "width": 660,
+      "height": 300,
+      "text": "## Zitate\n- \"Phantasie ist wichtiger als Wissen\"\n- \"Probleme kann man nicht mit derselben Denkweise lösen\"\n- \"Gott würfelt nicht\"\n- \"Ethik ist die Forderung, Mitmenschen als Zwecke zu behandeln\""
+    },
+    {
+      "id": "fragen",
+      "type": "text",
+      "x": 1600,
+      "y": 500,
+      "width": 760,
+      "height": 340,
+      "text": "## Weiterführende Fragen\n- Wirkung seiner Briefe?\n- Vergleich mit Russell/Arendt\n- Israel-Rezeption\n- Lehre für heutige Wissenschafts-/KI-Debatten"
     }
   ],
   "edges": [
-    {
-      "id": "e1",
-      "fromNode": "root",
-      "toNode": "physik",
-      "fromSide": "bottom",
-      "toSide": "top",
-      "label": "Feld"
-    }
+    {"id": "e1", "fromNode": "root", "toNode": "physik"},
+    {"id": "e2", "fromNode": "root", "toNode": "wissphilo"},
+    {"id": "e3", "fromNode": "root", "toNode": "ethik"},
+    {"id": "e4", "fromNode": "root", "toNode": "politik"},
+    {"id": "e5", "fromNode": "root", "toNode": "israel"},
+    {"id": "e6", "fromNode": "root", "toNode": "bildung"},
+    {"id": "e7", "fromNode": "root", "toNode": "stil"},
+    {"id": "e8", "fromNode": "root", "toNode": "timeline"},
+    {"id": "e9", "fromNode": "root", "toNode": "docs"},
+    {"id": "e10", "fromNode": "root", "toNode": "kontrovers"},
+    {"id": "e11", "fromNode": "root", "toNode": "wirkung"},
+    {"id": "e12", "fromNode": "root", "toNode": "zitate"},
+    {"id": "e13", "fromNode": "root", "toNode": "fragen"}
   ]
 }
