@@ -1,220 +1,32 @@
-	
-nodes	
-0	
-id	"root"
-type	"text"
-x	0
-y	0
-width	860
-height	260
-color	"1"
-text	"# Albert Einstein – Rollen & Felder\n**Public Intellectual · Physiker · Wissenschaftsphilosoph · Ethiker · Politik- & Gesellschaftskritiker**\n\n> Leitmotiv: Wahrheit als Spannung zwischen Kohärenz & Disruption (∴fore)."
-1	
-id	"physik"
-type	"text"
-x	-920
-y	-420
-width	720
-height	420
-color	"3"
-text	"## Physik\n- Spezielle Relativität (1905): Invarianz der Lichtgeschwindigkeit, Zeitdilatation, Längenkontraktion.\n- Allgemeine Relativität (1915): Gravitation als Krümmung der Raumzeit.\n- Photoeffekt (Nobelpreis 1921): Lichtquanten, Anfang der Quantenphysik.\n- EPR-Paradoxon (1935): Kritik an Vollständigkeit der Quantenmechanik.\n- Späte Jahre: Vereinheitlichungsversuche (Feldtheorien).\n\n**Kernspannung:** Determinismus-Intuition ↔ Quantenindeterminismus."
-2	
-id	"wissphilo"
-type	"text"
-x	-140
-y	-560
-width	800
-height	420
-color	"4"
-text	'## Wissenschaftsphilosophie\n- Realismus vs. Kopenhagener Deutung: "Gott würfelt nicht" als erkenntnistheoretische Skepsis.\n- Theorie & Erfahrung: Messung als theoriegeladen, aber Wahrheitssuche bleibt Ziel.\n- Ideal von Einfachheit/Schönheit: Heuristik, kein Dogma.\n- Wissenschaft & Ethik: Erkenntnis ohne Gewissen ist blind.'
-3	
-id	"ethik"
-type	"text"
-x	720
-y	-430
-width	820
-height	470
-color	"5"
-text	"## Ethik & Gesellschaft\n- Humanismus & Universalismus; Ablehnung von Chauvinismus.\n- Antirassismus (NAACP; Reden 1946/Princeton).\n- Antisemitismus-Erfahrungen (Europa) → Exil, Empathie für Verfolgte.\n- Pazifismus/Antimilitarismus – mit historischem Bruch angesichts des NS-Regimes.\n- Akademische Freiheit & Verantwortung von Intellektuellen."
-4	
-id	"politik"
-type	"text"
-x	1100
-y	40
-width	880
-height	520
-color	"6"
-text	"## Politik & Öffentlichkeit\n- **Brief an Roosevelt (1939):** Warnung vor dt. Uranprojekt (indirekter Impuls für Manhattan Project).\n- **Why Socialism? (1949, Monthly Review):** Plädoyer für demokratischen Sozialismus & Schutz vor Oligopolen.\n- **Russell–Einstein-Manifest (1955):** Abrüstungsappell → Pugwash-Bewegung.\n- **McCarthy-Kritik/Bürgerrechte:** Solidarität mit W. E. B. Du Bois & Paul Robeson.\n- **Paradox:** Mitangeschoben → später einer der lautesten Kritiker der Atomrüstung."
-5	
-id	"israel"
-type	"text"
-x	320
-y	360
-width	820
-height	520
-color	"2"
-text	'## Israel & Zionismus\n- Kultureller Zionismus: Förderung der Hebräischen Universität (Eröffnungsrede 1925).\n- Skepsis gegenüber Nationalismus & Militarismus jeder Art.\n- **NYT-Brief 1948** (mit u. a. Hannah Arendt): Warnung vor Cherut/Begin ("faschistische Tendenzen").\n- **1952 Präsidentschaftsangebot:** Absage an Abba Eban – tiefe Verbundenheit, aber fehlende Eignung für Amt.\n- Wunschbild: moralische & kulturelle Orientierung statt chauvinistischem Staat.'
-6	
-id	"bildung"
-type	"text"
-x	-520
-y	360
-width	720
-height	440
-color	"3"
-text	"## Bildung & Kultur\n- Wissenschaftsvermittlung & populäre Vorträge.\n- Musik (Violine) als Denk- & Erholungsraum.\n- Förderung junger Forschender; internationale Kooperation.\n- Skepsis gegenüber Autoritätskult – Förderung kritischen Denkens."
-7	
-id	"stil"
-type	"text"
-x	-1120
-y	40
-width	720
-height	420
-color	"4"
-text	'## Persönlichkeit & Stil\n- Ironisch, unabhängig, konfliktscheu gegenüber Dogmen, nicht gegenüber Unrecht.\n- Kosmopolitisch, aber biografisch verwurzelt in jüdischer Erfahrung.\n- Öffentliches Gewissen: unbequem, aber klar.\n- Humor: "Wenn die Fakten nicht zur Theorie passen, ändere die Fakten nicht – prüfe die Theorie." (zugeschrieben)'
-8	
-id	"timeline"
-type	"text"
-x	-220
-y	740
-width	860
-height	560
-color	"5"
-text	'## Zeitleiste (Auswahl)\n- 1905: Annus mirabilis (SR, Photoeffekt, Brownsche Bewegung).\n- 1915: Allgemeine Relativität.\n- 1921: Nobelpreis (Photoeffekt).\n- 1925: Rede Hebräische Universität.\n- 1933: Emigration in die USA (Princeton).\n- 1939: Brief an Roosevelt.\n- 1948: NYT-Brief (Cherut/Begin).\n- 1949: "Why Socialism?"\n- 1952: Absage Präsidentschaft Israels (an Abba Eban).\n- 1955: Russell–Einstein-Manifest; Tod.'
-9	
-id	"docs"
-type	"text"
-x	760
-y	760
-width	920
-height	560
-color	"1"
-text	'## Schlüsseldokumente\n- (1939) Brief an Roosevelt – Uranprojekt.\n- (1948) Offener Brief an die *New York Times* (Arendt u. a.) – Warnung vor Cherut/Begin.\n- (1949) "Why Socialism?" – Monthly Review.\n- (1952) Absagebrief an Abba Eban – Präsidentschaft Israels.\n- (1955) Russell–Einstein-Manifest – Abrüstung & Pugwash.\n\n> Hinweis: Originaltexte im Zweifel im Wortlaut prüfen; Rezeption variiert.'
-10	
-id	"kontrovers"
-type	"text"
-x	-980
-y	720
-width	800
-height	560
-color	"2"
-text	"## Kontroversen & Paradoxa\n- Pazifist, der die Atomforschung indirekt anschob → später Abrüstungsikone.\n- Kosmopolit, der kulturellen Zionismus bejaht, Nationalismus kritisiert.\n- Realismus-Intuition vs. empirischer Erfolg der Quantenmechanik.\n- Öffentliche Autorität vs. Abneigung gegen Ämter (Absage 1952)."
-11	
-id	"wirkung"
-type	"text"
-x	1520
-y	-220
-width	900
-height	520
-color	"3"
-text	"## Wirkung & Rezeption\n- Wissenschaft: Paradigmenwechsel in Raumzeit & Gravitation; anhaltende EPR-Debatten (Nichtlokalität, Verschränkung).\n- Politik: Symbolfigur für Abrüstung; moralische Autorität in Bürgerrechtsfragen.\n- Bildung/Kultur: Ikone kritischen Denkens; Mythos vs. Mensch.\n- Israel-Debatte: geschätzt, aber nicht unkritisch rezipiert."
-12	
-id	"zitate"
-type	"text"
-x	-1000
-y	-760
-width	840
-height	460
-color	"6"
-text	'## Zitate (kurz, teils zugeschrieben)\n- "Phantasie ist wichtiger als Wissen, denn Wissen ist begrenzt."\n- "Probleme kann man niemals mit derselben Denkweise lösen, durch die sie entstanden sind."\n- "Gott würfelt nicht." (als erkenntnistheoretische Skepsis)\n- "Ethik ist nichts anderes als die Forderung, die Mitmenschen als Zwecke zu behandeln." (paraphrasiert)'
-13	
-id	"fragen"
-type	"text"
-x	1600
-y	520
-width	900
-height	520
-color	"4"
-text	"## Weiterführende Fragen (∴fore)\n- Wirksamkeit: Welche konkreten politischen Effekte hatten seine Briefe/Appelle?\n- Vergleich: Einstein vs. Russell/Arendt/Du Bois – wer bewegte was?\n- Israel: Rezeption der 1948/1952er Briefe in Israel & Diaspora.\n- Epistemik: Was lernen wir aus Einsteins Realismus-Streit für heutige KI-/Wissenschaftsdebatten?\n\n> Humorhafter Seitenblick: Hätte man seine Abrüstungsappelle so schnell implementiert wie E=mc^2, gäbe es heute mehr Konzerthallen als Silos."
-edges	
-0	
-id	"e1"
-fromNode	"root"
-toNode	"physik"
-fromSide	"left"
-toSide	"right"
-label	"Fach"
-1	
-id	"e2"
-fromNode	"root"
-toNode	"wissphilo"
-fromSide	"top"
-toSide	"bottom"
-label	"Denken über Wissenschaft"
-2	
-id	"e3"
-fromNode	"root"
-toNode	"ethik"
-fromSide	"right"
-toSide	"left"
-label	"Ethik"
-3	
-id	"e4"
-fromNode	"root"
-toNode	"politik"
-fromSide	"right"
-toSide	"left"
-label	"Öffentlichkeit"
-4	
-id	"e5"
-fromNode	"root"
-toNode	"israel"
-fromSide	"bottom"
-toSide	"top"
-label	"Zionismus"
-5	
-id	"e6"
-fromNode	"root"
-toNode	"bildung"
-fromSide	"left"
-toSide	"right"
-label	"Vermittlung"
-6	
-id	"e7"
-fromNode	"root"
-toNode	"stil"
-fromSide	"left"
-toSide	"right"
-label	"Persona"
-7	
-id	"e8"
-fromNode	"root"
-toNode	"timeline"
-fromSide	"bottom"
-toSide	"top"
-label	"Zeit"
-8	
-id	"e9"
-fromNode	"root"
-toNode	"docs"
-fromSide	"bottom"
-toSide	"top"
-label	"Dokumente"
-9	
-id	"e10"
-fromNode	"root"
-toNode	"kontrovers"
-fromSide	"bottom"
-toSide	"top"
-label	"Paradoxa"
-10	
-id	"e11"
-fromNode	"root"
-toNode	"wirkung"
-fromSide	"right"
-toSide	"left"
-label	"Rezeption"
-11	
-id	"e12"
-fromNode	"root"
-toNode	"zitate"
-fromSide	"top"
-toSide	"bottom"
-label	"Stimmen"
-12	
-id	"e13"
-fromNode	"root"
-toNode	"fragen"
-fromSide	"right"
-toSide	"left"
-label	"Offene Punkte"
+{
+  "nodes": [
+    {
+      "id": "root",
+      "type": "text",
+      "x": 0,
+      "y": 0,
+      "width": 600,
+      "height": 200,
+      "text": "# Albert Einstein\nPhysiker · Philosoph · Kritiker"
+    },
+    {
+      "id": "physik",
+      "type": "text",
+      "x": -400,
+      "y": 200,
+      "width": 400,
+      "height": 160,
+      "text": "## Physik\nRelativität, Quantenkritik, Nobelpreis"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "fromNode": "root",
+      "toNode": "physik",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "label": "Feld"
+    }
+  ]
+}
