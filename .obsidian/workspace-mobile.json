@@ -11,10 +11,17 @@
             "id": "130cde3e455aa427",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "Neuer Tab"
+              "type": "canvas",
+              "state": {
+                "file": "schule/arbeitsfelder/arbeitsfelder_als_erzieher.canvas",
+                "viewState": {
+                  "x": 276.6066783254829,
+                  "y": 530.9156798844236,
+                  "zoom": -1.0236117023585303
+                }
+              },
+              "icon": "lucide-layout-dashboard",
+              "title": "arbeitsfelder_als_erzieher"
             }
           }
         ]

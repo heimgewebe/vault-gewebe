@@ -1,999 +1,132 @@
 {
-  "nodes": [
-    {
-      "id": "b96c59bc6d270edb",
-      "type": "group",
-      "ratio": 1.7777777777777777,
-      "x": -80,
-      "y": 420,
-      "width": 1200,
-      "height": 675,
-      "label": "Start Slide"
-    },
-    {
-      "id": "arbeitsfelder",
-      "type": "text",
-      "text": "Arbeitsfelder als Erzieher",
-      "x": 0,
-      "y": 0,
-      "width": 360,
-      "height": 64
-    },
-    {
-      "id": "kindertageseinrichtungen",
-      "type": "text",
-      "text": "Kindertageseinrichtungen",
-      "x": 500,
-      "y": -40,
-      "width": 320,
-      "height": 60
-    },
-    {
-      "id": "spielkreise",
-      "type": "text",
-      "text": "Spielkreise",
-      "x": 820,
-      "y": 110,
-      "width": 220,
-      "height": 56
-    },
-    {
-      "id": "tagespflege",
-      "type": "text",
-      "text": "Tagespflege",
-      "x": 760,
-      "y": 30,
-      "width": 220,
-      "height": 56
-    },
-    {
-      "id": "loesegruppen",
-      "type": "text",
-      "text": "Lösegruppen",
-      "x": 760,
-      "y": 90,
-      "width": 220,
-      "height": 56
-    },
-    {
-      "id": "altersuebergreifende_gruppen",
-      "type": "file",
-      "file": "schule/arbeitsfelder/altersübergreifendeGruppen.canvas",
-      "x": 600,
-      "y": 180,
-      "width": 320,
-      "height": 56
-    },
-    {
-      "id": "kinderkrippen_u3",
-      "type": "text",
-      "text": "Kinderkrippen (U3)",
-      "x": 600,
-      "y": -30,
-      "width": 260,
-      "height": 56
-    },
-    {
-      "id": "spielgruppen",
-      "type": "text",
-      "text": "Spielgruppen",
-      "x": 600,
-      "y": -120,
-      "width": 220,
-      "height": 56
-    },
-    {
-      "id": "konzeptionelle_schwerpunkte",
-      "type": "text",
-      "text": "Konzeptionelle Schwerpunkte",
-      "x": 890,
-      "y": -130,
-      "width": 350,
-      "height": 60
-    },
-    {
-      "id": "zb_bewegungsfoerderung",
-      "type": "text",
-      "text": "z.B. Bewegungsförderung",
-      "x": 1180,
-      "y": -120,
-      "width": 320,
-      "height": 56
-    },
-    {
-      "id": "zb_naturverbundenheit",
-      "type": "text",
-      "text": "z.B. Naturverbundenheit",
-      "x": 1180,
-      "y": -60,
-      "width": 300,
-      "height": 56
-    },
-    {
-      "id": "zb_sprachentwicklung",
-      "type": "text",
-      "text": "z.B. Sprachentwicklung",
-      "x": 1180,
-      "y": 0,
-      "width": 300,
-      "height": 56
-    },
-    {
-      "id": "unterschiedliche_paedagogische_handlungskonzepte",
-      "type": "text",
-      "text": "unterschiedliche pädagogische Handlungskonzepte",
-      "x": 880,
-      "y": -300,
-      "width": 500,
-      "height": 60
-    },
-    {
-      "id": "waldorfpaedagogik_nach_rudolf_steiner",
-      "type": "text",
-      "text": "Waldorfpädagogik (nach Rudolf Steiner)",
-      "x": 1210,
-      "y": -360,
-      "width": 420,
-      "height": 56
-    },
-    {
-      "id": "offenes_konzept",
-      "type": "text",
-      "text": "offenes Konzept",
-      "x": 1210,
-      "y": -240,
-      "width": 220,
-      "height": 56
-    },
-    {
-      "id": "geschlossenes_konzept",
-      "type": "text",
-      "text": "geschlossenes Konzept",
-      "x": 1210,
-      "y": -180,
-      "width": 260,
-      "height": 56
-    },
-    {
-      "id": "hdj",
-      "type": "text",
-      "text": "HDJ",
-      "x": 320,
-      "y": 110,
-      "width": 140,
-      "height": 56
-    },
-    {
-      "id": "familienberatung",
-      "type": "text",
-      "text": "Familienberatung",
-      "x": 340,
-      "y": 240,
-      "width": 260,
-      "height": 60
-    },
-    {
-      "id": "fruehe_hilfen_und_familienzentren",
-      "type": "text",
-      "text": "Frühe Hilfen & Familienzentren",
-      "x": 320,
-      "y": 320,
-      "width": 420,
-      "height": 60
-    },
-    {
-      "id": "fruehfoerderstellen",
-      "type": "text",
-      "text": "Frühförderstellen",
-      "x": 300,
-      "y": 400,
-      "width": 280,
-      "height": 56
-    },
-    {
-      "id": "familienzentren",
-      "type": "text",
-      "text": "Familienzentren",
-      "x": 320,
-      "y": 460,
-      "width": 260,
-      "height": 56
-    },
-    {
-      "id": "verhaltensauffaellige_kinder",
-      "type": "text",
-      "text": "verhaltensauffällige Kinder",
-      "x": 680,
-      "y": 260,
-      "width": 320,
-      "height": 56
-    },
-    {
-      "id": "bei_allgemeinen_fragen_zur_entwicklung_der_kinder___der_erziehung",
-      "type": "text",
-      "text": "bei allgemeinen Fragen zur Entwicklung der Kinder / der Erziehung",
-      "x": 680,
-      "y": 320,
-      "width": 640,
-      "height": 56
-    },
-    {
-      "id": "hj_hilfen",
-      "type": "text",
-      "text": "Einrichtung der Kinder- und Jugendhilfe und Hilfen zur Erziehung",
-      "x": 220,
-      "y": 500,
-      "width": 740,
-      "height": 64
-    },
-    {
-      "id": "bei_kindeswohlgefaehrdung",
-      "type": "text",
-      "text": "bei Kindeswohlgefährdung",
-      "x": 620,
-      "y": 560,
-      "width": 300,
-      "height": 56
-    },
-    {
-      "id": "hilfen_zur_erziehung_kurz_hze",
-      "type": "text",
-      "text": "Hilfen zur Erziehung (kurz HZE)",
-      "x": 620,
-      "y": 620,
-      "width": 360,
-      "height": 56
-    },
-    {
-      "id": "stationaere_hilfen",
-      "type": "text",
-      "text": "stationäre Hilfen",
-      "x": 620,
-      "y": 680,
-      "width": 280,
-      "height": 56
-    },
-    {
-      "id": "ziel_befaehigung_des_menschen_zu_einer_muendigen_person_und_einem_hohen_anspruch_an_partizipation",
-      "type": "text",
-      "text": "Ziel: Befähigung des Menschen zu einer mündigen Person und einem hohen Anspruch an Partizipation",
-      "x": 620,
-      "y": 740,
-      "width": 880,
-      "height": 64
-    },
-    {
-      "id": "betreuung_ueber_tag_und_nacht",
-      "type": "text",
-      "text": "Betreuung über Tag und Nacht",
-      "x": 620,
-      "y": 800,
-      "width": 360,
-      "height": 56
-    },
-    {
-      "id": "angebot_von_ambulanten_hilfenangeboten",
-      "type": "text",
-      "text": "Angebot von ambulanten Hilfenangeboten",
-      "x": 620,
-      "y": 860,
-      "width": 460,
-      "height": 56
-    },
-    {
-      "id": "zb_sozialpaedagogische_familienhilfe",
-      "type": "text",
-      "text": "z.B. sozialpädagogische Familienhilfe",
-      "x": 1080,
-      "y": 860,
-      "width": 420,
-      "height": 56
-    },
-    {
-      "id": "zb_engere_begleitung_durch_das_jeweilige_jugendamt",
-      "type": "text",
-      "text": "z.B. engere Begleitung durch das jeweilige Jugendamt",
-      "x": 620,
-      "y": 920,
-      "width": 640,
-      "height": 56
-    },
-    {
-      "id": "wohngruppen",
-      "type": "text",
-      "text": "Wohngruppen",
-      "x": 920,
-      "y": 680,
-      "width": 220,
-      "height": 56
-    },
-    {
-      "id": "intensivpaedagogische_massnahmen",
-      "type": "text",
-      "text": "intensivpädagogische Maßnahmen",
-      "x": 920,
-      "y": 740,
-      "width": 420,
-      "height": 56
-    },
-    {
-      "id": "kriseninterventionsteams",
-      "type": "text",
-      "text": "Kriseninterventionsteams",
-      "x": 920,
-      "y": 920,
-      "width": 360,
-      "height": 56
-    },
-    {
-      "id": "kinder_unterstuetzen",
-      "type": "text",
-      "text": "Kinder unterstützen",
-      "x": -200,
-      "y": 640,
-      "width": 260,
-      "height": 56
-    },
-    {
-      "id": "mit_kindern_spielen",
-      "type": "text",
-      "text": "mit Kindern spielen",
-      "x": -200,
-      "y": 700,
-      "width": 260,
-      "height": 56
-    },
-    {
-      "id": "kinder_entsprechend_pflegen",
-      "type": "text",
-      "text": "Kinder entsprechend pflegen",
-      "x": -200,
-      "y": 760,
-      "width": 320,
-      "height": 56
-    },
-    {
-      "id": "patienten_und_deren_angehoerigen_beraten",
-      "type": "text",
-      "text": "Patienten und deren Angehörigen beraten",
-      "x": -200,
-      "y": 820,
-      "width": 440,
-      "height": 56
-    },
-    {
-      "id": "unterschiedliche_altersgruppen",
-      "type": "text",
-      "text": "unterschiedliche Altersgruppen",
-      "x": -200,
-      "y": 880,
-      "width": 340,
-      "height": 56
-    },
-    {
-      "id": "ganztagsschulen",
-      "type": "text",
-      "text": "Ganztagsschulen",
-      "x": -520,
-      "y": -200,
-      "width": 300,
-      "height": 60
-    },
-    {
-      "id": "einsatz_im_zusaetzlichen_ganztagsangebot",
-      "type": "text",
-      "text": "Einsatz im zusätzlichen Ganztagsangebot",
-      "x": -800,
-      "y": -180,
-      "width": 380,
-      "height": 56
-    },
-    {
-      "id": "wahlangebote",
-      "type": "text",
-      "text": "Wahlangebote",
-      "x": -800,
-      "y": -300,
-      "width": 240,
-      "height": 56
-    },
-    {
-      "id": "hausaufgabenbetreuung",
-      "type": "text",
-      "text": "Hausaufgabenbetreuung",
-      "x": -800,
-      "y": -360,
-      "width": 320,
-      "height": 56
-    },
-    {
-      "id": "offene_ganztagsschulen",
-      "type": "text",
-      "text": "offene Ganztagsschulen",
-      "x": -800,
-      "y": -420,
-      "width": 320,
-      "height": 56
-    },
-    {
-      "id": "verschiedene_konzepte",
-      "type": "text",
-      "text": "Verschiedene Konzepte",
-      "x": -1060,
-      "y": -460,
-      "width": 300,
-      "height": 56
-    },
-    {
-      "id": "moeglichkeit_freiwillig_das_ganztagsangebot_auszuwaehlen",
-      "type": "text",
-      "text": "Möglichkeit freiwillig das Ganztagsangebot auszuwählen",
-      "x": -1360,
-      "y": -520,
-      "width": 540,
-      "height": 56
-    },
-    {
-      "id": "schulsozialarbeit",
-      "type": "text",
-      "text": "Schulsozialarbeit",
-      "x": -520,
-      "y": -80,
-      "width": 260,
-      "height": 56
-    },
-    {
-      "id": "uebergangsmanagement_schule_beruf",
-      "type": "text",
-      "text": "Übergangsmanagement zwischen Schule und Beruf",
-      "x": -520,
-      "y": -20,
-      "width": 420,
-      "height": 56
-    },
-    {
-      "id": "maedchenarbeit",
-      "type": "text",
-      "text": "Mädchenarbeit",
-      "x": -980,
-      "y": 220,
-      "width": 240,
-      "height": 56
-    },
-    {
-      "id": "jugendarbeit",
-      "type": "text",
-      "text": "Jugendarbeit",
-      "x": -980,
-      "y": 280,
-      "width": 240,
-      "height": 56
-    },
-    {
-      "id": "jugendverbaende",
-      "type": "text",
-      "text": "Jugendverbände",
-      "x": -980,
-      "y": 340,
-      "width": 260,
-      "height": 56
-    },
-    {
-      "id": "spielmobile",
-      "type": "text",
-      "text": "Spielmobile",
-      "x": -980,
-      "y": 400,
-      "width": 220,
-      "height": 56
-    },
-    {
-      "id": "erlebnispaedagogik",
-      "type": "text",
-      "text": "Erlebnispädagogik",
-      "x": -980,
-      "y": 460,
-      "width": 260,
-      "height": 56
-    },
-    {
-      "id": "kinder_und_jugendliche_partizipieren_lassen",
-      "type": "text",
-      "text": "Kinder und Jugendliche partizipieren lassen",
-      "x": -980,
-      "y": 520,
-      "width": 520,
-      "height": 56
-    },
-    {
-      "id": "an_interessen_anknuepfen",
-      "type": "text",
-      "text": "an Interessen anknüpfen",
-      "x": -980,
-      "y": 580,
-      "width": 300,
-      "height": 56
-    },
-    {
-      "id": "anforderung_und_ziel_erforderliche_angebote_zur_foerderung_der_entwicklung_zur_verfuegung_stellen",
-      "type": "text",
-      "text": "Anforderung & Ziel: erforderliche Angebote zur Förderung der Entwicklung zur Verfügung stellen",
-      "x": -980,
-      "y": 640,
-      "width": 980,
-      "height": 64
-    },
-    {
-      "id": "mobile_beratung_streetwork",
-      "type": "text",
-      "text": "Mobile Beratung / Streetwork",
-      "x": -1220,
-      "y": 700,
-      "width": 420,
-      "height": 56
-    },
-    {
-      "id": "medienpaedagogische_projekte",
-      "type": "text",
-      "text": "medienpädagogische Projekte",
-      "x": -980,
-      "y": 760,
-      "width": 360,
-      "height": 56
-    },
-    {
-      "id": "bauspielplatz",
-      "type": "text",
-      "text": "Bauspielplatz",
-      "x": -420,
-      "y": 100,
-      "width": 260,
-      "height": 56
-    },
-    {
-      "id": "ferienbetreuung",
-      "type": "text",
-      "text": "Ferienbetreuung",
-      "x": -260,
-      "y": 200,
-      "width": 260,
-      "height": 56
-    },
-    {
-      "id": "koordinierende_und_verwalterische_arbeit_im_buero",
-      "type": "text",
-      "text": "koordinierende und verwalterische Arbeit im Büro",
-      "x": 245,
-      "y": -300,
-      "width": 520,
-      "height": 60
-    },
-    {
-      "id": "kinderstation_im_krankenhaus_oder_psychiatrie",
-      "type": "text",
-      "text": "Kinderstation im Krankenhaus oder Psychiatrie",
-      "x": -313,
-      "y": 416,
-      "width": 620,
-      "height": 64
-    },
-    {
-      "id": "jugendvollzugsanstalt",
-      "type": "text",
-      "text": "Jugendvollzugsanstalt",
-      "x": -34,
-      "y": -440,
-      "width": 320,
-      "height": 60
-    }
-  ],
-  "edges": [
-    {
-      "id": "e_arbeitsfelder_kindertageseinrichtungen",
-      "fromNode": "arbeitsfelder",
-      "fromSide": "right",
-      "toNode": "kindertageseinrichtungen",
-      "toSide": "left"
-    },
-    {
-      "id": "e_kindertageseinrichtungen_spielkreise",
-      "fromNode": "kindertageseinrichtungen",
-      "fromSide": "bottom",
-      "toNode": "spielkreise",
-      "toSide": "top"
-    },
-    {
-      "id": "e_kindertageseinrichtungen_tagespflege",
-      "fromNode": "kindertageseinrichtungen",
-      "fromSide": "bottom",
-      "toNode": "tagespflege",
-      "toSide": "top"
-    },
-    {
-      "id": "e_kindertageseinrichtungen_loesegruppen",
-      "fromNode": "kindertageseinrichtungen",
-      "fromSide": "bottom",
-      "toNode": "loesegruppen",
-      "toSide": "top"
-    },
-    {
-      "id": "e_kindertageseinrichtungen_altersuebergreifende_gruppen",
-      "fromNode": "kindertageseinrichtungen",
-      "fromSide": "bottom",
-      "toNode": "altersuebergreifende_gruppen",
-      "toSide": "top"
-    },
-    {
-      "id": "e_kindertageseinrichtungen_kinderkrippen_u3",
-      "fromNode": "kindertageseinrichtungen",
-      "fromSide": "right",
-      "toNode": "kinderkrippen_u3",
-      "toSide": "left"
-    },
-    {
-      "id": "e_kindertageseinrichtungen_spielgruppen",
-      "fromNode": "kindertageseinrichtungen",
-      "fromSide": "top",
-      "toNode": "spielgruppen",
-      "toSide": "bottom"
-    },
-    {
-      "id": "e_kindertageseinrichtungen_konzeptionelle_schwerpunkte",
-      "fromNode": "kindertageseinrichtungen",
-      "fromSide": "top",
-      "toNode": "konzeptionelle_schwerpunkte",
-      "toSide": "bottom"
-    },
-    {
-      "id": "e_konzeptionelle_schwerpunkte_zb_bewegungsfoerderung",
-      "fromNode": "konzeptionelle_schwerpunkte",
-      "fromSide": "right",
-      "toNode": "zb_bewegungsfoerderung",
-      "toSide": "left"
-    },
-    {
-      "id": "e_konzeptionelle_schwerpunkte_zb_naturverbundenheit",
-      "fromNode": "konzeptionelle_schwerpunkte",
-      "fromSide": "bottom",
-      "toNode": "zb_naturverbundenheit",
-      "toSide": "top"
-    },
-    {
-      "id": "e_konzeptionelle_schwerpunkte_zb_sprachentwicklung",
-      "fromNode": "konzeptionelle_schwerpunkte",
-      "fromSide": "bottom",
-      "toNode": "zb_sprachentwicklung",
-      "toSide": "top"
-    },
-    {
-      "id": "e_kindertageseinrichtungen_unterschiedliche_paedagogische_handlungskonzepte",
-      "fromNode": "kindertageseinrichtungen",
-      "fromSide": "top",
-      "toNode": "unterschiedliche_paedagogische_handlungskonzepte",
-      "toSide": "bottom"
-    },
-    {
-      "id": "e_unterschiedliche_paedagogische_handlungskonzepte_waldorfpaedagogik_nach_rudolf_steiner",
-      "fromNode": "unterschiedliche_paedagogische_handlungskonzepte",
-      "fromSide": "top",
-      "toNode": "waldorfpaedagogik_nach_rudolf_steiner",
-      "toSide": "bottom"
-    },
-    {
-      "id": "e_unterschiedliche_paedagogische_handlungskonzepte_offenes_konzept",
-      "fromNode": "unterschiedliche_paedagogische_handlungskonzepte",
-      "fromSide": "bottom",
-      "toNode": "offenes_konzept",
-      "toSide": "top"
-    },
-    {
-      "id": "e_unterschiedliche_paedagogische_handlungskonzepte_geschlossenes_konzept",
-      "fromNode": "unterschiedliche_paedagogische_handlungskonzepte",
-      "fromSide": "bottom",
-      "toNode": "geschlossenes_konzept",
-      "toSide": "top"
-    },
-    {
-      "id": "e_arbeitsfelder_koordinierende_und_verwalterische_arbeit_im_buero",
-      "toFloating": false,
-      "fromNode": "arbeitsfelder",
-      "fromSide": "top",
-      "toNode": "koordinierende_und_verwalterische_arbeit_im_buero",
-      "toSide": "bottom"
-    },
-    {
-      "id": "e_arbeitsfelder_hdj",
-      "fromNode": "arbeitsfelder",
-      "fromSide": "bottom",
-      "toNode": "hdj",
-      "toSide": "top"
-    },
-    {
-      "id": "e_arbeitsfelder_familienberatung",
-      "toFloating": false,
-      "fromNode": "arbeitsfelder",
-      "fromSide": "bottom",
-      "toNode": "familienberatung",
-      "toSide": "top"
-    },
-    {
-      "id": "e_familienberatung_fruehe_hilfen_und_familienzentren",
-      "fromNode": "familienberatung",
-      "fromSide": "bottom",
-      "toNode": "fruehe_hilfen_und_familienzentren",
-      "toSide": "top"
-    },
-    {
-      "id": "e_fruehe_hilfen_und_familienzentren_fruehfoerderstellen",
-      "fromNode": "fruehe_hilfen_und_familienzentren",
-      "fromSide": "bottom",
-      "toNode": "fruehfoerderstellen",
-      "toSide": "top"
-    },
-    {
-      "id": "e_fruehe_hilfen_und_familienzentren_familienzentren",
-      "fromNode": "fruehe_hilfen_und_familienzentren",
-      "fromSide": "bottom",
-      "toNode": "familienzentren",
-      "toSide": "top"
-    },
-    {
-      "id": "e_familienberatung_verhaltensauffaellige_kinder",
-      "fromNode": "familienberatung",
-      "fromSide": "right",
-      "toNode": "verhaltensauffaellige_kinder",
-      "toSide": "left"
-    },
-    {
-      "id": "e_familienberatung_bei_allgemeinen_fragen_zur_entwicklung_der_kinder___der_erziehung",
-      "toFloating": false,
-      "fromNode": "familienberatung",
-      "fromSide": "right",
-      "toNode": "bei_allgemeinen_fragen_zur_entwicklung_der_kinder___der_erziehung",
-      "toSide": "top"
-    },
-    {
-      "id": "e_arbeitsfelder_hj_hilfen",
-      "fromNode": "arbeitsfelder",
-      "fromSide": "bottom",
-      "toNode": "hj_hilfen",
-      "toSide": "top"
-    },
-    {
-      "id": "e_hj_hilfen_bei_kindeswohlgefaehrdung",
-      "fromNode": "hj_hilfen",
-      "fromSide": "bottom",
-      "toNode": "bei_kindeswohlgefaehrdung",
-      "toSide": "top"
-    },
-    {
-      "id": "e_hj_hilfen_hilfen_zur_erziehung_kurz_hze",
-      "fromNode": "hj_hilfen",
-      "fromSide": "bottom",
-      "toNode": "hilfen_zur_erziehung_kurz_hze",
-      "toSide": "top"
-    },
-    {
-      "id": "e_hj_hilfen_stationaere_hilfen",
-      "fromNode": "hj_hilfen",
-      "fromSide": "bottom",
-      "toNode": "stationaere_hilfen",
-      "toSide": "top"
-    },
-    {
-      "id": "e_hj_hilfen_ziel_befaehigung_des_menschen_zu_einer_muendigen_person_und_einem_hohen_anspruch_an_partizipation",
-      "fromNode": "hj_hilfen",
-      "fromSide": "bottom",
-      "toNode": "ziel_befaehigung_des_menschen_zu_einer_muendigen_person_und_einem_hohen_anspruch_an_partizipation",
-      "toSide": "top"
-    },
-    {
-      "id": "e_hj_hilfen_betreuung_ueber_tag_und_nacht",
-      "fromNode": "hj_hilfen",
-      "fromSide": "bottom",
-      "toNode": "betreuung_ueber_tag_und_nacht",
-      "toSide": "top"
-    },
-    {
-      "id": "e_hj_hilfen_angebot_von_ambulanten_hilfenangeboten",
-      "fromNode": "hj_hilfen",
-      "fromSide": "bottom",
-      "toNode": "angebot_von_ambulanten_hilfenangeboten",
-      "toSide": "top"
-    },
-    {
-      "id": "e_hj_hilfen_zb_sozialpaedagogische_familienhilfe",
-      "fromNode": "hj_hilfen",
-      "fromSide": "bottom",
-      "toNode": "zb_sozialpaedagogische_familienhilfe",
-      "toSide": "top"
-    },
-    {
-      "id": "e_hj_hilfen_zb_engere_begleitung_durch_das_jeweilige_jugendamt",
-      "fromNode": "hj_hilfen",
-      "fromSide": "bottom",
-      "toNode": "zb_engere_begleitung_durch_das_jeweilige_jugendamt",
-      "toSide": "top"
-    },
-    {
-      "id": "e_stationaere_hilfen_wohngruppen",
-      "fromNode": "stationaere_hilfen",
-      "fromSide": "right",
-      "toNode": "wohngruppen",
-      "toSide": "left"
-    },
-    {
-      "id": "e_stationaere_hilfen_intensivpaedagogische_massnahmen",
-      "fromNode": "stationaere_hilfen",
-      "fromSide": "bottom",
-      "toNode": "intensivpaedagogische_massnahmen",
-      "toSide": "top"
-    },
-    {
-      "id": "e_angebot_von_ambulanten_hilfenangeboten_kriseninterventionsteams",
-      "fromNode": "angebot_von_ambulanten_hilfenangeboten",
-      "fromSide": "right",
-      "toNode": "kriseninterventionsteams",
-      "toSide": "left"
-    },
-    {
-      "id": "e_angebot_von_ambulanten_hilfenangeboten_zb_sozialpaedagogische_familienhilfe",
-      "fromNode": "angebot_von_ambulanten_hilfenangeboten",
-      "fromSide": "right",
-      "toNode": "zb_sozialpaedagogische_familienhilfe",
-      "toSide": "left"
-    },
-    {
-      "id": "e_arbeitsfelder_kinderstation_im_krankenhaus_oder_psychiatrie",
-      "fromNode": "arbeitsfelder",
-      "fromSide": "bottom",
-      "toNode": "kinderstation_im_krankenhaus_oder_psychiatrie",
-      "toSide": "top"
-    },
-    {
-      "id": "e_kinderstation_im_krankenhaus_oder_psychiatrie_kinder_unterstuetzen",
-      "fromNode": "kinderstation_im_krankenhaus_oder_psychiatrie",
-      "fromSide": "bottom",
-      "toNode": "kinder_unterstuetzen",
-      "toSide": "top"
-    },
-    {
-      "id": "e_kinderstation_im_krankenhaus_oder_psychiatrie_mit_kindern_spielen",
-      "fromNode": "kinderstation_im_krankenhaus_oder_psychiatrie",
-      "fromSide": "bottom",
-      "toNode": "mit_kindern_spielen",
-      "toSide": "top"
-    },
-    {
-      "id": "e_kinderstation_im_krankenhaus_oder_psychiatrie_kinder_entsprechend_pflegen",
-      "fromNode": "kinderstation_im_krankenhaus_oder_psychiatrie",
-      "fromSide": "bottom",
-      "toNode": "kinder_entsprechend_pflegen",
-      "toSide": "top"
-    },
-    {
-      "id": "e_kinderstation_im_krankenhaus_oder_psychiatrie_patienten_und_deren_angehoerigen_beraten",
-      "fromNode": "kinderstation_im_krankenhaus_oder_psychiatrie",
-      "fromSide": "bottom",
-      "toNode": "patienten_und_deren_angehoerigen_beraten",
-      "toSide": "top"
-    },
-    {
-      "id": "e_kinderstation_im_krankenhaus_oder_psychiatrie_unterschiedliche_altersgruppen",
-      "fromNode": "kinderstation_im_krankenhaus_oder_psychiatrie",
-      "fromSide": "bottom",
-      "toNode": "unterschiedliche_altersgruppen",
-      "toSide": "top"
-    },
-    {
-      "id": "e_arbeitsfelder_ganztagsschulen",
-      "fromNode": "arbeitsfelder",
-      "fromSide": "top",
-      "toNode": "ganztagsschulen",
-      "toSide": "bottom"
-    },
-    {
-      "id": "e_ganztagsschulen_einsatz_im_zusaetzlichen_ganztagsangebot",
-      "fromNode": "ganztagsschulen",
-      "fromSide": "left",
-      "toNode": "einsatz_im_zusaetzlichen_ganztagsangebot",
-      "toSide": "right"
-    },
-    {
-      "id": "e_ganztagsschulen_wahlangebote",
-      "fromNode": "ganztagsschulen",
-      "fromSide": "top",
-      "toNode": "wahlangebote",
-      "toSide": "bottom"
-    },
-    {
-      "id": "e_ganztagsschulen_hausaufgabenbetreuung",
-      "fromNode": "ganztagsschulen",
-      "fromSide": "top",
-      "toNode": "hausaufgabenbetreuung",
-      "toSide": "bottom"
-    },
-    {
-      "id": "e_ganztagsschulen_offene_ganztagsschulen",
-      "fromNode": "ganztagsschulen",
-      "fromSide": "top",
-      "toNode": "offene_ganztagsschulen",
-      "toSide": "bottom"
-    },
-    {
-      "id": "e_ganztagsschulen_schulsozialarbeit",
-      "fromNode": "ganztagsschulen",
-      "fromSide": "right",
-      "toNode": "schulsozialarbeit",
-      "toSide": "left"
-    },
-    {
-      "id": "e_schulsozialarbeit_uebergangsmanagement_schule_beruf",
-      "fromNode": "schulsozialarbeit",
-      "fromSide": "bottom",
-      "toNode": "uebergangsmanagement_schule_beruf",
-      "toSide": "top"
-    },
-    {
-      "id": "e_offene_ganztagsschulen_verschiedene_konzepte",
-      "fromNode": "offene_ganztagsschulen",
-      "fromSide": "left",
-      "toNode": "verschiedene_konzepte",
-      "toSide": "right"
-    },
-    {
-      "id": "e_verschiedene_konzepte_moeglichkeit_freiwillig_das_ganztagsangebot_auszuwaehlen",
-      "fromNode": "verschiedene_konzepte",
-      "fromSide": "top",
-      "toNode": "moeglichkeit_freiwillig_das_ganztagsangebot_auszuwaehlen",
-      "toSide": "bottom"
-    },
-    {
-      "id": "e_arbeitsfelder_bauspielplatz",
-      "fromNode": "arbeitsfelder",
-      "fromSide": "bottom",
-      "toNode": "bauspielplatz",
-      "toSide": "right"
-    },
-    {
-      "id": "e_arbeitsfelder_ferienbetreuung",
-      "fromNode": "arbeitsfelder",
-      "fromSide": "bottom",
-      "toNode": "ferienbetreuung",
-      "toSide": "top"
-    },
-    {
-      "id": "e_arbeitsfelder_jugendvollzugsanstalt",
-      "fromNode": "arbeitsfelder",
-      "fromSide": "top",
-      "toNode": "jugendvollzugsanstalt",
-      "toSide": "bottom"
-    },
-    {
-      "id": "e_jugendarbeit_mobile_beratung_streetwork",
-      "fromNode": "jugendarbeit",
-      "fromSide": "bottom",
-      "toNode": "mobile_beratung_streetwork",
-      "toSide": "top"
-    },
-    {
-      "id": "e_jugendarbeit_medienpaedagogische_projekte",
-      "fromNode": "jugendarbeit",
-      "fromSide": "bottom",
-      "toNode": "medienpaedagogische_projekte",
-      "toSide": "top"
-    },
-    {
-      "id": "e_an_interessen_anknuepfen_medienpaedagogische_projekte",
-      "fromNode": "an_interessen_anknuepfen",
-      "fromSide": "bottom",
-      "toNode": "medienpaedagogische_projekte",
-      "toSide": "top"
-    }
-  ],
-  "metadata": {
-    "version": "1.0-1.0",
-    "frontmatter": {},
-    "startNode": "b96c59bc6d270edb"
-  }
+	"nodes":[
+		{"id":"kinder_unterstuetzen","type":"text","text":"Kinder unterstützen","x":-200,"y":640,"width":260,"height":56},
+		{"id":"mit_kindern_spielen","type":"text","text":"mit Kindern spielen","x":-200,"y":700,"width":260,"height":56},
+		{"id":"kinder_entsprechend_pflegen","type":"text","text":"Kinder entsprechend pflegen","x":-200,"y":760,"width":320,"height":56},
+		{"id":"patienten_und_deren_angehoerigen_beraten","type":"text","text":"Patienten und deren Angehörigen beraten","x":-200,"y":820,"width":440,"height":56},
+		{"id":"unterschiedliche_altersgruppen","type":"text","text":"unterschiedliche Altersgruppen","x":-200,"y":880,"width":340,"height":56},
+		{"id":"ganztagsschulen","type":"text","text":"Ganztagsschulen","x":-520,"y":-200,"width":300,"height":60},
+		{"id":"einsatz_im_zusaetzlichen_ganztagsangebot","type":"text","text":"Einsatz im zusätzlichen Ganztagsangebot","x":-800,"y":-180,"width":380,"height":56},
+		{"id":"anforderung_und_ziel_erforderliche_angebote_zur_foerderung_der_entwicklung_zur_verfuegung_stellen","type":"text","text":"Anforderung & Ziel: erforderliche Angebote zur Förderung der Entwicklung zur Verfügung stellen","x":-980,"y":640,"width":980,"height":64},
+		{"id":"mobile_beratung_streetwork","type":"text","text":"Mobile Beratung / Streetwork","x":-1220,"y":700,"width":420,"height":56},
+		{"id":"medienpaedagogische_projekte","type":"text","text":"medienpädagogische Projekte","x":-980,"y":760,"width":360,"height":56},
+		{"id":"schulsozialarbeit","type":"text","text":"Schulsozialarbeit","x":-520,"y":-80,"width":260,"height":56},
+		{"id":"uebergangsmanagement_schule_beruf","type":"text","text":"Übergangsmanagement zwischen Schule und Beruf","x":-520,"y":-20,"width":420,"height":56},
+		{"id":"maedchenarbeit","type":"text","text":"Mädchenarbeit","x":-980,"y":220,"width":240,"height":56},
+		{"id":"jugendarbeit","type":"text","text":"Jugendarbeit","x":-980,"y":280,"width":240,"height":56},
+		{"id":"jugendverbaende","type":"text","text":"Jugendverbände","x":-980,"y":340,"width":260,"height":56},
+		{"id":"spielmobile","type":"text","text":"Spielmobile","x":-980,"y":400,"width":220,"height":56},
+		{"id":"erlebnispaedagogik","type":"text","text":"Erlebnispädagogik","x":-980,"y":460,"width":260,"height":56},
+		{"id":"kinder_und_jugendliche_partizipieren_lassen","type":"text","text":"Kinder und Jugendliche partizipieren lassen","x":-980,"y":520,"width":520,"height":56},
+		{"id":"bauspielplatz","type":"text","text":"Bauspielplatz","x":-420,"y":100,"width":260,"height":56},
+		{"id":"ferienbetreuung","type":"text","text":"Ferienbetreuung","x":-260,"y":200,"width":260,"height":56},
+		{"id":"konzeptionelle_schwerpunkte","type":"text","text":"Konzeptionelle Schwerpunkte","x":890,"y":-130,"width":350,"height":60},
+		{"id":"unterschiedliche_paedagogische_handlungskonzepte","type":"text","text":"unterschiedliche pädagogische Handlungskonzepte","x":880,"y":-300,"width":500,"height":60},
+		{"id":"wahlangebote","type":"text","text":"Wahlangebote","x":-800,"y":-300,"width":240,"height":56},
+		{"id":"hausaufgabenbetreuung","type":"text","text":"Hausaufgabenbetreuung","x":-800,"y":-360,"width":320,"height":56},
+		{"id":"offene_ganztagsschulen","type":"text","text":"offene Ganztagsschulen","x":-800,"y":-420,"width":320,"height":56},
+		{"id":"verschiedene_konzepte","type":"text","text":"Verschiedene Konzepte","x":-1060,"y":-460,"width":300,"height":56},
+		{"id":"moeglichkeit_freiwillig_das_ganztagsangebot_auszuwaehlen","type":"text","text":"Möglichkeit freiwillig das Ganztagsangebot auszuwählen","x":-1360,"y":-520,"width":540,"height":56},
+		{"id":"an_interessen_anknuepfen","type":"text","text":"an Interessen anknüpfen","x":-980,"y":580,"width":300,"height":56},
+		{"id":"kinderstation_im_krankenhaus_oder_psychiatrie","type":"text","text":"Kinderstation im Krankenhaus oder Psychiatrie","x":-313,"y":416,"width":620,"height":64},
+		{"id":"jugendvollzugsanstalt","type":"text","text":"Jugendvollzugsanstalt","x":-34,"y":-440,"width":320,"height":60},
+		{"id":"spielkreise","type":"text","text":"Spielkreise","x":820,"y":110,"width":220,"height":56},
+		{"id":"tagespflege","type":"text","text":"Tagespflege","x":760,"y":30,"width":220,"height":56},
+		{"id":"loesegruppen","type":"text","text":"Lösegruppen","x":760,"y":90,"width":220,"height":56},
+		{"id":"zb_bewegungsfoerderung","type":"text","text":"z.B. Bewegungsförderung","x":1180,"y":-120,"width":320,"height":56},
+		{"id":"zb_naturverbundenheit","type":"text","text":"z.B. Naturverbundenheit","x":1180,"y":-60,"width":300,"height":56},
+		{"id":"zb_sprachentwicklung","type":"text","text":"z.B. Sprachentwicklung","x":1180,"y":0,"width":300,"height":56},
+		{"id":"waldorfpaedagogik_nach_rudolf_steiner","type":"text","text":"Waldorfpädagogik (nach Rudolf Steiner)","x":1210,"y":-360,"width":420,"height":56},
+		{"id":"offenes_konzept","type":"text","text":"offenes Konzept","x":1210,"y":-240,"width":220,"height":56},
+		{"id":"geschlossenes_konzept","type":"text","text":"geschlossenes Konzept","x":1210,"y":-180,"width":260,"height":56},
+		{"id":"koordinierende_und_verwalterische_arbeit_im_buero","type":"text","text":"koordinierende und verwalterische Arbeit im Büro","x":245,"y":-300,"width":520,"height":60},
+		{"id":"bei_allgemeinen_fragen_zur_entwicklung_der_kinder___der_erziehung","type":"text","text":"bei allgemeinen Fragen zur Entwicklung der Kinder / der Erziehung","x":680,"y":320,"width":640,"height":56},
+		{"id":"stationaere_hilfen","type":"text","text":"stationäre Hilfen","x":620,"y":680,"width":280,"height":56},
+		{"id":"ziel_befaehigung_des_menschen_zu_einer_muendigen_person_und_einem_hohen_anspruch_an_partizipation","type":"text","text":"Ziel: Befähigung des Menschen zu einer mündigen Person und einem hohen Anspruch an Partizipation","x":620,"y":740,"width":880,"height":64},
+		{"id":"betreuung_ueber_tag_und_nacht","type":"text","text":"Betreuung über Tag und Nacht","x":620,"y":800,"width":360,"height":56},
+		{"id":"angebot_von_ambulanten_hilfenangeboten","type":"text","text":"Angebot von ambulanten Hilfenangeboten","x":620,"y":860,"width":460,"height":56},
+		{"id":"zb_sozialpaedagogische_familienhilfe","type":"text","text":"z.B. sozialpädagogische Familienhilfe","x":1080,"y":860,"width":420,"height":56},
+		{"id":"zb_engere_begleitung_durch_das_jeweilige_jugendamt","type":"text","text":"z.B. engere Begleitung durch das jeweilige Jugendamt","x":620,"y":920,"width":640,"height":56},
+		{"id":"wohngruppen","type":"text","text":"Wohngruppen","x":920,"y":680,"width":220,"height":56},
+		{"id":"intensivpaedagogische_massnahmen","type":"text","text":"intensivpädagogische Maßnahmen","x":920,"y":740,"width":420,"height":56},
+		{"id":"kriseninterventionsteams","type":"text","text":"Kriseninterventionsteams","x":920,"y":920,"width":360,"height":56},
+		{"id":"arbeitsfelder","type":"text","text":"Arbeitsfelder als Erzieher","x":0,"y":0,"width":360,"height":64},
+		{"id":"kindertageseinrichtungen","type":"text","text":"Kindertageseinrichtungen","x":500,"y":-40,"width":320,"height":60},
+		{"id":"altersuebergreifende_gruppen","type":"file","file":"schule/arbeitsfelder/altersübergreifendeGruppen.canvas","x":600,"y":180,"width":320,"height":56},
+		{"id":"kinderkrippen_u3","type":"text","text":"Kinderkrippen (U3)","x":600,"y":-30,"width":260,"height":56},
+		{"id":"spielgruppen","type":"text","text":"Spielgruppen","x":600,"y":-120,"width":220,"height":56},
+		{"id":"hdj","type":"text","text":"HDJ","x":320,"y":110,"width":140,"height":56},
+		{"id":"familienberatung","type":"text","text":"Familienberatung","x":340,"y":240,"width":260,"height":60},
+		{"id":"fruehe_hilfen_und_familienzentren","type":"text","text":"Frühe Hilfen & Familienzentren","x":320,"y":320,"width":420,"height":60},
+		{"id":"verhaltensauffaellige_kinder","type":"text","text":"verhaltensauffällige Kinder","x":680,"y":260,"width":320,"height":56},
+		{"id":"fruehfoerderstellen","type":"text","text":"Frühförderstellen","x":300,"y":400,"width":280,"height":56},
+		{"id":"familienzentren","type":"text","text":"Familienzentren","x":320,"y":460,"width":260,"height":56},
+		{"id":"hj_hilfen","type":"text","text":"Einrichtung der Kinder- und Jugendhilfe und Hilfen zur Erziehung","x":220,"y":500,"width":740,"height":64},
+		{"id":"bei_kindeswohlgefaehrdung","type":"text","text":"bei Kindeswohlgefährdung","x":620,"y":560,"width":300,"height":56},
+		{"id":"hilfen_zur_erziehung_kurz_hze","type":"text","text":"Hilfen zur Erziehung (kurz HZE)","x":620,"y":620,"width":360,"height":56}
+	],
+	"edges":[
+		{"id":"e_arbeitsfelder_kindertageseinrichtungen","fromNode":"arbeitsfelder","fromSide":"right","toNode":"kindertageseinrichtungen","toSide":"left"},
+		{"id":"e_kindertageseinrichtungen_spielkreise","fromNode":"kindertageseinrichtungen","fromSide":"bottom","toNode":"spielkreise","toSide":"top"},
+		{"id":"e_kindertageseinrichtungen_tagespflege","fromNode":"kindertageseinrichtungen","fromSide":"bottom","toNode":"tagespflege","toSide":"top"},
+		{"id":"e_kindertageseinrichtungen_loesegruppen","fromNode":"kindertageseinrichtungen","fromSide":"bottom","toNode":"loesegruppen","toSide":"top"},
+		{"id":"e_kindertageseinrichtungen_altersuebergreifende_gruppen","fromNode":"kindertageseinrichtungen","fromSide":"bottom","toNode":"altersuebergreifende_gruppen","toSide":"top"},
+		{"id":"e_kindertageseinrichtungen_kinderkrippen_u3","fromNode":"kindertageseinrichtungen","fromSide":"right","toNode":"kinderkrippen_u3","toSide":"left"},
+		{"id":"e_kindertageseinrichtungen_spielgruppen","fromNode":"kindertageseinrichtungen","fromSide":"top","toNode":"spielgruppen","toSide":"bottom"},
+		{"id":"e_kindertageseinrichtungen_konzeptionelle_schwerpunkte","fromNode":"kindertageseinrichtungen","fromSide":"top","toNode":"konzeptionelle_schwerpunkte","toSide":"bottom"},
+		{"id":"e_konzeptionelle_schwerpunkte_zb_bewegungsfoerderung","fromNode":"konzeptionelle_schwerpunkte","fromSide":"right","toNode":"zb_bewegungsfoerderung","toSide":"left"},
+		{"id":"e_konzeptionelle_schwerpunkte_zb_naturverbundenheit","fromNode":"konzeptionelle_schwerpunkte","fromSide":"bottom","toNode":"zb_naturverbundenheit","toSide":"top"},
+		{"id":"e_konzeptionelle_schwerpunkte_zb_sprachentwicklung","fromNode":"konzeptionelle_schwerpunkte","fromSide":"bottom","toNode":"zb_sprachentwicklung","toSide":"top"},
+		{"id":"e_kindertageseinrichtungen_unterschiedliche_paedagogische_handlungskonzepte","fromFloating":false,"fromNode":"kindertageseinrichtungen","fromSide":"top","toNode":"unterschiedliche_paedagogische_handlungskonzepte","toSide":"bottom"},
+		{"id":"e_unterschiedliche_paedagogische_handlungskonzepte_waldorfpaedagogik_nach_rudolf_steiner","fromNode":"unterschiedliche_paedagogische_handlungskonzepte","fromSide":"top","toNode":"waldorfpaedagogik_nach_rudolf_steiner","toSide":"bottom"},
+		{"id":"e_unterschiedliche_paedagogische_handlungskonzepte_offenes_konzept","fromNode":"unterschiedliche_paedagogische_handlungskonzepte","fromSide":"bottom","toNode":"offenes_konzept","toSide":"top"},
+		{"id":"e_unterschiedliche_paedagogische_handlungskonzepte_geschlossenes_konzept","fromNode":"unterschiedliche_paedagogische_handlungskonzepte","fromSide":"bottom","toNode":"geschlossenes_konzept","toSide":"top"},
+		{"id":"e_arbeitsfelder_koordinierende_und_verwalterische_arbeit_im_buero","toFloating":false,"fromNode":"arbeitsfelder","fromSide":"top","toNode":"koordinierende_und_verwalterische_arbeit_im_buero","toSide":"bottom"},
+		{"id":"e_arbeitsfelder_hdj","fromNode":"arbeitsfelder","fromSide":"bottom","toNode":"hdj","toSide":"top"},
+		{"id":"e_arbeitsfelder_familienberatung","toFloating":false,"fromNode":"arbeitsfelder","fromSide":"bottom","toNode":"familienberatung","toSide":"top"},
+		{"id":"e_familienberatung_fruehe_hilfen_und_familienzentren","toFloating":false,"fromNode":"familienberatung","fromSide":"bottom","toNode":"fruehe_hilfen_und_familienzentren","toSide":"top"},
+		{"id":"e_fruehe_hilfen_und_familienzentren_fruehfoerderstellen","fromNode":"fruehe_hilfen_und_familienzentren","fromSide":"bottom","toNode":"fruehfoerderstellen","toSide":"top"},
+		{"id":"e_familienberatung_verhaltensauffaellige_kinder","fromNode":"familienberatung","fromSide":"right","toNode":"verhaltensauffaellige_kinder","toSide":"left"},
+		{"id":"e_familienberatung_bei_allgemeinen_fragen_zur_entwicklung_der_kinder___der_erziehung","toFloating":false,"fromNode":"familienberatung","fromSide":"right","toNode":"bei_allgemeinen_fragen_zur_entwicklung_der_kinder___der_erziehung","toSide":"top"},
+		{"id":"e_arbeitsfelder_kinderstation_im_krankenhaus_oder_psychiatrie","fromNode":"arbeitsfelder","fromSide":"bottom","toNode":"kinderstation_im_krankenhaus_oder_psychiatrie","toSide":"top"},
+		{"id":"e_kinderstation_im_krankenhaus_oder_psychiatrie_kinder_unterstuetzen","fromNode":"kinderstation_im_krankenhaus_oder_psychiatrie","fromSide":"bottom","toNode":"kinder_unterstuetzen","toSide":"top"},
+		{"id":"e_kinderstation_im_krankenhaus_oder_psychiatrie_mit_kindern_spielen","fromNode":"kinderstation_im_krankenhaus_oder_psychiatrie","fromSide":"bottom","toNode":"mit_kindern_spielen","toSide":"top"},
+		{"id":"e_kinderstation_im_krankenhaus_oder_psychiatrie_kinder_entsprechend_pflegen","fromNode":"kinderstation_im_krankenhaus_oder_psychiatrie","fromSide":"bottom","toNode":"kinder_entsprechend_pflegen","toSide":"top"},
+		{"id":"e_kinderstation_im_krankenhaus_oder_psychiatrie_patienten_und_deren_angehoerigen_beraten","fromNode":"kinderstation_im_krankenhaus_oder_psychiatrie","fromSide":"bottom","toNode":"patienten_und_deren_angehoerigen_beraten","toSide":"top"},
+		{"id":"e_kinderstation_im_krankenhaus_oder_psychiatrie_unterschiedliche_altersgruppen","fromNode":"kinderstation_im_krankenhaus_oder_psychiatrie","fromSide":"bottom","toNode":"unterschiedliche_altersgruppen","toSide":"top"},
+		{"id":"e_arbeitsfelder_ganztagsschulen","fromNode":"arbeitsfelder","fromSide":"top","toNode":"ganztagsschulen","toSide":"bottom"},
+		{"id":"e_ganztagsschulen_einsatz_im_zusaetzlichen_ganztagsangebot","fromNode":"ganztagsschulen","fromSide":"left","toNode":"einsatz_im_zusaetzlichen_ganztagsangebot","toSide":"right"},
+		{"id":"e_ganztagsschulen_wahlangebote","fromNode":"ganztagsschulen","fromSide":"top","toNode":"wahlangebote","toSide":"bottom"},
+		{"id":"e_ganztagsschulen_hausaufgabenbetreuung","fromNode":"ganztagsschulen","fromSide":"top","toNode":"hausaufgabenbetreuung","toSide":"bottom"},
+		{"id":"e_ganztagsschulen_offene_ganztagsschulen","fromNode":"ganztagsschulen","fromSide":"top","toNode":"offene_ganztagsschulen","toSide":"bottom"},
+		{"id":"e_ganztagsschulen_schulsozialarbeit","fromNode":"ganztagsschulen","fromSide":"right","toNode":"schulsozialarbeit","toSide":"left"},
+		{"id":"e_schulsozialarbeit_uebergangsmanagement_schule_beruf","fromNode":"schulsozialarbeit","fromSide":"bottom","toNode":"uebergangsmanagement_schule_beruf","toSide":"top"},
+		{"id":"e_offene_ganztagsschulen_verschiedene_konzepte","fromNode":"offene_ganztagsschulen","fromSide":"left","toNode":"verschiedene_konzepte","toSide":"right"},
+		{"id":"e_verschiedene_konzepte_moeglichkeit_freiwillig_das_ganztagsangebot_auszuwaehlen","fromNode":"verschiedene_konzepte","fromSide":"top","toNode":"moeglichkeit_freiwillig_das_ganztagsangebot_auszuwaehlen","toSide":"bottom"},
+		{"id":"e_arbeitsfelder_bauspielplatz","fromNode":"arbeitsfelder","fromSide":"bottom","toNode":"bauspielplatz","toSide":"right"},
+		{"id":"e_arbeitsfelder_ferienbetreuung","fromNode":"arbeitsfelder","fromSide":"bottom","toNode":"ferienbetreuung","toSide":"top"},
+		{"id":"e_arbeitsfelder_jugendvollzugsanstalt","fromNode":"arbeitsfelder","fromSide":"top","toNode":"jugendvollzugsanstalt","toSide":"bottom"},
+		{"id":"e_jugendarbeit_mobile_beratung_streetwork","fromNode":"jugendarbeit","fromSide":"bottom","toNode":"mobile_beratung_streetwork","toSide":"top"},
+		{"id":"e_jugendarbeit_medienpaedagogische_projekte","fromNode":"jugendarbeit","fromSide":"bottom","toNode":"medienpaedagogische_projekte","toSide":"top"},
+		{"id":"e_an_interessen_anknuepfen_medienpaedagogische_projekte","fromNode":"an_interessen_anknuepfen","fromSide":"bottom","toNode":"medienpaedagogische_projekte","toSide":"top"},
+		{"id":"e_fruehe_hilfen_und_familienzentren_familienzentren","fromNode":"fruehe_hilfen_und_familienzentren","fromSide":"bottom","toNode":"familienzentren","toSide":"top"},
+		{"id":"e_arbeitsfelder_hj_hilfen","fromNode":"arbeitsfelder","fromSide":"bottom","toNode":"hj_hilfen","toSide":"top"},
+		{"id":"e_hj_hilfen_bei_kindeswohlgefaehrdung","fromNode":"hj_hilfen","fromSide":"bottom","toNode":"bei_kindeswohlgefaehrdung","toSide":"top"},
+		{"id":"e_hj_hilfen_hilfen_zur_erziehung_kurz_hze","fromNode":"hj_hilfen","fromSide":"bottom","toNode":"hilfen_zur_erziehung_kurz_hze","toSide":"top"},
+		{"id":"e_hj_hilfen_stationaere_hilfen","fromNode":"hj_hilfen","fromSide":"bottom","toNode":"stationaere_hilfen","toSide":"top"},
+		{"id":"e_hj_hilfen_ziel_befaehigung_des_menschen_zu_einer_muendigen_person_und_einem_hohen_anspruch_an_partizipation","fromNode":"hj_hilfen","fromSide":"bottom","toNode":"ziel_befaehigung_des_menschen_zu_einer_muendigen_person_und_einem_hohen_anspruch_an_partizipation","toSide":"top"},
+		{"id":"e_hj_hilfen_betreuung_ueber_tag_und_nacht","fromNode":"hj_hilfen","fromSide":"bottom","toNode":"betreuung_ueber_tag_und_nacht","toSide":"top"},
+		{"id":"e_hj_hilfen_angebot_von_ambulanten_hilfenangeboten","fromNode":"hj_hilfen","fromSide":"bottom","toNode":"angebot_von_ambulanten_hilfenangeboten","toSide":"top"},
+		{"id":"e_hj_hilfen_zb_sozialpaedagogische_familienhilfe","fromNode":"hj_hilfen","fromSide":"bottom","toNode":"zb_sozialpaedagogische_familienhilfe","toSide":"top"},
+		{"id":"e_hj_hilfen_zb_engere_begleitung_durch_das_jeweilige_jugendamt","fromNode":"hj_hilfen","fromSide":"bottom","toNode":"zb_engere_begleitung_durch_das_jeweilige_jugendamt","toSide":"top"},
+		{"id":"e_stationaere_hilfen_wohngruppen","fromNode":"stationaere_hilfen","fromSide":"right","toNode":"wohngruppen","toSide":"left"},
+		{"id":"e_stationaere_hilfen_intensivpaedagogische_massnahmen","fromNode":"stationaere_hilfen","fromSide":"bottom","toNode":"intensivpaedagogische_massnahmen","toSide":"top"},
+		{"id":"e_angebot_von_ambulanten_hilfenangeboten_kriseninterventionsteams","fromNode":"angebot_von_ambulanten_hilfenangeboten","fromSide":"right","toNode":"kriseninterventionsteams","toSide":"left"},
+		{"id":"e_angebot_von_ambulanten_hilfenangeboten_zb_sozialpaedagogische_familienhilfe","fromNode":"angebot_von_ambulanten_hilfenangeboten","fromSide":"right","toNode":"zb_sozialpaedagogische_familienhilfe","toSide":"left"}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{},
+		"startNode":"b96c59bc6d270edb"
+	}
 }
