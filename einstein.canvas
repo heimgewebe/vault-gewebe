@@ -31,3 +31,187 @@
 		{"id":"e13","fromNode":"root","fromSide":"bottom","toNode":"fragen","toSide":"left"}
 	]
 }
+  "nodes": [
+    {
+      "id": "root",
+      "type": "text",
+      "x": 0,
+      "y": 0,
+      "width": 780,
+      "height": 200,
+      "text": "# Albert Einstein – Denk- & Wirkungsspektrum\nVerknüpfung von Wissenschaft, Ethik und Öffentlichkeit"
+    },
+    {
+      "id": "wiss",
+      "type": "text",
+      "x": -700,
+      "y": -40,
+      "width": 520,
+      "height": 240,
+      "text": "## Wissenschaftlicher Fokus\n- Ziel: kohärente Naturbeschreibung\n- Methoden: Gedankenexperimente & mathematische Eleganz\n- Haltung: Realismus, Verantwortungsgefühl gegenüber Erkenntnis"
+    },
+    {
+      "id": "physik",
+      "type": "text",
+      "x": -1150,
+      "y": -320,
+      "width": 540,
+      "height": 340,
+      "text": "## Physik – Schlüsselbeiträge\n- 1905: Spezielle Relativität (Raum-Zeit-Vereinigung)\n- 1915: Allgemeine Relativität (Gravitation als Geometrie)\n- Photoeffekt → Nobelpreis 1921\n- Bose-Einstein-Statistik, EPR-Paradoxon\n- Suche nach Weltformel trotz Skepsis gegenüber Quantenindeterminismus"
+    },
+    {
+      "id": "wissphilo",
+      "type": "text",
+      "x": -350,
+      "y": -320,
+      "width": 540,
+      "height": 320,
+      "text": "## Wissenschaftsphilosophie\n- Realismus statt rein probabilistischer Deutung (\"Gott würfelt nicht\")\n- Gedankenexperimente als Erkenntnisinstrument\n- Kriterien: Einfachheit, innere Eleganz, empirische Bewährung\n- Forschungsethik: Wahrhaftigkeit & soziale Verantwortung"
+    },
+    {
+      "id": "engagement",
+      "type": "text",
+      "x": 720,
+      "y": -40,
+      "width": 540,
+      "height": 260,
+      "text": "## Gesellschaft & Politik\n- Stimme gegen Nationalismus, Rassismus, Militarismus\n- Setzt Prominenz für Demokratie, Bürgerrechte & Abrüstung ein\n- Verbindet wissenschaftliche Autorität mit moralischem Appell"
+    },
+    {
+      "id": "ethik",
+      "type": "text",
+      "x": 1180,
+      "y": -320,
+      "width": 540,
+      "height": 300,
+      "text": "## Ethik & Verantwortung\n- Humanistische Verpflichtung: Würde jedes Menschen\n- Pazifismus – mit Ausnahme im Angesicht des NS-Regimes\n- Verteidigt akademische Freiheit & Minderheitenrechte\n- Bringt Wissenschaft & Moral ins Gespräch"
+    },
+    {
+      "id": "politik",
+      "type": "text",
+      "x": 1240,
+      "y": -620,
+      "width": 560,
+      "height": 340,
+      "text": "## Politik & Öffentlichkeit\n- 1939: Brief an Roosevelt → Warnung vor deutscher Atombombe\n- 1949: \"Why Socialism?\" → Plädoyer für soziale Demokratie\n- 1955: Russell–Einstein-Manifest → globale Abrüstung\n- Kritik am McCarthyismus, Unterstützung der US-Bürgerrechtsbewegung"
+    },
+    {
+      "id": "israel",
+      "type": "text",
+      "x": 1160,
+      "y": 260,
+      "width": 540,
+      "height": 320,
+      "text": "## Israel & Jüdische Gemeinschaft\n- Aufbau der Hebräischen Universität & Mittelbeschaffung\n- Plädiert für bi-nationalen, kulturell geprägten Zionismus\n- Kritisiert radikalen Nationalismus (NYT-Brief 1948)\n- Lehnt 1952 das israelische Präsidentenamt ab"
+    },
+    {
+      "id": "docs",
+      "type": "text",
+      "x": 1560,
+      "y": -40,
+      "width": 520,
+      "height": 280,
+      "text": "## Schlüsseltexte & Briefe\n- 1939: Warnbrief an Roosevelt\n- 1948: Offener Brief in der NYT (Cherut-Kritik)\n- 1949: Aufsatz \"Why Socialism?\"\n- 1952: Absage an Abba Eban\n- 1955: Russell–Einstein-Manifest"
+    },
+    {
+      "id": "kontrovers",
+      "type": "text",
+      "x": 1580,
+      "y": 360,
+      "width": 520,
+      "height": 300,
+      "text": "## Spannungen & Paradoxa\n- Pazifist und doch Auslöser für das Manhattan-Projekt aus Furcht vor Hitler\n- Kosmopolitischer Humanist und zugleich engagierter Zionist\n- Kritiker der Quantenmechanik, dennoch Wegbereiter ihres Erfolgs\n- Symbolfigur, aber meidet formale Ämter"
+    },
+    {
+      "id": "wirkung",
+      "type": "text",
+      "x": 1580,
+      "y": -360,
+      "width": 520,
+      "height": 300,
+      "text": "## Wirkung & Nachhall\n- Physik: Relativität prägt Kosmologie, GPS, Raumfahrt\n- Philosophie: Debatte um Realität und Messung\n- Politik: Ikone für Abrüstung & Bürgerrechte\n- Bildung: Sinnbild für Kreativität & Neugier"
+    },
+    {
+      "id": "person",
+      "type": "text",
+      "x": 0,
+      "y": -360,
+      "width": 520,
+      "height": 260,
+      "text": "## Persönlichkeit & Lernkultur\n- Unabhängiger Geist, Humor, Nonkonformismus\n- Musik (Violine) als Denkmedium\n- Fördert junge Talente, kritisiert Autoritätsgläubigkeit\n- Kultiviert Einfachheit als Lebenshaltung"
+    },
+    {
+      "id": "stil",
+      "type": "text",
+      "x": -400,
+      "y": -640,
+      "width": 520,
+      "height": 280,
+      "text": "## Lebensstil & Habitus\n- Selbstironisch, unprätentiös\n- Pflegt kosmopolitische Netzwerke & Briefwechsel\n- Öffentliche Unbequemlichkeit als moralische Praxis\n- Humor als Mittel gegen Autoritätsgehorsam"
+    },
+    {
+      "id": "bildung",
+      "type": "text",
+      "x": 400,
+      "y": -640,
+      "width": 520,
+      "height": 280,
+      "text": "## Bildung & Vermittlung\n- Popularisiert komplexe Physik in Essays & Vorträgen\n- Befürwortet freie Lernräume statt Drill\n- Unterstützt akademische Austauschprogramme\n- Übersetzt Forschung in gesellschaftliche Orientierung"
+    },
+    {
+      "id": "zitate",
+      "type": "text",
+      "x": 0,
+      "y": -720,
+      "width": 520,
+      "height": 260,
+      "text": "## Leitsätze\n- \"Phantasie ist wichtiger als Wissen.\"\n- \"Probleme kann man nicht mit derselben Denkweise lösen, durch die sie entstanden sind.\"\n- \"Gott würfelt nicht.\"\n- \"Ethik ist die Forderung, Mitmenschen als Zwecke zu behandeln.\""
+    },
+    {
+      "id": "leben",
+      "type": "text",
+      "x": 0,
+      "y": 320,
+      "width": 520,
+      "height": 240,
+      "text": "## Biografie & Kontexte\n- Migrationserfahrungen prägen globalen Blick\n- Netzwerke mit Wissenschaft, Politik, Kultur\n- Krisen: Weltkriege, Faschismus, Atomzeitalter\n- Rolle als öffentlicher Intellektueller in den USA"
+    },
+    {
+      "id": "timeline",
+      "type": "text",
+      "x": -360,
+      "y": 620,
+      "width": 520,
+      "height": 320,
+      "text": "## Zeitleiste – markante Jahre\n1879: Geburt in Ulm\n1905: Annus mirabilis\n1915: Allgemeine Relativität\n1933: Emigration in die USA\n1939: Brief an Roosevelt\n1948: NYT-Brief gegen Extremismus\n1949: Why Socialism?\n1952: Absage israelisches Präsidentenamt\n1955: Russell–Einstein-Manifest, Tod"
+    },
+    {
+      "id": "fragen",
+      "type": "text",
+      "x": 360,
+      "y": 620,
+      "width": 520,
+      "height": 320,
+      "text": "## Weiterführende Fragen\n- Welche Wirkung hatten seine Warnungen auf das Manhattan-Projekt?\n- Wie unterscheidet sich sein Humanismus von dem Russells oder Arendts?\n- Wie wird er heute in Israel erinnert?\n- Welche Lehren bietet sein Verantwortungsbegriff für KI- & Wissenschaftsethik?"
+    }
+  ],
+  "edges": [
+    {"id": "e1", "fromNode": "root", "toNode": "wiss"},
+    {"id": "e2", "fromNode": "root", "toNode": "engagement"},
+    {"id": "e3", "fromNode": "root", "toNode": "person"},
+    {"id": "e4", "fromNode": "root", "toNode": "leben"},
+    {"id": "e5", "fromNode": "root", "toNode": "fragen"},
+    {"id": "e6", "fromNode": "wiss", "toNode": "physik"},
+    {"id": "e7", "fromNode": "wiss", "toNode": "wissphilo"},
+    {"id": "e8", "fromNode": "person", "toNode": "stil"},
+    {"id": "e9", "fromNode": "person", "toNode": "bildung"},
+    {"id": "e10", "fromNode": "person", "toNode": "zitate"},
+    {"id": "e11", "fromNode": "leben", "toNode": "timeline"},
+    {"id": "e12", "fromNode": "engagement", "toNode": "ethik"},
+    {"id": "e13", "fromNode": "engagement", "toNode": "politik"},
+    {"id": "e14", "fromNode": "engagement", "toNode": "israel"},
+    {"id": "e15", "fromNode": "engagement", "toNode": "docs"},
+    {"id": "e16", "fromNode": "engagement", "toNode": "kontrovers"},
+    {"id": "e17", "fromNode": "engagement", "toNode": "wirkung"}
+  ]
+}

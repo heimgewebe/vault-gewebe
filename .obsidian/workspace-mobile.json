@@ -11,17 +11,10 @@
             "id": "130cde3e455aa427",
             "type": "leaf",
             "state": {
-              "type": "canvas",
-              "state": {
-                "file": "schule/arbeitsfelder/altersübergreifendeGruppen.canvas",
-                "viewState": {
-                  "x": 123.68186968838526,
-                  "y": 730.0246458923515,
-                  "zoom": -0.8613312236792513
-                }
-              },
-              "icon": "lucide-layout-dashboard",
-              "title": "altersübergreifendeGruppen"
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "Neuer Tab"
             }
           }
         ]
@@ -231,10 +224,10 @@
   },
   "active": "130cde3e455aa427",
   "lastOpenFiles": [
+    "einstein.canvas",
     "schule/arbeitsfelder/arbeitsfelder_als_erzieher.canvas",
     "schule/arbeitsfelder/altersübergreifendeGruppen.canvas",
     "schule/konflikte/kita_konflikte.canvas",
-    "einstein.canvas",
     "glasfaser.md",
     "halde/GEWEBE_MERGE_20250904_145348.md",
     "einstein.md",
