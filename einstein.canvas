@@ -164,22 +164,94 @@
     }
   ],
   "edges": [
-    {"id": "e1", "fromNode": "root", "toNode": "wiss"},
-    {"id": "e2", "fromNode": "root", "toNode": "engagement"},
-    {"id": "e3", "fromNode": "root", "toNode": "person"},
-    {"id": "e4", "fromNode": "root", "toNode": "leben"},
-    {"id": "e5", "fromNode": "root", "toNode": "fragen"},
-    {"id": "e6", "fromNode": "wiss", "toNode": "physik"},
-    {"id": "e7", "fromNode": "wiss", "toNode": "wissphilo"},
-    {"id": "e8", "fromNode": "person", "toNode": "stil"},
-    {"id": "e9", "fromNode": "person", "toNode": "bildung"},
-    {"id": "e10", "fromNode": "person", "toNode": "zitate"},
-    {"id": "e11", "fromNode": "leben", "toNode": "timeline"},
-    {"id": "e12", "fromNode": "engagement", "toNode": "ethik"},
-    {"id": "e13", "fromNode": "engagement", "toNode": "politik"},
-    {"id": "e14", "fromNode": "engagement", "toNode": "israel"},
-    {"id": "e15", "fromNode": "engagement", "toNode": "docs"},
-    {"id": "e16", "fromNode": "engagement", "toNode": "kontrovers"},
-    {"id": "e17", "fromNode": "engagement", "toNode": "wirkung"}
-  ]
+    {
+      "id": "e1",
+      "fromNode": "root",
+      "toNode": "wiss"
+    },
+    {
+      "id": "e2",
+      "fromNode": "root",
+      "toNode": "engagement"
+    },
+    {
+      "id": "e3",
+      "fromNode": "root",
+      "toNode": "person"
+    },
+    {
+      "id": "e4",
+      "fromNode": "root",
+      "toNode": "leben"
+    },
+    {
+      "id": "e5",
+      "fromNode": "root",
+      "toNode": "fragen"
+    },
+    {
+      "id": "e6",
+      "fromNode": "wiss",
+      "toNode": "physik"
+    },
+    {
+      "id": "e7",
+      "fromNode": "wiss",
+      "toNode": "wissphilo"
+    },
+    {
+      "id": "e8",
+      "fromNode": "person",
+      "toNode": "stil"
+    },
+    {
+      "id": "e9",
+      "fromNode": "person",
+      "toNode": "bildung"
+    },
+    {
+      "id": "e10",
+      "fromNode": "person",
+      "toNode": "zitate"
+    },
+    {
+      "id": "e11",
+      "fromNode": "leben",
+      "toNode": "timeline"
+    },
+    {
+      "id": "e12",
+      "fromNode": "engagement",
+      "toNode": "ethik"
+    },
+    {
+      "id": "e13",
+      "fromNode": "engagement",
+      "toNode": "politik"
+    },
+    {
+      "id": "e14",
+      "fromNode": "engagement",
+      "toNode": "israel"
+    },
+    {
+      "id": "e15",
+      "fromNode": "engagement",
+      "toNode": "docs"
+    },
+    {
+      "id": "e16",
+      "fromNode": "engagement",
+      "toNode": "kontrovers"
+    },
+    {
+      "id": "e17",
+      "fromNode": "engagement",
+      "toNode": "wirkung"
+    }
+  ],
+  "metadata": {
+    "version": "1.0-1.0",
+    "frontmatter": {}
+  }
 }
