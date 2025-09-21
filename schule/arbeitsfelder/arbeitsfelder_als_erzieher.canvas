@@ -49,7 +49,7 @@
 		{"id":"verschiedene_konzepte","type":"text","text":"Verschiedene Konzepte","x":-1060,"y":-460,"width":300,"height":56},
                 {"id":"moeglichkeit_freiwillig_das_ganztagsangebot_auszuwaehlen","type":"text","text":"Möglichkeit freiwillig das Ganztagsangebot auszuwählen","x":-1360,"y":-520,"width":540,"height":56},
                 {"id":"schulsozialarbeit","type":"text","text":"Schulsozialarbeit","x":-520,"y":-80,"width":260,"height":56},
-                {"id":"uebergangsmanagement_schule_beruf","type":"text","text":"Übergangsmanagement Schule ↔ Beruf","x":-520,"y":-20,"width":420,"height":56},
+                {"id":"uebergangsmanagement_schule_beruf","type":"text","text":"Übergangsmanagement zwischen Schule und Beruf","x":-520,"y":-20,"width":420,"height":56},
                 {"id":"maedchenarbeit","type":"text","text":"Mädchenarbeit","x":-980,"y":220,"width":240,"height":56},
 		{"id":"jugendarbeit","type":"text","text":"Jugendarbeit","x":-980,"y":280,"width":240,"height":56},
 		{"id":"jugendverbaende","type":"text","text":"Jugendverbände","x":-980,"y":340,"width":260,"height":56},
