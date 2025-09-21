@@ -1,0 +1,16 @@
+name: lint-and-validate
+on:
+  push:
+  pull_request:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { lfs: true }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - run: sudo apt-get update -y && sudo apt-get install -y jq vale
+      - run: npm ci || npm i
+      - run: npm run lint
+      - run: vale . || true

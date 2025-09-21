@@ -1,0 +1,137 @@
+{
+	"nodes":[
+		{"id":"center","type":"text","text":"In welcher Gesellschaft wollen wir leben?","x":-340,"y":-70,"width":344,"height":62},
+		{"id":"a10","type":"text","text":"@chatGPT: welchen einfluss haben technologien auf uns?","x":-1510,"y":-89,"width":463,"height":70},
+		{"id":"q4","type":"text","text":"4. Welche neuen Formen der persönlichen Identität werden in der digitalen Gesellschaft gefordert?","x":92,"y":-124,"width":498,"height":78},
+		{"id":"q9","type":"text","text":"9. Wie stellen wir uns den Herausforderungen der Klimakatastrophe?","x":-762,"y":149,"width":416,"height":76},
+		{"id":"a9","type":"text","text":"Fossile Ressourcen nicht verbrennen.\n\npersönlich: grüner Leben\n\npolitisch: Fossilsektor und weitere Schädlinge stark besteuern statt zu subventionieren","x":-988,"y":379,"width":325,"height":189},
+		{"id":"q11","type":"text","text":"11. Wie ist Macht verteilt?","x":-660,"y":-296,"width":234,"height":60},
+		{"id":"q2","type":"text","text":"2. Von welchen neuen gesellschaftlichen Vorgaben, Kontrollen und Zwängen hängt Ihr eigenes Leben ab?","x":11,"y":-455,"width":471,"height":92},
+		{"id":"a2","type":"text","text":"Von keinen","x":279,"y":-647,"width":128,"height":60},
+		{"id":"q3","type":"text","text":"3. Welche Chancen und Risiken birgt der Wunsch, das eigene Leben auf eigene Rechnung zu führen?","x":409,"y":-265,"width":462,"height":83},
+		{"id":"a3","type":"text","text":"Chance: Verantwortung\nRisiko: Verantwortung","x":640,"y":-447,"width":227,"height":82},
+		{"id":"a4","type":"text","text":"Die gläserne, die informierte","x":800,"y":-125,"width":245,"height":66},
+		{"id":"q5","type":"text","text":"5. Was schränkt Ihr Leben ein?","x":71,"y":19,"width":301,"height":71},
+		{"id":"a5","type":"text","text":"Trinken, Essen, Schlafen, Sterben","x":548,"y":25,"width":297,"height":66},
+		{"id":"q6","type":"text","text":"6. Mit wem wollen Sie sich solidarisieren und mit wem nicht?","x":-51,"y":261,"width":527,"height":60},
+		{"id":"a6","type":"text","text":"Mit solidarischen Menschen / nicht mit unsolidarischen","x":702,"y":340,"width":451,"height":67},
+		{"id":"q7","type":"text","text":"7. Was ist Gemeinschaft?","x":-254,"y":389,"width":277,"height":70},
+		{"id":"a7","type":"text","text":"Ko-konstruktive Teilhabe","x":91,"y":546,"width":230,"height":63},
+		{"id":"etymo","type":"text","text":"Etymologie »Gemeinschaft«:\nahd. gimeini / mhd. gemeine ← urgerm. ga‑mainiz\n= Zusammen‑/Mit‑ (ga‑) + Besitz/Anteil/Teilnahme (mainiz)\n→ »Ko‑konstruktive Teilhabe«","x":473,"y":512,"width":474,"height":140},
+		{"id":"q8","type":"text","text":"8. Schafft es die Demokratie aus der Krise?","x":-605,"y":503,"width":385,"height":67},
+		{"id":"a8","type":"text","text":"Welche Demokratie? Welche Krise?","x":-576,"y":659,"width":323,"height":60},
+		{"id":"q10","type":"text","text":"10. Welchen Einfluss haben Technologien auf uns?","x":-912,"y":-83,"width":433,"height":60},
+		{
+			"id":"fce4f52af78692f1",
+			"type":"text",
+			"text":"Technologien verstärken Muster, erweitern Handlungsspielräume,\nerzeugen Pfadabhängigkeiten, externalisieren Kosten,\nformen Aufmerksamkeit, kodifizieren Macht.",
+			"styleAttributes":{},
+			"x":-2043,
+			"y":-123,
+			"width":390,
+			"height":149
+		},
+		{"id":"a11","type":"text","text":"Top‑down – ohne Vermittlungsansatz","x":-1048,"y":-389,"width":353,"height":60},
+		{"id":"q1","type":"text","text":"1. Was ist Ihnen wichtig und wofür „kämpfen“ Sie?","x":-241,"y":-578,"width":437,"height":61},
+		{"id":"a1","type":"text","text":"Gerechtigkeit","x":-102,"y":-710,"width":135,"height":60},
+		{"id":"q12","type":"text","text":"12. Wer oder was gefährdet die Gesellschaft – vor welchen konkreten Herausforderungen steht sie?","x":-503,"y":-423,"width":381,"height":88},
+		{"id":"a12","type":"text","text":"Hochfinanz & Handlanger / Gegenkraft: Emanzipation","x":-720,"y":-561,"width":428,"height":60}
+	],
+	"edges":[
+		{"id":"9551d51d-ab9c-4d71-b5a4-d8ba5119a376","fromNode":"center","fromSide":"top","toNode":"q1","toSide":"bottom"},
+		{"id":"398c5e9b-fdf4-4786-94e2-e00856dcd715","fromNode":"q1","fromSide":"top","toNode":"a1","toSide":"bottom"},
+		{"id":"b5e3b922-e303-41b1-9832-e4c6b4ab2267","fromNode":"center","fromSide":"top","toNode":"q2","toSide":"bottom"},
+		{"id":"921c7d15-7792-4c40-a7cd-85314d5430ab","fromNode":"q2","fromSide":"top","toNode":"a2","toSide":"bottom"},
+		{"id":"3d1f1d0a-f885-4733-8194-6a8bb633df11","fromNode":"q3","fromSide":"top","toNode":"a3","toSide":"bottom"},
+		{"id":"df79360c-eaff-4f79-a1f9-1933d868d900","fromNode":"center","fromSide":"right","toNode":"q4","toSide":"left"},
+		{"id":"84696952-e461-4a5c-88d7-12e58ae6e774","fromNode":"q4","fromSide":"right","toNode":"a4","toSide":"left"},
+		{"id":"51197850-0fb8-451d-ac83-c189c4b8518e","fromNode":"center","fromSide":"bottom","toNode":"q6","toSide":"top"},
+		{"id":"4180283d-32c5-4b67-80af-0449309b2b07","fromNode":"center","fromSide":"bottom","toNode":"q7","toSide":"top"},
+		{"id":"9ebf1fd5-6d53-4999-a828-c9bacc7c343b","fromNode":"center","fromSide":"bottom","toNode":"q8","toSide":"top"},
+		{"id":"a49fe46a-3689-4d0a-abfa-02570e474f74","fromNode":"q8","fromSide":"bottom","toNode":"a8","toSide":"top"},
+		{"id":"bb1d13bb-abc7-42fa-89f6-18884e4ed62b","fromNode":"center","fromSide":"bottom","toNode":"q9","toSide":"top"},
+		{"id":"8efa77a3-a4e2-4412-85ce-49b0064bc081","fromNode":"q9","fromSide":"bottom","toNode":"a9","toSide":"top"},
+		{"id":"f71a1ba8-7172-4eca-a6bb-db27dbc69ffc","fromNode":"center","fromSide":"left","toNode":"q10","toSide":"right"},
+		{"id":"73735260-1086-442d-9a12-f40f7afb3cc4","fromNode":"q10","fromSide":"left","toNode":"a10","toSide":"right"},
+		{"id":"8cc3ba24-c55d-4581-a53c-cc93cb17f70a","fromNode":"center","fromSide":"top","toNode":"q11","toSide":"bottom"},
+		{"id":"0b8d3ff8-3499-44ab-b564-dd22c2a4a668","fromNode":"center","fromSide":"top","toNode":"q12","toSide":"bottom"},
+		{"id":"6c4a7631-29eb-423c-b83f-afaad5311c7e","fromNode":"q12","fromSide":"top","toNode":"a12","toSide":"bottom"},
+		{
+			"id":"331d83d4210ceb44",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"a10",
+			"fromSide":"left",
+			"toNode":"fce4f52af78692f1",
+			"toSide":"right"
+		},
+		{
+			"id":"538e5b8f8e699819",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"etymo",
+			"fromSide":"left",
+			"toNode":"a7",
+			"toSide":"right"
+		},
+		{
+			"id":"7b98c606be84ac25",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"center",
+			"fromSide":"bottom",
+			"toNode":"q5",
+			"toSide":"left"
+		},
+		{
+			"id":"9b4158b661e51da0",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromFloating":false,
+			"fromNode":"center",
+			"fromSide":"top",
+			"toNode":"q3",
+			"toSide":"left"
+		},
+		{
+			"id":"b779e6da612f8db5",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"q5",
+			"fromSide":"right",
+			"toNode":"a5",
+			"toSide":"left"
+		},
+		{
+			"id":"3757ca0e1990fa58",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"q6",
+			"fromSide":"right",
+			"toNode":"a6",
+			"toSide":"left"
+		},
+		{
+			"id":"5cf94804a765cb40",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"q11",
+			"fromSide":"left",
+			"toNode":"a11",
+			"toSide":"bottom"
+		},
+		{
+			"id":"558082486a2ba567",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"q7",
+			"fromSide":"right",
+			"toNode":"a7",
+			"toSide":"top"
+		}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

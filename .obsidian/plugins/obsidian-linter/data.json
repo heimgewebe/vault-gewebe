@@ -287,6 +287,11 @@
       "match": "^systemanalogieStadtteilhaus-mindmap\\.md$",
       "flags": "",
       "label": ""
+    },
+    {
+      "match": "^FAHRPLAN\\.md$",
+      "flags": "",
+      "label": ""
     }
   ],
   "linterLocale": "system-default",

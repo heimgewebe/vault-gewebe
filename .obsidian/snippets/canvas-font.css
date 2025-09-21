@@ -1,0 +1,18 @@
+/* Größere Schrift in Canvas-Textknoten (robust für Mobile/Desktop) */
+.canvas-node-container.is-text .canvas-node-content,
+.canvas-node-container.is-text .markdown-preview-view,
+.canvas-node-container.is-text .markdown-preview-view div,
+.canvas-node-container.is-text .markdown-preview-view p {
+  font-size: 28px !important;   /* hier größer/kleiner stellen */
+  line-height: 1.6 !important;
+}
+
+/* Überschriften innerhalb von Canvas-Textknoten */
+.canvas-node-container.is-text h1 { font-size: 36px !important; line-height: 1.2 !important; }
+.canvas-node-container.is-text h2 { font-size: 32px !important; line-height: 1.3 !important; }
+.canvas-node-container.is-text h3 { font-size: 28px !important; line-height: 1.35 !important; }
+
+/* Minimal mehr Innenabstand, damit große Schrift nicht gequetscht wirkt */
+.canvas-node-container.is-text .canvas-node-content {
+  padding: 14px 18px !important;
+}

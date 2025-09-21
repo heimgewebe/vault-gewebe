@@ -1,0 +1,33 @@
+{
+	"nodes":[
+		{"id":"physik","type":"text","text":"## Physik\n- Spezielle Relativität (1905)\n- Allgemeine Relativität (1915)\n- Nobelpreis 1921 (Photoeffekt)\n- EPR-Paradoxon (1935)\n- Vereinheitlichungsversuche\n\nKernspannung: Determinismus vs. Quantenindeterminismus","x":-900,"y":-400,"width":600,"height":320},
+		{"id":"wissphilo","type":"text","text":"## Wissenschaftsphilosophie\n- Realismus vs. Kopenhagener Deutung (\"Gott würfelt nicht\")\n- Theoriegeladenheit von Messung\n- Einfachheit/Schönheit als Heuristik\n- Wissenschaft & Ethik","x":-100,"y":-500,"width":640,"height":320},
+		{"id":"ethik","type":"text","text":"## Ethik & Gesellschaft\n- Humanismus & Universalismus\n- Antirassismus (NAACP, Rede Princeton 1946)\n- Antisemitismus-Erfahrung → Exil\n- Pazifismus (mit Bruch im NS-Kontext)\n- Akademische Freiheit","x":800,"y":-400,"width":680,"height":340},
+		{"id":"politik","type":"text","text":"## Politik & Öffentlichkeit\n- Brief an Roosevelt 1939 → Manhattan Project\n- Why Socialism? (1949)\n- Russell–Einstein-Manifest (1955)\n- McCarthy-Kritik / Bürgerrechte\n- Paradox: Atomprojekt angeschoben → später Abrüstung","x":1200,"y":80,"width":760,"height":360},
+		{"id":"israel","type":"text","text":"## Israel & Zionismus\n- Förderung Hebräische Universität\n- Skepsis gegenüber Nationalismus\n- NYT-Brief 1948 gegen Cherut/Begin\n- 1952 Präsidentschaftsangebot → Absage\n- Wunsch: kulturell-moralische Orientierung statt Militarismus","x":300,"y":400,"width":700,"height":340},
+		{"id":"bildung","type":"text","text":"## Bildung & Kultur\n- Populäre Vermittlung\n- Musik (Violine) als Denkraum\n- Förderung junger Forschender\n- Kritik an Autoritätskult","x":-600,"y":400,"width":600,"height":280},
+		{"id":"stil","type":"text","text":"## Persönlichkeit & Stil\n- Ironie & Unabhängigkeit\n- Kosmopolitisch verwurzelt\n- Öffentlich unbequem\n- Humorvolle Schärfe","x":-1200,"y":40,"width":600,"height":280},
+		{"id":"timeline","type":"text","text":"## Zeitleiste (Auswahl)\n1905: Annus mirabilis\n1915: Allgemeine Relativität\n1921: Nobelpreis\n1933: Emigration USA\n1939: Brief an Roosevelt\n1948: NYT-Brief\n1949: Why Socialism?\n1952: Absage Präsidentschaft\n1955: Russell–Einstein-Manifest, Tod","x":-200,"y":750,"width":700,"height":360},
+		{"id":"docs","type":"text","text":"## Schlüsseldokumente\n- (1939) Brief an Roosevelt\n- (1948) Offener Brief NYT\n- (1949) Why Socialism?\n- (1952) Absagebrief an Abba Eban\n- (1955) Russell–Einstein-Manifest","x":700,"y":760,"width":720,"height":340},
+		{"id":"kontrovers","type":"text","text":"## Kontroversen & Paradoxa\n- Pazifist → Atomforschung mit angestoßen\n- Kosmopolit ↔ Zionist\n- Realismus ↔ Quanten-Erfolg\n- Öffentliche Autorität ↔ Ablehnung von Ämtern","x":-1000,"y":760,"width":660,"height":320},
+		{"id":"fragen","type":"text","text":"## Weiterführende Fragen\n- Wirkung seiner Briefe?\n- Vergleich mit Russell/Arendt\n- Israel-Rezeption\n- Lehre für heutige Wissenschafts-/KI-Debatten","x":1600,"y":500,"width":760,"height":340},
+		{"id":"root","type":"text","text":"# Albert Einstein – Rollen & Felder\nPublic Intellectual · Physiker · Wissenschaftsphilosoph · Ethiker · Politik- & Gesellschaftskritiker","x":-33,"y":27,"width":800,"height":220},
+		{"id":"zitate","type":"text","text":"## Zitate\n- \"Phantasie ist wichtiger als Wissen\"\n- \"Probleme kann man nicht mit derselben Denkweise lösen\"\n- \"Gott würfelt nicht\"\n- \"Ethik ist die Forderung, Mitmenschen als Zwecke zu behandeln\"","x":-829,"y":-828,"width":660,"height":300},
+		{"id":"wirkung","type":"text","text":"## Wirkung & Rezeption\n- Wissenschaft: Paradigmenwechsel\n- Politik: Abrüstungssymbol\n- Bildung: Ikone kritischen Denkens\n- Israel: verehrt, aber auch kritisiert","x":1608,"y":-317,"width":760,"height":320}
+	],
+	"edges":[
+		{"id":"e1","fromNode":"root","fromSide":"top","toNode":"physik","toSide":"right"},
+		{"id":"e2","fromNode":"root","fromSide":"top","toNode":"wissphilo","toSide":"bottom"},
+		{"id":"e3","fromNode":"root","fromSide":"top","toNode":"ethik","toSide":"left"},
+		{"id":"e4","fromNode":"root","fromSide":"right","toNode":"politik","toSide":"left"},
+		{"id":"e5","fromNode":"root","fromSide":"bottom","toNode":"israel","toSide":"top"},
+		{"id":"e6","fromNode":"root","fromSide":"bottom","toNode":"bildung","toSide":"top"},
+		{"id":"e7","fromNode":"root","fromSide":"left","toNode":"stil","toSide":"right"},
+		{"id":"e8","fromNode":"root","fromSide":"bottom","toNode":"timeline","toSide":"top"},
+		{"id":"e9","fromNode":"root","fromSide":"bottom","toNode":"docs","toSide":"top"},
+		{"id":"e10","fromNode":"root","fromSide":"bottom","toNode":"kontrovers","toSide":"top"},
+		{"id":"e11","fromNode":"root","fromSide":"right","toNode":"wirkung","toSide":"left"},
+		{"id":"e12","fromNode":"root","fromSide":"top","toNode":"zitate","toSide":"bottom"},
+		{"id":"e13","fromNode":"root","fromSide":"bottom","toNode":"fragen","toSide":"left"}
+	]
+}
