@@ -1,0 +1,31 @@
+// .devcontainer/devcontainer.json
+{
+  "name": "vault-gewebe-dev",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "runArgs": ["--gpus", "all"],
+  "containerEnv": {
+    "NVIDIA_VISIBLE_DEVICES": "all",
+    "NVIDIA_DRIVER_CAPABILITIES": "compute,utility"
+  },
+  "postCreateCommand": "bash -lc 'echo DEVCONTAINER_OK && (nvidia-smi || true)'",
+  "remoteUser": "vscode",
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "davidanson.vscode-markdownlint",
+        "vscodevim.vim",
+        "ms-azuretools.vscode-docker",
+        "eamodio.gitlens",
+        "timonwong.shellcheck",
+        "streetsidesoftware.code-spell-checker"
+      ]
+    }
+  }
+}
