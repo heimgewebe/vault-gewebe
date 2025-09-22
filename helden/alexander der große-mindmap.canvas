@@ -1,0 +1,39 @@
+{
+        "nodes":[
+                {"id":"root","type":"text","text":"# Alexander der Große – Mindmap\nMakedonischer König und Welteroberer","x":0,"y":0,"width":760,"height":200},
+                {"id":"kontext","type":"text","text":"## Herkunft & Kontext\n- Geboren 356 v. Chr. in Pella\n- Sohn Philipps II. & Olympias\n- Erziehung am Hof, Aristoteles als Lehrer\n- Makedonien als aufstrebende Großmacht","x":-760,"y":-40,"width":520,"height":280},
+                {"id":"macht","type":"text","text":"## Machtübernahme\n- 336 v. Chr.: Thronbesteigung nach Mord an Philipp II.\n- Niederschlagung griechischer Aufstände (Theben)\n- Festigung der Hegemonie im Korinthischen Bund","x":-1240,"y":-340,"width":520,"height":280},
+                {"id":"bildung","type":"text","text":"## Ausbildung & Wertewelt\n- Aristotelische Bildung: Philosophie, Naturkunde, Homerkultur\n- Ideale des heroischen Arete & panhellenischen Führungsanspruchs\n- Kombination aus Pragmatismus und Mythenerzählung","x":-360,"y":-340,"width":520,"height":280},
+                {"id":"feldzug","type":"text","text":"## Persienfeldzug\n- 334 v. Chr. Hellespont-Übergang\n- Siege: Granikos, Issos, Gaugamela\n- Einnahme von Anatolien, Levante, Ägypten, Mesopotamien, Persien\n- Expedition bis in den Indusraum","x":680,"y":-20,"width":620,"height":320},
+                {"id":"taktik","type":"text","text":"## Militärische Innovationen\n- Kombination aus Phalanx & Hetairenreiterei\n- Bewegliche Belagerungstechnik (Tyros)\n- Logistik über Meeresflotte & regionale Depots\n- Psychologische Kriegsführung, Integration lokaler Eliten","x":1200,"y":-320,"width":540,"height":320},
+                {"id":"verwaltung","type":"text","text":"## Herrschaft & Verwaltung\n- Weiterführung persischer Satrapien mit makedonischer Kontrolle\n- Gründung von Städten (Alexandria) als Verwaltungs- & Kulturzentren\n- Mischung aus Makedonen, Griechen & Lokaleliten in Führungspositionen\n- Einführung gemeinsamer Währung & Maßsysteme","x":1220,"y":320,"width":560,"height":340},
+                {"id":"kontakte","type":"text","text":"## Kulturkontakte & Politik\n- Übernahme persischer Hofrituale (Proskynese) – Konflikte mit makedonischem Adel\n- Förderung von Ehen zwischen Offizieren & Perserinnen (Susa 324)\n- Religionspolitik: Verehrung lokaler Gottheiten, pharaonischer Anspruch in Ägypten\n- Mission eines kosmopolitischen Herrscherbildes","x":680,"y":320,"width":620,"height":340},
+                {"id":"nachfolge","type":"text","text":"## Nachfolgekrise\n- Unerwarteter Tod 323 v. Chr. in Babylon\n- Kein klarer Erbe (nur Halbbruder Arrhidaios, später Sohn Alexander IV.)\n- Diadochenkriege zersplittern das Reich\n- Entstehung hellenistischer Königreiche","x":-40,"y":360,"width":560,"height":300},
+                {"id":"wirkung","type":"text","text":"## Langfristige Wirkung\n- Beginn der hellenistischen Epoche\n- Verbreitung griechischer Sprache & Bildung (Koine)\n- Austausch von Wissenschaft, Handel und Religion über Eurasien\n- Vorbild für spätere Feldherren (Caesar, Napoleon)","x":-440,"y":360,"width":540,"height":300},
+                {"id":"mythos","type":"text","text":"## Mythos & Rezeption\n- Heroisierung in Alexanderromanen & Legenden\n- Ikone für Imperiumsvorstellungen in Europa & Asien\n- Religiöse Deutungen (Sohn des Zeus-Ammon)\n- Motiv in Kunst, Literatur, Popkultur","x":-840,"y":360,"width":520,"height":300},
+                {"id":"fraktionen","type":"text","text":"## Hof & Spannungen\n- Rivalität mit Kleitos, Philotas, Parmenion\n- Ermordung Bessos, Bestrafung Aufstände in Baktrien\n- Verschwörung der Leibwächter? Mysteriöser Tod\n- Balance zwischen Loyalität & Autorität","x":-760,"y":-360,"width":520,"height":300},
+                {"id":"timeline","type":"text","text":"## Zeitleiste\n356 Geburt in Pella\n338 Schlacht von Chaironeia\n336 Thronbesteigung\n334 Überquerung des Hellespont\n332 Gründung Alexandria\n331 Sieg bei Gaugamela\n326 Schlacht am Hydaspes\n323 Tod in Babylon","x":0,"y":-360,"width":520,"height":320},
+                {"id":"quellen","type":"text","text":"## Quellenlage\n- Zeitnahe Berichte verloren (Kallisthenes, Ptolemaios)\n- Spätere antike Autoren: Arrian, Plutarch, Diodor, Curtius Rufus\n- Archäologische Befunde, Inschriften, Münzen\n- Moderne Debatten über Zuverlässigkeit & Perspektiven","x":-400,"y":-640,"width":540,"height":320},
+                {"id":"fragen","type":"text","text":"## Offene Fragen\n- Gesundheitszustand & Todesursache?\n- Grad der Integration lokaler Kulturen vs. imperialer Kontrolle\n- Vision eines vereinten Reiches oder pragmatisches Machthandeln?\n- Auswirkungen auf Zentralasien & Indien langfristig?","x":400,"y":-640,"width":560,"height":320}
+        ],
+        "edges":[
+                {"id":"e1","fromNode":"root","fromSide":"left","toNode":"kontext","toSide":"right"},
+                {"id":"e2","fromNode":"root","fromSide":"left","toNode":"bildung","toSide":"right"},
+                {"id":"e3","fromNode":"root","fromSide":"left","toNode":"timeline","toSide":"right"},
+                {"id":"e4","fromNode":"root","fromSide":"top","toNode":"quellen","toSide":"bottom"},
+                {"id":"e5","fromNode":"root","fromSide":"right","toNode":"feldzug","toSide":"left"},
+                {"id":"e6","fromNode":"feldzug","fromSide":"top","toNode":"taktik","toSide":"bottom"},
+                {"id":"e7","fromNode":"feldzug","fromSide":"bottom","toNode":"kontakte","toSide":"top"},
+                {"id":"e8","fromNode":"feldzug","fromSide":"bottom","toNode":"verwaltung","toSide":"top"},
+                {"id":"e9","fromNode":"root","fromSide":"bottom","toNode":"nachfolge","toSide":"top"},
+                {"id":"e10","fromNode":"nachfolge","fromSide":"left","toNode":"wirkung","toSide":"right"},
+                {"id":"e11","fromNode":"nachfolge","fromSide":"left","toNode":"mythos","toSide":"right"},
+                {"id":"e12","fromNode":"kontext","fromSide":"top","toNode":"macht","toSide":"bottom"},
+                {"id":"e13","fromNode":"kontext","fromSide":"top","toNode":"fraktionen","toSide":"bottom"},
+                {"id":"e14","fromNode":"root","fromSide":"bottom","toNode":"fragen","toSide":"top"}
+        ],
+        "metadata":{
+                "version":"1.0-1.0",
+                "frontmatter":{}
+        }
+}
