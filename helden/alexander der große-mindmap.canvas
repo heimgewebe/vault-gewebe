@@ -30,7 +30,7 @@
                 {"id":"e11","fromNode":"nachfolge","fromSide":"left","toNode":"mythos","toSide":"right"},
                 {"id":"e12","fromNode":"kontext","fromSide":"top","toNode":"macht","toSide":"bottom"},
                 {"id":"e13","fromNode":"kontext","fromSide":"top","toNode":"fraktionen","toSide":"bottom"},
-                {"id":"e14","fromNode":"root","fromSide":"bottom","toNode":"fragen","toSide":"top"}
+                {"id":"e14","fromNode":"root","fromSide":"top","toNode":"fragen","toSide":"bottom"}
         ],
         "metadata":{
                 "version":"1.0-1.0",
