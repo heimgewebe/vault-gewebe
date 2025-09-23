@@ -4,24 +4,24 @@
     "type": "split",
     "children": [
       {
-        "id": "ffc69c4e17712e12",
+        "id": "20d6cffb4bb638ea",
         "type": "tabs",
         "children": [
           {
-            "id": "130cde3e455aa427",
+            "id": "a4f3258e5bbd84df",
             "type": "leaf",
             "state": {
               "type": "canvas",
               "state": {
-                "file": "schule/arbeitsfelder/arbeitsfelder_als_erzieher.canvas",
+                "file": "helden/einstein.canvas",
                 "viewState": {
-                  "x": 65.31779661016944,
-                  "y": 621.0076271186442,
-                  "zoom": -1.4788621485861988
+                  "x": 1172.6327887733087,
+                  "y": 898.813679903923,
+                  "zoom": -1.2528209312230902
                 }
               },
               "icon": "lucide-layout-dashboard",
-              "title": "arbeitsfelder_als_erzieher"
+              "title": "einstein"
             }
           }
         ]
@@ -158,7 +158,7 @@
         "state": {
           "type": "outline",
           "state": {
-            "file": "schule/arbeitsfelder/arbeitsfelder_als_erzieher.canvas",
+            "file": "helden/einstein.canvas",
             "followCursor": false,
             "showSearch": false,
             "searchQuery": ""
@@ -229,18 +229,27 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "130cde3e455aa427",
+  "active": "a4f3258e5bbd84df",
   "lastOpenFiles": [
-    "helden/alexander der große.md",
+    "einstein-israel.canvas",
+    "einstein-israel 2.canvas",
+    "helden/einstein.canvas",
+    "einstein-israel 1.canvas",
+    "einstein-israel.canvas.md",
+    "schule/arbeitsfelder/altersübergreifendeGruppen.canvas",
+    "schule/arbeitsfelder/arbeitsfelder_als_erzieher.canvas",
+    "helden/einstein-physik.canvas",
+    "glasfaser.md",
+    "einsteins_physik.canvas.md",
     "einstein.canvas",
+    "Unbenannt.md",
+    "schule/theater/projektmethode.md",
+    "helden/alexander der große-mindmap.canvas",
+    "helden/alexander der große.md",
     "praxistipps.md",
     "gefühle.md",
     "einstein.md",
-    "helden/einstein.canvas",
-    "schule/arbeitsfelder/arbeitsfelder_als_erzieher.canvas",
-    "schule/arbeitsfelder/altersübergreifendeGruppen.canvas",
     "schule/konflikte/kita_konflikte.canvas",
-    "glasfaser.md",
     "halde/GEWEBE_MERGE_20250904_145348.md",
     "orga/steuerrückerstattung",
     "schule/pädagogik/IB Auszug Selbstwirksamkeit.pdf",
@@ -249,10 +258,6 @@
     "geschichte/frankfurter schule-mindmap.md",
     "geschichte/macht/machtachsen.canvas",
     "geschichte/macht",
-    "geschichte/1. weltkrieg/1. weltkrieg kapitalverflechtung.canvas",
-    "geschichte/1. weltkrieg/machtvernetzung krieg.canvas",
-    "geschichte/1. weltkrieg/verflechtungstheorie.canvas",
-    "geschichte/1. weltkrieg/1. weltkrieg kapitalflüsse.canvas",
     "geschichte/1. weltkrieg",
     "geschichte/balkan",
     "geschichte/weltverschwörung/geheimdienstterror.md",
@@ -272,11 +277,6 @@
     "geschichte",
     "schule/praxis/tosay.md",
     "coding/wgx/wgxZusammen+host_sign_merge.md",
-    "coding/wgx/wgxZusammen.md",
-    "coding/wgx/wgxBisEben.md",
-    "coding/wgx/wgxNeu.md",
-    "coding/wgx/wgxVariante.md",
-    "coding/wgx/wgxNeuAnders.md",
     "schule/arbeitsfelder/arbeitsfelder.jpeg",
     "Pasted image 20250814212038.png",
     "homo.domesticus.png",

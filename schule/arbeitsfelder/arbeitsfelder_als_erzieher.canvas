@@ -40,7 +40,6 @@
 		{"id":"offenes_konzept","type":"text","text":"offenes Konzept","x":1210,"y":-240,"width":220,"height":56},
 		{"id":"geschlossenes_konzept","type":"text","text":"geschlossenes Konzept","x":1210,"y":-180,"width":260,"height":56},
 		{"id":"koordinierende_und_verwalterische_arbeit_im_buero","type":"text","text":"koordinierende und verwalterische Arbeit im Büro","x":245,"y":-300,"width":520,"height":60},
-		{"id":"bei_allgemeinen_fragen_zur_entwicklung_der_kinder___der_erziehung","type":"text","text":"bei allgemeinen Fragen zur Entwicklung der Kinder / der Erziehung","x":680,"y":320,"width":640,"height":56},
 		{"id":"stationaere_hilfen","type":"text","text":"stationäre Hilfen","x":620,"y":680,"width":280,"height":56},
 		{"id":"ziel_befaehigung_des_menschen_zu_einer_muendigen_person_und_einem_hohen_anspruch_an_partizipation","type":"text","text":"Ziel: Befähigung des Menschen zu einer mündigen Person und einem hohen Anspruch an Partizipation","x":620,"y":740,"width":880,"height":64},
 		{"id":"betreuung_ueber_tag_und_nacht","type":"text","text":"Betreuung über Tag und Nacht","x":620,"y":800,"width":360,"height":56},
@@ -63,7 +62,8 @@
 		{"id":"familienzentren","type":"text","text":"Familienzentren","x":320,"y":460,"width":260,"height":56},
 		{"id":"hj_hilfen","type":"text","text":"Einrichtung der Kinder- und Jugendhilfe und Hilfen zur Erziehung","x":220,"y":500,"width":740,"height":64},
 		{"id":"bei_kindeswohlgefaehrdung","type":"text","text":"bei Kindeswohlgefährdung","x":620,"y":560,"width":300,"height":56},
-		{"id":"hilfen_zur_erziehung_kurz_hze","type":"text","text":"Hilfen zur Erziehung (kurz HZE)","x":620,"y":620,"width":360,"height":56}
+		{"id":"hilfen_zur_erziehung_kurz_hze","type":"text","text":"Hilfen zur Erziehung (kurz HZE)","x":620,"y":620,"width":360,"height":56},
+		{"id":"bei_allgemeinen_fragen_zur_entwicklung_der_kinder___der_erziehung","type":"text","text":"bei allgemeinen Fragen zur Entwicklung der Kinder / der Erziehung","x":762,"y":331,"width":640,"height":56}
 	],
 	"edges":[
 		{"id":"e_arbeitsfelder_kindertageseinrichtungen","fromNode":"arbeitsfelder","fromSide":"right","toNode":"kindertageseinrichtungen","toSide":"left"},

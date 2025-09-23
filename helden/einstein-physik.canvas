@@ -1,0 +1,41 @@
+{
+	"nodes":[
+		{"id":"root","type":"text","text":"# Albert Einstein – Physik (komplett)\nSR & GR • Photoeffekt • Brownsche Bewegung • EPR/Quantenfundamente • Formeln & Metriken • Experimente • Anwendungen • Grenzen","x":0,"y":0,"width":980,"height":260},
+		{"id":"sr","type":"text","text":"## Spezielle Relativität (1905)\nPostulate: (1) Relativitätsprinzip, (2) c konstant.\nKonsequenzen: Zeitdilatation Δt' = γΔt, Längenkontraktion L' = L/γ, Relativität der Gleichzeitigkeit.\nDynamik: p = γmv, E = γmc^2, Ruheenergie E0 = mc^2.\nKinematik: Lorentz-Trafo, Vierervektor-Formalismus.","x":-1160,"y":-520,"width":860,"height":420},
+		{"id":"gr","type":"text","text":"## Allgemeine Relativität (1915)\nGravitation = Krümmung der Raumzeit. Äquivalenzprinzip.\nFeldgleichungen: G_{μν} + Λ g_{μν} = (8πG/c^4) T_{μν}.\nVorhersagen: Perihel Merkur, Lichtablenkung, Shapiro-Delay, Gravitationswellen, Rotverschiebung.\nGeodäten statt Kraft, Energie-Impuls-Erhaltung via ∇_μ T^{μν}=0.","x":1160,"y":-520,"width":900,"height":460},
+		{"id":"photo","type":"text","text":"## Photoelektrischer Effekt (1905) – Nobelpreis 1921\nPhotonenergie E = hν. Austrittsarbeit Φ: eU_max = hν − Φ.\nSchwellfrequenz ν0 = Φ/h. Linearer Zusammenhang: U_max ∝ ν.","x":-1280,"y":60,"width":820,"height":340},
+		{"id":"brown","type":"text","text":"## Brownsche Bewegung (1905)\nThermische Molekülstöße → sichtbare Zufallsbewegung.\nD(t) = (k_B T)/(6π η r). Bestimmung von N_A (Avogadro-Zahl).\nStarke Evidenz für Atomhypothese.","x":-580,"y":560,"width":820,"height":340},
+		{"id":"epr","type":"text","text":"## EPR (1935) & Quantenkritik\nFrage nach Vollständigkeit der QM. Verschränkung → Nichtlokalität.\nBell-Ungleichungen (später): experimentell verletzt → lokale verborgene Variablen scheiden aus.\nEinsteins Intuition: Realismus/Determinismus; Debatte bis heute fruchtbar.","x":1140,"y":60,"width":900,"height":380},
+		{"id":"eqs","type":"text","text":"## Formeln & Prinzipien (Tafel)\nLorentz-Faktor: γ = 1/√(1−v^2/c^2).\nEnergie-Impuls: E^2 = (pc)^2 + (mc^2)^2.\nGeodäte: d^2x^μ/dτ^2 + Γ^μ_{αβ} (dx^α/dτ)(dx^β/dτ) = 0.\nSchwarzschild-Radius: r_s = 2GM/c^2.\nGravitationsrotverschiebung (schwach): Δν/ν ≈ ΔΦ/c^2.\nShapiro-Delay (näherungsweise): Δt ≈ (2GM/c^3) ln(...).","x":-120,"y":-820,"width":1040,"height":420},
+		{"id":"metrics","type":"text","text":"## Metriken (Auswahl)\nMinkowski: ds^2 = −c^2dt^2 + dx^2 + dy^2 + dz^2.\nSchwarzschild: ds^2 = −(1−r_s/r)c^2dt^2 + (1−r_s/r)^{-1}dr^2 + r^2 dΩ^2.\nKerr (rotierendes BH): a ≠ 0, Rahmenmitführung (Lense-Thirring).\nFLRW (kosmologisch): ds^2 = −c^2dt^2 + a(t)^2 [ dr^2/(1−kr^2) + r^2 dΩ^2 ].\nDe-Sitter: Λ>0, beschleunigte Expansion.","x":60,"y":-420,"width":1080,"height":520},
+		{"id":"exp","type":"text","text":"## Schlüsselmessungen & Tests\n1919: Eddington – Lichtablenkung an der Sonne.\n1959: Pound–Rebka – Gravitationsrotverschiebung.\n1960er: Shapiro-Delay (Radar zu Planeten).\n1971: Hafele–Keating – Atomuhren im Flugzeug (SR+GR).\nGPS: permanente SR(−7 µs/Tag) & GR(+45 µs/Tag)-Korrekturen.\n2015→: LIGO/Virgo/KAGRA – Gravitationswellen.\nVLBI/BH-Schatten (EHT): nah an Kerr-Vorhersagen.","x":420,"y":540,"width":980,"height":520},
+		{"id":"numerics","type":"text","text":"## Numerik & Größenordnungen\nc ≈ 3·10^8 m/s. G ≈ 6.67·10^−11 SI.\nErde: r_s ≈ 8.9 mm; Sonne: r_s ≈ 2.95 km.\nGPS: SR-Zeitdilatation −7 µs/Tag (v≈3.9 km/s), GR +45 µs/Tag (ΔΦ).\nGalaktische Lensing-Winkel: ~Bogensekunden.\nGW-Amplituden: h ~ 10^−21 (LIGO-Empfindlichkeit).","x":-1720,"y":-200,"width":880,"height":520},
+		{"id":"apps","type":"text","text":"## Anwendungen & Phänomene\nGravitationslinsen (Massenkartierung, H0-Schätzung).\nSchwarze Löcher (Akkretion, Jets, Schatten, Ringdown-Spektren).\nKosmologie (ΛCDM; a(t), k, Λ; dunkle Bestandteile).\nMetrologie & Navigation (Zeitnormale, GPS/Galileo).\nPräzisionstests (Pulsare, Doppel-BHs, EMRI-Signale).","x":-1740,"y":520,"width":900,"height":520},
+		{"id":"limits","type":"text","text":"## Grenzen & offene Probleme\nGR ↔ QM unvereinbar → Quantengravitation (Loop, Strings, Asymptotic Safety).\nSingularitäten (BH, Urknall); Cosmic Censorship unbewiesen.\nΛ-Problem: Vakuumenergie vs. beobachtetes Λ.\nDunkle Materie/Energie: neue Teilchen/Felder oder Modifikationen?\nInformationsparadoxon (BH-Verdampfung, Unitarität?).","x":1800,"y":-40,"width":980,"height":520},
+		{"id":"timeline","type":"text","text":"## Timeline (Physik-Meilensteine)\n1905: SR, Photoeffekt, Brownsche Bewegung.\n1915: GR.\n1919: Eddington.\n1921: Nobelpreis (Photoeffekt).\n1935: EPR.\n1959: Pound–Rebka; 1964–66: Shapiro.\n1971: Hafele–Keating.\n1990er→: Präzisions-Lensing, Pulsare.\n2015→: Gravitationswellen.\n2019/2022: BH-Schatten (M87*, Sgr A*).","x":-80,"y":860,"width":1040,"height":440},
+		{"id":"read","type":"text","text":"## Reading Map\nEinstein: Relativity (populär), Originalarbeiten 1905.\nMTW – Gravitation; Carroll – Spacetime & Geometry; Schutz – A First Course.\nRindler – SR/GR; Wald – General Relativity.\nAspect/Zeilinger – Bell-Experimente; Susskind/Harlow – BH-Information.","x":-1880,"y":-900,"width":900,"height":420},
+		{"id":"gloss","type":"text","text":"## Glossar (Kurz)\nc – Lichtgeschwindigkeit; G – Gravitationskonstante; h – Planck-Konstante.\nMetrik g_{μν}: Geometrie der Raumzeit; G_{μν}: Einstein-Tensor (Krümmung).\nT_{μν}: Energie-Impuls-Tensor; Λ: kosmologische Konstante.\nGeodäte: kürzeste/längste Bahn in Raumzeit; r_s: Schwarzschild-Radius.\nEddington-Messung: Sternenpositionen bei Sonnenfinsternis.\nShapiro-Delay: Zeitverzögerung von Funksignalen im Schwerefeld.","x":1820,"y":-900,"width":980,"height":460}
+	],
+	"edges":[
+		{"id":"e1","fromNode":"root","fromSide":"top","toNode":"sr","toSide":"right"},
+		{"id":"e2","fromNode":"root","fromSide":"top","toNode":"gr","toSide":"left"},
+		{"id":"e3","fromNode":"root","fromSide":"left","toNode":"photo","toSide":"right"},
+		{"id":"e4","fromNode":"root","fromSide":"bottom","toNode":"brown","toSide":"top"},
+		{"id":"e5","fromNode":"root","fromSide":"right","toNode":"epr","toSide":"left"},
+		{"id":"e6","fromNode":"root","fromSide":"top","toNode":"eqs","toSide":"bottom"},
+		{"id":"e7","fromNode":"eqs","fromSide":"bottom","toNode":"metrics","toSide":"top"},
+		{"id":"e8","fromNode":"gr","fromSide":"left","toNode":"metrics","toSide":"right"},
+		{"id":"e9","fromNode":"gr","fromSide":"bottom","toNode":"exp","toSide":"top"},
+		{"id":"e10","fromNode":"sr","fromSide":"bottom","toNode":"exp","toSide":"top"},
+		{"id":"e11","fromNode":"exp","fromSide":"left","toNode":"numerics","toSide":"right"},
+		{"id":"e12","fromNode":"exp","fromSide":"left","toNode":"apps","toSide":"right"},
+		{"id":"e13","fromNode":"apps","fromSide":"right","toNode":"limits","toSide":"left"},
+		{"id":"e14","fromNode":"root","fromSide":"bottom","toNode":"timeline","toSide":"top"},
+		{"id":"e15","fromNode":"root","fromSide":"top","toNode":"read","toSide":"right"},
+		{"id":"e16","fromNode":"root","fromSide":"top","toNode":"gloss","toSide":"left"}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}
