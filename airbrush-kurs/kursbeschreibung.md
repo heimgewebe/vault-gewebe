@@ -1,0 +1,2 @@
+Titel: Airbrush – lackier deine Utensilien!
+Beschreibung: Mach aus Alltäglichem etwas Besonderes: Mit der Airbrush, einer druckluftbetriebenen Sprühpistole, gestaltest du Handyhüllen, Federmappen, Rucksäcke oder Kleidung ganz nach deinem Geschmack. Du lernst Farbverläufe, Schablonen und Freihand-Techniken kennen und kannst aus vielen Farben wählen – von knallig fluoreszierend bis glänzend metallic. Am Ende hast du etwas, das es so nur einmal gibt: dein eigenes Kunstwerk.

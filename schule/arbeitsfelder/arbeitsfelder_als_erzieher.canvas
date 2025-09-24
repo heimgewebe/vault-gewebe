@@ -63,7 +63,7 @@
 		{"id":"hj_hilfen","type":"text","text":"Einrichtung der Kinder- und Jugendhilfe und Hilfen zur Erziehung","x":220,"y":500,"width":740,"height":64},
 		{"id":"bei_kindeswohlgefaehrdung","type":"text","text":"bei Kindeswohlgefährdung","x":620,"y":560,"width":300,"height":56},
 		{"id":"hilfen_zur_erziehung_kurz_hze","type":"text","text":"Hilfen zur Erziehung (kurz HZE)","x":620,"y":620,"width":360,"height":56},
-		{"id":"bei_allgemeinen_fragen_zur_entwicklung_der_kinder___der_erziehung","type":"text","text":"bei allgemeinen Fragen zur Entwicklung der Kinder / der Erziehung","x":762,"y":331,"width":640,"height":56}
+		{"id":"bei_allgemeinen_fragen_zur_entwicklung_der_kinder___der_erziehung","type":"text","text":"bei allgemeinen Fragen zur Entwicklung der Kinder / der Erziehung","x":812,"y":362,"width":640,"height":56}
 	],
 	"edges":[
 		{"id":"e_arbeitsfelder_kindertageseinrichtungen","fromNode":"arbeitsfelder","fromSide":"right","toNode":"kindertageseinrichtungen","toSide":"left"},
@@ -73,7 +73,7 @@
 		{"id":"e_kindertageseinrichtungen_altersuebergreifende_gruppen","fromNode":"kindertageseinrichtungen","fromSide":"bottom","toNode":"altersuebergreifende_gruppen","toSide":"top"},
 		{"id":"e_kindertageseinrichtungen_kinderkrippen_u3","fromNode":"kindertageseinrichtungen","fromSide":"right","toNode":"kinderkrippen_u3","toSide":"left"},
 		{"id":"e_kindertageseinrichtungen_spielgruppen","fromNode":"kindertageseinrichtungen","fromSide":"top","toNode":"spielgruppen","toSide":"bottom"},
-		{"id":"e_kindertageseinrichtungen_konzeptionelle_schwerpunkte","fromNode":"kindertageseinrichtungen","fromSide":"top","toNode":"konzeptionelle_schwerpunkte","toSide":"bottom"},
+		{"id":"e_kindertageseinrichtungen_konzeptionelle_schwerpunkte","toFloating":false,"fromNode":"kindertageseinrichtungen","fromSide":"top","toNode":"konzeptionelle_schwerpunkte","toSide":"bottom"},
 		{"id":"e_konzeptionelle_schwerpunkte_zb_bewegungsfoerderung","fromNode":"konzeptionelle_schwerpunkte","fromSide":"right","toNode":"zb_bewegungsfoerderung","toSide":"left"},
 		{"id":"e_konzeptionelle_schwerpunkte_zb_naturverbundenheit","fromNode":"konzeptionelle_schwerpunkte","fromSide":"bottom","toNode":"zb_naturverbundenheit","toSide":"top"},
 		{"id":"e_konzeptionelle_schwerpunkte_zb_sprachentwicklung","fromNode":"konzeptionelle_schwerpunkte","fromSide":"bottom","toNode":"zb_sprachentwicklung","toSide":"top"},
