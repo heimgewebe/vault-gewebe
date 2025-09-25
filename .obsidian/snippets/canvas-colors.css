@@ -1,0 +1,66 @@
+/* ===== Obsidian Canvas – Farbschema (universelle Pipeline) =====
+   Slot → Bedeutung
+   1 (Blau): Root / Meta
+   2 (Grau): Definition
+   3 (Grün): Ziele
+   4 (Gelb): Prozesse
+   5 (Rot): Störungen / Herausforderungen
+   6 (Violett): Ebenen
+   Essenz: farblos (keine .mod-canvas-color-* Klasse)
+   -------------------------------------------------------------- */
+
+/* Primärfarben – als RGB, harmonieren i. d. R. in Light & Dark */
+.mod-canvas-color-1 { --canvas-color:  52, 152, 219; } /* Blau     */
+.mod-canvas-color-2 { --canvas-color: 149, 165, 166; } /* Grau     */
+.mod-canvas-color-3 { --canvas-color:  46, 204, 113; } /* Grün     */
+.mod-canvas-color-4 { --canvas-color: 241, 196,  15; } /* Gelb     */
+.mod-canvas-color-5 { --canvas-color: 231,  76,  60; } /* Rot      */
+.mod-canvas-color-6 { --canvas-color: 155,  89, 182; } /* Violett  */
+
+/* Optional: leicht erhöhte Lesbarkeit für alle farbigen Karten */
+.mod-canvas-color-1,
+.mod-canvas-color-2,
+.mod-canvas-color-3,
+.mod-canvas-color-4,
+.mod-canvas-color-5,
+.mod-canvas-color-6 {
+  /* erhöhte Kontrastkante */
+  --canvas-card-border: rgba(0,0,0,0.18);
+  box-shadow: 0 0 0 1px var(--canvas-card-border);
+}
+
+/* Essenz-Knoten: farblos, deutlicher Rahmen
+   (greift auf alle Canvas-Karten ohne Farbkategorie) */
+.canvas .canvas-node:not(.mod-canvas-color-1):not(.mod-canvas-color-2)
+:not(.mod-canvas-color-3):not(.mod-canvas-color-4)
+:not(.mod-canvas-color-5):not(.mod-canvas-color-6) {
+  background: var(--background-primary);
+  box-shadow: 0 0 0 2px var(--text-muted);
+  /* kompaktere Typo, damit Schlagworte “knacken” */
+  --canvas-font-size: 0.95rem;
+  --canvas-line-height: 1.25;
+}
+
+/* (Optional) Dark-Mode Feintuning: stärkere Konturen auf dunklem Grund */
+.theme-dark .mod-canvas-color-1,
+.theme-dark .mod-canvas-color-2,
+.theme-dark .mod-canvas-color-3,
+.theme-dark .mod-canvas-color-4,
+.theme-dark .mod-canvas-color-5,
+.theme-dark .mod-canvas-color-6 {
+  --canvas-card-border: rgba(255,255,255,0.22);
+  box-shadow: 0 0 0 1px var(--canvas-card-border);
+}
+
+.theme-dark .canvas .canvas-node:not(.mod-canvas-color-1):not(.mod-canvas-color-2)
+:not(.mod-canvas-color-3):not(.mod-canvas-color-4)
+:not(.mod-canvas-color-5):not(.mod-canvas-color-6) {
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.28);
+}
+
+/* (Optional) leichte, konsistente Innenabstände für bessere Lesbarkeit */
+.canvas .canvas-node .canvas-node-content {
+  padding: 10px 12px;
+  font-size: var(--canvas-font-size, 1rem);
+  line-height: var(--canvas-line-height, 1.4);
+}

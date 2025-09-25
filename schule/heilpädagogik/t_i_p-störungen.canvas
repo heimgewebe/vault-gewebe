@@ -1,0 +1,33 @@
+{
+	"nodes":[
+		{"id":"root","type":"text","text":"Störungen integrativer Prozesse","x":0,"y":0,"width":420,"height":120,"color":"2"},
+		{"id":"arten","type":"text","text":"Arten der Störung\n• Überabgrenzung → Isolation\n• Überannäherung → Aggression, Überfürsorglichkeit","x":-600,"y":-100,"width":420,"height":180,"color":"6"},
+		{"id":"arten_e","type":"text","text":"Essenz: Isolation oder Vereinnahmung","x":-950,"y":-100,"width":280,"height":80,"color":"6"},
+		{"id":"ursachen","type":"text","text":"Mögliche Ursachen\n• Ängste (z.B. Überforderung, Gesichtsverlust)\n• Ungeklärte Rollen & Machtfragen\n• Mangel an Akzeptanz & Wertschätzung\n• Strukturelle Barrieren","x":600,"y":-100,"width":440,"height":220,"color":"5"},
+		{"id":"ursachen_e","type":"text","text":"Essenz: Angst + Strukturdefizite","x":1050,"y":-100,"width":260,"height":80,"color":"5"},
+		{"id":"ebenen","type":"text","text":"Betroffene Ebenen\n• innerpsychisch: verdrängte Anteile, Selbstbild\n• interaktionell: Kommunikationsabbrüche, Konflikte\n• institutionell: exkludierende Strukturen\n• kulturell-gesellschaftlich: Diskriminierung, Homogenisierung","x":-600,"y":250,"width":480,"height":260,"color":"7"},
+		{"id":"ebenen_e","type":"text","text":"Essenz: Störungen wirken auf allen Ebenen","x":-1000,"y":350,"width":320,"height":80,"color":"7"},
+		{"id":"folgen","type":"text","text":"Folgen\n• Exklusion einzelner Kinder/Personen\n• Konfliktverschärfung\n• Abbruch von Lern- und Entwicklungsprozessen\n• Vertrauensverlust","x":600,"y":250,"width":440,"height":220,"color":"4"},
+		{"id":"folgen_e","type":"text","text":"Essenz: Vertrauens- & Prozessabbruch","x":1050,"y":350,"width":280,"height":80,"color":"4"},
+		{"id":"praevention","type":"text","text":"Prävention & Bearbeitung\n• Balance von Nähe & Distanz\n• Reflexion eigener Anteile\n• Klärung von Rollen & Kommunikation\n• Inklusive Strukturen schaffen\n• Haltung: Wertschätzung & Anerkennung","x":0,"y":500,"width":460,"height":240,"color":"3"},
+		{"id":"praevention_e","type":"text","text":"Essenz: Balance + Reflexion","x":0,"y":750,"width":240,"height":80,"color":"3"},
+		{"id":"meta","type":"text","text":"Meta-Kern\nStörungen entstehen, wenn Nähe und Distanz kippen.\nIntegration verlangt Balance auf allen Ebenen.","x":0,"y":-400,"width":520,"height":140,"color":"4"}
+	],
+	"edges":[
+		{"id":"e1","fromNode":"root","fromSide":"left","toNode":"arten","toSide":"right","label":"Typen"},
+		{"id":"e1a","fromNode":"arten","fromSide":"left","toNode":"arten_e","toSide":"right"},
+		{"id":"e2","fromNode":"root","fromSide":"right","toNode":"ursachen","toSide":"left","label":"Ursachen"},
+		{"id":"e2a","fromNode":"ursachen","fromSide":"right","toNode":"ursachen_e","toSide":"left"},
+		{"id":"e3","fromNode":"root","fromSide":"bottom","toNode":"ebenen","toSide":"top","label":"Betroffene Ebenen"},
+		{"id":"e3a","fromNode":"ebenen","fromSide":"left","toNode":"ebenen_e","toSide":"right"},
+		{"id":"e4","fromNode":"root","fromSide":"bottom","toNode":"folgen","toSide":"left","label":"Folgen"},
+		{"id":"e4a","fromNode":"folgen","fromSide":"right","toNode":"folgen_e","toSide":"left"},
+		{"id":"e5","fromNode":"root","fromSide":"bottom","toNode":"praevention","toSide":"top","label":"Prävention"},
+		{"id":"e5a","fromNode":"praevention","fromSide":"bottom","toNode":"praevention_e","toSide":"top"},
+		{"id":"e6","fromNode":"meta","fromSide":"bottom","toNode":"root","toSide":"top","label":"roter Faden"}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

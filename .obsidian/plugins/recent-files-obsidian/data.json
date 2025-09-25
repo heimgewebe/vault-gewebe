@@ -1,16 +1,40 @@
 {
   "recentFiles": [
     {
-      "basename": "diverseKindersituation",
-      "path": "schule/heilpädagogik/diverseKindersituation.md"
+      "basename": "inklusion_vs_integration",
+      "path": "inklusion_vs_integration.canvas"
     },
     {
-      "basename": "foerderschwerpunkt_geistige_behinderung",
-      "path": "schule/heilpädagogik/foerderschwerpunkt_geistige_behinderung.canvas"
+      "basename": "bri",
+      "path": "bri.canvas"
+    },
+    {
+      "basename": "canvas-richtlinien",
+      "path": "obsidian/canvas-richtlinien.canvas"
     },
     {
       "basename": "theorie_integrativer_prozesse",
       "path": "schule/heilpädagogik/theorie_integrativer_prozesse.canvas"
+    },
+    {
+      "basename": "arbeitsfelder_als_erzieher",
+      "path": "schule/arbeitsfelder/arbeitsfelder_als_erzieher.canvas"
+    },
+    {
+      "basename": "Gescanntes Dokument 09.09.25 um 12.37.03",
+      "path": "schule/heilpädagogik/Gescanntes Dokument 09.09.25 um 12.37.03.pdf"
+    },
+    {
+      "basename": "t_i_p-ziel",
+      "path": "schule/heilpädagogik/t_i_p-ziel.canvas"
+    },
+    {
+      "basename": "t_i_p-störungen",
+      "path": "schule/heilpädagogik/t_i_p-störungen.canvas"
+    },
+    {
+      "basename": "foerderschwerpunkt_geistige_behinderung",
+      "path": "schule/heilpädagogik/foerderschwerpunkt_geistige_behinderung.canvas"
     },
     {
       "basename": "tip-ziel.canvas",
@@ -29,20 +53,8 @@
       "path": "t_i_p-ziel.canvas 1.md"
     },
     {
-      "basename": "LF3_S3_Berufliche Ausgangssituation_Diversitätssensible Lernumgebung.docx",
-      "path": "schule/heilpädagogik/LF3_S3_Berufliche Ausgangssituation_Diversitätssensible Lernumgebung.docx.pdf"
-    },
-    {
-      "basename": "arbeitsfelder_als_erzieher",
-      "path": "schule/arbeitsfelder/arbeitsfelder_als_erzieher.canvas"
-    },
-    {
       "basename": "altersübergreifendeGruppen",
       "path": "schule/arbeitsfelder/altersübergreifendeGruppen.canvas"
-    },
-    {
-      "basename": "Unbenannt 1",
-      "path": "Unbenannt 1.md"
     },
     {
       "basename": "aufgabe",
@@ -67,10 +79,6 @@
     {
       "basename": "glasfaser",
       "path": "glasfaser.md"
-    },
-    {
-      "basename": "Unbenannt",
-      "path": "Unbenannt.md"
     },
     {
       "basename": "kita_konflikte",
@@ -111,10 +119,6 @@
     {
       "basename": "kita_konflikte",
       "path": "kita_konflikte.canvas"
-    },
-    {
-      "basename": "Gescanntes Dokument 09.09.25 um 12.37.03",
-      "path": "schule/heilpädagogik/Gescanntes Dokument 09.09.25 um 12.37.03.pdf"
     },
     {
       "basename": "projektinitiative",
@@ -191,10 +195,6 @@
     {
       "basename": "zeigen - Mindmap",
       "path": "zeigen - Mindmap.md"
-    },
-    {
-      "basename": "markmind",
-      "path": "orga/schlüssel/markmind.md"
     }
   ],
   "omittedPaths": [],

@@ -1,0 +1,16 @@
+/* Erzwinge Sichtbarkeit des Kartentextes in Canvas */
+.canvas .canvas-node .canvas-node-content {
+  opacity: 1 !important;
+  visibility: visible !important;
+  color: var(--text-normal) !important;
+  -webkit-line-clamp: unset !important;
+  display: block !important;
+}
+/* Verhindere, dass Themes Content ausblenden, wenn klein gezoomt */
+.canvas .canvas-node {
+  contain: none !important;           /* manche Themes nutzen content-visibility/contain */
+}
+.canvas .canvas-node .canvas-node-content * {
+  opacity: 1 !important;
+  visibility: visible !important;
+}

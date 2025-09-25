@@ -1,0 +1,23 @@
+{
+	"nodes":[
+		{"id":"root","type":"text","text":"Ziel integrativer Prozesse\n(Egalitäre Differenz, Prengel 2010)","x":0,"y":0,"width":420,"height":140,"color":"3"},
+		{"id":"heraus","type":"text","text":"Herausforderungen\n• Gefahr: paternalistische Fürsorge\n• Spannungen: Standardisierung im Schulsystem\n• Umsetzung: Ressourcen & Haltung nötig","x":0,"y":400,"width":480,"height":200,"color":"4"},
+		{"id":"essenz","type":"text","text":"Essenz\n„Unterschiede bleiben – aber niemand verliert dadurch sein Recht auf gleiche Anerkennung.“","x":0,"y":-400,"width":520,"height":120,"color":"3"},
+		{"id":"gegen","type":"text","text":"Abgrenzung zu Fehlformen\n• keine Gleichmachung\n• keine Nivellierung von Differenzen\n• kein erzwungener Konsens","x":565,"y":-248,"width":420,"height":160,"color":"2"},
+		{"id":"kern","type":"text","text":"Kernidee\n• Unterschiede anerkennen\n• Unterschiede sichtbar halten\n• Unterschiede gleichwertig behandeln","x":-512,"y":-278,"width":420,"height":180,"color":"6"},
+		{"id":"theorie","type":"text","text":"Theoretischer Bezug\n• Prengel (2010): Egalitäre Differenz\n• Reiser: Integration als Aushandlung\n• Zusammenhang zu Anerkennungstheorie (Honneth)","x":639,"y":55,"width":460,"height":220,"color":"5"},
+		{"id":"praktisch","type":"text","text":"Praktische Umsetzung\n• individuelle Förderung ohne Sonderstatus\n• Balance: Nähe ↔ Distanz\n• Respekt vor Eigenheiten\n• Gleichberechtigte Teilhabe in Alltag & Bildung","x":-602,"y":71,"width":440,"height":220,"color":"7"}
+	],
+	"edges":[
+		{"id":"e1","fromNode":"root","fromSide":"left","toNode":"kern","toSide":"right","label":"Kernidee"},
+		{"id":"e2","fromNode":"root","fromSide":"right","toNode":"gegen","toSide":"left","label":"Abgrenzung"},
+		{"id":"e3","fromNode":"root","fromSide":"bottom","toNode":"praktisch","toSide":"right","label":"Praxis"},
+		{"id":"e4","fromNode":"root","fromSide":"bottom","toNode":"theorie","toSide":"left","label":"Theorie"},
+		{"id":"e5","fromNode":"root","fromSide":"bottom","toNode":"heraus","toSide":"top","label":"Herausforderungen"},
+		{"id":"e6","fromNode":"essenz","fromSide":"bottom","toNode":"root","toSide":"top","label":"Verdichtung"}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

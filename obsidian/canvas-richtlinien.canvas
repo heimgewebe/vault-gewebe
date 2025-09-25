@@ -1,0 +1,28 @@
+{
+	"nodes":[
+		{"id":"root","type":"text","text":"Richtlinien für Canvas-Gestaltung\nQuelle: GPT-Erinnerungen","x":0,"y":0,"width":420,"height":140,"color":"1"},
+		{"id":"kern","type":"text","text":"Kernprinzipien\n• Root-Knoten mit Titel & Quelle\n• Essenz-Knoten frei gestaltbar\n• Farben konsistent für Rollen\n• Verbindungen nur wenn bedeutsam","x":-600,"y":-200,"width":520,"height":220,"color":"2"},
+		{"id":"kern_ess","type":"text","text":"Essenz: Minimaler Rahmen","x":-600,"y":-370,"width":300,"height":100,"color":"2"},
+		{"id":"achsen","type":"text","text":"Räumliche Orientierung\n• Horizontal: Grundlagen → Prozesse → Ziele\n• Vertikal: Ebenen unten konkret, oben abstrakt\n• Alternative Achsen: Zeit, Ist/Soll, Konflikt/Lösung, Global/Lokal\n• Frei wählbar oder ignorierbar","x":-50,"y":-300,"width":540,"height":240,"color":"6"},
+		{"id":"achsen_ess","type":"text","text":"Essenz: Achsen als Option","x":-50,"y":-480,"width":300,"height":100,"color":"6"},
+		{"id":"knoten","type":"text","text":"Knoten & Text\n• Inhalte: Stichpunkte, Fließtext, Symbole, Geschichten\n• Essenz frei\n• Root mit Quelle\n• Größen nach Textmenge","x":550,"y":-100,"width":480,"height":200,"color":"4"},
+		{"id":"knoten_ess","type":"text","text":"Essenz: Ausdruck frei","x":550,"y":-260,"width":280,"height":100,"color":"4"},
+		{"id":"uebersicht","type":"text","text":"Übersicht & Lesbarkeit\n• Teil-/Master-Canvas nutzen\n• Zoom-Tauglichkeit beachten\n• Leerräume gezielt einsetzen\n• Kohärenz-Check am Ende","x":-600,"y":300,"width":520,"height":200,"color":"3"},
+		{"id":"uebersicht_ess","type":"text","text":"Essenz: Klar & lesbar","x":-600,"y":470,"width":280,"height":100,"color":"3"},
+		{"id":"optionen","type":"text","text":"Gestaltungsoptionen\n• Cluster, Asymmetrien\n• Kreis-, Spiral-, Wellenformen\n• Humor, Ironie, Selbstreflexion\n• Canvas als Bühne oder Landschaft","x":50,"y":350,"width":500,"height":200,"color":"5"},
+		{"id":"optionen_ess","type":"text","text":"Essenz: Spielraum","x":50,"y":520,"width":260,"height":90,"color":"5"},
+		{"id":"legende","type":"text","text":"Legende-Knoten\n• Farben: Blau=Zentrum, Grau=Grundlagen, Gelb=Prozesse, Rot=Hindernisse, Grün=Ziele, Violett=Ebenen\n• Achsen-Logik (falls genutzt)\n• Hinweise: Essenz frei, Verbindungen sparsam\nPosition: am Rand","x":700,"y":250,"width":560,"height":260,"color":"1"}
+	],
+	"edges":[
+		{"id":"e_root_kern","fromNode":"root","fromSide":"left","toNode":"kern","toSide":"right"},
+		{"id":"e_root_achsen","fromNode":"root","fromSide":"top","toNode":"achsen","toSide":"bottom"},
+		{"id":"e_root_knoten","fromNode":"root","fromSide":"right","toNode":"knoten","toSide":"left"},
+		{"id":"e_root_uebersicht","fromNode":"root","fromSide":"bottom","toNode":"uebersicht","toSide":"top"},
+		{"id":"e_root_optionen","fromNode":"root","fromSide":"bottom","toNode":"optionen","toSide":"top"},
+		{"id":"e_root_legende","fromNode":"root","fromSide":"bottom","toNode":"legende","toSide":"left"}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

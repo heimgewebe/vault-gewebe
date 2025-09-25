@@ -4,40 +4,45 @@
     "type": "split",
     "children": [
       {
-        "id": "20d6cffb4bb638ea",
+        "id": "ad9934fbdd2f285d",
         "type": "tabs",
         "children": [
           {
-            "id": "a4f3258e5bbd84df",
+            "id": "f5f6ca5f87820637",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "canvas",
               "state": {
-                "file": "schule/heilpädagogik/diverseKindersituation.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
+                "file": "schule/heilpädagogik/theorie_integrativer_prozesse.canvas",
+                "viewState": {
+                  "x": 482.6610763433496,
+                  "y": 648.1462888811964,
+                  "zoom": -1.3909294193986343
+                }
               },
-              "icon": "lucide-file",
-              "title": "diverseKindersituation"
+              "icon": "lucide-layout-dashboard",
+              "title": "theorie_integrativer_prozesse"
             }
           },
           {
-            "id": "a154724829075622",
+            "id": "86b525ae9c071185",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "canvas",
               "state": {
-                "file": "tip-ziel.canvas.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
+                "file": "inklusion_vs_integration.canvas",
+                "viewState": {
+                  "x": -38.02078436622281,
+                  "y": 186.57432116933091,
+                  "zoom": -1.4370007617143918
+                }
               },
-              "icon": "lucide-file",
-              "title": "tip-ziel.canvas"
+              "icon": "lucide-layout-dashboard",
+              "title": "inklusion_vs_integration"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -171,7 +176,7 @@
         "state": {
           "type": "outline",
           "state": {
-            "file": "schule/heilpädagogik/diverseKindersituation.md",
+            "file": "schule/heilpädagogik/Gescanntes Dokument 09.09.25 um 12.37.03.pdf",
             "followCursor": false,
             "showSearch": false,
             "searchQuery": ""
@@ -242,11 +247,27 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "a4f3258e5bbd84df",
+  "active": "86b525ae9c071185",
   "lastOpenFiles": [
-    "schule/heilpädagogik/foerderschwerpunkt_geistige_behinderung.canvas",
-    "schule/heilpädagogik/foerderschwerpunkt_geistige_behinderung.canvas",
+    "bri.canvas",
+    "inklusion_vs_integration.canvas",
+    "obsidian/canvas-richtlinien.canvas",
     "schule/heilpädagogik/theorie_integrativer_prozesse.canvas",
+    "obsidian",
+    "schule/konflikte/diverseKindersituation.md",
+    "schule/konflikte/LF3_S3_Berufliche Ausgangssituation_Diversitätssensible Lernumgebung.docx.pdf",
+    "schule/arbeitsfelder/arbeitsfelder_als_erzieher.canvas",
+    "schule/heilpädagogik/Gescanntes Dokument 09.09.25 um 12.37.03.pdf",
+    "schule/heilpädagogik/orga",
+    "schule/heilpädagogik/t_i_p-ziel.canvas",
+    "schule/heilpädagogik/h.canvas",
+    "schule/heilpädagogik/t.canvas",
+    "schule/heilpädagogik/t_i_p-störungen.canvas",
+    "Unbenannt.md",
+    "Unbenannt 1.md",
+    "schule/heilpädagogik/diverseKindersituation.md",
+    "schule/heilpädagogik/foerderschwerpunkt_geistige_behinderung.canvas",
+    "schule/heilpädagogik/foerderschwerpunkt_geistige_behinderung.canvas",
     "tip-ziel.canvas.md",
     "Unbenannt 2.md",
     "schule/konflikte/ahrensburger_weg.md",
@@ -254,20 +275,11 @@
     "t_i_p-ziel.canvas 1.md",
     "schule/heilpädagogik/LF3_S3_Berufliche Ausgangssituation_Diversitätssensible Lernumgebung.docx.pdf",
     "schule/heilpädagogik/theorie_integrativer_prozesse.md",
-    "schule/arbeitsfelder/arbeitsfelder_als_erzieher.canvas",
-    "schule/arbeitsfelder/altersübergreifendeGruppen.canvas",
-    "Unbenannt 1.md",
     "schule/konflikte/aufgabe.md",
-    "helden/einstein.canvas",
     "helden/alexander der große.md",
-    "helden/alexander der große.canvas",
-    "einstein-israel.canvas",
-    "einstein-israel 2.canvas",
-    "einstein-israel 1.canvas",
     "einstein-israel.canvas.md",
     "glasfaser.md",
     "einsteins_physik.canvas.md",
-    "Unbenannt.md",
     "schule/theater/projektmethode.md",
     "praxistipps.md",
     "gefühle.md",
@@ -279,16 +291,10 @@
     "coding/nexus",
     "geschichte/frankfurter schule-mindmap.md",
     "geschichte/macht",
-    "geschichte/1. weltkrieg",
-    "geschichte/balkan",
     "geschichte/weltverschwörung/geheimdienstterror.md",
     "geschichte/weltverschwörung/verschwoerungsskandale.md",
     "geschichte/weltverschwörung/verschwoerungsannahme.md",
     "geschichte/weltverschwörung/brdskandale.md",
-    "geschichte/weltverschwörung/weltverschwoerungsbeweisführung.md",
-    "geschichte/weltverschwörung/paedokriminalit.md",
-    "geschichte/weltverschwörung/monolith",
-    "geschichte/weltverschwörung",
     "schule/arbeitsfelder/arbeitsfelder.jpeg",
     "Pasted image 20250814212038.png",
     "homo.domesticus.png",

@@ -1,0 +1,38 @@
+{
+	"nodes":[
+		{"id":"root","type":"text","text":"Integration vs. Inklusion","x":0,"y":0,"width":480,"height":140,"color":"4"},
+		{"id":"def","type":"text","text":"[#] Definition Integration\n• Einfügen in bestehendes System\n• Anpassung wird erwartet\n• Fokus: Defizitausgleich","x":-600,"y":-150,"width":460,"height":180,"color":"6"},
+		{"id":"def_e","type":"text","text":"[◎] Essenz: Anpassung","x":-950,"y":-150,"width":200,"height":80,"color":"6"},
+		{"id":"ziel","type":"text","text":"[✓] Definition Inklusion\n• Strukturen passen sich den Menschen an\n• Vielfalt = Normalität\n• Recht auf Teilhabe für alle","x":600,"y":-150,"width":460,"height":180,"color":"3"},
+		{"id":"ziel_e","type":"text","text":"[◎] Essenz: Zugehörigkeit","x":950,"y":-200,"width":240,"height":80,"color":"3"},
+		{"id":"prozess","type":"text","text":"[→] Charakter Unterschied\n• Integration = Sonderstatus\n• Inklusion = Teilhabe ohne Sonderstatus\n• Integration = Weg zum Ziel\n• Inklusion = Ziel selbst","x":-200,"y":-350,"width":460,"height":200,"color":"5"},
+		{"id":"prozess_e","type":"text","text":"[◎] Essenz: Ziel vs. Weg","x":-200,"y":-520,"width":220,"height":80,"color":"5"},
+		{"id":"stoerung","type":"text","text":"[!] Störungen & Missverständnisse\n• Inklusion oft nur als ‚Integration neu‘ verstanden\n• Gefahr: Schlagwort ohne Substanz\n• Widerstände durch Ressourcenmangel","x":200,"y":350,"width":460,"height":200,"color":"2"},
+		{"id":"stoerung_e","type":"text","text":"[◎] Essenz: Begriffsverwirrung","x":200,"y":600,"width":260,"height":80,"color":"2"},
+		{"id":"praxis","type":"text","text":"Praxis-Beispiele\nIntegration = Förderschule, danach gemeinsame Freizeit\nInklusion = Gemeinsames Lernen von Beginn an","x":-600,"y":250,"width":480,"height":200,"color":"7"},
+		{"id":"praxis_e","type":"text","text":"[◎] Essenz: Alltag zählt","x":-950,"y":320,"width":220,"height":80,"color":"7"},
+		{"id":"meta","type":"text","text":"[∴] Meta-Kern\nInklusion = Alle gehören dazu\nIntegration = Anpassung an bestehende Strukturen","x":86,"y":-581,"width":540,"height":140,"color":"4"}
+	],
+	"edges":[
+		{"id":"e1","fromNode":"root","fromSide":"left","toNode":"def","toSide":"right","label":"Integration"},
+		{"id":"e1a","fromNode":"def","fromSide":"left","toNode":"def_e","toSide":"right"},
+		{"id":"e2","fromNode":"root","fromSide":"right","toNode":"ziel","toSide":"left","label":"Inklusion"},
+		{"id":"e2a","fromNode":"ziel","fromSide":"top","toNode":"ziel_e","toSide":"bottom"},
+		{"id":"e3","fromNode":"root","fromSide":"top","toNode":"prozess","toSide":"bottom","label":"Charakter"},
+		{"id":"e3a","fromNode":"prozess","fromSide":"top","toNode":"prozess_e","toSide":"bottom"},
+		{"id":"e4","fromNode":"root","fromSide":"bottom","toNode":"stoerung","toSide":"top","label":"Störungen"},
+		{"id":"e4a","fromNode":"stoerung","fromSide":"bottom","toNode":"stoerung_e","toSide":"top"},
+		{"id":"e5","fromNode":"root","fromSide":"bottom","toNode":"praxis","toSide":"top","label":"Praxis"},
+		{"id":"e5a","fromNode":"praxis","fromSide":"left","toNode":"praxis_e","toSide":"right"},
+		{"id":"e6","fromNode":"meta","fromSide":"bottom","toNode":"root","toSide":"top","label":"roter Faden"},
+		{"id":"e7","fromNode":"meta","fromSide":"bottom","toNode":"def","toSide":"right"},
+		{"id":"e8","fromNode":"meta","fromSide":"bottom","toNode":"ziel","toSide":"left"},
+		{"id":"e9","fromNode":"meta","fromSide":"left","toNode":"prozess","toSide":"right"},
+		{"id":"e10","fromNode":"meta","fromSide":"bottom","toNode":"stoerung","toSide":"top"},
+		{"id":"e11","fromNode":"meta","fromSide":"bottom","toNode":"praxis","toSide":"top"}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}
