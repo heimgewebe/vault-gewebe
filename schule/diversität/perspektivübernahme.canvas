@@ -1,0 +1,116 @@
+{
+	"nodes":[
+		{"id":"root","type":"text","text":"Perspektivübernahme – Diversität im Kinderhaus Bachweg","x":-120,"y":-80,"width":520,"height":120,"color":"1"},
+		{"id":"meta","type":"text","text":"Verstehen beginnt, wenn ich die Brille wechsle.","x":-120,"y":-260,"width":520,"height":100,"color":"1"},
+		{"id":"mw_k","type":"text","text":"Mwazilinda – Kinderperspektive\n• Gefühle: nicht gemeint sein, verletzt\n• Funktion: Suche nach Zugehörigkeit\n• Diversität: Hautfarbe, Repräsentation","x":-900,"y":-260,"width":420,"height":180,"color":"2"},
+		{"id":"ve_k","type":"text","text":"Verena – Kinderperspektive\n• Gefühle: Beschämung, Minderwert\n• Funktion: Schutz durch Rückzug\n• Diversität: Armut, Teilhabe","x":-900,"y":-40,"width":420,"height":180,"color":"2"},
+		{"id":"ma_k","type":"text","text":"Max – Kinderperspektive\n• Gefühle: Frust, außen vor\n• Funktion: Bedürfnis nach Gleichwertigkeit\n• Diversität: Behinderung, Barrieren","x":-900,"y":180,"width":420,"height":180,"color":"2"},
+		{"id":"gruppe","type":"text","text":"Gruppenperspektive\n• Gemeinsam: Dazugehören, Rollen, Status\n• Unterschiede: Fähigkeiten, Geld, Aussehen\n• Mögliche Deutungen: „Max nervt“, „Verena ist komisch“, „Mwazilinda passt nicht“\n• Lernchance: Vielfalt als normal erleben","x":-120,"y":120,"width":520,"height":220,"color":"3"},
+		{"id":"fam_mw","type":"text","text":"Familie Mwazilinda\n• Hoffnung: Anerkennung kultureller Wurzeln\n• Befürchtung: Diskriminierungserfahrungen","x":780,"y":-260,"width":420,"height":160,"color":"5"},
+		{"id":"fam_ve","type":"text","text":"Familie Verena\n• Hoffnung: Teilhabe trotz wenig Geld\n• Befürchtung: Scham, Ausschluss","x":780,"y":-40,"width":420,"height":160,"color":"5"},
+		{"id":"fam_ma","type":"text","text":"Familie Max\n• Hoffnung: Selbstständigkeit, Barrierefreiheit\n• Befürchtung: Ausschluss durch Rahmenbedingungen","x":780,"y":180,"width":420,"height":160,"color":"5"},
+		{"id":"hindernisse","type":"text","text":"Hindernisse der Perspektivübernahme\n• Eigene Vorannahmen / Projektion\n• Strukturelle Blindstellen (Armut, Rassismus, Barrieren)\n• Zeitdruck im Alltag","x":220,"y":420,"width":520,"height":180,"color":"4"},
+		{"id":"essenz","type":"text","text":"Essenz: Nur wer die Sicht des Anderen kennt, kann angemessen handeln.","x":-120,"y":-420,"width":520,"height":100,"color":"1"},
+		{"id":"legende","type":"text","text":"Legende\nFarben:\nBlau = Zentrum/Meta\nGrau = Kinderperspektive/Grundlagen\nGelb = Gruppe\nGrün = Familie\nRot = Hindernisse\nViolett = Ebenen\n\nAchsen:\nLinks = Kinder\nMitte = Gruppe\nRechts = Familien\nVertikal: unten konkret, oben abstrakt\n\nHinweis: Meta-Knoten ohne Pfeile; Essenz frei","x":1240,"y":-440,"width":440,"height":300,"color":"2"},
+		{"id":"ebenen","type":"text","text":"Ebenen\n• Kind: Innenwelt, Funktion des Verhaltens\n• Gruppe: Dynamik, Zuschreibungen\n• Familie: Hoffnungen, Befürchtungen","x":468,"y":-523,"width":520,"height":160,"color":"6"},
+		{
+			"id":"8dce0e96214af604",
+			"type":"text",
+			"text":"[[situation_vielfalt_bachweg.canvas|situation_vielfalt_bachweg]]",
+			"styleAttributes":{},
+			"x":-42,
+			"y":-538,
+			"width":260,
+			"height":60
+		},
+		{
+			"id":"42c4341b72d2267d",
+			"type":"text",
+			"text":"überabgrenzung als schutzreaktion und kompensation der verhinderten selbstwirksamkeit",
+			"styleAttributes":{},
+			"x":-1343,
+			"y":-3,
+			"width":319,
+			"height":104,
+			"color":"1"
+		},
+		{
+			"id":"591b6746401ebef2",
+			"type":"text",
+			"text":"seine behinderung wird integriert, nicht sein bedürfnis",
+			"styleAttributes":{},
+			"x":-1320,
+			"y":228,
+			"width":260,
+			"height":60,
+			"color":"1"
+		}
+	],
+	"edges":[
+		{"id":"e_root_mw","fromNode":"root","fromSide":"left","toNode":"mw_k","toSide":"right"},
+		{"id":"e_root_ve","fromNode":"root","fromSide":"left","toNode":"ve_k","toSide":"right"},
+		{"id":"e_root_grp","fromNode":"root","fromSide":"bottom","toNode":"gruppe","toSide":"top"},
+		{"id":"e_root_fmw","fromNode":"root","fromSide":"right","toNode":"fam_mw","toSide":"left"},
+		{"id":"e_root_fve","fromFloating":false,"fromNode":"root","fromSide":"right","toNode":"fam_ve","toSide":"left"},
+		{"id":"e_root_hin","fromNode":"root","fromSide":"bottom","toNode":"hindernisse","toSide":"top"},
+		{"id":"e_root_eb","toFloating":false,"fromNode":"root","fromSide":"top","toNode":"ebenen","toSide":"bottom"},
+		{
+			"id":"6666adb37fa09dca",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"root",
+			"fromSide":"right",
+			"toNode":"fam_ma",
+			"toSide":"left"
+		},
+		{
+			"id":"84c5464961200b9b",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"root",
+			"fromSide":"left",
+			"toNode":"ma_k",
+			"toSide":"right"
+		},
+		{
+			"id":"8a82e2d827ee61ac",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"ma_k",
+			"fromSide":"left",
+			"toNode":"591b6746401ebef2",
+			"toSide":"right"
+		},
+		{
+			"id":"d4f3b1990d011aea",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"mw_k",
+			"fromSide":"left",
+			"toNode":"42c4341b72d2267d",
+			"toSide":"right"
+		},
+		{
+			"id":"7923c8345a8f7991",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"ve_k",
+			"fromSide":"left",
+			"toNode":"42c4341b72d2267d",
+			"toSide":"right"
+		},
+		{
+			"id":"45d79b4a30c4c18a",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"ma_k",
+			"fromSide":"left",
+			"toNode":"42c4341b72d2267d",
+			"toSide":"right"
+		}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

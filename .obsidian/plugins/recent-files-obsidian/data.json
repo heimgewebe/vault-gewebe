@@ -1,6 +1,58 @@
 {
   "recentFiles": [
     {
+      "basename": "t_i_p-ziel_leitprinzipien",
+      "path": "schule/heilpädagogik/t_i_p-ziel_leitprinzipien.canvas"
+    },
+    {
+      "basename": "t_i_p-ziel",
+      "path": "schule/heilpädagogik/t_i_p-ziel.canvas"
+    },
+    {
+      "basename": "theorie_integrativer_prozesse",
+      "path": "schule/heilpädagogik/theorie_integrativer_prozesse.canvas"
+    },
+    {
+      "basename": "arbeitsfelder",
+      "path": "schule/arbeitsfelder/arbeitsfelder.jpeg"
+    },
+    {
+      "basename": "senioren_perspektivübernahme",
+      "path": "schule/arbeitsfelder/senioren_perspektivübernahme.canvas"
+    },
+    {
+      "basename": "altersübergreifende_gruppen",
+      "path": "schule/arbeitsfelder/altersübergreifende_gruppen.canvas"
+    },
+    {
+      "basename": "senioren",
+      "path": "schule/arbeitsfelder/senioren.canvas"
+    },
+    {
+      "basename": "arbeitsfelder_als_erzieher",
+      "path": "schule/arbeitsfelder/arbeitsfelder_als_erzieher.canvas"
+    },
+    {
+      "basename": "situation_vielfalt_bachweg",
+      "path": "schule/diversität/situation_vielfalt_bachweg.canvas"
+    },
+    {
+      "basename": "perspektivübernahme",
+      "path": "schule/diversität/perspektivübernahme.canvas"
+    },
+    {
+      "basename": "situation_vielfalt_bachweg_minimal",
+      "path": "schule/diversität/situation_vielfalt_bachweg_minimal.canvas"
+    },
+    {
+      "basename": "situation_vielfalt_bachweg_full",
+      "path": "schule/diversität/situation_vielfalt_bachweg_full.canvas"
+    },
+    {
+      "basename": "LF3_S3_Berufliche Ausgangssituation_Diversitätssensible Lernumgebung.docx",
+      "path": "schule/konflikte/LF3_S3_Berufliche Ausgangssituation_Diversitätssensible Lernumgebung.docx.pdf"
+    },
+    {
       "basename": "inklusion_vs_integration",
       "path": "inklusion_vs_integration.canvas"
     },
@@ -11,22 +63,6 @@
     {
       "basename": "canvas-richtlinien",
       "path": "obsidian/canvas-richtlinien.canvas"
-    },
-    {
-      "basename": "theorie_integrativer_prozesse",
-      "path": "schule/heilpädagogik/theorie_integrativer_prozesse.canvas"
-    },
-    {
-      "basename": "arbeitsfelder_als_erzieher",
-      "path": "schule/arbeitsfelder/arbeitsfelder_als_erzieher.canvas"
-    },
-    {
-      "basename": "Gescanntes Dokument 09.09.25 um 12.37.03",
-      "path": "schule/heilpädagogik/Gescanntes Dokument 09.09.25 um 12.37.03.pdf"
-    },
-    {
-      "basename": "t_i_p-ziel",
-      "path": "schule/heilpädagogik/t_i_p-ziel.canvas"
     },
     {
       "basename": "t_i_p-störungen",
@@ -51,10 +87,6 @@
     {
       "basename": "t_i_p-ziel.canvas 1",
       "path": "t_i_p-ziel.canvas 1.md"
-    },
-    {
-      "basename": "altersübergreifendeGruppen",
-      "path": "schule/arbeitsfelder/altersübergreifendeGruppen.canvas"
     },
     {
       "basename": "aufgabe",
@@ -95,10 +127,6 @@
     {
       "basename": "arbeitsfelder_erzieher",
       "path": "schule/arbeitsfelder/arbeitsfelder_erzieher.canvas"
-    },
-    {
-      "basename": "arbeitsfelder",
-      "path": "schule/arbeitsfelder/arbeitsfelder.jpeg"
     },
     {
       "basename": "freyProjektmethode",
@@ -171,30 +199,6 @@
     {
       "basename": "README",
       "path": "obsidian-gewebe-repo/README.md"
-    },
-    {
-      "basename": "reiselisten",
-      "path": "reise/reiselisten.md"
-    },
-    {
-      "basename": "weisheitsmatrix",
-      "path": "weisheit/weisheitsmatrix.canvas"
-    },
-    {
-      "basename": "weisheitskompass",
-      "path": "weisheit/weisheitskompass.canvas"
-    },
-    {
-      "basename": "kontonummern",
-      "path": "orga/banken/kontonummern.md"
-    },
-    {
-      "basename": "zeigen",
-      "path": "zeigen.md"
-    },
-    {
-      "basename": "zeigen - Mindmap",
-      "path": "zeigen - Mindmap.md"
     }
   ],
   "omittedPaths": [],

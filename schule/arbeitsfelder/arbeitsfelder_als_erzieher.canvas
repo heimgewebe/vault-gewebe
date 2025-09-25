@@ -51,7 +51,7 @@
 		{"id":"kriseninterventionsteams","type":"text","text":"Kriseninterventionsteams","x":920,"y":920,"width":360,"height":56},
 		{"id":"arbeitsfelder","type":"text","text":"Arbeitsfelder als Erzieher","x":0,"y":0,"width":360,"height":64},
 		{"id":"kindertageseinrichtungen","type":"text","text":"Kindertageseinrichtungen","x":500,"y":-40,"width":320,"height":60},
-		{"id":"altersuebergreifende_gruppen","type":"file","file":"schule/arbeitsfelder/altersübergreifendeGruppen.canvas","x":600,"y":180,"width":320,"height":56},
+		{"id":"altersuebergreifende_gruppen","type":"file","file":"schule/arbeitsfelder/altersübergreifende_gruppen.canvas","x":600,"y":180,"width":320,"height":56},
 		{"id":"kinderkrippen_u3","type":"text","text":"Kinderkrippen (U3)","x":600,"y":-30,"width":260,"height":56},
 		{"id":"spielgruppen","type":"text","text":"Spielgruppen","x":600,"y":-120,"width":220,"height":56},
 		{"id":"hdj","type":"text","text":"HDJ","x":320,"y":110,"width":140,"height":56},

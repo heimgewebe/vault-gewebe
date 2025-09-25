@@ -4,45 +4,54 @@
     "type": "split",
     "children": [
       {
-        "id": "ad9934fbdd2f285d",
+        "id": "2b5be182757de573",
         "type": "tabs",
         "children": [
           {
-            "id": "f5f6ca5f87820637",
+            "id": "dd09310f63499adf",
             "type": "leaf",
             "state": {
               "type": "canvas",
               "state": {
-                "file": "schule/heilpädagogik/theorie_integrativer_prozesse.canvas",
+                "file": "schule/heilpädagogik/t_i_p-ziel_leitprinzipien.canvas",
                 "viewState": {
-                  "x": 482.6610763433496,
-                  "y": 648.1462888811964,
-                  "zoom": -1.3909294193986343
+                  "x": 169.54237288135582,
+                  "y": 438.8568920904904,
+                  "zoom": -1.2492139112469516
                 }
               },
               "icon": "lucide-layout-dashboard",
-              "title": "theorie_integrativer_prozesse"
+              "title": "t_i_p-ziel_leitprinzipien"
             }
           },
           {
-            "id": "86b525ae9c071185",
+            "id": "d15ae80ba8017b04",
             "type": "leaf",
             "state": {
               "type": "canvas",
               "state": {
-                "file": "inklusion_vs_integration.canvas",
+                "file": "schule/arbeitsfelder/senioren_perspektivübernahme.canvas",
                 "viewState": {
-                  "x": -38.02078436622281,
-                  "y": 186.57432116933091,
-                  "zoom": -1.4370007617143918
+                  "x": -44,
+                  "y": 126,
+                  "zoom": 0
                 }
               },
               "icon": "lucide-layout-dashboard",
-              "title": "inklusion_vs_integration"
+              "title": "senioren_perspektivübernahme"
+            }
+          },
+          {
+            "id": "f1a3a8728199e507",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "Neuer Tab"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -247,27 +256,35 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "86b525ae9c071185",
+  "active": "dd09310f63499adf",
   "lastOpenFiles": [
-    "bri.canvas",
-    "inklusion_vs_integration.canvas",
-    "obsidian/canvas-richtlinien.canvas",
+    "schule/heilpädagogik/t_i_p-ziel.canvas",
+    "schule/heilpädagogik/t_i_p-ziel_leitprinzipien.canvas",
     "schule/heilpädagogik/theorie_integrativer_prozesse.canvas",
+    "schule/arbeitsfelder/arbeitsfelder.jpeg",
+    "schule/arbeitsfelder/senioren_perspektivübernahme.canvas",
+    "schule/arbeitsfelder/altersübergreifende_gruppen.canvas",
+    "schule/arbeitsfelder/senioren.canvas",
+    "schule/arbeitsfelder/arbeitsfelder_als_erzieher.canvas",
+    "schule/PNG-Bild.png",
+    "schule/PNG-Bild 2.png",
+    "schule/senioren_perspektive.png",
+    "schule/arbeitsfelder/perspektivübernahmen.md",
+    "schule/diversität/situation_vielfalt_bachweg.canvas",
+    "schule/diversität/perspektivübernahme.canvas",
+    "schule/handlungszyklus.pdf",
+    "schule/diversität/situation_vielfalt_bachweg_minimal.canvas",
+    "schule/diversität/situation_vielfalt_bachweg_full.canvas",
+    "schule/diversität/zusätzliche_beobachtung.md",
+    "schule/diversität/perspektivübernahme.md",
+    "schule/konflikte/LF3_S3_Berufliche Ausgangssituation_Diversitätssensible Lernumgebung.docx.pdf",
     "obsidian",
     "schule/konflikte/diverseKindersituation.md",
-    "schule/konflikte/LF3_S3_Berufliche Ausgangssituation_Diversitätssensible Lernumgebung.docx.pdf",
-    "schule/arbeitsfelder/arbeitsfelder_als_erzieher.canvas",
     "schule/heilpädagogik/Gescanntes Dokument 09.09.25 um 12.37.03.pdf",
     "schule/heilpädagogik/orga",
-    "schule/heilpädagogik/t_i_p-ziel.canvas",
-    "schule/heilpädagogik/h.canvas",
-    "schule/heilpädagogik/t.canvas",
-    "schule/heilpädagogik/t_i_p-störungen.canvas",
     "Unbenannt.md",
     "Unbenannt 1.md",
     "schule/heilpädagogik/diverseKindersituation.md",
-    "schule/heilpädagogik/foerderschwerpunkt_geistige_behinderung.canvas",
-    "schule/heilpädagogik/foerderschwerpunkt_geistige_behinderung.canvas",
     "tip-ziel.canvas.md",
     "Unbenannt 2.md",
     "schule/konflikte/ahrensburger_weg.md",
@@ -290,20 +307,12 @@
     "schule/pädagogik",
     "coding/nexus",
     "geschichte/frankfurter schule-mindmap.md",
-    "geschichte/macht",
     "geschichte/weltverschwörung/geheimdienstterror.md",
-    "geschichte/weltverschwörung/verschwoerungsskandale.md",
-    "geschichte/weltverschwörung/verschwoerungsannahme.md",
-    "geschichte/weltverschwörung/brdskandale.md",
-    "schule/arbeitsfelder/arbeitsfelder.jpeg",
     "Pasted image 20250814212038.png",
     "homo.domesticus.png",
     "rezepte/cheesecake.png",
     "orga/wichtige dokumente/Identifikationsnummer.jpeg",
     "orga/wichtige dokumente/Identifikationsnummer.jpg",
-    "orga/wichtige dokumente/Identifikationsnummer.png",
-    "orga/wichtige dokumente/Steuer-ID.jpeg",
-    "orga/wichtige dokumente/Unterschrift .JPG",
-    "orga/wichtige dokumente/Handy-Rechnung.PNG"
+    "orga/wichtige dokumente/Identifikationsnummer.png"
   ]
 }

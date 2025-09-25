@@ -1,0 +1,15 @@
+{
+	"nodes":[
+		{"id":"gesellschaft","type":"text","text":"Gesellschaft (Grau)\n• Bedeut.: Integration, Entlastung, Prävention\n• Bild: Seniorenarbeit oft unterschätzt (Freizeitgestaltung)\n• Wünsche: Teilhabe fördern, Kosten im Blick, Entlastung Angehöriger","x":-600,"y":0,"width":420,"height":220,"color":"2"},
+		{"id":"adressaten","type":"text","text":"Adressaten (Gelb)\n• Bedeut.: Lebensraum, Struktur, Kontakte\n• Bild: Erwartung = Respekt, kein 'Kindergarten für Alte'\n• Wünsche: Selbstbestimmung, Anerkennung Biografie, Sicherheit","x":0,"y":300,"width":420,"height":240,"color":"3"},
+		{"id":"angehoerige","type":"text","text":"Angehörige (Grau)\n• Bedeut.: Ergänzung, Entlastung, Sicherheit\n• Bild: Spannbreite von 'Verwahrung' bis 'Lebensqualität'\n• Wünsche: Verlässlichkeit, Transparenz, humane Begleitung","x":600,"y":0,"width":420,"height":220,"color":"2"},
+		{"id":"essenz","type":"text","text":"Essenz: Seniorenarbeit = Dreieck\nGesellschaft – Senioren – Angehörige\nKern: Würde & Teilhabe","x":8,"y":-461,"width":420,"height":140,"color":"1"},
+		{"id":"legende","type":"text","text":"Legende\n— Farben —\nBlau = Zentrum/Meta\nGrau = Grundlagen (Gesellschaft, Angehörige)\nGelb = Prozesse (Adressaten)\nGrün = Ziele/Hypothesen\n\n— Achsen —\nLinks = Gesellschaft\nMitte = Senioren/Prozesse\nRechts = Angehörige\nVertikal: oben abstrakt, unten konkret\n\nHinweis: Meta-Knoten ohne Verbindungen; Essenz frei gestaltet.","x":1595,"y":718,"width":360,"height":300,"color":"1"},
+		{"id":"hypothese","type":"text","text":"Hypothese (Grün)\nSeniorenarbeit bietet viele Lernchancen:\n• Interdisziplinarität (Pädagogik, Pflege, Psychologie)\n• Umgang mit Verlust & Biografie\n• Würde & Partizipation praktisch umsetzen","x":608,"y":483,"width":480,"height":180,"color":"5"}
+	],
+	"edges":[],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

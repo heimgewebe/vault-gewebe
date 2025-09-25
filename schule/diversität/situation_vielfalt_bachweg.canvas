@@ -1,0 +1,42 @@
+{
+	"nodes":[
+		{"id":"root","type":"text","text":"Diversität im Kinderhaus Bachweg – Lernsituation","x":-200,"y":-100,"width":420,"height":120,"color":"4"},
+		{"id":"meta","type":"text","text":"Räume und Interaktionen spiegeln Zugehörigkeit oder Ausschluss","x":-200,"y":-300,"width":420,"height":100,"color":"4"},
+		{"id":"mwazilinda","type":"text","text":"Mwazilinda (5;8)\n– Brückenkind\n– Mehrsprachiger & kultureller Hintergrund\n– Erfahrungen mit Diskriminierung","x":-800,"y":-250,"width":360,"height":180,"color":"2"},
+		{"id":"verena","type":"text","text":"Verena (6;1)\n– Ältestes Kind\n– Sozioökonomisch benachteiligt\n– Begrenzte Teilhabe","x":-800,"y":0,"width":360,"height":160,"color":"2"},
+		{"id":"max","type":"text","text":"Max (5;3)\n– Rollstuhl, Spina bifida\n– Einschränkungen in Teilhabe\n– Häufig Arzttermine","x":-800,"y":220,"width":360,"height":160,"color":"2"},
+		{"id":"rahmen","type":"text","text":"Rahmen Kita\n– Kinderhaus Bachweg\n– 80 Kinder, 4 Gruppen\n– Leitung Melanie\n– Diverses Team, Praktikant:innen","x":-800,"y":-500,"width":360,"height":140,"color":"2"},
+		{"id":"beobachtungen","type":"text","text":"Beobachtungen\n– Mwazilinda: \"Sind die Sachen nichts für solche wie mich?\" / Maria-Rolle verwehrt / Hautfarbe-Kommentare\n– Verena: Gebrauchte Geschenke abgewertet / Pinnwand „Urlaub“ / kein Fahrrad\n– Max: Außen vor beim Piratenspiel / Pfützenspringen verweigert / Frust in Bauecke","x":-200,"y":150,"width":460,"height":260,"color":"3"},
+		{"id":"teamsitzung","type":"text","text":"Teamsitzung\n– Austausch über Fälle („Was liegt oben auf?“)\n– Ziel: Neuer Raum diversitätssensibel gestalten","x":-200,"y":450,"width":420,"height":120,"color":"3"},
+		{"id":"hindernisse","type":"text","text":"Hindernisse\n– Fehlende Repräsentation in Materialien\n– Armut sichtbar (Urlaub, Geschenke, Fahrrad)\n– Barrieren für Teilhabe (Rollstuhl)\n– Unreflektierte Fachkraft-Reaktionen","x":600,"y":0,"width":400,"height":220,"color":"1"},
+		{"id":"ziele","type":"text","text":"Ziele\n– Neuer Raum „Seifenblasencrew“\n– Vielfalt in Materialien, Rollen, Bildern\n– Kinderperspektiven ernst nehmen\n– Austausch mit anderen Kitas (best practice)","x":600,"y":300,"width":400,"height":200,"color":"5"},
+		{"id":"ebenen","type":"text","text":"Ebenen\n– Kind: Gefühle von Ausschluss, Frust\n– Team: Reflexion, Suche nach Lösungen\n– Institution: Raumgestaltung, konzeptionelle Öffnung","x":600,"y":-300,"width":400,"height":160,"color":"6"},
+		{"id":"essenz","type":"text","text":"Essenz: Vielfalt wird sichtbar, wenn sie fehlt.","x":-200,"y":-500,"width":420,"height":100,"color":"4"},
+		{"id":"legende","type":"text","text":"Legende\nFarben:\nBlau = Zentrum/Meta\nGrau = Grundlagen\nGelb = Prozesse\nRot = Hindernisse\nGrün = Ziele\nViolett = Ebenen\n\nAchsen:\nLinks = Grundlagen\nMitte = Prozesse\nRechts = Ziele\nVertikal: unten konkret, oben abstrakt\n\nHinweis: Meta-Knoten ohne Pfeile; Essenz frei gestaltet","x":1000,"y":-500,"width":420,"height":260,"color":"2"},
+		{
+			"id":"99aa311c61d56227",
+			"type":"text",
+			"text":"[[perspektivübernahme.canvas|perspektivübernahme]]",
+			"styleAttributes":{},
+			"x":-1119,
+			"y":-71,
+			"width":260,
+			"height":60
+		}
+	],
+	"edges":[
+		{"id":"e1","fromNode":"root","fromSide":"left","toNode":"mwazilinda","toSide":"right"},
+		{"id":"e2","fromNode":"root","fromSide":"left","toNode":"verena","toSide":"right"},
+		{"id":"e3","fromNode":"root","fromSide":"bottom","toNode":"max","toSide":"top"},
+		{"id":"e4","fromNode":"root","fromSide":"top","toNode":"rahmen","toSide":"bottom"},
+		{"id":"e5","fromNode":"root","fromSide":"bottom","toNode":"beobachtungen","toSide":"top"},
+		{"id":"e6","fromNode":"root","fromSide":"bottom","toNode":"teamsitzung","toSide":"top"},
+		{"id":"e7","fromNode":"root","fromSide":"right","toNode":"hindernisse","toSide":"left"},
+		{"id":"e8","fromNode":"root","fromSide":"bottom","toNode":"ziele","toSide":"top"},
+		{"id":"e9","fromNode":"root","fromSide":"right","toNode":"ebenen","toSide":"left"}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

@@ -1,0 +1,51 @@
+{
+	"nodes":[
+		{"id":"praxis","type":"text","text":"Handlungsdimensionen\n• Schule, Kita, Jugendhilfe\n• Institutionen passen sich an Menschen an","x":0,"y":350,"width":480,"height":200,"color":"7"},
+		{"id":"praxis_e","type":"text","text":"Essenz: Strukturen anpassen","x":71,"y":590,"width":260,"height":80,"color":"7"},
+		{"id":"egal_diff_e","type":"text","text":"Essenz: Unterschied = gleichwertig","x":-1153,"y":-109,"width":280,"height":80,"color":"6"},
+		{"id":"theoriebez_e","type":"text","text":"Essenz: Rahmenwerke","x":-1153,"y":191,"width":240,"height":80,"color":"6"},
+		{"id":"egal_diff","type":"text","text":"Begriff: Egalitäre Differenz\n• Unterschied ≠ Defizit\n• Anerkennung ohne Angleichung\n• Quelle: Prengel (2010)","x":-803,"y":-109,"width":460,"height":200,"color":"6"},
+		{"id":"theoriebez","type":"text","text":"Theoriebezüge\n• Honneth: Anerkennung\n• Reiser: Integrative Prozesse","x":-803,"y":191,"width":420,"height":160,"color":"6"},
+		{"id":"heraus","type":"text","text":"Herausforderungen\n• Ressourcenmangel\n• Widerstände (Standardisierung vs. Vielfalt)","x":-803,"y":391,"width":440,"height":180,"color":"1"},
+		{"id":"heraus_e","type":"text","text":"Essenz: Widerstände im Alltag","x":-1153,"y":411,"width":280,"height":80,"color":"1"},
+		{"id":"rechte","type":"text","text":"Menschenrechte / UN-BRK\n• Recht auf Teilhabe\n• Salamanca-Erklärung\n• Inklusive Bildung als Pflicht","x":767,"y":-216,"width":460,"height":200,"color":"3"},
+		{"id":"leitbild","type":"text","text":"Inklusive Leitbilder\n• Vielfalt = Normalität\n• Partizipation für alle\n• Strukturen passen sich an Menschen an","x":767,"y":84,"width":460,"height":200,"color":"3"},
+		{"id":"chancen","type":"text","text":"Chancen\n• Vielfalt als Ressource\n• Innovation in Pädagogik\n• Gemeinschaft stärken","x":767,"y":334,"width":420,"height":200,"color":"3"},
+		{"id":"rechte_e","type":"text","text":"Essenz: Rechtliche Basis","x":1117,"y":-216,"width":260,"height":80,"color":"3"},
+		{"id":"leitbild_e","type":"text","text":"Essenz: Inklusion als Leitidee","x":1117,"y":114,"width":280,"height":80,"color":"3"},
+		{"id":"chancen_e","type":"text","text":"Essenz: Potenzial von Vielfalt","x":1117,"y":354,"width":280,"height":80,"color":"3"},
+		{"id":"root","type":"text","text":"Ziel & Leitprinzipien integrativer Praxis","x":-3,"y":-500,"width":520,"height":140,"color":"3"},
+		{"id":"meta","type":"text","text":"Meta-Kern\nEgalitäre Differenz = Unterschiede bleiben sichtbar\nUND erhalten gleiche Anerkennung","x":0,"y":-666,"width":560,"height":140,"color":"4"}
+	],
+	"edges":[
+		{"id":"e1","fromNode":"root","fromSide":"left","toNode":"egal_diff","toSide":"right","label":"Kernbegriff"},
+		{"id":"e1a","fromNode":"egal_diff","fromSide":"left","toNode":"egal_diff_e","toSide":"right"},
+		{"id":"e2","fromNode":"root","fromSide":"bottom","toNode":"theoriebez","toSide":"right","label":"Theorie"},
+		{"id":"e2a","fromNode":"theoriebez","fromSide":"left","toNode":"theoriebez_e","toSide":"right"},
+		{"id":"e3","fromNode":"root","fromSide":"right","toNode":"rechte","toSide":"left","label":"Normative Basis"},
+		{"id":"e3a","fromNode":"rechte","fromSide":"right","toNode":"rechte_e","toSide":"left"},
+		{"id":"e4","fromNode":"root","fromSide":"bottom","toNode":"leitbild","toSide":"left","label":"Leitbild"},
+		{"id":"e4a","fromNode":"leitbild","fromSide":"right","toNode":"leitbild_e","toSide":"left"},
+		{"id":"e5","fromNode":"root","fromSide":"bottom","toNode":"praxis","toSide":"top","label":"Konsequenz"},
+		{"id":"e6","fromFloating":false,"fromNode":"root","fromSide":"bottom","toNode":"chancen","toSide":"top","label":"Potenziale"},
+		{"id":"e6a","fromNode":"chancen","fromSide":"right","toNode":"chancen_e","toSide":"left"},
+		{"id":"e7","fromFloating":false,"fromNode":"root","fromSide":"bottom","toNode":"heraus","toSide":"top","label":"Barrieren"},
+		{"id":"e7a","fromNode":"heraus","fromSide":"left","toNode":"heraus_e","toSide":"right"},
+		{"id":"e8","fromNode":"egal_diff","fromSide":"right","toNode":"leitbild","toSide":"left","label":"Inhaltlich verwandt"},
+		{"id":"e9","fromNode":"rechte","fromSide":"bottom","toNode":"praxis","toSide":"top","label":"setzt Rahmen"},
+		{"id":"e10","fromNode":"chancen","fromSide":"left","toNode":"heraus","toSide":"right","label":"Spannungsfeld"},
+		{
+			"id":"dc3d5d946790ea8c",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"praxis",
+			"fromSide":"bottom",
+			"toNode":"praxis_e",
+			"toSide":"top"
+		}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}
