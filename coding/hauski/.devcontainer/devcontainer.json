@@ -1,23 +1,23 @@
 {
   "name": "hauski-dev",
-  "build": { "dockerfile": "Dockerfile", "context": ".devcontainer" },
-  "runArgs": ["--gpus", "all"],
+  "build": { "dockerfile": "Dockerfile", "context": ".." },
   "hostRequirements": { "gpu": "optional" },
-  "containerEnv": {
-    "NVIDIA_VISIBLE_DEVICES": "all",
-    "NVIDIA_DRIVER_CAPABILITIES": "compute,utility"
-  },
   "remoteUser": "vscode",
-  "postCreateCommand": "bash /workspaces/hauski/scripts/bootstrap.sh",
+
   "features": {
     "ghcr.io/devcontainers/features/common-utils:2": { "username": "vscode", "installZsh": false },
     "ghcr.io/devcontainers/features/node:1": { "version": "20" },
     "ghcr.io/devcontainers/features/python:1": { "version": "3.11" },
-    "ghcr.io/devcontainers-contrib/features/gh-release:1": { "repo": "cli/cli", "release": "latest", "assetRegex": "linux_amd64" }
+    "ghcr.io/devcontainers/features/rust:1": {},
+    "ghcr.io/devcontainers/features/nvidia-cuda:1": { "installCuda": false }
   },
+
+  "postCreateCommand": "bash -lc 'if [ -f /home/vscode/.cargo/env ]; then . /home/vscode/.cargo/env; fi; sudo apt-get update && sudo apt-get install -y direnv; grep -q \"direnv hook bash\" /home/vscode/.bashrc || echo \"eval \\\"\\$(direnv hook bash)\\\"\" >> /home/vscode/.bashrc; chown vscode:vscode /home/vscode/.bashrc; if [ -x /workspaces/hauski/scripts/bootstrap.sh ] ; then /workspaces/hauski/scripts/bootstrap.sh ; fi'",
+
   "customizations": {
     "vscode": {
       "extensions": [
+        "mkhl.direnv",
         "rust-lang.rust-analyzer",
         "tamasfe.even-better-toml",
         "ms-azuretools.vscode-docker",
@@ -29,8 +29,9 @@
       ]
     }
   },
+
   "mounts": [
-    "source=hauski-cargo,target=/usr/local/cargo,type=volume",
-    "source=hauski-rustup,target=/usr/local/rustup,type=volume"
+    "source=hauski-cargo,target=/home/vscode/.cargo,type=volume",
+    "source=hauski-rustup,target=/home/vscode/.rustup,type=volume"
   ]
 }
