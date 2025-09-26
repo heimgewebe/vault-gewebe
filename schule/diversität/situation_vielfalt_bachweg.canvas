@@ -3,7 +3,7 @@
 		{"id":"root","type":"text","text":"Diversität im Kinderhaus Bachweg – Lernsituation","x":-200,"y":-100,"width":420,"height":120,"color":"4"},
 		{"id":"meta","type":"text","text":"Räume und Interaktionen spiegeln Zugehörigkeit oder Ausschluss","x":-200,"y":-300,"width":420,"height":100,"color":"4"},
 		{"id":"mwazilinda","type":"text","text":"Mwazilinda (5;8)\n– Brückenkind\n– Mehrsprachiger & kultureller Hintergrund\n– Erfahrungen mit Diskriminierung","x":-800,"y":-250,"width":360,"height":180,"color":"2"},
-		{"id":"verena","type":"text","text":"Verena (6;1)\n– Ältestes Kind\n– Sozioökonomisch benachteiligt\n– Begrenzte Teilhabe","x":-800,"y":0,"width":360,"height":160,"color":"2"},
+		{"id":"verena","type":"text","text":"[[verena.canvas|verena]] (6;1)\n– Ältestes Kind\n– Sozioökonomisch benachteiligt\n– Begrenzte Teilhabe","x":-800,"y":0,"width":360,"height":160,"color":"2"},
 		{"id":"max","type":"text","text":"Max (5;3)\n– Rollstuhl, Spina bifida\n– Einschränkungen in Teilhabe\n– Häufig Arzttermine","x":-800,"y":220,"width":360,"height":160,"color":"2"},
 		{"id":"rahmen","type":"text","text":"Rahmen Kita\n– Kinderhaus Bachweg\n– 80 Kinder, 4 Gruppen\n– Leitung Melanie\n– Diverses Team, Praktikant:innen","x":-800,"y":-500,"width":360,"height":140,"color":"2"},
 		{"id":"beobachtungen","type":"text","text":"Beobachtungen\n– Mwazilinda: \"Sind die Sachen nichts für solche wie mich?\" / Maria-Rolle verwehrt / Hautfarbe-Kommentare\n– Verena: Gebrauchte Geschenke abgewertet / Pinnwand „Urlaub“ / kein Fahrrad\n– Max: Außen vor beim Piratenspiel / Pfützenspringen verweigert / Frust in Bauecke","x":-200,"y":150,"width":460,"height":260,"color":"3"},

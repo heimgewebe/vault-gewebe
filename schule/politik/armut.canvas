@@ -1,0 +1,10 @@
+{
+	"nodes":[
+		{"id":"hindernisse","type":"text","text":"Hindernisse:\n• Strukturelle Probleme\n• Prekäre Beschäftigung\n• Zerlegbarkeit der Armutsbekämpfung","x":200,"y":-500,"width":420,"height":120,"color":"5"}
+	],
+	"edges":[],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

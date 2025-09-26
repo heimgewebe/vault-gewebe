@@ -8,47 +8,20 @@
         "type": "tabs",
         "children": [
           {
-            "id": "dd09310f63499adf",
+            "id": "5b263b183ae1de92",
             "type": "leaf",
             "state": {
               "type": "canvas",
               "state": {
-                "file": "schule/heilpädagogik/t_i_p-ziel_leitprinzipien.canvas",
+                "file": "schule/politik/armut.canvas",
                 "viewState": {
-                  "x": 169.54237288135582,
-                  "y": 438.8568920904904,
-                  "zoom": -1.2492139112469516
+                  "x": 8.518673955222141,
+                  "y": 603.9342152089841,
+                  "zoom": -1.577856493620215
                 }
               },
               "icon": "lucide-layout-dashboard",
-              "title": "t_i_p-ziel_leitprinzipien"
-            }
-          },
-          {
-            "id": "d15ae80ba8017b04",
-            "type": "leaf",
-            "state": {
-              "type": "canvas",
-              "state": {
-                "file": "schule/arbeitsfelder/senioren_perspektivübernahme.canvas",
-                "viewState": {
-                  "x": -44,
-                  "y": 126,
-                  "zoom": 0
-                }
-              },
-              "icon": "lucide-layout-dashboard",
-              "title": "senioren_perspektivübernahme"
-            }
-          },
-          {
-            "id": "f1a3a8728199e507",
-            "type": "leaf",
-            "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "Neuer Tab"
+              "title": "armut"
             }
           }
         ]
@@ -185,7 +158,7 @@
         "state": {
           "type": "outline",
           "state": {
-            "file": "schule/heilpädagogik/Gescanntes Dokument 09.09.25 um 12.37.03.pdf",
+            "file": "schule/politik/armut.canvas",
             "followCursor": false,
             "showSearch": false,
             "searchQuery": ""
@@ -233,9 +206,21 @@
           "icon": "lucide-ghost",
           "title": "BC-tree"
         }
+      },
+      {
+        "id": "0f9b10151e816cbf",
+        "type": "leaf",
+        "state": {
+          "type": "file-properties",
+          "state": {
+            "file": "geschichte/1. weltkrieg/1. weltkrieg kapitalverflechtung.canvas"
+          },
+          "icon": "lucide-info",
+          "title": "Dateieigenschaften"
+        }
       }
     ],
-    "currentTab": 2
+    "currentTab": 7
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -256,27 +241,30 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "dd09310f63499adf",
+  "active": "5b263b183ae1de92",
   "lastOpenFiles": [
-    "schule/heilpädagogik/t_i_p-ziel.canvas",
-    "schule/heilpädagogik/t_i_p-ziel_leitprinzipien.canvas",
+    "geschichte/1. weltkrieg/1. weltkrieg kapitalverflechtung.canvas",
+    "Unbenannt.base",
+    "schule/politik/armut.canvas",
+    "schule/arbeitsfelder/interview_leitfaden.pdf",
+    "schule/diversität/perspektivübernahme.canvas",
+    "schule/diversität/perspektivübernahme.md",
+    "schule/diversität/situation_vielfalt_bachweg_old.canvas",
+    "schule/diversität/situation_vielfalt_bachweg.canvas",
     "schule/heilpädagogik/theorie_integrativer_prozesse.canvas",
-    "schule/arbeitsfelder/arbeitsfelder.jpeg",
+    "schule/heilpädagogik/t_i_p-ziel_leitprinzipien.canvas",
+    "schule/diversität/verena.canvas",
+    "schule/politik/Poppe_Armut.pdf",
+    "schule/diversität/armut.canvas",
     "schule/arbeitsfelder/senioren_perspektivübernahme.canvas",
-    "schule/arbeitsfelder/altersübergreifende_gruppen.canvas",
-    "schule/arbeitsfelder/senioren.canvas",
-    "schule/arbeitsfelder/arbeitsfelder_als_erzieher.canvas",
+    "schule/heilpädagogik/t_i_p-ziel.canvas",
+    "schule/arbeitsfelder/arbeitsfelder.jpeg",
     "schule/PNG-Bild.png",
     "schule/PNG-Bild 2.png",
     "schule/senioren_perspektive.png",
     "schule/arbeitsfelder/perspektivübernahmen.md",
-    "schule/diversität/situation_vielfalt_bachweg.canvas",
-    "schule/diversität/perspektivübernahme.canvas",
     "schule/handlungszyklus.pdf",
-    "schule/diversität/situation_vielfalt_bachweg_minimal.canvas",
-    "schule/diversität/situation_vielfalt_bachweg_full.canvas",
     "schule/diversität/zusätzliche_beobachtung.md",
-    "schule/diversität/perspektivübernahme.md",
     "schule/konflikte/LF3_S3_Berufliche Ausgangssituation_Diversitätssensible Lernumgebung.docx.pdf",
     "obsidian",
     "schule/konflikte/diverseKindersituation.md",
@@ -303,9 +291,6 @@
     "einstein.md",
     "halde/GEWEBE_MERGE_20250904_145348.md",
     "orga/steuerrückerstattung",
-    "schule/pädagogik/IB Auszug Selbstwirksamkeit.pdf",
-    "schule/pädagogik",
-    "coding/nexus",
     "geschichte/frankfurter schule-mindmap.md",
     "geschichte/weltverschwörung/geheimdienstterror.md",
     "Pasted image 20250814212038.png",

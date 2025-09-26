@@ -15,7 +15,6 @@
 		{"id":"inter_e","type":"text","text":"Essenz: Kooperation","x":-200,"y":720,"width":220,"height":80,"color":"7"},
 		{"id":"inst","type":"text","text":"Ebene 3: Institutionell\n• Strukturen & Kulturen\n• Index für Inklusion\n• Schulkultur","x":400,"y":500,"width":460,"height":200,"color":"7"},
 		{"id":"inst_e","type":"text","text":"Essenz: Rahmen schaffen","x":800,"y":520,"width":240,"height":80,"color":"7"},
-		{"id":"kult","type":"text","text":"Ebene 4: Kulturell-gesellschaftlich\n• Akzeptanz inklusiver Ziele\n• Inklusion vs. Standardisierung\n• Partizipation","x":1000,"y":500,"width":460,"height":200,"color":"7"},
 		{"id":"kult_e","type":"text","text":"Essenz: Partizipation für alle","x":1400,"y":520,"width":280,"height":80,"color":"7"},
 		{"id":"methoden","type":"text","text":"Methoden & Werkzeuge\n• Index für Inklusion\n• Reflexionstechniken\n• Supervision\n• Partizipative Methoden","x":-200,"y":850,"width":460,"height":200,"color":"7"},
 		{"id":"methoden_e","type":"text","text":"Essenz: Praxis-Werkzeuge","x":-200,"y":1100,"width":260,"height":80,"color":"7"},
@@ -31,7 +30,8 @@
 		{"id":"heraus_e","type":"text","text":"Essenz: Barrieren & Widerstände","x":915,"y":1359,"width":320,"height":80,"color":"6"},
 		{"id":"ziel_e","type":"text","text":"Essenz: Egalitäre Differenz","x":1102,"y":-248,"width":280,"height":80,"color":"3"},
 		{"id":"didaktik","type":"text","text":"Didaktische Prinzipien\n• Partizipation\n• Individualisierung\n• Ressourcenorientierung","x":369,"y":854,"width":440,"height":180,"color":"7"},
-		{"id":"didaktik_e","type":"text","text":"Essenz: Praxisprinzipien","x":904,"y":902,"width":260,"height":80,"color":"7"}
+		{"id":"didaktik_e","type":"text","text":"Essenz: Praxisprinzipien","x":904,"y":902,"width":260,"height":80,"color":"7"},
+		{"id":"kult","type":"text","text":"Ebene 4: Kulturell-gesellschaftlich\n• Akzeptanz inklusiver Ziele\n• Inklusion vs. Standardisierung\n• Partizipation","x":1042,"y":506,"width":460,"height":200,"color":"7"}
 	],
 	"edges":[
 		{"id":"e1","fromNode":"root","fromSide":"left","toNode":"def","toSide":"right","label":"Grundlage"},
@@ -67,7 +67,7 @@
 		{"id":"e15a","fromNode":"heraus","fromSide":"right","toNode":"heraus_e","toSide":"left"},
 		{"id":"e17","fromNode":"ziel","fromSide":"bottom","toNode":"inter","toSide":"top"},
 		{"id":"e18","fromNode":"ziel","fromSide":"bottom","toNode":"inst","toSide":"top"},
-		{"id":"e19","fromNode":"ziel","fromSide":"bottom","toNode":"kult","toSide":"top"},
+		{"id":"e19","toFloating":false,"fromNode":"ziel","fromSide":"bottom","toNode":"kult","toSide":"top"},
 		{"id":"e20","fromNode":"stoerung","fromSide":"top","toNode":"inner","toSide":"bottom"},
 		{"id":"e21","fromNode":"stoerung","fromSide":"top","toNode":"inter","toSide":"bottom"},
 		{"id":"e22","fromNode":"stoerung","fromSide":"top","toNode":"inst","toSide":"bottom"},

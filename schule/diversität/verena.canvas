@@ -1,0 +1,21 @@
+{
+	"nodes":[
+		{"id":"phase3","type":"text","text":"Phase 3: Hypothese\n• Verena entwickelt Strategien zur Schamabwehr\n• Übergeordnet: Armut ↔ Teilhabe","x":0,"y":250,"width":380,"height":200,"color":"3"},
+		{"id":"meta","type":"text","text":"Meta-Leitidee:\nArmut sichtbar machen, ohne zu stigmatisieren.\nKita = Ort echter Zugehörigkeit.","x":-200,"y":-400,"width":420,"height":120,"color":"1"},
+		{"id":"legend","type":"text","text":"Legende\n— Farben —\nBlau = Zentrum/Meta\nGrau = Wahrnehmen\nGelb = Analyse/Hypothese\nGrün = Ziele/Handeln\nRot = Hindernisse\nViolett = Ebenen\n\n— Achsen —\nLinks = Analyse\nRechts = Handlung\nVertikal: unten konkret → oben abstrakt\n\nHinweis: Essenz-Knoten frei gestaltet","x":-1192,"y":-564,"width":420,"height":280,"color":"1"},
+		{"id":"phase1","type":"text","text":"Phase 1: Wahrnehmen & Erleben\n• Urlaubspinnwand ohne Postkarte\n• Geschenk wird abgewertet\n• Fahrradprojekt ohne Rad\nEssenz: Gefühl von Ausgrenzung & Scham","x":-927,"y":15,"width":360,"height":200,"color":"2"},
+		{"id":"phase5","type":"text","text":"Phase 5: Umsetzen & Interagieren\n• Kita-Rituale neu denken\n• Materialien ohne Geldwert betonen\n• Peer-Sensibilisierung\n• Zugehörigkeit aktiv schaffen","x":950,"y":-149,"width":380,"height":200,"color":"5"},
+		{"id":"phase4","type":"text","text":"Phase 4: Planen & Entscheiden\n• Raumgestaltung diversitätssensibel\n• Urlaubspinnwand → ‚Erlebnisse zuhause‘\n• Freundschaft stärken\n• Elternarbeit\nEssenz: Teilhabemöglichkeiten erweitern","x":576,"y":304,"width":400,"height":200,"color":"5"},
+		{"id":"phase2","type":"text","text":"Phase 2: Verstehen & Analysieren\n• Kind: Schutzstrategien (‚keine Lust‘)\n• Gruppe: Kommentare, Wertungen\n• Familie: lebt in Armut, sucht Teilhabe\nEssenz: Soziale Benachteiligung als Diversitätsthema","x":-603,"y":342,"width":380,"height":220,"color":"3"}
+	],
+	"edges":[
+		{"id":"e1","fromNode":"phase1","fromSide":"right","toNode":"phase2","toSide":"left","label":"→ Analyse"},
+		{"id":"e2","fromNode":"phase2","fromSide":"right","toNode":"phase3","toSide":"left","label":"→ Hypothese"},
+		{"id":"e3","fromNode":"phase3","fromSide":"right","toNode":"phase4","toSide":"left","label":"→ Planung"},
+		{"id":"e4","fromNode":"phase4","fromSide":"right","toNode":"phase5","toSide":"left","label":"→ Umsetzung"}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

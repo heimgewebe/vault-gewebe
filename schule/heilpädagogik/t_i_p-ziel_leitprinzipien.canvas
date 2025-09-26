@@ -1,6 +1,5 @@
 {
 	"nodes":[
-		{"id":"praxis","type":"text","text":"Handlungsdimensionen\n• Schule, Kita, Jugendhilfe\n• Institutionen passen sich an Menschen an","x":0,"y":350,"width":480,"height":200,"color":"7"},
 		{"id":"praxis_e","type":"text","text":"Essenz: Strukturen anpassen","x":71,"y":590,"width":260,"height":80,"color":"7"},
 		{"id":"egal_diff_e","type":"text","text":"Essenz: Unterschied = gleichwertig","x":-1153,"y":-109,"width":280,"height":80,"color":"6"},
 		{"id":"theoriebez_e","type":"text","text":"Essenz: Rahmenwerke","x":-1153,"y":191,"width":240,"height":80,"color":"6"},
@@ -15,7 +14,8 @@
 		{"id":"leitbild_e","type":"text","text":"Essenz: Inklusion als Leitidee","x":1117,"y":114,"width":280,"height":80,"color":"3"},
 		{"id":"chancen_e","type":"text","text":"Essenz: Potenzial von Vielfalt","x":1117,"y":354,"width":280,"height":80,"color":"3"},
 		{"id":"root","type":"text","text":"Ziel & Leitprinzipien integrativer Praxis","x":-3,"y":-500,"width":520,"height":140,"color":"3"},
-		{"id":"meta","type":"text","text":"Meta-Kern\nEgalitäre Differenz = Unterschiede bleiben sichtbar\nUND erhalten gleiche Anerkennung","x":0,"y":-666,"width":560,"height":140,"color":"4"}
+		{"id":"meta","type":"text","text":"Meta-Kern\nEgalitäre Differenz = Unterschiede bleiben sichtbar\nUND erhalten gleiche Anerkennung","x":0,"y":-666,"width":560,"height":140,"color":"4"},
+		{"id":"praxis","type":"text","text":"Handlungsdimensionen\n• Schule, Kita, Jugendhilfe\n• Institutionen passen sich an Menschen an","x":-36,"y":314,"width":480,"height":200,"color":"7"}
 	],
 	"edges":[
 		{"id":"e1","fromNode":"root","fromSide":"left","toNode":"egal_diff","toSide":"right","label":"Kernbegriff"},
