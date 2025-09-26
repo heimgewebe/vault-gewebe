@@ -1,0 +1,4 @@
+[submodule "coding/tools"]
+	path = coding/tools
+	url = git@github.com:alexdermohr/tools.git
+	branch = main
