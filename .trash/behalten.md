@@ -1,4 +1,0 @@
-gewissheitsanalyse
-humor
-subtext
-essenz
