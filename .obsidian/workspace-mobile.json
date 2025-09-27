@@ -11,17 +11,15 @@
             "id": "5b263b183ae1de92",
             "type": "leaf",
             "state": {
-              "type": "canvas",
+              "type": "markdown",
               "state": {
-                "file": "schule/politik/armut.canvas",
-                "viewState": {
-                  "x": 8.518673955222141,
-                  "y": 603.9342152089841,
-                  "zoom": -1.577856493620215
-                }
+                "file": "coding/tools/huhu.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
               },
-              "icon": "lucide-layout-dashboard",
-              "title": "armut"
+              "icon": "lucide-file",
+              "title": "huhu"
             }
           }
         ]
@@ -243,9 +241,9 @@
   },
   "active": "5b263b183ae1de92",
   "lastOpenFiles": [
+    "schule/politik/armut.canvas",
     "geschichte/1. weltkrieg/1. weltkrieg kapitalverflechtung.canvas",
     "Unbenannt.base",
-    "schule/politik/armut.canvas",
     "schule/arbeitsfelder/interview_leitfaden.pdf",
     "schule/diversität/perspektivübernahme.canvas",
     "schule/diversität/perspektivübernahme.md",

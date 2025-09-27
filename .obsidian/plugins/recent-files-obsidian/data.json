@@ -1,6 +1,10 @@
 {
   "recentFiles": [
     {
+      "basename": "huhu",
+      "path": "coding/tools/huhu.md"
+    },
+    {
       "basename": "armut",
       "path": "schule/politik/armut.canvas"
     },
@@ -195,10 +199,6 @@
     {
       "basename": "AA In welcher Gesellschaft wollen wir leben",
       "path": "AA In welcher Gesellschaft wollen wir leben.pdf"
-    },
-    {
-      "basename": "Toal",
-      "path": "schule/Toal.pdf"
     }
   ],
   "omittedPaths": [],
