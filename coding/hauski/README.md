@@ -41,11 +41,24 @@ cargo test --workspace -- --nocapture
 
 ---
 
+## wgx-Manifest & Aufgaben
+
+- Das wgx-Manifest liegt unter `.wgx/profile.yml` und verlangt einen Router mit den Fähigkeiten `task-router`, `manifest-validate` und `json-output`.
+- Tasks bestehen aus `cmd` + `args` und kommen ohne `eval`-Magie aus; zusätzliche Argumente werden sauber durchgereicht.
+- Prüfe das Manifest vor Commits lokal mit `wgx validate --profile .wgx/profile.yml`.
+- Die JSON-Ansicht der Tasks erhältst du über `wgx tasks --json`.
+- Persönliche Overrides (Pfade, Log-Level, Tokens) gehören in `.wgx/profile.local.yml`; eine Vorlage findest du in `.wgx/profile.local.example.yml`. Die Datei ist git-ignored.
+- Gemeinsame Umgebungsvariablen landen im Manifest unter `envDefaults`, individuelle Anpassungen im lokalen Profil via `envOverrides`. So bleibt die Naming-Convention repo-weit konsistent.
+
+---
+
 ## Entwicklung im Devcontainer
 - Basis-Tooling: Rust, Node, Python sowie optionale CUDA-Runtime.
 - Empfohlene Extensions: rust-analyzer, direnv, Docker, GitLens, Markdown-Mermaid.
 - Vorgefertigte Tasks: `cargo: fmt`, `cargo: clippy`, `cargo: build`, `cargo: test`.
 - Just-Shortcuts: `just fmt`, `just lint`, `just build`, `just test`, `just run-core`.
+- Netzwerkzugriffe von Cargo nutzen standardmäßig den Sparse-Index (`CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse`), um strenge Proxies zu umgehen; `CARGO_NET_RETRY=5` sorgt für automatische Wiederholungen.
+- `cargo-deny` ist im Container global installiert und steht ohne zusätzliche Schritte bereit.
 
 ---
 
@@ -57,6 +70,8 @@ cargo run -p hauski-core
 # Alternative über das Justfile
 just run-core
 ```
+
+> **Hinweis:** Setze `HAUSKI_EXPOSE_CONFIG=true`, um die geschützten Routen unter `/config/*` bewusst freizugeben (nur für lokale Tests empfohlen).
 
 Verfügbare bzw. geplante API-Endpunkte:
 - `GET /health` → "ok"

@@ -15,9 +15,11 @@ setup() {
   mkdir -p ../remote && (cd ../remote && git init --bare >/dev/null)
   git remote add origin ../remote
   git push -u origin main >/dev/null
-  # WGX_DIR auf Projekt-Root setzen (eine Ebene höher annehmen)
-  export WGX_DIR="$(cd .. && pwd)"
-  export PATH="$WGX_DIR:$PATH"
+  # WGX_DIR auf das Projekt-Root setzen (eine Ebene oberhalb des Testverzeichnisses)
+  local project_root
+  project_root="$(cd "${BATS_TEST_DIRNAME}/.." && pwd)"
+  export WGX_DIR="$project_root"
+  export PATH="$WGX_DIR/cli:$PATH"
 }
 
 teardown() {
@@ -28,8 +30,9 @@ teardown() {
 @test "reload performs hard reset and clean" {
   # lokale Änderung
   echo "local" > local.txt
+
   # rufe wgx reload (aus dem echten Projekt)
-  run "$WGX_DIR/wgx" reload
+  run wgx reload
   [ "$status" -eq 0 ]
   # local.txt sollte weg sein (clean -fdx)
   [ ! -f local.txt ]

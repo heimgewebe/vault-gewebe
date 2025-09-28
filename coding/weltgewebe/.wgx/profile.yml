@@ -1,0 +1,22 @@
+wgx:
+  apiVersion: v1
+  requiredWgx: "^2.0.3"
+  repoKind: "weltgewebe"
+  hermetic: true
+  dirs:
+    web: "apps/web"
+    api: "crates"
+    data: ".local/state/weltgewebe"
+  env:
+    RUST_LOG: "info,weltgewebe=debug"
+  tasks:
+    doctor: "cargo run -p wg-cli -- doctor"
+    web-dev: "pnpm --dir apps/web dev"
+    api-test: "cargo test -p wg-api -- --nocapture"
+    fmt: "cargo fmt --all"
+    clippy: "cargo clippy --all-targets --all-features -- -D warnings"
+  workflows:
+    dev-up:
+      steps:
+        - task: "api-test"
+        - task: "web-dev"

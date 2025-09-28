@@ -13,16 +13,14 @@ jobs:
         with:
           toolchain: stable
           components: rustfmt, clippy
-      - name: Cache cargo
-        uses: actions/cache@v4
+      - uses: taiki-e/install-action@v2
         with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            target
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-      - name: Install cargo-deny and just
-        run: cargo install cargo-deny just
+          tool: cargo-deny
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: just
+      - name: Cache cargo
+        uses: Swatinem/rust-cache@v2
       - name: fmt
         run: cargo fmt --all --check
       - name: clippy
@@ -31,3 +29,19 @@ jobs:
         run: cargo deny check
       - name: test
         run: cargo test --workspace -- --nocapture
+      - name: Run server (background)
+        run: |
+          cargo run -p hauski-core &
+          echo $! > server.pid
+          sleep 1
+      - name: k6 smoke (p95 gate)
+        uses: grafana/k6-action@v0.3.1
+        with:
+          filename: ./observability/k6/health-smoke.js
+          flags: --summary-export=./observability/k6/summary.json
+      - name: Enforce p95 < 0.4s
+        run: |
+          jq -e '.metrics.http_req_duration.p(95) < 400' observability/k6/summary.json
+      - name: Stop server
+        if: always()
+        run: kill $(cat server.pid) || true
