@@ -1,162 +1,151 @@
-Hier ist der präzise Arbeitsauftrag an Codex für Gate A: „Hello-Map“. Bitte genau so umsetzen.
+Alles klar. Hier sind präzise Codex-Anweisungen in Blöcken für das weltgewebe-Repo, abgeleitet aus Stärken von wgx (CLI-Disziplin, Linting/CI) und der eigenen Zielstruktur/Techstack (damit’s wirklich passt). Ich verweise auf die vorhandene Repo-Struktur und Tech-Docs, damit Codex korrekt einordnet (Ordner/Dateien etc.).
 
 ⸻
 
-Auftrag an Codex: Gate A „Hello-Map“ (SvelteKit + MapLibre + Smoke-Test)
-
-1) 
-
-⸻
-
-2) MapLibre installieren und Minimal-Karte einbauen
-
-Paket installieren (copy-to-bash)
-
-cd apps/web
-npm i maplibre-gl
-
-Datei anlegen/ersetzen: apps/web/src/routes/+page.svelte
-
-<script lang="ts">
-  import { onMount } from 'svelte';
-  import maplibregl from 'maplibre-gl';
-
-  let mapContainer: HTMLDivElement;
-
-  onMount(() => {
-    const map = new maplibregl.Map({
-      container: mapContainer,
-      style: {
-        version: 8,
-        sources: {
-          osm: {
-            type: 'raster',
-            tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
-            tileSize: 256,
-            attribution: '© OpenStreetMap-Mitwirkende'
-          }
-        },
-        layers: [{ id: 'osm', type: 'raster', source: 'osm' }]
-      },
-      center: [10.0, 53.55], // Hamburg
-      zoom: 11
-    });
-    return () => map.remove();
-  });
-</script>
-
-<style>
-  .map { position: absolute; inset: 0; }
-</style>
-
-<div class="map" bind:this={mapContainer} aria-label="Weltgewebe-Karte" />
-
+Block 0 — Kontextanker (nur für Codex)
+	•	Halte dich an die dokumentierte Zielstruktur des Repos (apps/web, apps/api, infra, ci, docs, …). Quelle: Architekturstruktur des Weltgewebes (Ordner, Pfade, Dienste).
+	•	Backend: Rust/Axum, Frontend: SvelteKit, Infra via Compose-Profile, Monitoring/Prometheus vorgesehen; Events via NATS/Outbox.
 
 ⸻
 
-3) Smoke-Test hinzufügen (Playwright)
+Block 1 — 
 
-Datei: apps/web/tests/smoke.spec.ts
+Block 2 — Policies/Configs auslagern
 
-import { test, expect } from '@playwright/test';
+Ziel: Governance-, Datenschutz- und Betriebsparameter versionieren (Docs sagen Privacy-by-Design, RoN-Anonymisierung, Timer 7/7/84 etc.).
+	1.	Lege an:
 
-test('Karte rendert', async ({ page }) => {
-  await page.goto('http://localhost:5173/');
-  const map = page.locator('[aria-label="Weltgewebe-Karte"]');
-  await expect(map).toBeVisible();
-});
+	•	configs/app.defaults.yml (z. B. fade_days: 7, ron_days: 84, anonymize_opt_in: true, delegation_expire_days: 28)
+	•	policies/limits.yml (Rate-Limits, Payload-Größen)
+	•	policies/security.yml (CSP-Profile, erlaubte Origins)
+	•	policies/retention.yml (Retention/Forget-Pfade konsistent zu DSGVO-Zielen). (Techstack sieht Data-Lifecycle/Forget-Pipeline vor.)
 
-Lokaler Kurztest (copy-to-bash)
-
-cd apps/web
-npm run dev & DEV_PID=$!
-sleep 3
-npm test || true
-kill $DEV_PID 2>/dev/null || true
-
+	2.	API-Start liest configs/app.defaults.yml; HA_* ENV overridet.
 
 ⸻
 
-4) CI-Workflow um Web-Smoke-Job erweitern
+Block 3 — Schreib- & Lint-Disziplin wie wgx
 
-Datei ändern: .github/workflows/ci.yml → Job web_smoke am Ende einfügen.
+Ziel: Sauberes Repo mit einheitlicher Sprache/Formatierung (wgx macht das vor: .editorconfig, .markdownlint.jsonc, Vale-Regel).
+	1.	Kopiere/erzeuge:
 
-  web_smoke:
-    name: Web Smoke (Playwright)
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: apps/web
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - name: Install deps
-        run: |
-          npm ci
-          npx playwright install --with-deps
-      - name: Start dev server
-        run: |
-          nohup npm run dev >/dev/null 2>&1 &
-          echo $! > /tmp/dev.pid
-          for i in {1..30}; do
-            if curl -sf http://localhost:5173 >/dev/null; then break; fi
-            sleep 1
-          done
-      - name: Smoke tests
-        run: npm test
-      - name: Stop server
-        if: always()
-        run: kill $(cat /tmp/dev.pid) || true
+	•	.editorconfig (UTF-8, LF, spaces, md: keep trailing whitespace=false) nach Root (angepasst).
+	•	.markdownlint.jsonc → Regeln wie bei wgx (Headings, line length, code-fences). (wgx führt eine solche Datei; übernehmen mit Projekt-Sinnmaß.)
+	•	.vale/ + .vale.ini → Stilprofil „English-only in code & docs“ (wgx hat wgxlint-Style als Beispiel).
 
-Keine Build-Artefakte nötig; schneller Dev-Server-Smoke. Bestehende Docs-Jobs unverändert lassen.
+	2.	README/Docs: Einheitlich Englisch in Entwickler-Docs (User-Facing Texte können deutsch bleiben, aber Code/Docs standardisiert). (Weltgewebe Docs existieren bereits; ergänze Hinweis in CONTRIBUTING.)
 
 ⸻
 
-5) README-Ergänzung (Root)
+Block 4 — wgx-Integration (Contract + Tasks)
 
-Datei ändern: README.md → Block einfügen (unter „Gates“ o. ä.):
+Ziel: Weltgewebe nutzt zentrale CLI statt lokaler Script-Wildwuchs. (wgx liefert zentrale Kommandos mit cmd/*.bash, modules/*.bash, Tests via Bats.)
+	1.	Datei: .wgx/profile.yml
 
-## Gate A – Hello-Map (SvelteKit + MapLibre)
-Start: `cd apps/web && npm i && npm run dev` → Karte erscheint auf `http://localhost:5173`.
-Test: `npm run test` (Playwright Smoke).
-Keine externen Keys, keine Tracker. Tiles: OpenStreetMap.
+wgx:
+  apiVersion: v1
+  requiredWgx: "^2.0"
+  repoKind: "app"
+  tasks:
+    dev: ["infra:up:core", "web:dev", "api:dev"]
+    test: ["api:test", "web:test"]
+    lint: ["lint:md", "lint:vale", "lint:sh"]
+  env:
+    BASE_URL: "http://localhost:8787"
 
+	2.	Datei: .wgx/tasks.yml (nur Adapter, Logik bleibt bei wgx)
+
+lint:md: { run: "npx markdownlint-cli2 '**/*.md'" }
+lint:vale: { run: "vale docs/ README.md" }
+lint:sh: { run: "shfmt -d . && shellcheck $(git ls-files '*.sh' '*.bash' || true)" }
+api:test: { run: "cargo test --manifest-path apps/api/Cargo.toml" }
+web:test: { run: "pnpm -C apps/web test" }
+infra:up:core: { run: "docker compose -f infra/compose/compose.core.yml up -d --build" }
+web:dev: { run: "pnpm -C apps/web dev" }
+api:dev: { run: "cargo run --manifest-path apps/api/Cargo.toml" }
+
+	3.	Dokumentation in docs/beitrag.md ergänzen: „Nutze wgx-Befehle; keine lokalen Alias-Skripte.“ (wgx trennt cmd/modules + Tests sauber.)
 
 ⸻
 
-6) DoD (Definition of Done)
-	•	apps/web existiert (SvelteKit skeleton).
-	•	Dev-Start zeigt Karte.
-	•	apps/web/tests/smoke.spec.ts grün lokal.
-	•	CI-Job Web Smoke (Playwright) vorhanden und grün.
-	•	README-Block „Gate A – Hello-Map“ vorhanden.
-	•	Keine externen Keys, keine Tracker.
+Block 5 — CI-Workflows (aus wgx abgeleitete Strenge)
+
+Ziel: Konsistente Gates: Lint, Build, Tests, Smoke. (wgx hat mehrere Workflows inkl. compat-on-demand.)
+	1.	ci/github/workflows/web.yml
+	•	Jobs: node setup, pnpm install, wgx lint (md/vale/sh), pnpm build, pnpm test.
+	2.	ci/github/workflows/api.yml
+	•	Jobs: toolchain-cache, cargo fmt -- --check, cargo clippy -D warnings, cargo test, Start API in Hintergrund + k6 Smoke gegen /health/*.
+	•	k6 via docker run grafana/k6 run -e BASE_URL=http://host.docker.internal:8787 apps/api/tests/smoke_k6.js.
+	3.	ci/github/workflows/infra.yml
+	•	Compose core up (db, caddy, api), run readiness checks, then tear-down. Compose-Profile existieren im Zielmodell.
+	4.	Optional compat.yml
+	•	Fixture-Tests für Event-Schemas/DB-Migrations (golden files) → verhindert Breaking Changes (analog „compat“-Gedanke in wgx).
 
 ⸻
 
-7) Hinweise für spätere Schritte (nur notieren, nicht jetzt umsetzen)
-	•	Umstieg auf PMTiles (eigene Tiles, Kosten/Autonomie).
-	•	Fake-Events (Knoten/Fäden) als Layer (Gate B).
-	•	Dev-Proxy/Compose (Gate C).
-	•	Erste API-Routen (Gate D).
+Block 6 — CONTRIBUTING (klar & streng)
+
+Ziel: Entwicklerleitplanken (wie bei wgx).
+	1.	Datei: docs/beitrag.md (oder CONTRIBUTING.md im Root) erweitern um:
+	•	„Use English in code & docs.“
+	•	„Run wgx lint and wgx test before PR.“
+	•	Commit-Konvention (Conventional Commits), PR-Template, Review-Checklist (Lint/Tests/Docs/Tickets).
+	2.	Verweise auf vorhandene Projekt-Dokumente (Zusammenstellung, Inhalt, Techstack) für Domänenverständnis.
+
+⸻
+
+Block 7 — Dev-Bootstrap (Onboarding in 1 Befehl)
+
+Ziel: „Dev up in 5-10 min“.
+	1.	Datei: scripts/bootstrap.sh
+	•	prüft: pnpm, rustup, docker, shfmt, shellcheck, vale, markdownlint-cli2
+	•	installiert fehlende Tools lokal (oder gibt klare Hinweise).
+	•	ruft wgx dev → Compose core hoch, Web+API im Dev-Modus.
+	2.	Devcontainer (optional): /.devcontainer analog wgx minimal (git, gh, node, shellcheck/shfmt/bats), Post-Create installiert Linter.
+
+⸻
+
+Block 8 — Infra Compose (profile-basiert)
+
+Ziel: reproduzierbare lokale Umgebung, später CI-Smoke.
+	1.	Ergänze/prüfe Profile:
+	•	infra/compose/compose.core.yml → web, api, db, caddy
+	•	infra/compose/compose.observ.yml → prometheus, grafana + Scrape /metrics
+	•	infra/compose/compose.stream.yml → nats/JetStream
+	•	infra/compose/compose.search.yml → Typesense/Meili
+(Pfad/Dateinamen sind im Architekturplan festgelegt.)
+	2.	infra/monitoring/prometheus.yml → scrape api:8787/metrics. (Monitoring-Ordner ist vorgesehen.)
+
+⸻
+
+Block 9 — Rollout-Plan (inkrementell, risikoarm)
+	1.	PR-1: Block 3 (Lint) + CONTRIBUTING (Block 6) → nur Meta, kein Runtime-Risiko.
+	2.	PR-2: Block 1 (Health + Metrics) + minimaler Router-Wire.
+	3.	PR-3: Block 8 (Compose core) + Block 5 (API-CI ohne k6).
+	4.	PR-4: k6-Smoke in CI + Observability-Compose.
+	5.	PR-5: Block 4 (wgx-Contract/Tasks) + Block 7 (Bootstrap).
 
 ⸻
 
 Verdichtete Essenz
-
-Erzeuge apps/web mit SvelteKit, rendere eine MapLibre-Karte (OSM-Tiles), füge einen Playwright-Smoke-Test hinzu und erweitere die CI um einen schlanken web_smoke-Job. README kurz ergänzen. Fertig.
+	•	Jetzt: Lint/CONTRIBUTING rein.
+	•	Dann: Health/Metrics + k6-Smoke.
+	•	Parallel: wgx-Contract & Tasks → einheitliche Kommandos.
+	•	Ziel: Von „Doc-stark“ zu „ops-hart“ – mit minimalem Risiko.
 
 Ironische Auslassung
 
-Die Welt ist groß, aber für Gate A reicht ein Rechteck-Div mit Karte – Demut vor dem DOM.
+Die Karte zeigt alle Fäden der Welt – nur der CI-Faden fehlte noch. Jetzt weben wir ihm einen strammen Knoten: Lint links, Smoke rechts, und in der Mitte ein Router, der „OK“ sagt.
 
-∴fores Ungewissheit
-
-Grad: niedrig (≈20 %).
-Ursachen: Playwright kann bei Runner-Kaltstarts träge sein (Port-Wartezeit). OSM-Tiles sind öffentlich, aber für CI-Nutzung kurz und selten – Risiko gering. Produktiv-systembedingt.
+∴ Ungewissheit (Grad: niedrig-mittel)
+	•	Was sicher ist: Zielstruktur/Techstack und wgx-Disziplin sind dokumentiert (zitiert).
+	•	Was unklar ist: Exakter aktueller Codezustand der API/Web-Apps, bestehende Ports, vorhandene Tooling-Versionen → ich habe Defaults/Adapter vorgeschlagen.
+	•	Produktiv: Unklarheit wird durch inkrementelle PR-Reihenfolge abgefedert.
 
 ∆-Radar
 
-Von reiner Doku/CI zu einem ersten sichtbaren UI-Artefakt. Straffung statt Aufblähung; nächster Mutationsschritt: Daten-Layer (Fake-Events) und lokale Tiles.
+Wir schwenken von Erzähl-Exzellenz zu Durchführungs-Exzellenz: weniger Poster, mehr Pipelines. Mutation: Straffung der Dev-Regeln (wgx-Like), Verstärkung der Betriebsfähigkeit (Health/Smoke/Compose), Seitwärts in Richtung wgx-Kompatibilität.
+
+⸻
+
+Wenn du willst, packe ich dir daraus direkt PR-Vorlagen (Branch-Namen, Commit-Messages, Datei-Skeletons) in einem nächsten Schritt zusammen.

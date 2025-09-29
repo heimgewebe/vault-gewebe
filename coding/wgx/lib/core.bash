@@ -52,6 +52,7 @@ log_error() {
 }
 
 # ---------- Env / Defaults ----------
+: "${WGX_VERSION:=2.0.3}"
 : "${WGX_BASE:=main}"
 
 # ── Module autoload ─────────────────────────────────────────────────────────
@@ -137,7 +138,7 @@ Usage:
   wgx <command> [args]
 
 Commands:
-"$(wgx_print_command_list)"
+$(wgx_print_command_list)
 
 Env:
   WGX_BASE       Basis-Branch für reload (default: main)
@@ -150,17 +151,29 @@ USAGE
 
 # ── Command dispatcher ──────────────────────────────────────────────────────
 wgx_main() {
-  local sub="${1:-help}"
+  if (($# == 0)); then
+    wgx_usage
+    return 1
+  fi
+
+  local sub="$1"
   shift || true
 
   case "$sub" in
+  validate)
+    _load_modules
+    # shellcheck source=/dev/null
+    source "${WGX_DIR}/cmd/validate.bash"
+    validate::run "$@"
+    return
+    ;;
   help | -h | --help)
     wgx_usage
-    return
+    return 0
     ;;
   --list | commands)
     wgx_available_commands
-    return
+    return 0
     ;;
   esac
 
@@ -189,5 +202,6 @@ wgx_main() {
   fi
 
   echo "❌ Unbekannter Befehl: ${sub}" >&2
-  return 127
+  wgx_usage >&2
+  return 1
 }

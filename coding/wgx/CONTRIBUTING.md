@@ -1,27 +1,32 @@
-# Contributing to wgx
+# Beitrag zu wgx
 
-**Scope:** wgx is a Bash-first helper toolkit targeting Linux/macOS, Termux, WSL and Codespaces.
-Keep changes small, portable and covered by tests.
+**Rahmen:** wgx ist ein Bash-zentriertes Hilfstool für Linux/macOS, Termux, WSL und Codespaces.
+Halte Änderungen klein, portabel und mit Tests abgesichert.
 
-## Ground rules
-- **Language:** English for code, docs and commit messages (helps tooling/Copilot).
-- **Portability:** Do not break Termux/WSL/Codespaces. No GNU-only flags unless guarded.
-- **Safety:** `set -euo pipefail` in all scripts; no silent failures.
-- **Help:** Every command must support `-h|--help`.
+## Grundregeln
 
-## Dev setup
-- Use the Dev Container. It ships `shellcheck`, `shfmt`, `bats`.
-- Local dev outside container: install those tools manually.
+- **Sprache:** Dokumentation und Hilfetexte auf Deutsch verfassen; Commit-Nachrichten vorzugsweise auf Englisch für Tool-Kompatibilität.
+- **Portabilität:** Termux/WSL/Codespaces nicht brechen. Keine GNU-only-Flags ohne Schutz.
+- **Sicherheit:** In allen Skripten `set -euo pipefail`; keine stillen Fehler.
+- **Hilfe:** Jeder Befehl muss `-h|--help` unterstützen.
 
-## Lint & tests
-- Format check: `shfmt -d`.
+## Entwicklungsumgebung
+
+- Nutze den Dev-Container. Er enthält `shellcheck`, `shfmt`, `bats`.
+- Lokale Entwicklung außerhalb des Containers: Werkzeuge manuell installieren.
+
+## Lint & Tests
+
+- Format-Check: `shfmt -d`.
 - Lint: `shellcheck -f gcc`.
-- Tests: place Bats tests under `tests/` and run `bats -r tests`.
+- Tests: Bats-Tests unter `tests/` ablegen und mit `bats -r tests` ausführen.
 
 ## Commits & PRs
-- Conventional-ish prefix: `feat|fix|docs|refactor|chore(wgx:subcmd): ...`
-- Keep PRs focused; include “How tested”.
 
-## Definition of done
-- CI green (bash_lint_test).
-- For new/changed commands: help text + Bats test exist.
+- Konventioneller Prefix: `feat|fix|docs|refactor|chore(wgx:subcmd): ...`
+- PRs fokussiert halten; „Wie getestet“ angeben.
+
+## Definition of Done
+
+- CI grün (`bash_lint_test`).
+- Für neue/geänderte Befehle: Hilfetext + Bats-Test vorhanden.

@@ -1,6 +1,18 @@
 {
   "recentFiles": [
     {
+      "basename": "kita_konflikte",
+      "path": "schule/konflikte/kita_konflikte.canvas"
+    },
+    {
+      "basename": "LF3_S3_Berufliche Ausgangssituation_Diversitätssensible Lernumgebung.docx",
+      "path": "schule/konflikte/LF3_S3_Berufliche Ausgangssituation_Diversitätssensible Lernumgebung.docx.pdf"
+    },
+    {
+      "basename": "AB_mehrperspektivischAnalysierenundVerstehen",
+      "path": "schule/konflikte/AB_mehrperspektivischAnalysierenundVerstehen.pdf"
+    },
+    {
       "basename": "huhu",
       "path": "coding/tools/huhu.md"
     },
@@ -77,10 +89,6 @@
       "path": "schule/diversität/situation_vielfalt_bachweg_full.canvas"
     },
     {
-      "basename": "LF3_S3_Berufliche Ausgangssituation_Diversitätssensible Lernumgebung.docx",
-      "path": "schule/konflikte/LF3_S3_Berufliche Ausgangssituation_Diversitätssensible Lernumgebung.docx.pdf"
-    },
-    {
       "basename": "inklusion_vs_integration",
       "path": "inklusion_vs_integration.canvas"
     },
@@ -141,10 +149,6 @@
       "path": "glasfaser.md"
     },
     {
-      "basename": "kita_konflikte",
-      "path": "schule/konflikte/kita_konflikte.canvas"
-    },
-    {
       "basename": "GEWEBE_MERGE_20250904_145348",
       "path": "halde/GEWEBE_MERGE_20250904_145348.md"
     },
@@ -195,10 +199,6 @@
     {
       "basename": "LF3_S3_Berufliche Ausgangssituation_Diversitätssensible Lernumgebung.docx",
       "path": "LF3_S3_Berufliche Ausgangssituation_Diversitätssensible Lernumgebung.docx.pdf"
-    },
-    {
-      "basename": "AA In welcher Gesellschaft wollen wir leben",
-      "path": "AA In welcher Gesellschaft wollen wir leben.pdf"
     }
   ],
   "omittedPaths": [],

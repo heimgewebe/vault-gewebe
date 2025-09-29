@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 cmd_task() {
-  if (($# == 0)); then
+  if (( $# == 0 )); then
     die "Usage: wgx task <name> [--] [args...]"
   fi
 
@@ -12,7 +12,15 @@ cmd_task() {
   local name="$1"
   shift || true
 
-  if ! profile::task_command "$name" >/dev/null; then
+  if [[ ${1:-} == -- ]]; then
+    shift
+  fi
+
+  local key
+  key="$(profile::_normalize_task_name "$name")"
+  local spec
+  spec="$(profile::_task_spec "$key")"
+  if [[ -z $spec ]]; then
     die "Task not defined: $name"
   fi
 
@@ -20,4 +28,3 @@ cmd_task() {
     return 1
   fi
 }
-

@@ -11,10 +11,17 @@
             "id": "5b263b183ae1de92",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "Neuer Tab"
+              "type": "canvas",
+              "state": {
+                "file": "schule/konflikte/kita_konflikte.canvas",
+                "viewState": {
+                  "x": -110.87215467161388,
+                  "y": 799.8386888842336,
+                  "zoom": -1.1394402074523522
+                }
+              },
+              "icon": "lucide-layout-dashboard",
+              "title": "kita_konflikte"
             }
           }
         ]
@@ -234,8 +241,12 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "95ee38c492322f6d",
+  "active": "5b263b183ae1de92",
   "lastOpenFiles": [
+    "schule/konflikte/LF3_S3_Berufliche Ausgangssituation_Diversitätssensible Lernumgebung.docx.pdf",
+    "schule/konflikte/AB_mehrperspektivischAnalysierenundVerstehen.pdf",
+    "wgx to do.md",
+    "repos feedback.md",
     "Unbenannt.md",
     "coding/tools/tttt.md",
     "coding/weltgewebe/docs/techstack.md",
@@ -259,8 +270,6 @@
     "coding/weltgewebe/docs/runbooks/codespaces-recovery.md",
     "coding/weltgewebe/docs/datenmodell.md",
     "coding/weltgewebe/docs/specs/privacy-api.md",
-    "coding/weltgewebe/docs/specs/privacy-ui.md",
-    "coding/weltgewebe/docs/runbook.md",
     "coding/weltgewebe/docs/runbooks",
     "coding/weltgewebe/docs/process",
     "coding/weltgewebe/docs/specs",
@@ -270,11 +279,9 @@
     "coding/weltgewebe/ci",
     "coding/dotfiles/home",
     "coding/dotfiles",
-    "coding/weltweberei.org",
     "schule/politik/armut.canvas",
     "geschichte/1. weltkrieg/1. weltkrieg kapitalverflechtung.canvas",
     "schule/diversität/perspektivübernahme.canvas",
-    "schule/diversität/perspektivübernahme.md",
     "schule/diversität/situation_vielfalt_bachweg_old.canvas",
     "schule/diversität/situation_vielfalt_bachweg.canvas",
     "schule/heilpädagogik/theorie_integrativer_prozesse.canvas",

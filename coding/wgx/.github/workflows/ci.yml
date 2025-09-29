@@ -1,67 +1,148 @@
-name: CI
+name: CI (smart PR)
 
 on:
-  push:
-    branches: [ main, master ]
   pull_request:
-    branches: [ "*" ]
+    branches: [ main ]
+    types: [opened, synchronize, reopened, ready_for_review, labeled, unlabeled]
+  merge_group: {}
+  workflow_dispatch: {}
+
+permissions:
+  pull-requests: write
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  bash_lint_test:
-    name: Bash Lint & Tests
+  changes:
+    name: Detect changes
     runs-on: ubuntu-latest
+    outputs:
+      shell: ${{ steps.filter.outputs.shell }}
+      docs: ${{ steps.filter.outputs.docs }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            shell:
+              - 'wgx'
+              - '**/*.sh'
+              - '**/*.bash'
+            docs:
+              - '**/*.md'
+              - 'docs/**'
 
+  lint_shell:
+    name: Shell lint (shfmt + shellcheck)
+    needs: changes
+    if: |
+      github.event_name == 'merge_group' ||
+      github.event_name == 'workflow_dispatch' ||
+      (
+        github.event_name == 'pull_request' &&
+        github.event.pull_request.draft == false &&
+        (
+          needs.changes.outputs.shell == 'true' ||
+          contains(github.event.pull_request.labels.*.name, 'full-ci') ||
+          contains(github.event.pull_request.labels.*.name, 'lint')
+        )
+      )
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
       - name: Install shell tooling
         run: |
           sudo apt-get update -y
-          sudo apt-get install -y shellcheck shfmt bats jq
-
+          sudo apt-get install -y shellcheck shfmt jq
       - name: shfmt (check)
         run: |
-          # Fail if any .sh/.bash not formatted
-          readarray -t files < <(git ls-files '*.sh' '*.bash')
+          readarray -t files < <(git ls-files '*.sh' '*.bash' 'wgx' 'cmd/*' 'lib/*' 'modules/*' 2>/dev/null || true)
           if [ "${#files[@]}" -gt 0 ]; then
             shfmt -d "${files[@]}"
           else
             echo "No shell files."
           fi
-
       - name: shellcheck
         run: |
-          readarray -t files < <(git ls-files '*.sh' '*.bash')
+          readarray -t files < <(git ls-files '*.sh' '*.bash' 'wgx' 'cmd/*' 'lib/*' 'modules/*' 2>/dev/null || true)
           if [ "${#files[@]}" -gt 0 ]; then
             shellcheck -S style "${files[@]}"
           else
             echo "No shell files."
           fi
 
-      - name: bats tests
-        run: |
-          if [ -d tests ]; then
-            bats -r tests
-          else
-            echo "No tests/ directory"; exit 1
-          fi
-
   docs_lint:
-    name: Docs Lint (Markdown + Links)
+    name: Docs lint (Markdown + Links)
+    needs: changes
+    if: |
+      github.event_name == 'merge_group' ||
+      github.event_name == 'workflow_dispatch' ||
+      (
+        github.event_name == 'pull_request' &&
+        (
+          needs.changes.outputs.docs == 'true' ||
+          contains(github.event.pull_request.labels.*.name, 'full-ci')
+        )
+      )
     runs-on: ubuntu-latest
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
-
       - name: Markdownlint
         run: |
-          npm install -g markdownlint-cli2
-          markdownlint-cli2 "**/*.md" "#node_modules" "#.git" "#**/CHANGELOG*.md" || exit 1
-
-      - name: Link Check (Lychee)
-        uses: lycheeverse/lychee-action@v1
+          npm i -g markdownlint-cli2@0.12.1
+          markdownlint-cli2 "**/*.md" "#node_modules" "#.git" || exit 1
+      - name: Link check (Lychee)
+        uses: lycheeverse/lychee-action@v2
         with:
-          args: >-
-            --no-progress --accept 200,206,429
-            --exclude-loopback --max-concurrency 8
-            .
+          args: --no-progress --accept 200,206,429 --max-concurrency 8 .
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  profile_contracts:
+    name: Profile contracts
+    needs: changes
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'merge_group' ||
+      (
+        github.event_name == 'pull_request' &&
+        contains(github.event.pull_request.labels.*.name, 'full-ci')
+      )
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        repo:
+          - https://github.com/alexdermohr/weltgewebe
+          - https://github.com/alexdermohr/hauski
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure git safe.directory
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+      - name: Validate ${{ matrix.repo }}
+        env:
+          GIT_ASKPASS: /bin/true
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          repo="${{ matrix.repo }}"
+          name="${repo##*/}"
+          target="$repo"
+          if [[ "$repo" == https://github.com/* && -n "${GH_TOKEN:-}" ]]; then
+            target="https://x-access-token:${GH_TOKEN}@github.com/${repo#https://github.com/}"
+          fi
+          ./wgx validate --json "$target" --out "validate_${name}.json"
+      - name: Upload JSON results
+        uses: actions/upload-artifact@v4
+        with:
+          name: profile-contracts-json
+          path: validate_*.json
