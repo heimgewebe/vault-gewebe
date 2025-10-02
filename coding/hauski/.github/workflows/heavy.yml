@@ -53,11 +53,14 @@ jobs:
       fail-fast: false
       matrix:
         toolchain: ${{ fromJSON(format('["{0}"]', join(split(needs.decide.outputs.matrix, ','), '","'))) }}
+    env:
+      toolchain: ${{ matrix.toolchain }}
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
         with:
+          toolchain: ${{ env.toolchain }}
           # we switch the toolchain explicitly via rustup in the next step
           components: rustfmt, clippy
       - uses: taiki-e/install-action@v2
@@ -91,3 +94,24 @@ jobs:
           name: coverage-${{ matrix.toolchain }}
           path: lcov.info
           if-no-files-found: ignore
+
+  policy-gate:
+    needs: decide
+    if: needs.decide.outputs.run_heavy == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate policy definitions
+        run: |
+          test -s policies/slo.yaml
+          test -s policies/perf.json
+          python - <<'PY'
+import json
+from pathlib import Path
+
+with Path("policies/perf.json").open() as handle:
+    json.load(handle)
+
+print("policies/perf.json is valid JSON")
+PY

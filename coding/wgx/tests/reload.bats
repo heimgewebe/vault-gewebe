@@ -27,13 +27,26 @@ teardown() {
   rm -rf tmprepo remote
 }
 
-@test "reload performs hard reset and clean" {
-  # lokale Änderung
+@test "reload aborts on dirty working tree without force" {
   echo "local" > local.txt
 
-  # rufe wgx reload (aus dem echten Projekt)
   run wgx reload
+  [ "$status" -ne 0 ]
+  [ -f local.txt ]
+  [[ "$output" =~ "reload abgebrochen" ]]
+}
+
+@test "reload --force resets and cleans" {
+  echo "local" > local.txt
+
+  run wgx reload --force
   [ "$status" -eq 0 ]
-  # local.txt sollte weg sein (clean -fdx)
   [ ! -f local.txt ]
+}
+
+@test "reload --dry-run only prints plan" {
+  run wgx reload --dry-run
+  [ "$status" -eq 0 ]
+  [[ "$output" =~ "[DRY-RUN]" ]]
+  [ -z "$(git status --porcelain)" ]
 }

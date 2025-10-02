@@ -23,7 +23,7 @@ HausKI ist ein lokaler KI-Orchestrator für Pop!_OS-Workstations mit NVIDIA-RTX-
 
 ---
 
-## Quickstart
+## Schnellstart
 
 **Voraussetzungen lokal (Pop!_OS, Rust stable):**
 ```bash
@@ -62,16 +62,40 @@ cargo test --workspace -- --nocapture
 
 ---
 
-## Build, Test & Run
+## Build, Test & Ausführung
 
 Den Core-Service lokal starten:
 ```bash
-cargo run -p hauski-core
-# Alternative über das Justfile
+cargo run -p hauski-cli -- serve
+# Alternative über das Justfile (ruft intern `cargo run -p hauski-core` auf)
 just run-core
 ```
 
 > **Hinweis:** Setze `HAUSKI_EXPOSE_CONFIG=true`, um die geschützten Routen unter `/config/*` bewusst freizugeben (nur für lokale Tests empfohlen).
+
+### CORS & Frontend-Integration
+
+- Standardmäßig akzeptiert der Core nur Browser-Anfragen vom Ursprung `http://127.0.0.1:8080`.
+- Setze `HAUSKI_ALLOWED_ORIGIN=<https://dein-frontend.example>` im Environment, um einen anderen Origin explizit freizuschalten.
+- Preflight-Requests (`OPTIONS`) werden nur beantwortet, wenn der angefragte Origin erlaubt ist; alle anderen Ursprünge erhalten `403 Forbidden`.
+- Die Antwort-Header enthalten `Access-Control-Allow-Origin` und `Vary: Origin`, sobald der Request vom freigegebenen Ursprung kommt.
+
+### Docker-Compose-Stack (Profil `core`)
+
+```bash
+# Build & Start (detached)
+docker compose -f infra/compose/compose.core.yml --profile core up --build -d
+
+# Logs verfolgen
+docker compose -f infra/compose/compose.core.yml logs -f api
+
+# Optionaler Health- und Readiness-Check (falls implementiert)
+curl http://localhost:${HAUSKI_API_PORT:-8080}/health
+curl http://localhost:${HAUSKI_API_PORT:-8080}/ready
+
+# Stoppen und Ressourcen freigeben
+docker compose -f infra/compose/compose.core.yml --profile core down
+```
 
 Verfügbare bzw. geplante API-Endpunkte:
 - `GET /health` → "ok"
@@ -79,10 +103,29 @@ Verfügbare bzw. geplante API-Endpunkte:
 - *(geplant)* OpenAI-kompatible Routen (`/v1/chat/completions`, `/v1/embeddings`)
 - *(geplant)* Spezialendpunkte: `/asr/transcribe`, `/audio/profile`, `/obsidian/canvas/suggest`
 
+### Observability & Metriken
+
+Die API exportiert Prometheus-kompatible Kennzahlen unter `/metrics`:
+
+- `http_requests_total{method,path,status}` zählt eingehende HTTP-Requests pro Methode, Route und Statuscode.
+- `http_request_duration_seconds{method,path}` erfasst Latenzen als Histogramm mit den Standard-Buckets `0.005s` bis `1s`.
+
+Beispielabfragen für Dashboards oder die Prometheus-Konsole:
+
+- Erfolgs- vs. Fehlerraten:
+  ```promql
+  sum by (status) (rate(http_requests_total[5m]))
+  ```
+- 95%-Perzentil der Request-Latenz je Route:
+  ```promql
+  histogram_quantile(0.95, sum by (le, method, path) (rate(http_request_duration_seconds_bucket[5m])))
+  ```
+
 ---
 
 ## Policies & Budgets
 - Laufzeit- und Thermik-Grenzen liegen in `policies/limits.yaml` (z. B. `latency.llm_p95_ms`, `thermal.gpu_max_c`).
+- Kann die Datei nicht gelesen werden, nutzt der Core sichere Defaults (LLM p95 = 400 ms, Index p95 = 60 ms, GPU-Max = 80 °C, dGPU-Power = 220 W, ASR WER = 10 %). So bleibt der Dienst lauffähig, selbst wenn Policies fehlen.
 - Netzwerk-Routing folgt einem Deny-by-default-Ansatz; Whitelists werden perspektivisch über `policies/routing.yaml` gepflegt.
 - CI verknüpft Formatierung, Lints (`cargo-deny`) und Tests; Budget-Checks für p95-Latenzen sind vorgesehen.
 
@@ -135,6 +178,11 @@ hauski audio profile set <profile-name>
 - CI-Gates: `cargo fmt`, `cargo clippy -D warnings`, `cargo test`, `cargo-deny`.
 - `scripts/bootstrap.sh` richtet `pre-commit` ein und erzwingt Format/Lint vor Commits.
 - Lizenzrichtlinien liegen in `deny.toml`.
+
+### Cargo.lock-Workflow
+- `Cargo.lock` gilt als Build-Artefakt: Patches und PRs sollten die Datei zunächst ausschließen und sie erst nach einem lokalen `cargo update` committen.
+- Das Skript [`scripts/git-apply-nolock.sh`](scripts/git-apply-nolock.sh) nimmt ein Patch-File entgegen, wendet es ohne `Cargo.lock` an, führt `cargo update` aus und erstellt direkt einen Commit. So lassen sich Codex-Konflikte mit automatisch regenerierten Lockfiles vermeiden.
+- Für manuelle Flows: `git add . ':!Cargo.lock' && git commit …`, danach `cargo update`, `git add Cargo.lock` und einen separaten „refresh“-Commit anlegen.
 
 ### Sprache
 - Primärsprache ist Deutsch (Du-Form, klare Sätze), Code-Kommentare und Log-Meldungen bleiben Englisch.

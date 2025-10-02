@@ -4,6 +4,9 @@ Eigenständiges CLI für Git-/Repo-Workflows (Termux, WSL, Linux, macOS). Lizenz
 
 ## Schnellstart
 
+> 📘 **Language policy:** New contributions should use English for user-facing text.
+> See [docs/Language-Policy.md](docs/Language-Policy.md) for the detailed guidance.
+
 ```bash
 git clone <DEIN-REPO>.git wgx
 cd wgx
@@ -38,6 +41,7 @@ wgx --list 2>/dev/null || wgx commands 2>/dev/null || ls -1 cmd/
 - CI lokal ausführen:
 
   ```bash
+  bash -n $(git ls-files '*.sh' '*.bash')
   shfmt -d $(git ls-files '*.sh' '*.bash')
   shellcheck -S style $(git ls-files '*.sh' '*.bash')
   bats -r tests
@@ -49,7 +53,20 @@ wgx --list 2>/dev/null || wgx commands 2>/dev/null || ls -1 cmd/
 
 Destruktiv: setzt den Workspace hart auf `origin/$WGX_BASE` zurück (`git reset --hard` + `git clean -fdx`).
 
+- Bricht ab, wenn das Arbeitsverzeichnis nicht sauber ist (außer mit `--force`).
+- Mit `--dry-run` werden nur die Schritte angezeigt, ohne etwas zu verändern.
+- Optional sichert `--snapshot` vorher in einen Git-Stash.
+
 **Alias**: `sync-remote`.
+
+### sync
+
+Holt Änderungen vom Remote (`git pull --rebase --autostash --ff-only`). Scheitert das, wird automatisch auf `origin/$WGX_BASE` rebased.
+
+- Schützt vor unbeabsichtigtem Lauf auf einem „dirty“ Working Tree (Abbruch ohne `--force`).
+- `--dry-run` zeigt nur die geplanten Git-Kommandos.
+- Über `--base <branch>` lässt sich der Fallback-Branch für den Rebase explizit setzen.
+- Gibt es zusätzlich ein Positionsargument, hat `--base` Vorrang und weist mit einer Warnung darauf hin.
 
 ## Repository-Layout
 
@@ -120,6 +137,8 @@ wgx:
 
 Automatisierte Tests werden über `tests/` organisiert (z. B. mit [Bats](https://bats-core.readthedocs.io/)).
 Ergänzende Checks kannst du via `wgx selftest` starten.
+Die Quoting-Grundregeln sind in der [Leitlinie: Shell-Quoting](docs/Leitlinie.Quoting.de.md)
+gebündelt.
 
 ## Architekturhinweis — nur modulare Struktur
 

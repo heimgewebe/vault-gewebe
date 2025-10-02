@@ -5,10 +5,12 @@ use std::{
     task::{Context, Poll},
 };
 
+pub mod health;
+
 use axum::{
     extract::{MatchedPath, State},
     http::{header, HeaderValue, Request, StatusCode},
-    response::IntoResponse,
+    response::{IntoResponse, Response},
 };
 use prometheus::{Encoder, IntCounterVec, IntGaugeVec, Opts, Registry, TextEncoder};
 use tower::{Layer, Service};
@@ -45,7 +47,7 @@ struct MetricsInner {
 impl Metrics {
     pub fn try_new(build_info: BuildInfo) -> Result<Self, prometheus::Error> {
         let http_opts = Opts::new("http_requests_total", "Total number of HTTP requests");
-        let http_requests_total = IntCounterVec::new(http_opts, &["method", "path"])?;
+        let http_requests_total = IntCounterVec::new(http_opts, &["method", "path", "status"])?;
 
         let build_opts = Opts::new("build_info", "Build information for the API");
         let build_info_metric = IntGaugeVec::new(build_opts, &["version", "commit", "built_at"])?;
@@ -126,9 +128,10 @@ impl<S, B> Service<Request<B>> for MetricsService<S>
 where
     S: Service<Request<B>>,
     S::Future: Send + 'static,
+    S::Response: IntoResponse,
     B: Send + 'static,
 {
-    type Response = S::Response;
+    type Response = Response;
     type Error = S::Error;
     type Future = Pin<Box<dyn Future<Output = Result<Self::Response, Self::Error>> + Send>>;
 
@@ -147,12 +150,18 @@ where
         let future = self.inner.call(request);
 
         Box::pin(async move {
-            let result = future.await;
-            metrics
-                .http_requests_total()
-                .with_label_values(&[method.as_str(), path.as_str()])
-                .inc();
-            result
+            match future.await {
+                Ok(response) => {
+                    let response: Response = response.into_response();
+                    let status = response.status().as_u16().to_string();
+                    metrics
+                        .http_requests_total()
+                        .with_label_values(&[method.as_str(), path.as_str(), status.as_str()])
+                        .inc();
+                    Ok(response)
+                }
+                Err(error) => Err(error),
+            }
         })
     }
 }

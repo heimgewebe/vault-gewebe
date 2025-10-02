@@ -1,0 +1,19 @@
+{
+	"nodes":[
+		{"id":"root","type":"text","text":"Vorname: Julie\nQuelle: Eigenes Canvas","x":0,"y":0,"width":100,"height":100,"color":"blue"},
+		{"id":"bedeutung","type":"text","text":"Bedeutung\n→ aus dem Lateinischen: \"die dem Jupiter Geweihte\"\n→ Variante von Julia","x":-400,"y":100,"width":100,"height":100,"color":"gray"},
+		{"id":"herkunft","type":"text","text":"Herkunft\n→ Römisch/lateinisch\n→ Familienname Julius → weibliche Form Julia/Julie","x":-400,"y":-100,"width":100,"height":100,"color":"gray"},
+		{"id":"verbreitung","type":"text","text":"Verbreitung\n→ Beliebt in Frankreich, Deutschland, Skandinavien\n→ Modewellen im 19. Jh. und 1990er","x":400,"y":-100,"width":100,"height":100,"color":"yellow"},
+		{"id":"varianten","type":"text","text":"Varianten\n→ Julia, Juliette, Juliana\n→ männlich: Julius, Julien","x":400,"y":100,"width":100,"height":100,"color":"yellow"},
+		{"id":"assoziationen","type":"text","text":"Assoziationen\n→ Shakespeare: Romeo & Julia\n→ Kultur: Lieder, Filme, Romane","x":0,"y":250,"width":100,"height":100,"color":"green"},
+		{"id":"essenz","type":"text","text":"Essenz: Julie = klassische, kulturell reiche Namensform","x":0,"y":-250,"width":100,"height":100,"color":"blue"},
+		{"id":"legende","type":"text","text":"Legende:\nBlau = Zentrum/Meta\nGrau = Herkunft/Bedeutung\nGelb = Prozesse/Varianten\nGrün = Ziele/Assoziationen\nAchse: links = Herkunft, rechts = Varianten, unten = Assoziationen, oben = Essenz","x":213,"y":-110,"width":100,"height":100,"color":"gray"}
+	],
+	"edges":[
+		{"fromNode":"essenz","fromSide":"bottom","toNode":"root","toSide":"top"}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

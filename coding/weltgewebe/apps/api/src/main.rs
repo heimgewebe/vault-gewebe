@@ -8,6 +8,7 @@ use anyhow::{anyhow, Context};
 use async_nats::Client as NatsClient;
 use axum::{routing::get, Router};
 use routes::health::health_routes;
+use routes::meta::meta_routes;
 use sqlx::postgres::PgPoolOptions;
 use state::ApiState;
 use telemetry::{metrics_handler, BuildInfo, Metrics, MetricsLayer};
@@ -33,6 +34,7 @@ async fn main() -> anyhow::Result<()> {
 
     let app = Router::new()
         .merge(health_routes())
+        .merge(meta_routes())
         .route("/metrics", get(metrics_handler))
         .layer(MetricsLayer::new(metrics))
         .with_state(state);
@@ -70,17 +72,28 @@ async fn initialise_database_pool() -> (Option<sqlx::PgPool>, bool) {
         Err(_) => return (None, false),
     };
 
-    match PgPoolOptions::new()
+    let pool = match PgPoolOptions::new()
         .max_connections(5)
-        .connect(&database_url)
-        .await
+        .connect_lazy(&database_url)
     {
-        Ok(pool) => (Some(pool), true),
+        Ok(pool) => pool,
         Err(error) => {
-            tracing::warn!(error = %error, "failed to connect to database");
-            (None, true)
+            tracing::warn!(error = %error, "failed to configure database pool");
+            return (None, true);
+        }
+    };
+
+    match pool.acquire().await {
+        Ok(connection) => drop(connection),
+        Err(error) => {
+            tracing::warn!(
+                error = %error,
+                "database connection unavailable at startup; readiness will keep retrying",
+            );
         }
     }
+
+    (Some(pool), true)
 }
 
 async fn initialise_nats_client() -> (Option<NatsClient>, bool) {

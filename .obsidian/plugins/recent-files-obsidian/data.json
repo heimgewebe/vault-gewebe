@@ -1,8 +1,32 @@
 {
   "recentFiles": [
     {
+      "basename": "to do weltgewebe",
+      "path": "to do weltgewebe.md"
+    },
+    {
+      "basename": "theorie_integrativer_prozesse",
+      "path": "schule/heilpädagogik/theorie_integrativer_prozesse.canvas"
+    },
+    {
+      "basename": "foerderschwerpunkt_geistige_behinderung",
+      "path": "schule/heilpädagogik/foerderschwerpunkt_geistige_behinderung.canvas"
+    },
+    {
       "basename": "kita_konflikte",
       "path": "schule/konflikte/kita_konflikte.canvas"
+    },
+    {
+      "basename": "t_i_p-störungen",
+      "path": "schule/heilpädagogik/t_i_p-störungen.canvas"
+    },
+    {
+      "basename": "t_i_p-ziel_leitprinzipien",
+      "path": "schule/heilpädagogik/t_i_p-ziel_leitprinzipien.canvas"
+    },
+    {
+      "basename": "t_i_p-ziel",
+      "path": "schule/heilpädagogik/t_i_p-ziel.canvas"
     },
     {
       "basename": "LF3_S3_Berufliche Ausgangssituation_Diversitätssensible Lernumgebung.docx",
@@ -41,14 +65,6 @@
       "path": "schule/diversität/situation_vielfalt_bachweg.canvas"
     },
     {
-      "basename": "theorie_integrativer_prozesse",
-      "path": "schule/heilpädagogik/theorie_integrativer_prozesse.canvas"
-    },
-    {
-      "basename": "t_i_p-ziel_leitprinzipien",
-      "path": "schule/heilpädagogik/t_i_p-ziel_leitprinzipien.canvas"
-    },
-    {
       "basename": "verena",
       "path": "schule/diversität/verena.canvas"
     },
@@ -59,10 +75,6 @@
     {
       "basename": "senioren_perspektivübernahme",
       "path": "schule/arbeitsfelder/senioren_perspektivübernahme.canvas"
-    },
-    {
-      "basename": "t_i_p-ziel",
-      "path": "schule/heilpädagogik/t_i_p-ziel.canvas"
     },
     {
       "basename": "arbeitsfelder",
@@ -99,14 +111,6 @@
     {
       "basename": "canvas-richtlinien",
       "path": "obsidian/canvas-richtlinien.canvas"
-    },
-    {
-      "basename": "t_i_p-störungen",
-      "path": "schule/heilpädagogik/t_i_p-störungen.canvas"
-    },
-    {
-      "basename": "foerderschwerpunkt_geistige_behinderung",
-      "path": "schule/heilpädagogik/foerderschwerpunkt_geistige_behinderung.canvas"
     },
     {
       "basename": "tip-ziel.canvas",
@@ -187,18 +191,6 @@
     {
       "basename": "projektinitiative.md",
       "path": "projektinitiative.md.md"
-    },
-    {
-      "basename": "AA In welcher Gesellschaft wollen wir leben",
-      "path": "schule/politik/AA In welcher Gesellschaft wollen wir leben.pdf"
-    },
-    {
-      "basename": "FAHRPLAN",
-      "path": "FAHRPLAN.md"
-    },
-    {
-      "basename": "LF3_S3_Berufliche Ausgangssituation_Diversitätssensible Lernumgebung.docx",
-      "path": "LF3_S3_Berufliche Ausgangssituation_Diversitätssensible Lernumgebung.docx.pdf"
     }
   ],
   "omittedPaths": [],

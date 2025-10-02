@@ -1,0 +1,79 @@
+name: docs-style
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - "docs/**"
+      - ".vale/**"
+      - ".vale.ini"
+      - ".github/workflows/docs-style.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docs-style-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  vale:
+    name: Vale prose lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Install Vale (v3.4.1, checksum verified)
+        run: |
+          set -euo pipefail
+          VALE_VERSION="3.4.1"
+          VALE_OS="Linux_64-bit"
+          TARBALL="vale_${VALE_VERSION}_${VALE_OS}.tar.gz"
+          BASE_URL="https://github.com/errata-ai/vale/releases/download/v${VALE_VERSION}"
+          curl -fsSL -o "$TARBALL" "${BASE_URL}/${TARBALL}"
+          curl -fsSL -o checksums.txt "${BASE_URL}/vale_${VALE_VERSION}_checksums.txt"
+          grep "$TARBALL" checksums.txt | sha256sum -c -
+          mkdir -p bin
+          tar -xzf "$TARBALL"
+          mv vale bin/vale
+          rm -f "$TARBALL" checksums.txt
+          ./bin/vale --version
+
+      - name: Determine changed docs
+        id: changed
+        run: |
+          set -euo pipefail
+          base="${{ github.base_ref || 'main' }}"
+          # Ensure base is a remote-tracking branch (origin/branch)
+          if [[ "$base" != origin/* ]]; then
+            base="origin/$base"
+          fi
+          if ! git fetch origin "${base#origin/}" --depth=1; then
+            echo "Warning: unable to fetch $base; continuing with available history" >&2
+          fi
+          files=$(git diff --name-only "$base...HEAD" | awk '/^docs\// {print}' || true)
+          echo "files<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$files" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Run Vale (soft; no fail)
+        run: |
+          set -euo pipefail
+          if [ -n "${{ steps.changed.outputs.files }}" ]; then
+            if ! ./bin/vale --minAlertLevel=suggestion ${{ steps.changed.outputs.files }}; then
+              echo "Vale reported suggestions; continuing without failing the workflow."
+            fi
+          else
+            echo "No changed docs/* files; skipping."
+          fi
+
+      - name: Full docs sweep on manual run (optional)
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: |
+          if ! ./bin/vale --minAlertLevel=suggestion docs; then
+            echo "Vale reported suggestions during full sweep; continuing without failing the workflow."
+          fi
