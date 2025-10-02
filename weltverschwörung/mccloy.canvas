@@ -1,0 +1,24 @@
+{
+	"nodes":[
+		{"id":"root","type":"text","text":"John J. McCloy (1895–1989)","x":0,"y":0,"width":280,"height":80,"color":"blue"},
+		{"id":"bio","type":"text","text":"Biografie\n• Geboren 1895 Philadelphia\n• Jurist (Harvard)\n• Gestorben 1989","x":-400,"y":-150,"width":240,"height":120,"color":"gray"},
+		{"id":"worldbank","type":"text","text":"Präsident Weltbank (1947–1949)","x":300,"y":-200,"width":240,"height":80,"color":"yellow"},
+		{"id":"germany","type":"text","text":"US-Hochkommissar Deutschland (1949–1952)\n• Amnestien für Industrielle\n• Wegbereiter BRD","x":300,"y":0,"width":280,"height":120,"color":"yellow"},
+		{"id":"war","type":"text","text":"Assistant Secretary of War\n• Japaner-Internierung\n• Auschwitz-Bombardement blockiert","x":300,"y":200,"width":300,"height":120,"color":"yellow"},
+		{"id":"netzwerke","type":"text","text":"Netzwerke\n• CFR\n• Atlantikbrücke\n• Bilderberg\n• Ford Foundation\n• Rockefeller / Chase Manhattan","x":-400,"y":100,"width":280,"height":160,"color":"violet"},
+		{"id":"kontroversen","type":"text","text":"Kontroversen (allgemein)\n• Re-Integration alter Eliten\n• 'The Chairman' – Omnipräsenz","x":0,"y":320,"width":280,"height":120,"color":"red"},
+		{"id":"auschwitz","type":"text","text":"Auschwitz-Bombardement verweigert (1944)\n• Ressourcen-Argument\n• Ölwerke in der Nähe wurden sehr wohl bombardiert","x":600,"y":200,"width":340,"height":140,"color":"red"},
+		{"id":"krupp","type":"text","text":"Freilassung Alfried Krupp & Friedrich Flick\n• Rückkehr der Industriebarone\n• Kontinuität statt Gerechtigkeit","x":600,"y":0,"width":340,"height":120,"color":"red"},
+		{"id":"internierung","type":"text","text":"Internierung japanischstämmiger US-Amerikaner\n• 100.000+ Menschen\n• Ohne Verfahren\n• Ethnische Diskriminierung","x":600,"y":-200,"width":340,"height":140,"color":"red"},
+		{"id":"paperclip","type":"text","text":"Operation Paperclip / Kalter Krieg\n• Integration belasteter Nazi-Wissenschaftler\n• Pragmatismus > Recht","x":600,"y":-400,"width":340,"height":120,"color":"red"},
+		{"id":"wirkung","type":"text","text":"Wirkungen\n• Wirtschaftswunder erleichtert\n• US-Einfluss in Europa gefestigt\n• Verkörperung des militärisch-industriellen Komplexes","x":-400,"y":320,"width":300,"height":140,"color":"green"},
+		{"id":"legende","type":"text","text":"Legende:\nBlau = Zentrum\nGrau = Biografie\nGelb = Positionen\nViolett = Netzwerke\nRot = Dunkle Punkte / Kontroversen\nGrün = Wirkungen","x":-700,"y":520,"width":300,"height":160,"color":"gray"}
+	],
+	"edges":[
+		{"fromNode":"war","fromSide":"top","toNode":"paperclip","toSide":"bottom","label":"involviert"}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

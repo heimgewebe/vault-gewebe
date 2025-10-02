@@ -11,15 +11,17 @@
             "id": "5b263b183ae1de92",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "canvas",
               "state": {
-                "file": "to do weltgewebe.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
+                "file": "schule/arbeitsfelder/interview.canvas",
+                "viewState": {
+                  "x": 250,
+                  "y": 214.83050847457628,
+                  "zoom": -0.48367916488397467
+                }
               },
-              "icon": "lucide-file",
-              "title": "to do weltgewebe"
+              "icon": "lucide-layout-dashboard",
+              "title": "interview"
             }
           }
         ]
@@ -211,7 +213,7 @@
         "state": {
           "type": "file-properties",
           "state": {
-            "file": "geschichte/1. weltkrieg/1. weltkrieg kapitalverflechtung.canvas"
+            "file": "schule/arbeitsfelder/interview.canvas"
           },
           "icon": "lucide-info",
           "title": "Dateieigenschaften"
@@ -239,8 +241,27 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "95ee38c492322f6d",
+  "active": "5b263b183ae1de92",
   "lastOpenFiles": [
+    "schule/arbeitsfelder/arbeitsfelder_als_erzieher.canvas",
+    "schule/arbeitsfelder/interview.canvas",
+    "schule/arbeitsfelder/arbeitsfelder.jpeg",
+    "reiselisten-mindmap.md",
+    "schule/heilpädagogik/t_i_p-störungen.canvas",
+    "schule/arbeitsfelder/Interviewleitfaden.docx",
+    "schule/heilpädagogik/theorie_integrativer_prozesse.canvas",
+    "schule/heilpädagogik/foerderschwerpunkt_geistige_behinderung.canvas",
+    "weltverschwörung/mccloy+.canvas",
+    "schule/konflikte/kita_konflikte.canvas",
+    "coding/weltgewebe/docs/process/README.md",
+    "schule/diversität/tanja.canvas",
+    "weltverschwörung/ordo ab chao 1914 - 57.canvas",
+    "schule/diversität/AASozialeUngleichheitTanjaTextPoppe(1).pdf",
+    "weltverschwörung/mccloy.canvas",
+    "schule/politik/Poppe_Armut.pdf",
+    "pr27.md",
+    "weltgewebe-programmierung/dokumente/wgxNeu/wgxMaxi.md",
+    "to do weltgewebe.md",
     "wgx myc - Seite 2.md",
     "wgx myc.md",
     "wgx zutrag.md",
@@ -251,10 +272,7 @@
     "blaupause.md",
     "audio.md",
     "to do hauski old.md",
-    "schule/heilpädagogik/theorie_integrativer_prozesse.canvas",
     "julie.canvas",
-    "schule/heilpädagogik/foerderschwerpunkt_geistige_behinderung.canvas",
-    "schule/konflikte/kita_konflikte.canvas",
     "coding/hauski/policies/perf.json",
     "coding/hauski/policies/slo.yaml",
     "coding/hauski/docs/runbooks/local-dev.md",
@@ -266,28 +284,12 @@
     "coding/hauski/infra/compose/compose.core.yml",
     "coding/hauski/infra/compose",
     "coding/hauski/infra",
-    "coding/wgx/tests/semver_caret.bats",
-    "coding/weltgewebe/policies/limits.yaml",
     "coding/weltgewebe/docs/process/bash-tooling-guidelines.md",
     "prototyp.md",
-    "schule/heilpädagogik/t_i_p-störungen.canvas",
-    "schule/heilpädagogik/t_i_p-ziel_leitprinzipien.canvas",
-    "schule/heilpädagogik/t_i_p-ziel.canvas",
     "wg feedback.md",
     "coding/tools/huhu.md",
-    "schule/konflikte/LF3_S3_Berufliche Ausgangssituation_Diversitätssensible Lernumgebung.docx.pdf",
     "coding/tools/tttt.md",
     "coding/weltgewebe/docs/techstack.md",
-    "coding/weltgewebe/CONTRIBUTING.md",
-    "coding/weltgewebe/docs/zusammenstellung.md",
-    "coding/weltgewebe/docs/inhalt.md",
-    "coding/weltgewebe/docs/architekturstruktur.md",
-    "coding/weltgewebe/docs/process/fahrplan.md",
-    "coding/weltgewebe/docs/adr/ADR-0003__privacy-unschaerferadius-ron.md",
-    "schule/politik/armut.canvas",
-    "geschichte/1. weltkrieg/1. weltkrieg kapitalverflechtung.canvas",
-    "schule/diversität/perspektivübernahme.canvas",
-    "schule/arbeitsfelder/arbeitsfelder.jpeg",
     "schule/PNG-Bild.png",
     "schule/PNG-Bild 2.png",
     "schule/senioren_perspektive.png",

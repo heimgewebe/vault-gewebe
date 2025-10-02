@@ -1,0 +1,18 @@
+{
+	"nodes":[
+		{"id":"e02119003f4817a2","type":"group","x":240,"y":400,"width":300,"height":300,"label":"Unbenannte Gruppe"},
+		{"id":"root","type":"text","text":"Arbeitsfeld: Senioren\nQuelle: Interviewleitfaden + Perspektivübernahmen","backgroundColor":"#A7C7E7","x":0,"y":0,"width":300,"height":60},
+		{"id":"hypothese","type":"text","text":"Hypothese:\nSeniorenarbeit bietet hohe Lernchancen, weil sie intensive Beziehungsarbeit, Biografiearbeit und interdisziplinäre Einblicke vereint.","backgroundColor":"#D5E8D4","x":400,"y":200,"width":300,"height":120},
+		{"id":"essenz","type":"text","text":"Essenz:\nPflege der Alten ist Pflege der Zukunft.","backgroundColor":"#E1D5E7","x":0,"y":-100,"width":260,"height":100},
+		{"id":"legende","type":"text","text":"🎨 Legende:\nBlau = Meta / Root\nGrau = Perspektiven\nGelb = Prozesse (Interview)\nGrün = Hypothese / Ziel\nViolett = Essenz\n\n🧭 Orientierung:\nLinks = Gesellschaftlich\nRechts = Individuell\nUnten = konkret\nOben = abstrakt","backgroundColor":"#F5F5F5","x":700,"y":500,"width":300,"height":180},
+		{"id":"meta1","type":"text","text":"Leitidee:\nEinblicke ins Berufsfeld durch Interview & Perspektivübernahme","backgroundColor":"#A7C7E7","x":7,"y":-193,"width":300,"height":60},
+		{"id":"interviewaufbau","type":"text","text":"Interviewstruktur:\n• Einstieg: Vorstellung, Einverständnis\n• Hauptteil:\n  – Beruflicher Werdegang\n  – Alltag & Motivation\n  – Herausforderungen\n  – Netzwerke & Wünsche\n• Schluss: Dank & Info zur Verwendung","backgroundColor":"#FFFFCC","x":-362,"y":-73,"width":280,"height":240}
+	],
+	"edges":[
+		{"fromNode":"root","fromSide":"top","toNode":"essenz","toSide":"bottom","label":"verdichtet"}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

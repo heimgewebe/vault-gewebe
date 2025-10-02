@@ -1,8 +1,24 @@
 {
   "recentFiles": [
     {
-      "basename": "to do weltgewebe",
-      "path": "to do weltgewebe.md"
+      "basename": "interview",
+      "path": "schule/arbeitsfelder/interview.canvas"
+    },
+    {
+      "basename": "arbeitsfelder_als_erzieher",
+      "path": "schule/arbeitsfelder/arbeitsfelder_als_erzieher.canvas"
+    },
+    {
+      "basename": "arbeitsfelder",
+      "path": "schule/arbeitsfelder/arbeitsfelder.jpeg"
+    },
+    {
+      "basename": "reiselisten-mindmap",
+      "path": "reiselisten-mindmap.md"
+    },
+    {
+      "basename": "t_i_p-störungen",
+      "path": "schule/heilpädagogik/t_i_p-störungen.canvas"
     },
     {
       "basename": "theorie_integrativer_prozesse",
@@ -13,12 +29,36 @@
       "path": "schule/heilpädagogik/foerderschwerpunkt_geistige_behinderung.canvas"
     },
     {
+      "basename": "mccloy+",
+      "path": "weltverschwörung/mccloy+.canvas"
+    },
+    {
       "basename": "kita_konflikte",
       "path": "schule/konflikte/kita_konflikte.canvas"
     },
     {
-      "basename": "t_i_p-störungen",
-      "path": "schule/heilpädagogik/t_i_p-störungen.canvas"
+      "basename": "README",
+      "path": "coding/weltgewebe/docs/process/README.md"
+    },
+    {
+      "basename": "tanja",
+      "path": "schule/diversität/tanja.canvas"
+    },
+    {
+      "basename": "mccloy",
+      "path": "weltverschwörung/mccloy.canvas"
+    },
+    {
+      "basename": "Poppe_Armut",
+      "path": "schule/politik/Poppe_Armut.pdf"
+    },
+    {
+      "basename": "pr27",
+      "path": "pr27.md"
+    },
+    {
+      "basename": "to do weltgewebe",
+      "path": "to do weltgewebe.md"
     },
     {
       "basename": "t_i_p-ziel_leitprinzipien",
@@ -69,16 +109,8 @@
       "path": "schule/diversität/verena.canvas"
     },
     {
-      "basename": "Poppe_Armut",
-      "path": "schule/politik/Poppe_Armut.pdf"
-    },
-    {
       "basename": "senioren_perspektivübernahme",
       "path": "schule/arbeitsfelder/senioren_perspektivübernahme.canvas"
-    },
-    {
-      "basename": "arbeitsfelder",
-      "path": "schule/arbeitsfelder/arbeitsfelder.jpeg"
     },
     {
       "basename": "altersübergreifende_gruppen",
@@ -87,10 +119,6 @@
     {
       "basename": "senioren",
       "path": "schule/arbeitsfelder/senioren.canvas"
-    },
-    {
-      "basename": "arbeitsfelder_als_erzieher",
-      "path": "schule/arbeitsfelder/arbeitsfelder_als_erzieher.canvas"
     },
     {
       "basename": "situation_vielfalt_bachweg_minimal",
@@ -171,26 +199,6 @@
     {
       "basename": "don‘t forget",
       "path": "don‘t forget.md"
-    },
-    {
-      "basename": "unterhalt",
-      "path": "orga/unterhalt/unterhalt.pdf"
-    },
-    {
-      "basename": "lebenslauf",
-      "path": "orga/wichtige dokumente/lebenslauf.pdf"
-    },
-    {
-      "basename": "kita_konflikte",
-      "path": "kita_konflikte.canvas"
-    },
-    {
-      "basename": "projektinitiative",
-      "path": "schule/theater/projektinitiative.md"
-    },
-    {
-      "basename": "projektinitiative.md",
-      "path": "projektinitiative.md.md"
     }
   ],
   "omittedPaths": [],

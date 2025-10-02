@@ -1,0 +1,99 @@
+{
+  "nodes": [
+    { "id": "root", "type": "text", "text": "Ordo ab Chao? 1914→1957\nEU als (mögliches) Hochfinanz-Produkt – Szenario-Canvas", "x": -40, "y": -320, "width": 420, "height": 110, "color": "blue" },
+
+    { "id": "essenz", "type": "text", "text": "Essenz-Knoten\nKrisen → Kredit → Kartellisierung → Supranationale Ordnung.\nKapital nutzt Chaos, um planbare Rahmen zu setzen (EGKS/EWG).", "x": 440, "y": -320, "width": 420, "height": 110, "color": "blue" },
+
+    { "id": "legende", "type": "text", "text": "Legende / Achsen\nBlau = Zentrum/Meta\nGrau = Grundlagen/Events\nGelb = Prozesse/Mechaniken\nRot = Kontroversen/Hindernisse\nGrün = Resultate/Ziele\nViolett = Ebenen/Netzwerke/Institutionen\nHorizontal = Zeit (1914→1957)\nVertikal = Abstraktion (oben Meta, unten konkret)\nFreiheit: Verbindungen sparsam + beschriftet", "x": -1140, "y": -320, "width": 420, "height": 210, "color": "gray" },
+
+    { "id": "meta_hf", "type": "text", "text": "Meta-Knoten: Internationale Hochfinanz\nBanken/Fonds, transnationale Kanzleien,\nKapitalbündelung, Risikostreuung,\nPräferenz: einheitliche Regeln, planbare Rendite", "x": -40, "y": -510, "width": 420, "height": 130, "color": "blue" },
+
+    { "id": "meta_netze", "type": "text", "text": "Meta-Knoten: Netzwerke & Foren\nCFR • ACG/Atlantikbrücke • (früh) Bilderberg\nBIZ Basel • OEEC/→OECD (1948→)\nFunktion: Agenda-Setting, Elitenkohärenz", "x": 440, "y": -510, "width": 420, "height": 130, "color": "violet" },
+
+    { "id": "meta_staat", "type": "text", "text": "Meta-Knoten: Staaten/Geopolitik\nWestbindung, Antibolschewismus,\nPlanbarkeit durch Suprastrukturen", "x": -520, "y": -510, "width": 420, "height": 120, "color": "violet" },
+
+    { "id": "1914_sarajevo", "type": "text", "text": "1914 Sarajevo (Attentat)\nSchwarze Hand / Apis-Umfeld\n→ Kriegsauslösung im hochgerüsteten Europa", "x": -1120, "y": -40, "width": 300, "height": 110, "color": "gray" },
+
+    { "id": "1914_18_ww1", "type": "text", "text": "1914–1918 Erster Weltkrieg\nAufrüstung als Kreditgeschäft\nKriegsanleihen, Rohstoffketten", "x": -820, "y": -40, "width": 300, "height": 110, "color": "gray" },
+
+    { "id": "1919_versailles", "type": "text", "text": "1919 Versailles\nReparationen • Revanchismus\nFragiler \"Frieden\"", "x": -520, "y": -40, "width": 240, "height": 100, "color": "gray" },
+
+    { "id": "1924_dawes", "type": "text", "text": "1924 Dawes-Plan\nUS-Kredite stabilisieren DE-Industrie\n→ Schuld/Kredit-Zyklus", "x": -260, "y": -40, "width": 260, "height": 100, "color": "gray" },
+
+    { "id": "1929_young_crash", "type": "text", "text": "1929 Young-Plan & Börsencrash\nLiquiditätsschock, politische Radikalisierung", "x": 20, "y": -40, "width": 300, "height": 100, "color": "gray" },
+
+    { "id": "1919_33_ns_aufstieg", "type": "text", "text": "1919–1933 NS-Aufstieg\nReichswehr-Spitzelrolle → Agitator\nIndustrie-/Auslandsgeschäfte laufen weiter", "x": 320, "y": -40, "width": 320, "height": 110, "color": "gray" },
+
+    { "id": "1933_39_aufruest", "type": "text", "text": "1933–1939 Aufrüstung/Autarkie\nIG Farben • Krupp • Technologietransfers", "x": 660, "y": -40, "width": 320, "height": 100, "color": "gray" },
+
+    { "id": "1939_45_ww2", "type": "text", "text": "1939–1945 Zweiter Weltkrieg\nTotaler Krieg • Zerstörung Europas", "x": 1000, "y": -40, "width": 300, "height": 100, "color": "gray" },
+
+    { "id": "1944_bretton", "type": "text", "text": "1944 Bretton Woods\nUSD-Anker • IWF/Weltbank\nMonetäre Ordnung", "x": 1300, "y": -40, "width": 260, "height": 100, "color": "violet" },
+
+    { "id": "1947_52_marshall", "type": "text", "text": "1947–1952 Marshallplan/GARIOA\nKapitalzufuhr • Westbindung • OEEC", "x": 1580, "y": -40, "width": 300, "height": 100, "color": "gray" },
+
+    { "id": "1951_egks", "type": "text", "text": "1951 EGKS (Montanunion)\nKartellisierung Kohle/Stahl\nSupranationale Hohe Behörde", "x": 1900, "y": -40, "width": 320, "height": 110, "color": "green" },
+
+    { "id": "1957_ewg", "type": "text", "text": "1957 EWG / Römische Verträge\nBinnenmarkt-Keim • Integration vertieft", "x": 2240, "y": -40, "width": 320, "height": 110, "color": "green" },
+
+    { "id": "gelb_schuldzyklus", "type": "text", "text": "Mechanik: Schuld/Kredit-Zyklus\nReparationen ↔ US-Kredite\nAbhängigkeit als Steuerungshebel", "x": -260, "y": 120, "width": 300, "height": 110, "color": "yellow" },
+
+    { "id": "gelb_kartell", "type": "text", "text": "Mechanik: Kartellisierung\nMontan, Standardisierung, Skalen\nVon Konzernkartellen zu EGKS", "x": 1900, "y": 120, "width": 320, "height": 110, "color": "yellow" },
+
+    { "id": "gelb_suprastruktur", "type": "text", "text": "Mechanik: Suprastrukturen\nZentralbanken, Kommissionen, Gerichte\nDemokratie dünn, Technokratie dick", "x": 2240, "y": 120, "width": 320, "height": 110, "color": "yellow" },
+
+    { "id": "rot_sarajevo_orch", "type": "text", "text": "Kontroverse: Orchestrierung Sarajevo?\nApis/Schwarze Hand – Geheimdienstnähe\nBeweislast ≠ Masterplan", "x": -1120, "y": 120, "width": 320, "height": 110, "color": "red" },
+
+    { "id": "rot_ns_funding", "type": "text", "text": "Kontroverse: NS-Förderung\nIndustriespenden, Auslandsdeals\nNützlichkeit vs. bewusste Inkubation", "x": 320, "y": 120, "width": 320, "height": 110, "color": "red" },
+
+    { "id": "rot_kriegsprofit", "type": "text", "text": "Kontroverse: Kriegsprofite\nRüstungsrenditen, Rohstoffketten\nMoral vs. Bilanz", "x": 1000, "y": 120, "width": 300, "height": 110, "color": "red" },
+
+    { "id": "rot_demokratiedefizit", "type": "text", "text": "Kontroverse: Demokratiedefizit EU\nKommission/EZB überproportional stark\nParlamente schwächer", "x": 2240, "y": 260, "width": 320, "height": 110, "color": "red" },
+
+    { "id": "vio_biz", "type": "text", "text": "BIZ Basel (1930→)\nClearing, Gold/Devisen,\nKonnektor der Zentralbanken", "x": 1300, "y": 120, "width": 260, "height": 100, "color": "violet" },
+
+    { "id": "vio_atl", "type": "text", "text": "Atlantikbrücke/ACG (1952)\nElitenintegration BRD–USA\nNarrative, Karrieren, Westbindung", "x": 1580, "y": 120, "width": 300, "height": 110, "color": "violet" },
+
+    { "id": "vio_cfr", "type": "text", "text": "CFR (1921→)\nAgenda-Papers, Außenpolitik-Frames", "x": 980, "y": -220, "width": 260, "height": 100, "color": "violet" },
+
+    { "id": "gruen_resultat", "type": "text", "text": "Resultat-Knoten\nPlanbarkeit ↑ • Transaktionskosten ↓\nKapitalzugang ↑ • Nationalstaat ↓", "x": 1900, "y": 260, "width": 320, "height": 110, "color": "green" }
+  ],
+  "edges": [
+    { "fromNode": "1914_sarajevo", "toNode": "1914_18_ww1", "label": "Katalysiert" },
+    { "fromNode": "1914_18_ww1", "toNode": "1919_versailles", "label": "Folge/Vertrag" },
+    { "fromNode": "1919_versailles", "toNode": "1924_dawes", "label": "Reparationslogik → Kredit" },
+    { "fromNode": "1924_dawes", "toNode": "1929_young_crash", "label": "Abhängigkeitszyklus" },
+    { "fromNode": "1929_young_crash", "toNode": "1919_33_ns_aufstieg", "label": "Krise → Radikalisierung" },
+    { "fromNode": "1919_33_ns_aufstieg", "toNode": "1933_39_aufruest", "label": "Macht + Industrie" },
+    { "fromNode": "1933_39_aufruest", "toNode": "1939_45_ww2", "label": "Aufrüstung → Krieg" },
+    { "fromNode": "1939_45_ww2", "toNode": "1944_bretton", "label": "Ordnung vorbereiten" },
+    { "fromNode": "1944_bretton", "toNode": "1947_52_marshall", "label": "USD-Anker → Kapitalfluss" },
+    { "fromNode": "1947_52_marshall", "toNode": "1951_egks", "label": "Rekonstruktion → Kartell" },
+    { "fromNode": "1951_egks", "toNode": "1957_ewg", "label": "Integration vertieft" },
+
+    { "fromNode": "gelb_schuldzyklus", "toNode": "1924_dawes", "label": "Mechanik wirkt" },
+    { "fromNode": "gelb_schuldzyklus", "toNode": "1929_young_crash", "label": "Bruch/Stress" },
+    { "fromNode": "gelb_kartell", "toNode": "1951_egks", "label": "Institutionalisiert" },
+    { "fromNode": "gelb_suprastruktur", "toNode": "1957_ewg", "label": "Designprinzip" },
+
+    { "fromNode": "rot_sarajevo_orch", "toNode": "1914_sarajevo", "label": "Debatte" },
+    { "fromNode": "rot_ns_funding", "toNode": "1919_33_ns_aufstieg", "label": "Finanz/Industrie" },
+    { "fromNode": "rot_kriegsprofit", "toNode": "1939_45_ww2", "label": "Anreiz" },
+    { "fromNode": "rot_demokratiedefizit", "toNode": "1957_ewg", "label": "Kritik" },
+
+    { "fromNode": "vio_biz", "toNode": "1944_bretton", "label": "Clearing/Koordination" },
+    { "fromNode": "vio_atl", "toNode": "1947_52_marshall", "label": "Elitenbindung" },
+    { "fromNode": "vio_cfr", "toNode": "1944_bretton", "label": "Narrative/Frames" },
+
+    { "fromNode": "meta_hf", "toNode": "gelb_suprastruktur", "label": "Präferenz" },
+    { "fromNode": "meta_hf", "toNode": "gelb_kartell", "label": "Skalen/Ordnung" },
+    { "fromNode": "meta_netze", "toNode": "vio_atl", "label": "Trägerschicht" },
+    { "fromNode": "meta_netze", "toNode": "vio_cfr", "label": "Trägerschicht" },
+    { "fromNode": "meta_staat", "toNode": "1947_52_marshall", "label": "Westbindung" },
+    { "fromNode": "1957_ewg", "toNode": "gruen_resultat", "label": "Effekt" },
+    { "fromNode": "1951_egks", "toNode": "gruen_resultat", "label": "Effekt" },
+    { "fromNode": "root", "toNode": "essenz", "label": "Leitidee" },
+    { "fromNode": "root", "toNode": "1914_sarajevo", "label": "Start" },
+    { "fromNode": "root", "toNode": "1957_ewg", "label": "Zielraum" }
+  ]
+}

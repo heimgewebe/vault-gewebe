@@ -1,0 +1,28 @@
+{
+	"nodes":[
+		{"id":"root","type":"text","text":"John J. McCloy (1895–1989)\nRoot • Quelle: Standardbio + Zeitzeugenakte (Synthese)","x":0,"y":0,"width":360,"height":100,"color":"blue"},
+		{"id":"bio","type":"text","text":"Biografie (Grau)\n• Harvard-Jurist\n• Assistant Sec. of War\n• Hochkommissar BRD\n• Weltbank, CFR, Ford, Chase","x":-470,"y":-160,"width":280,"height":140,"color":"gray"},
+		{"id":"pos_wb","type":"text","text":"Position: Weltbank (1947–49)\n• Marshall-Architektur\n• Finanz-Governance","x":340,"y":-240,"width":280,"height":110,"color":"yellow"},
+		{"id":"pos_hicom","type":"text","text":"Position: US-Hochkommissar BRD (1949–52)\n• Begnadigungen (Krupp/Flick)\n• Re-Integration Eliten","x":360,"y":-20,"width":320,"height":130,"color":"yellow"},
+		{"id":"pos_war","type":"text","text":"Position: Assistant Sec. of War\n• Internierungen\n• Auschwitz-Anträge abgelehnt","x":360,"y":200,"width":320,"height":120,"color":"yellow"},
+		{"id":"rockefeller","type":"text","text":"Rockefeller-Sphäre\n• Chase Manhattan (Board)\n• Hausanwalt/Berater","x":-520,"y":60,"width":280,"height":120,"color":"violet"},
+		{"id":"cfr","type":"text","text":"Council on Foreign Relations (CFR)\n• Chairman/Director\n• Außenpolitik-Thinktank","x":-860,"y":-40,"width":300,"height":120,"color":"violet"},
+		{"id":"bilderberg","type":"text","text":"Bilderberg (ab 1954)\n• Eliteforum Transatlantik\n• informelle Abstimmung","x":-860,"y":160,"width":300,"height":110,"color":"violet"},
+		{"id":"ford","type":"text","text":"Ford Foundation (Chair)\n• Philanthropie + Policy\n• Soft-Power-Hebel","x":-520,"y":240,"width":280,"height":110,"color":"violet"},
+		{"id":"chase","type":"text","text":"Chase Manhattan Bank\n• Transnationale Kapitalflüsse\n• Rockefeller-Hausbank","x":-520,"y":420,"width":300,"height":110,"color":"violet"},
+		{"id":"auschwitz","type":"text","text":"Auschwitz-Nichtbombardierung (1944)\n• „keine Ablenkung“\n• IG-Farben-Ziele nahebei bombardiert","x":760,"y":220,"width":360,"height":130,"color":"red"},
+		{"id":"krupp","type":"text","text":"Begnadigungen (Krupp/Flick)\n• Vermögensrückgabe\n• Kontinuität der Eliten","x":760,"y":20,"width":340,"height":120,"color":"red"},
+		{"id":"internierung","type":"text","text":"Internierungen (USA, 110k+)\n• ohne Verfahren\n• spätere Rechtfertigung","x":760,"y":-180,"width":340,"height":120,"color":"red"},
+		{"id":"paperclip","type":"text","text":"Operation Paperclip\n• Technikvorsprung > Recht\n• Integration belasteter Akteure","x":760,"y":-360,"width":340,"height":120,"color":"red"},
+		{"id":"wirkung","type":"text","text":"Wirkungen (Grün)\n• Westbindung BRD\n• Technokratische Pfade\n• Kapital-/Macht-Stabilisierung","x":-120,"y":340,"width":320,"height":120,"color":"green"},
+		{"id":"meta_hf","type":"text","text":"Internationale Hochfinanz (Meta-Knoten)\n• Transnationale Banken/Fonds\n• Thinktanks/Stiftungen/Foren\n• Supranationale Institutionen","x":-200,"y":-360,"width":400,"height":140,"color":"blue"},
+		{"id":"legende","type":"text","text":"Legende\nBlau = Zentrum/Meta\nGrau = Grundlagen\nGelb = Positionen/Prozesse\nViolett = Netzwerke/Ebenen\nRot = Kontroversen/Hindernisse\nGrün = Wirkungen/Ziele\nHinweis: Meta-Knoten ohne Vollverbindungen, Verbindungen sparsam+labeln.","x":-980,"y":360,"width":360,"height":180,"color":"gray"}
+	],
+	"edges":[
+		{"fromNode":"root","fromSide":"bottom","toNode":"wirkung","toSide":"top","label":"Folgen"}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

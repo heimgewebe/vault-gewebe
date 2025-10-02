@@ -1,5 +1,6 @@
 {
 	"nodes":[
+		{"id":"e4b03b7989419b02","type":"group","x":280,"y":540,"width":300,"height":300,"label":"Unbenannte Gruppe"},
 		{"id":"kinder_unterstuetzen","type":"text","text":"Kinder unterstützen","x":-200,"y":640,"width":260,"height":56},
 		{"id":"mit_kindern_spielen","type":"text","text":"mit Kindern spielen","x":-200,"y":700,"width":260,"height":56},
 		{"id":"kinder_entsprechend_pflegen","type":"text","text":"Kinder entsprechend pflegen","x":-200,"y":760,"width":320,"height":56},
@@ -18,7 +19,6 @@
 		{"id":"spielmobile","type":"text","text":"Spielmobile","x":-980,"y":400,"width":220,"height":56},
 		{"id":"erlebnispaedagogik","type":"text","text":"Erlebnispädagogik","x":-980,"y":460,"width":260,"height":56},
 		{"id":"kinder_und_jugendliche_partizipieren_lassen","type":"text","text":"Kinder und Jugendliche partizipieren lassen","x":-980,"y":520,"width":520,"height":56},
-		{"id":"bauspielplatz","type":"text","text":"Bauspielplatz","x":-420,"y":100,"width":260,"height":56},
 		{"id":"ferienbetreuung","type":"text","text":"Ferienbetreuung","x":-260,"y":200,"width":260,"height":56},
 		{"id":"konzeptionelle_schwerpunkte","type":"text","text":"Konzeptionelle Schwerpunkte","x":890,"y":-130,"width":350,"height":60},
 		{"id":"unterschiedliche_paedagogische_handlungskonzepte","type":"text","text":"unterschiedliche pädagogische Handlungskonzepte","x":880,"y":-300,"width":500,"height":60},
@@ -63,7 +63,8 @@
 		{"id":"hj_hilfen","type":"text","text":"Einrichtung der Kinder- und Jugendhilfe und Hilfen zur Erziehung","x":220,"y":500,"width":740,"height":64},
 		{"id":"bei_kindeswohlgefaehrdung","type":"text","text":"bei Kindeswohlgefährdung","x":620,"y":560,"width":300,"height":56},
 		{"id":"hilfen_zur_erziehung_kurz_hze","type":"text","text":"Hilfen zur Erziehung (kurz HZE)","x":620,"y":620,"width":360,"height":56},
-		{"id":"bei_allgemeinen_fragen_zur_entwicklung_der_kinder___der_erziehung","type":"text","text":"bei allgemeinen Fragen zur Entwicklung der Kinder / der Erziehung","x":812,"y":362,"width":640,"height":56}
+		{"id":"bei_allgemeinen_fragen_zur_entwicklung_der_kinder___der_erziehung","type":"text","text":"bei allgemeinen Fragen zur Entwicklung der Kinder / der Erziehung","x":812,"y":362,"width":640,"height":56},
+		{"id":"bauspielplatz","type":"text","text":"Bauspielplatz","x":-444,"y":100,"width":260,"height":56}
 	],
 	"edges":[
 		{"id":"e_arbeitsfelder_kindertageseinrichtungen","fromNode":"arbeitsfelder","fromSide":"right","toNode":"kindertageseinrichtungen","toSide":"left"},

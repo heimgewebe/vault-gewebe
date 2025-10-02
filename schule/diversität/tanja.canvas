@@ -1,0 +1,25 @@
+{
+	"nodes":[
+		{"id":"root","type":"text","text":"Fallbeispiel Tanja – Lebenslagenkonzept (Poppe 2023)","x":0,"y":0,"width":400,"height":60,"color":"blue"},
+		{"id":"materiell","type":"text","text":"Materielle Dimension:\n- Wenig Einkommen (Vater Schichtdienst, Mutter Ausbildung abgebrochen)\n- Kleine Wohnung, 8. Stock, kein Balkon\n- Kein eigenes Zimmer/Schreibtisch\n- Kein Geld für Schulhefte, Stifte, Geigenunterricht\n- Keine Restaurantbesuche, Ausflüge","x":-500,"y":200,"width":360,"height":220,"color":"grey"},
+		{"id":"sozial","type":"text","text":"Soziale Dimension:\n- Dauerstreit der Eltern → Rückzug\n- Übernahme von Erwachsenenrollen (Haushalt, Geschwister)\n- Kein Ausflug, kein Shopping mit Freundinnen\n- Gefahr von Isolation, Scham, Parentifizierung","x":-100,"y":200,"width":360,"height":200,"color":"grey"},
+		{"id":"essenz","type":"text","text":"Essenz:\nRelative Armut – alle Dimensionen betroffen.\nMaterielle Knappheit zieht soziale, gesundheitliche\nund bildungsbezogene Nachteile nach sich.","x":106,"y":637,"width":377,"height":167,"color":"green"},
+		{"id":"gesundheit","type":"text","text":"Gesundheitliche Dimension:\n- Kopf- und Bauchschmerzen\n- Psychische Belastung, Stress\n- Konzentrationsprobleme, Noten verschlechtern sich\n- Mutter wirkt erschöpft, evtl. depressiv\n- Kleine Schwester zeigt auffälliges Verhalten","x":302,"y":140,"width":360,"height":200,"color":"grey"},
+		{"id":"legende","type":"text","text":"Legende:\nBlau = Titel/Meta\nGrau = Dimensionen\nGrün = Essenz\nAchse: links→rechts = Dimensionen (Materiell, Sozial, Gesundheit, Bildung)","x":699,"y":-18,"width":320,"height":120,"color":"yellow"},
+		{"id":"bildung","type":"text","text":"Kulturell/Bildung:\n- Kein Schreibtisch, Lernumgebung ungünstig\n- Fehlende Materialien für Schule\n- Klassenausflug geschwänzt (kein Geld)\n- Kein Musik-/Instrumentalunterricht\n- Bildungsbenachteiligung → geringere Chancen","x":647,"y":426,"width":358,"height":240,"color":"grey"}
+	],
+	"edges":[
+		{"id":"e1","fromNode":"root","fromSide":"bottom","toNode":"materiell","toSide":"right","label":"Dimension"},
+		{"id":"e2","fromNode":"root","fromSide":"bottom","toNode":"sozial","toSide":"top","label":"Dimension"},
+		{"id":"e3","fromNode":"root","fromSide":"bottom","toNode":"gesundheit","toSide":"top","label":"Dimension"},
+		{"id":"e4","fromNode":"root","fromSide":"bottom","toNode":"bildung","toSide":"left","label":"Dimension"},
+		{"id":"e5","fromNode":"materiell","fromSide":"right","toNode":"essenz","toSide":"top","label":"Auswirkung"},
+		{"id":"e6","fromNode":"sozial","fromSide":"bottom","toNode":"essenz","toSide":"top","label":"Auswirkung"},
+		{"id":"e7","fromNode":"gesundheit","fromSide":"bottom","toNode":"essenz","toSide":"top","label":"Auswirkung"},
+		{"id":"e8","toFloating":false,"fromFloating":false,"fromNode":"bildung","fromSide":"left","toNode":"essenz","toSide":"top","label":"Auswirkung"}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}
