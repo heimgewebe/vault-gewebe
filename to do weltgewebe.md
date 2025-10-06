@@ -1,151 +1,381 @@
-Alles klar. Hier sind präzise Codex-Anweisungen in Blöcken für das weltgewebe-Repo, abgeleitet aus Stärken von wgx (CLI-Disziplin, Linting/CI) und der eigenen Zielstruktur/Techstack (damit’s wirklich passt). Ich verweise auf die vorhandene Repo-Struktur und Tech-Docs, damit Codex korrekt einordnet (Ordner/Dateien etc.).
+Alles klar. Hier sind präzise **Anweisungen für Codex** (nur Delta, copy-paste-fertig). Jede Einheit: Ziel → Änderungen → Patch/Commands → Checks.
 
-⸻
+---
 
-Block 0 — Kontextanker (nur für Codex)
-	•	Halte dich an die dokumentierte Zielstruktur des Repos (apps/web, apps/api, infra, ci, docs, …). Quelle: Architekturstruktur des Weltgewebes (Ordner, Pfade, Dienste).
-	•	Backend: Rust/Axum, Frontend: SvelteKit, Infra via Compose-Profile, Monitoring/Prometheus vorgesehen; Events via NATS/Outbox.
+# 1) ```
 
-⸻
+---
 
-Block 1 — 
+# 2) Observability: Prometheus-Config anlegen (passt zur Compose)
 
-Block 2 — Policies/Configs auslagern
+**Ziel:** Fehlendes Mount-Target für Prometheus bereitstellen.
 
-Ziel: Governance-, Datenschutz- und Betriebsparameter versionieren (Docs sagen Privacy-by-Design, RoN-Anonymisierung, Timer 7/7/84 etc.).
-	1.	Lege an:
+**Datei:** `infra/compose/monitoring/prometheus.yml`
 
-	•	configs/app.defaults.yml (z. B. fade_days: 7, ron_days: 84, anonymize_opt_in: true, delegation_expire_days: 28)
-	•	policies/limits.yml (Rate-Limits, Payload-Größen)
-	•	policies/security.yml (CSP-Profile, erlaubte Origins)
-	•	policies/retention.yml (Retention/Forget-Pfade konsistent zu DSGVO-Zielen). (Techstack sieht Data-Lifecycle/Forget-Pipeline vor.)
+**Patch:**
 
-	2.	API-Start liest configs/app.defaults.yml; HA_* ENV overridet.
+```bash
+mkdir -p infra/compose/monitoring
+cat > infra/compose/monitoring/prometheus.yml <<'YAML'
+global:
+  scrape_interval: 10s
 
-⸻
+scrape_configs:
+  - job_name: prometheus
+    static_configs:
+      - targets: ["prometheus:9090"]
+YAML
+git add infra/compose/monitoring/prometheus.yml
+```
 
-Block 3 — Schreib- & Lint-Disziplin wie wgx
+**Check:**
 
-Ziel: Sauberes Repo mit einheitlicher Sprache/Formatierung (wgx macht das vor: .editorconfig, .markdownlint.jsonc, Vale-Regel).
-	1.	Kopiere/erzeuge:
+```bash
+docker compose -f infra/compose/compose.observ.yml config >/dev/null && echo "OK: observ profile valid"
+```
 
-	•	.editorconfig (UTF-8, LF, spaces, md: keep trailing whitespace=false) nach Root (angepasst).
-	•	.markdownlint.jsonc → Regeln wie bei wgx (Headings, line length, code-fences). (wgx führt eine solche Datei; übernehmen mit Projekt-Sinnmaß.)
-	•	.vale/ + .vale.ini → Stilprofil „English-only in code & docs“ (wgx hat wgxlint-Style als Beispiel).
+---
 
-	2.	README/Docs: Einheitlich Englisch in Entwickler-Docs (User-Facing Texte können deutsch bleiben, aber Code/Docs standardisiert). (Weltgewebe Docs existieren bereits; ergänze Hinweis in CONTRIBUTING.)
+# 3) Semantik-Contracts: minimale Schemas spiegeln (bis Upstream gespiegelt ist)
 
-⸻
+**Ziel:** `semantics-intake` Workflow soll Dateien validieren können, auch ohne Upstream-Spiegel.
 
-Block 4 — wgx-Integration (Contract + Tasks)
+**Dateien:**
 
-Ziel: Weltgewebe nutzt zentrale CLI statt lokaler Script-Wildwuchs. (wgx liefert zentrale Kommandos mit cmd/*.bash, modules/*.bash, Tests via Bats.)
-	1.	Datei: .wgx/profile.yml
+- `contracts/semantics/node.schema.json`
+    
+- `contracts/semantics/edge.schema.json`
+    
+- `.gewebe/in/.gitkeep`
+    
 
-wgx:
-  apiVersion: v1
-  requiredWgx: "^2.0"
-  repoKind: "app"
-  tasks:
-    dev: ["infra:up:core", "web:dev", "api:dev"]
-    test: ["api:test", "web:test"]
-    lint: ["lint:md", "lint:vale", "lint:sh"]
-  env:
-    BASE_URL: "http://localhost:8787"
+**Patch:**
 
-	2.	Datei: .wgx/tasks.yml (nur Adapter, Logik bleibt bei wgx)
+```bash
+mkdir -p contracts/semantics .gewebe/in
+cat > contracts/semantics/node.schema.json <<'JSON'
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Node",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["id", "type"],
+  "properties": {
+    "id": { "type": "string" },
+    "type": { "type": "string" }
+  }
+}
+JSON
 
-lint:md: { run: "npx markdownlint-cli2 '**/*.md'" }
-lint:vale: { run: "vale docs/ README.md" }
-lint:sh: { run: "shfmt -d . && shellcheck $(git ls-files '*.sh' '*.bash' || true)" }
-api:test: { run: "cargo test --manifest-path apps/api/Cargo.toml" }
-web:test: { run: "pnpm -C apps/web test" }
-infra:up:core: { run: "docker compose -f infra/compose/compose.core.yml up -d --build" }
-web:dev: { run: "pnpm -C apps/web dev" }
-api:dev: { run: "cargo run --manifest-path apps/api/Cargo.toml" }
+cat > contracts/semantics/edge.schema.json <<'JSON'
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Edge",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["from", "to", "rel"],
+  "properties": {
+    "from": { "type": "string" },
+    "to": { "type": "string" },
+    "rel": { "type": "string" }
+  }
+}
+JSON
 
-	3.	Dokumentation in docs/beitrag.md ergänzen: „Nutze wgx-Befehle; keine lokalen Alias-Skripte.“ (wgx trennt cmd/modules + Tests sauber.)
+touch .gewebe/in/.gitkeep
+git add contracts/semantics/node.schema.json contracts/semantics/edge.schema.json .gewebe/in/.gitkeep
+```
 
-⸻
+**Check:**
 
-Block 5 — CI-Workflows (aus wgx abgeleitete Strenge)
+```bash
+jq -e . contracts/semantics/node.schema.json >/dev/null && jq -e . contracts/semantics/edge.schema.json >/dev/null && echo "OK: schemas syntaktisch valide"
+```
 
-Ziel: Konsistente Gates: Lint, Build, Tests, Smoke. (wgx hat mehrere Workflows inkl. compat-on-demand.)
-	1.	ci/github/workflows/web.yml
-	•	Jobs: node setup, pnpm install, wgx lint (md/vale/sh), pnpm build, pnpm test.
-	2.	ci/github/workflows/api.yml
-	•	Jobs: toolchain-cache, cargo fmt -- --check, cargo clippy -D warnings, cargo test, Start API in Hintergrund + k6 Smoke gegen /health/*.
-	•	k6 via docker run grafana/k6 run -e BASE_URL=http://host.docker.internal:8787 apps/api/tests/smoke_k6.js.
-	3.	ci/github/workflows/infra.yml
-	•	Compose core up (db, caddy, api), run readiness checks, then tear-down. Compose-Profile existieren im Zielmodell.
-	4.	Optional compat.yml
-	•	Fixture-Tests für Event-Schemas/DB-Migrations (golden files) → verhindert Breaking Changes (analog „compat“-Gedanke in wgx).
+---
 
-⸻
+# 4) Vale-Setup säubern (Namespace „Weltgewebe“ konsolidieren)
 
-Block 6 — CONTRIBUTING (klar & streng)
+**Ziel:** Keine alten `wgxlint`-Reste; `BasedOnStyles = Weltgewebe`; fehlende Prosa-Regel ergänzen.
 
-Ziel: Entwicklerleitplanken (wie bei wgx).
-	1.	Datei: docs/beitrag.md (oder CONTRIBUTING.md im Root) erweitern um:
-	•	„Use English in code & docs.“
-	•	„Run wgx lint and wgx test before PR.“
-	•	Commit-Konvention (Conventional Commits), PR-Template, Review-Checklist (Lint/Tests/Docs/Tickets).
-	2.	Verweise auf vorhandene Projekt-Dokumente (Zusammenstellung, Inhalt, Techstack) für Domänenverständnis.
+**Änderungen:**
 
-⸻
+- `BasedOnStyles = Weltgewebe` sicherstellen.
+    
+- Stil-Datei `GermanProse.yml` unter `Weltgewebe/` ergänzen.
+    
+- Alte `.vale/styles/wgxlint` (falls vorhanden) entfernen.
+    
 
-Block 7 — Dev-Bootstrap (Onboarding in 1 Befehl)
+**Patch:**
 
-Ziel: „Dev up in 5-10 min“.
-	1.	Datei: scripts/bootstrap.sh
-	•	prüft: pnpm, rustup, docker, shfmt, shellcheck, vale, markdownlint-cli2
-	•	installiert fehlende Tools lokal (oder gibt klare Hinweise).
-	•	ruft wgx dev → Compose core hoch, Web+API im Dev-Modus.
-	2.	Devcontainer (optional): /.devcontainer analog wgx minimal (git, gh, node, shellcheck/shfmt/bats), Post-Create installiert Linter.
+```bash
+mkdir -p .vale/styles/Weltgewebe
+# .vale.ini hartstellen
+cat > .vale.ini <<'INI'
+StylesPath = .vale/styles
+MinAlertLevel = suggestion
 
-⸻
+[*.md]
+BasedOnStyles = Weltgewebe
+INI
 
-Block 8 — Infra Compose (profile-basiert)
+# GermanProse-Regel ergänzen
+cat > .vale/styles/Weltgewebe/GermanProse.yml <<'YAML'
+extends: substitution
+level: suggestion
+ignorecase: true
+message: "Begriff prüfen: '%s' – konsistente Schreibweise wählen."
+swap:
+  "bspw.": "z. B."
+  "u.a.": "u. a."
+YAML
 
-Ziel: reproduzierbare lokale Umgebung, später CI-Smoke.
-	1.	Ergänze/prüfe Profile:
-	•	infra/compose/compose.core.yml → web, api, db, caddy
-	•	infra/compose/compose.observ.yml → prometheus, grafana + Scrape /metrics
-	•	infra/compose/compose.stream.yml → nats/JetStream
-	•	infra/compose/compose.search.yml → Typesense/Meili
-(Pfad/Dateinamen sind im Architekturplan festgelegt.)
-	2.	infra/monitoring/prometheus.yml → scrape api:8787/metrics. (Monitoring-Ordner ist vorgesehen.)
+# optional Altlasten
+rm -rf .vale/styles/wgxlint 2>/dev/null || true
 
-⸻
+git add .vale.ini .vale/styles/Weltgewebe/GermanProse.yml
+```
 
-Block 9 — Rollout-Plan (inkrementell, risikoarm)
-	1.	PR-1: Block 3 (Lint) + CONTRIBUTING (Block 6) → nur Meta, kein Runtime-Risiko.
-	2.	PR-2: Block 1 (Health + Metrics) + minimaler Router-Wire.
-	3.	PR-3: Block 8 (Compose core) + Block 5 (API-CI ohne k6).
-	4.	PR-4: k6-Smoke in CI + Observability-Compose.
-	5.	PR-5: Block 4 (wgx-Contract/Tasks) + Block 7 (Bootstrap).
+**Check:**
 
-⸻
+```bash
+grep -q 'BasedOnStyles = Weltgewebe' .vale.ini && echo "OK: Vale konfig"
+```
 
-Verdichtete Essenz
-	•	Jetzt: Lint/CONTRIBUTING rein.
-	•	Dann: Health/Metrics + k6-Smoke.
-	•	Parallel: wgx-Contract & Tasks → einheitliche Kommandos.
-	•	Ziel: Von „Doc-stark“ zu „ops-hart“ – mit minimalem Risiko.
+---
 
-Ironische Auslassung
+# 5) Docs-Runbook Pfad konsistent
 
-Die Karte zeigt alle Fäden der Welt – nur der CI-Faden fehlte noch. Jetzt weben wir ihm einen strammen Knoten: Lint links, Smoke rechts, und in der Mitte ein Router, der „OK“ sagt.
+**Ziel:** Policies erwarteten `docs/runbooks/observability.md`; vorhanden war `docs/runbook.observability.md`. Wir vereinheitlichen auf `docs/runbooks/observability.md`.
 
-∴ Ungewissheit (Grad: niedrig-mittel)
-	•	Was sicher ist: Zielstruktur/Techstack und wgx-Disziplin sind dokumentiert (zitiert).
-	•	Was unklar ist: Exakter aktueller Codezustand der API/Web-Apps, bestehende Ports, vorhandene Tooling-Versionen → ich habe Defaults/Adapter vorgeschlagen.
-	•	Produktiv: Unklarheit wird durch inkrementelle PR-Reihenfolge abgefedert.
+**Patch (Move + Linkfix):**
 
-∆-Radar
+```bash
+mkdir -p docs/runbooks
+if [ -f docs/runbook.observability.md ]; then
+  git mv docs/runbook.observability.md docs/runbooks/observability.md
+fi
+# Policies ggf. auf neuen Pfad heben
+if grep -q 'docs/runbooks/observability.md' policies/limits.yaml 2>/dev/null; then
+  : # schon korrekt
+else
+  sed -i 's#observability.md#observability.md#g' policies/limits.yaml 2>/dev/null || true
+fi
+git add -A
+```
 
-Wir schwenken von Erzähl-Exzellenz zu Durchführungs-Exzellenz: weniger Poster, mehr Pipelines. Mutation: Straffung der Dev-Regeln (wgx-Like), Verstärkung der Betriebsfähigkeit (Health/Smoke/Compose), Seitwärts in Richtung wgx-Kompatibilität.
+**Check:**
 
-⸻
+```bash
+test -f docs/runbooks/observability.md && echo "OK: Runbook vorhanden"
+```
 
-Wenn du willst, packe ich dir daraus direkt PR-Vorlagen (Branch-Namen, Commit-Messages, Datei-Skeletons) in einem nächsten Schritt zusammen.
+---
+
+# 6) API-Config: ohne `serde_yaml` (eigener Parser) – Sicherstellen
+
+**Ziel:** `apps/api/Cargo.toml` ohne `serde_yaml`; `config.rs` nutzt `parse_config`.
+
+**Patch (nur falls nötig):**
+
+```bash
+applypatch <<'PATCH'
+*** Begin Patch
+*** Update File: apps/api/Cargo.toml
+@@
+- serde_json = "1"
+- serde_yaml = "0.9"
++ serde_json = "1"
+*** End Patch
+PATCH
+```
+
+> Falls `apps/api/src/config.rs` noch `serde_yaml::from_str` nutzt: auf `parse_config`-Variante wechseln (du hast die manuelle Parser-Implementierung bereits eingespielt; kein weiterer Patch nötig, wenn `parse_config` vorhanden ist).
+
+**Check:**
+
+```bash
+! grep -q 'serde_yaml' apps/api/Cargo.toml && echo "OK: keine serde_yaml in Cargo.toml"
+rg -n "parse_config\\(|serde_yaml" apps/api/src/config.rs
+```
+
+---
+
+# 7) API-Smoke-Workflow robuster: `jq` sicher installieren
+
+**Ziel:** `api-smoke.yml` soll `jq` nicht voraussetzen.
+
+**Patch:**
+
+```bash
+applypatch <<'PATCH'
+*** Begin Patch
+*** Update File: .github/workflows/api-smoke.yml
+@@
+       - name: Wait for API health endpoint
+         run: |
+           ok=0
+           for i in {1..60}; do
+             if curl -fsS http://127.0.0.1:8787/health/live; then ok=1; break; fi
+             sleep 0.5
+           done
+           [ "$ok" -eq 1 ] || { echo "health/live not ready in time"; exit 1; }
++      - name: Ensure jq present
++        run: |
++          sudo apt-get update -y
++          sudo apt-get install -y jq
+       - name: Probe /health and /metrics
+         run: |
+           set -euxo pipefail
+           curl -fsS http://127.0.0.1:8787/health/live
+           curl -fsS -o /dev/null -w "%{http_code}\n" http://127.0.0.1:8787/health/ready | grep -E '^(200|503)$'
+*** End Patch
+PATCH
+```
+
+**Check:** CI-Run des Jobs muss ohne „jq not found“ durchlaufen.
+
+---
+
+# 8) Devcontainer: Script ausführbar + LF-EOL
+
+**Ziel:** `.devcontainer/post-create.sh` mit Exec-Bit und LF.
+
+**Commands:**
+
+```bash
+chmod +x .devcontainer/post-create.sh
+git add --chmod=+x .devcontainer/post-create.sh
+```
+
+(EOL ist bereits über `.gitattributes` auf `LF` für `*.sh` gesetzt.)
+
+**Check:**
+
+```bash
+git ls-files -s .devcontainer/post-create.sh | awk '{print $1, $2, $4}'
+# Mode sollte 100755 anzeigen
+```
+
+---
+
+# 9) Python-Tooling Workflow: final (mit setup-uv, Cache, Manifesterkennung)
+
+**Ziel:** Zusammengeführte, saubere Fassung nutzen.
+
+**Datei:** `.github/workflows/python-tooling.yml`
+
+**Patch (vollständig überschreiben):**
+
+```bash
+cat > .github/workflows/python-tooling.yml <<'YAML'
+name: python-tooling
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - "**/*.py"
+      - ".github/workflows/python-tooling.yml"
+      - "tools/py/**"
+      - "uv.lock"
+      - "pyproject.toml"
+      - "**/requirements*.txt"
+  push:
+    branches: [ main ]
+    paths:
+      - "**/*.py"
+      - ".github/workflows/python-tooling.yml"
+      - "tools/py/**"
+      - "uv.lock"
+      - "pyproject.toml"
+      - "**/requirements*.txt"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: python-tooling-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  uv-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v1
+
+      - name: Cache uv cache dir
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/uv
+          key: uv-${{ runner.os }}-${{ hashFiles('**/pyproject.toml', '**/requirements*.txt', '**/uv.lock') }}
+          restore-keys: |
+            uv-${{ runner.os }}-
+
+      - name: Sync dependencies (all manifests)
+        shell: bash
+        run: |
+          set -euo pipefail
+          UV=uv
+          found=0
+          while IFS= read -r dir; do
+            found=1
+            if [ -f "$dir/uv.lock" ]; then
+              echo "::group::uv sync (locked) in $dir"
+              (cd "$dir" && $UV sync --locked)
+              echo "::endgroup::"
+            elif [ -f "$dir/requirements.txt" ]; then
+              echo "::group::uv pip sync in $dir"
+              (cd "$dir" && $UV pip sync requirements.txt)
+              echo "::endgroup::"
+            elif [ -f "$dir/pyproject.toml" ]; then
+              echo "::group::uv sync in $dir"
+              (cd "$dir" && $UV sync)
+              echo "::endgroup::"
+            fi
+          done < <(find . -type f \( -name "uv.lock" -o -name "requirements.txt" -o -name "pyproject.toml" \) -exec dirname {} \; | sort -u)
+          if [ "$found" -eq 0 ]; then
+            echo "No Python dependency manifest found. Skipping sync."
+          fi
+
+      - name: Python sanity check
+        run: python -c "import sys; print('python ok:', sys.version)"
+YAML
+git add .github/workflows/python-tooling.yml
+```
+
+**Check:** Workflow lädt, zeigt `uv --version` (implizit), synct ggf. Manifeste ohne Fehler.
+
+---
+
+# 10) Abschluss-Checks (lokal)
+
+```bash
+# Rust
+cargo fmt --all -- --check
+cargo clippy --all-targets -- -D warnings
+cargo test --workspace -q
+
+# API quick check
+RUST_LOG=info cargo run -p weltgewebe-api & pid=$!; sleep 1
+curl -fsS localhost:8787/health/live >/dev/null
+curl -fsS localhost:8787/version | jq -e '.version and .commit and .build_timestamp' >/dev/null
+kill $pid 2>/dev/null || true
+
+# Vale soft check (nur Hinweise)
+vale --minAlertLevel=suggestion docs || true
+
+# Compose observability
+docker compose -f infra/compose/compose.observ.yml config >/dev/null
+```
+
+Fertig.

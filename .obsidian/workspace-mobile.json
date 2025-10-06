@@ -11,17 +11,10 @@
             "id": "5b263b183ae1de92",
             "type": "leaf",
             "state": {
-              "type": "canvas",
-              "state": {
-                "file": "weltverschwörung/mccloy.canvas",
-                "viewState": {
-                  "x": 81.2974504249292,
-                  "y": 417.64872521246457,
-                  "zoom": -0.7507947475295855
-                }
-              },
-              "icon": "lucide-layout-dashboard",
-              "title": "mccloy"
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "Neuer Tab"
             }
           }
         ]
@@ -213,7 +206,7 @@
         "state": {
           "type": "file-properties",
           "state": {
-            "file": "schule/arbeitsfelder/interview.canvas"
+            "file": "halde/wgx myc.md"
           },
           "icon": "lucide-info",
           "title": "Dateieigenschaften"
@@ -241,38 +234,44 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "5b263b183ae1de92",
+  "active": "95ee38c492322f6d",
   "lastOpenFiles": [
+    "out_of_comfort_zone_with_sustainability.canvas",
+    "out_of_comfort_zone.canvas",
+    "halde/wgx myc.md",
+    "review zyklus.md",
+    "repos feedback.md",
+    "halde/blaupause hauski-audio.md",
+    "pr27.md",
+    "prototyp.md",
+    "reiselisten-mindmap.md",
+    "wgx to do.md",
+    "schule/heilpädagogik/t_i_p-ziel_leitprinzipien.canvas",
+    "halde/wgx myc - Seite 2.md",
+    "schule/heilpädagogik/theorie_integrativer_prozesse.canvas",
+    "hauski-feedback.md",
+    "weltverschwörung/mccloy.canvas",
+    "weltverschwörung/thatchers lohnzerstörung.md",
+    "to do semantAH.md",
+    "halde/wgx zutrag.md",
+    "julie.canvas",
+    "weltverschwörung/thatchers lohnzerstörung.md",
     "weltverschwörung/mccloy+.canvas",
     "weltverschwörung/ordo ab chao 1914 - 57.canvas",
     "schule/arbeitsfelder/interview.canvas",
     "schule/arbeitsfelder/arbeitsfelder_als_erzieher.canvas",
     "schule/arbeitsfelder/arbeitsfelder.jpeg",
-    "reiselisten-mindmap.md",
     "schule/heilpädagogik/t_i_p-störungen.canvas",
     "schule/arbeitsfelder/Interviewleitfaden.docx",
-    "schule/heilpädagogik/theorie_integrativer_prozesse.canvas",
-    "schule/heilpädagogik/foerderschwerpunkt_geistige_behinderung.canvas",
-    "schule/konflikte/kita_konflikte.canvas",
     "coding/weltgewebe/docs/process/README.md",
-    "schule/diversität/tanja.canvas",
     "schule/diversität/AASozialeUngleichheitTanjaTextPoppe(1).pdf",
-    "weltverschwörung/mccloy.canvas",
     "schule/politik/Poppe_Armut.pdf",
-    "pr27.md",
     "weltgewebe-programmierung/dokumente/wgxNeu/wgxMaxi.md",
     "to do weltgewebe.md",
-    "wgx myc - Seite 2.md",
-    "wgx myc.md",
-    "wgx zutrag.md",
     "wgx hyper.md",
     "Unbenannt.md",
-    "repos feedback.md",
-    "wgx to do.md",
-    "blaupause.md",
     "audio.md",
     "to do hauski old.md",
-    "julie.canvas",
     "coding/hauski/policies/perf.json",
     "coding/hauski/policies/slo.yaml",
     "coding/hauski/docs/runbooks/local-dev.md",
@@ -284,12 +283,6 @@
     "coding/hauski/infra/compose/compose.core.yml",
     "coding/hauski/infra/compose",
     "coding/hauski/infra",
-    "coding/weltgewebe/docs/process/bash-tooling-guidelines.md",
-    "prototyp.md",
-    "wg feedback.md",
-    "coding/tools/huhu.md",
-    "coding/tools/tttt.md",
-    "coding/weltgewebe/docs/techstack.md",
     "schule/PNG-Bild.png",
     "schule/PNG-Bild 2.png",
     "schule/senioren_perspektive.png",

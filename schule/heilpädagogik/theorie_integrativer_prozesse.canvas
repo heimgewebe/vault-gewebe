@@ -22,7 +22,6 @@
 		{"id":"team_e","type":"text","text":"Essenz: Teamreflexion","x":-1050,"y":870,"width":240,"height":80,"color":"7"},
 		{"id":"chancen","type":"text","text":"Chancen\n• Vielfalt als Ressource\n• Gemeinschaft stärken\n• Innovation fördern","x":970,"y":115,"width":420,"height":180,"color":"3"},
 		{"id":"chancen_e","type":"text","text":"Essenz: Potenzial von Vielfalt","x":1302,"y":127,"width":280,"height":80,"color":"3"},
-		{"id":"ziel","type":"text","text":"[[t_i_p-ziel_leitprinzipien.canvas|Ziel & Leitprinzipien]]\n• Egalitäre Differenz\n• Teilhabe für alle\n• Unterschiede anerkennen ohne Exklusion\n• Bezug: Menschenrechte, UN-BRK\n","x":676,"y":-272,"width":480,"height":220,"color":"3"},
 		{"id":"charakter_e","type":"text","text":"Essenz: Konflikt + Reflexion","x":32,"y":-460,"width":280,"height":80,"color":"5"},
 		{"id":"stoerung","type":"text","text":"[[t_i_p-störungen.canvas|Störungen]]\n• Überabgrenzung → Isolation\n• Überannäherung → Überfürsorglichkeit\n• Strukturelle Blockaden","x":-202,"y":1255,"width":460,"height":220,"color":"2"},
 		{"id":"stoerung_e","type":"text","text":"Essenz: Balanceverlust","x":-153,"y":1521,"width":240,"height":80,"color":"2"},
@@ -31,7 +30,8 @@
 		{"id":"ziel_e","type":"text","text":"Essenz: Egalitäre Differenz","x":1102,"y":-248,"width":280,"height":80,"color":"3"},
 		{"id":"didaktik","type":"text","text":"Didaktische Prinzipien\n• Partizipation\n• Individualisierung\n• Ressourcenorientierung","x":369,"y":854,"width":440,"height":180,"color":"7"},
 		{"id":"didaktik_e","type":"text","text":"Essenz: Praxisprinzipien","x":904,"y":902,"width":260,"height":80,"color":"7"},
-		{"id":"kult","type":"text","text":"Ebene 4: Kulturell-gesellschaftlich\n• Akzeptanz inklusiver Ziele\n• Inklusion vs. Standardisierung\n• Partizipation","x":1042,"y":506,"width":460,"height":200,"color":"7"}
+		{"id":"kult","type":"text","text":"Ebene 4: Kulturell-gesellschaftlich\n• Akzeptanz inklusiver Ziele\n• Inklusion vs. Standardisierung\n• Partizipation","x":1042,"y":506,"width":460,"height":200,"color":"7"},
+		{"id":"ziel","type":"text","text":"[[t_i_p-ziel_leitprinzipien.canvas|Ziel & Leitprinzipien]]\n• Egalitäre Differenz\n• Teilhabe für alle\n• Unterschiede anerkennen ohne Exklusion\n• Bezug: Menschenrechte, UN-BRK\n","x":689,"y":-252,"width":480,"height":220,"color":"3"}
 	],
 	"edges":[
 		{"id":"e1","fromNode":"root","fromSide":"left","toNode":"def","toSide":"right","label":"Grundlage"},
@@ -68,14 +68,14 @@
 		{"id":"e17","fromNode":"ziel","fromSide":"bottom","toNode":"inter","toSide":"top"},
 		{"id":"e18","fromNode":"ziel","fromSide":"bottom","toNode":"inst","toSide":"top"},
 		{"id":"e19","toFloating":false,"fromNode":"ziel","fromSide":"bottom","toNode":"kult","toSide":"top"},
-		{"id":"e20","fromNode":"stoerung","fromSide":"top","toNode":"inner","toSide":"bottom"},
+		{"id":"e20","fromFloating":false,"fromNode":"stoerung","fromSide":"top","toNode":"inner","toSide":"bottom"},
 		{"id":"e21","fromNode":"stoerung","fromSide":"top","toNode":"inter","toSide":"bottom"},
 		{"id":"e22","fromNode":"stoerung","fromSide":"top","toNode":"inst","toSide":"bottom"},
 		{"id":"e23","fromNode":"stoerung","fromSide":"top","toNode":"kult","toSide":"bottom"},
 		{"id":"e24","fromNode":"methoden","fromSide":"top","toNode":"inner","toSide":"bottom"},
 		{"id":"e25","fromNode":"methoden","fromSide":"top","toNode":"inter","toSide":"bottom"},
 		{"id":"e26","fromNode":"methoden","fromSide":"top","toNode":"inst","toSide":"bottom"},
-		{"id":"e27","fromNode":"methoden","fromSide":"right","toNode":"kult","toSide":"left"},
+		{"id":"e27","toFloating":false,"fromNode":"methoden","fromSide":"right","toNode":"kult","toSide":"left"},
 		{"id":"e28","fromNode":"team","fromSide":"top","toNode":"inter","toSide":"bottom","label":"Kooperation"},
 		{"id":"e29","fromNode":"team","fromSide":"right","toNode":"inst","toSide":"left","label":"Strukturarbeit"},
 		{"id":"e30","fromNode":"heraus","fromSide":"top","toNode":"methoden","toSide":"bottom","label":"überwinden"}
