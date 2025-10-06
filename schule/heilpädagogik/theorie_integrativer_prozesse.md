@@ -11,3 +11,14 @@ Integration ergibt sich keineswegs von selbst, sondern muss auf [den oben genann
 	•	Auf der interaktionellen Ebene geht es um die kommunikativen und kooperativen Prozesse, die sich zwischen den verschiedenen Personen ereignen: in der Peergroup der Kinder, zwischen pädagogischen Fachkräften und den Kindern, zwischen Fachkräften unterschiedlicher Profession (Erzieherinnen, Heilpädagoginnen, Integrationshelferinnen, Lehrkräften, Therapeutinnen) sowie zwischen Fachkräften und Eltern.
 	•	Auf der institutionellen Ebene ist nach den inklusiven Kulturen, Strukturen und Praktiken zu fragen, wie sie mit dem Instrument des Index für Inklusion (Booth/Ainscow 2002, Booth u. a. 2006) für die inklusive Entwicklung von Bildungssituationen evaluiert werden können.
 	•	Auf kulturell-gesellschaftlicher Ebene geht es um die Frage der grundsätzlichen Akzeptanz inklusiver Zielsetzungen, die ggf. in Widerspruch zu zunehmenden Standardisierungs- und Homogenisierungstendenzen des Bildungssystems stehen, sowie um die Umsetzung des Rechts auf Partizipation an allen Lebensbereichen.
+
+## Impuls für inklusive Praxis
+
+Aus der Canvas-Struktur zur Theorie integrativer Prozesse lassen sich drei praktische Einsichten für gelingende Inklusion destillieren:
+
+1. **Balance von Nähe und Distanz aktiv gestalten.** Inklusion verlangt nicht nach harmonischer Gleichmacherei, sondern nach dem stetigen Austarieren von Annäherung und Abgrenzung. Pädagogische Teams benötigen Räume der Selbstreflexion, Supervision und kollegialen Fallberatung, um eigene Ambivalenzen wahrzunehmen und professionelle Distanz zu sichern.
+2. **Kooperation als Arbeitsprinzip verankern.** Die interaktionelle Ebene gewinnt durch bewusste Kommunikationsstrukturen: multiprofessionelle Teams, partizipative Methoden und eine gemeinsame Sprache über Anerkennung. Diese Kooperation stützt sowohl die Peers als auch die Zusammenarbeit mit Familien und eröffnet Innovationspotenziale durch Vielfalt.
+3. **Institutionelle Rahmen konsequent anpassen.** Indexgestützte Schul- und Einrichtungskulturen, menschenrechtliche Leitplanken (UN-BRK, Salamanca) sowie partizipative Entscheidungswege sorgen dafür, dass egalitäre Differenz mehr als ein Leitbild bleibt. Strukturelle Barrieren – Ressourcenmangel, Rollenkonflikte, träge Organisationen – werden so sichtbar und bearbeitbar.
+
+Wer diese drei Linien miteinander verschränkt, stärkt die Fähigkeit eines Systems, Störungen integrativer Prozesse früh zu erkennen und produktiv zu bearbeiten. Inklusion wird dadurch zur gelebten Praxis, die Konfliktbearbeitung, Anerkennung und Teilhabe in allen Ebenen miteinander verbindet.
+
