@@ -23,7 +23,7 @@ Schnappe mir Punkt 1 („Doku & Beispiele“) und liefere dir direkt einen saube
 - Makefile ergänzt: `make demo` nutzt Example-Konfig
     
 
-> **Annahme/Faktenlage:** Ich habe das Repo live inspiziert und dabei Struktur & README gesehen (Rust-Workspace, Python-Tooling, `.gewebe/`, systemd etc.). Die folgenden Änderungen sind additive, kollisionsarm und passen zur bestehenden Struktur. ([GitHub](https://github.com/alexdermohr/semantah "GitHub - alexdermohr/semantAH"))
+> **Annahme/Faktenlage:** Ich habe das Repo live inspiziert und dabei Struktur & README gesehen (Rust-Workspace, Python-Tooling, `.gewebe/`, systemd etc.). Die folgenden Änderungen sind additive, kollisionsarm und passen zur bestehenden Struktur. ([GitHub](https://github.com/heimgewebe/semantah "GitHub - heimgewebe/semantAH"))
 
 ---
 
