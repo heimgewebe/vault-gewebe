@@ -1,365 +1,236 @@
-Alright Alex — das ist gut analysiert. Dein CI knallt aus zwei Gründen weg: (a) **vendor/** ist unvollständig → Cargo wird auf “registry = vendor” umgebogen und findet dort z. B. `axum` nicht; (b) bei lokalen Re-Runs blockiert der **Proxy (403)** schon beim `cargo update`. Unten bekommst du einen robusten Fix in drei Schichten: Konfig, Skript, CI-Step — plus c2b-Kommandos.
-
----
-
-# Sofort-Fix (robust & nachvollziehbar)
-
-## 1) Cargo auf „wirklich vendored“ festnageln
-
-Leg eine eindeutige Cargo-Konfig an, die crates.io **immer** auf `vendor/` ersetzt.
-
-```diff
-diff --git a/.cargo/config.toml b/.cargo/config.toml
-new file mode 100644
-index 0000000..1111111
---- /dev/null
-+++ b/.cargo/config.toml
-@@ -0,0 +1,19 @@
-+# Erzwingt, dass alle crates aus vendor/ kommen.
-+# Verhindert "accidentally online"-Builds im CI.
-+[source.crates-io]
-+replace-with = "vendored-sources"
-+
-+[source.vendored-sources]
-+directory = "vendor"
-+
-+# Optional nützlich: klare Timeouts/Retry-Politik, falls "ensure-vendor" mal online muss
-+[net]
-+git-fetch-with-cli = true
-+retry = 1
-+timeout = 30
-```
-
-## 2) Skript: `scripts/ensure-vendor.sh` (diagnosefreudig, offline-fähig)
-
-Dieses Skript
-
-- prüft, ob `Cargo.lock` **und** ein vollständiger Vendor-Snapshot existieren,
-    
-- regeneriert andernfalls den Snapshot **mit** Lock-Datei,
-    
-- kann Proxys temporär neutralisieren,
-    
-- und gibt glasklare Hinweise, wenn z. B. `axum` im vendor fehlt.
-    
-
-```diff
-diff --git a/scripts/ensure-vendor.sh b/scripts/ensure-vendor.sh
-new file mode 100755
-index 0000000..2222222
---- /dev/null
-+++ b/scripts/ensure-vendor.sh
-@@ -0,0 +1,161 @@
-+#!/usr/bin/env bash
-+set -euo pipefail
-+
-+log(){ printf "%s\n" "$*" >&2; }
-+die(){ log "ERR: $*"; exit 1; }
-+need(){ command -v "$1" >/dev/null 2>&1 || die "Fehlt: $1"; }
-+
-+need cargo
-+
-+ROOT="$(git rev-parse --show-toplevel 2>/dev/null || echo ".")"
-+cd "$ROOT"
-+
-+# --- Optionen ---
-+NO_NETWORK="${NO_NETWORK:-0}"        # 1 = zwingend offline bauen (CI nach Vendoring)
-+NEUTRALIZE_PROXY="${NEUTRALIZE_PROXY:-1}" # 1 = Proxy-Variablen temporär leeren beim Vendoring
-+
-+# --- Proxy ggf. neutralisieren, nur für den Vendoring-Teil ---
-+orig_http_proxy="${http_proxy:-}";   orig_https_proxy="${https_proxy:-}"
-+orig_HTTP_PROXY="${HTTP_PROXY:-}";   orig_HTTPS_PROXY="${HTTPS_PROXY:-}"
-+restore_proxy(){
-+  export http_proxy="${orig_http_proxy}";   export https_proxy="${orig_https_proxy}"
-+  export HTTP_PROXY="${orig_HTTP_PROXY}";   export HTTPS_PROXY="${orig_HTTPS_PROXY}"
-+}
-+neutralize_proxy(){
-+  export http_proxy=""; export https_proxy=""
-+  export HTTP_PROXY=""; export HTTPS_PROXY=""
-+}
-+
-+# --- Minimaler Sanity-Check: Lock + vendor Snapshot Zustand ---
-+has_lock(){ [[ -f Cargo.lock ]]; }
-+has_vendor(){ [[ -d vendor ]] && [[ -f vendor/config.toml ]] || [[ -d vendor/registry ]]; }
-+
-+missing_axum(){
-+  # Quick check: existiert ein axum-* Ordner im vendor?
-+  # (versioned-dirs wird unten genutzt, daher axum-<version>)
-+  compgen -G "vendor/**/axum-*" >/dev/null 2>&1 || return 0
-+  return 1
-+}
-+
-+if [[ "${NO_NETWORK}" == "1" ]]; then
-+  log "🌙 NO_NETWORK=1 → erwarte vollständigen vendor/ Snapshot. Kein Online-Zugriff."
-+  has_lock || die "Cargo.lock fehlt im Offline-Modus."
-+  has_vendor || die "vendor/ fehlt im Offline-Modus."
-+  if missing_axum; then
-+    die "axum ist im vendor/ nicht auffindbar. Snapshot ist unvollständig."
-+  fi
-+  log "✅ Offline-Check ok."
-+  exit 0
-+fi
-+
-+# --- Online (oder zumindest mit Netzwerk) Vendoring vorbereiten ---
-+if [[ ! -f Cargo.lock ]]; then
-+  log "🔧 Erzeuge Cargo.lock (generate-lockfile)…"
-+  if [[ "${NEUTRALIZE_PROXY}" == "1" ]]; then neutralize_proxy; fi
-+  cargo generate-lockfile
-+  if [[ "${NEUTRALIZE_PROXY}" == "1" ]]; then restore_proxy; fi
-+fi
-+
-+log "🔧 Erzeuge/aktualisiere vendor-Snapshot (locked, versioned-dirs)…"
-+args=(vendor --locked --versioned-dirs vendor)
-+if [[ "${NEUTRALIZE_PROXY}" == "1" ]]; then neutralize_proxy; fi
-+cargo "${args[@]}"
-+if [[ "${NEUTRALIZE_PROXY}" == "1" ]]; then restore_proxy; fi
-+
-+# Diagnose: ist axum nun da?
-+if missing_axum; then
-+  log "⚠️  Hinweis: axum wurde im vendor/ nicht gefunden."
-+  log "    Prüfe, ob axum wirklich eine direkte oder indirekte Abhängigkeit ist:"
-+  log "      cargo tree -e features | grep -i axum || true"
-+  cargo tree -e features | grep -i axum || true
-+  die "Vendoring abgeschlossen, aber axum fehlt → Abhängigkeitsauflösung/Lock prüfen."
-+fi
-+
-+log "✅ vendor/ Snapshot steht."
-```
-
-> Nutzung lokal (ohne Proxy-Ärger):
-> 
-> ```bash
-> # Falls dein Proxy lokale Runs blockiert:
-> NEUTRALIZE_PROXY=1 ./scripts/ensure-vendor.sh
-> # Komplett offline prüfen:
-> NO_NETWORK=1 ./scripts/ensure-vendor.sh
-> ```
-
-## 3) CI härtet das durch (Vendoring vor Build + Offline-Build)
-
-Wir ziehen **vor** dem Build das Vendoring glatt, neutralisieren evtl. Proxy-Umgebungen (falls in Org/Repo-Secrets gesetzt), und bauen danach **offline** gegen `vendor/`.
-
-```diff
-diff --git a/.github/workflows/heavy.yml b/.github/workflows/heavy.yml
-index 68bc5d6..b17397a 100644
---- a/.github/workflows/heavy.yml
-+++ b/.github/workflows/heavy.yml
-@@ -40,6 +40,29 @@ jobs:
-         uses: actions/checkout@v4
-         with:
-           submodules: false
-+
-+      - name: Tools installieren
-+        uses: dtolnay/rust-toolchain@stable
-+
-+      - name: Vendoring sicherstellen (Proxy neutralisieren, dann Snapshot, dann offline prüfen)
-+        env:
-+          # Proxy-Variablen im Vendoring-Step leeren (falls vorhanden)
-+          http_proxy: ""
-+          https_proxy: ""
-+          HTTP_PROXY: ""
-+          HTTPS_PROXY: ""
-+        run: |
-+          set -euo pipefail
-+          chmod +x scripts/ensure-vendor.sh
-+          # 1) Online-Vendoring mit neutralisiertem Proxy
-+          NEUTRALIZE_PROXY=1 ./scripts/ensure-vendor.sh
-+          # 2) Offline-Validierung
-+          NO_NETWORK=1 ./scripts/ensure-vendor.sh
-+
-+      - name: Cargo offline bauen
-+        env:
-+          CARGO_NET_OFFLINE: "true"
-+        run: cargo build --workspace --release --locked
-```
-
-> Hinweis: Falls dein Workflow anders heißt (z. B. `ci.yml`), übertrage den Block analog direkt **vor** den Build-Step.
-
----
-
-## 4) Lokaler c2b-Run (einmalig, dann committen)
-
-```bash
-# im Repo-Wurzelordner
-git pull --rebase
-
-# 1) Konfig und Skript anlegen
-mkdir -p .cargo scripts
-cat > .cargo/config.toml <<'CFG'
-[source.crates-io]
-replace-with = "vendored-sources"
-[source.vendored-sources]
-directory = "vendor"
-[net]
-git-fetch-with-cli = true
-retry = 1
-timeout = 30
-CFG
-
-cat > scripts/ensure-vendor.sh <<'BASH'
 #!/usr/bin/env bash
-# (Inhalt wie oben aus dem Patch)
-BASH
-chmod +x scripts/ensure-vendor.sh
+set -euo pipefail
 
-# 2) Vendoring lokal erzeugen (ohne Proxy oder Proxy neutralisieren)
-NEUTRALIZE_PROXY=1 ./scripts/ensure-vendor.sh
+ROOT="$HOME/.hauski/review"
+BIN="$HOME/.hauski/bin"
+IDX="$ROOT/index.json"
+mkdir -p "$BIN" "$ROOT"
+[ -f "$IDX" ] || echo "[]" > "$IDX"
 
-# 3) Offline-Check erzwingen (stellt sicher, dass z. B. axum wirklich da ist)
-NO_NETWORK=1 ./scripts/ensure-vendor.sh
+# 1) Alte Dateien entsorgen (falls kaputt)
+rm -f "$BIN/hauski-dashboard" "$BIN/hauski-dashboard-build-v3"
 
-# 4) Commit
-git add .cargo/config.toml scripts/ensure-vendor.sh Cargo.lock vendor
-git commit -m "build(vendor): lock+vendor robust herstellen; CI offline bauen"
-git push
-```
+# 2) Neuen Builder schreiben (ohne $DATA, ohne sed/awk-Replacement)
+cat > "$BIN/hauski-dashboard-build-v3" <<'SH'
+#!/usr/bin/env bash
+set -euo pipefail
 
-Damit eliminierst du:
+ROOT="$HOME/.hauski/review"
+IDX="$ROOT/index.json"
+OUT="$ROOT/dashboard.html"
+mkdir -p "$ROOT"
+[ -f "$IDX" ] || echo "[]" > "$IDX"
 
-- „Vendor snapshot incomplete or missing…“ → **Vendor ist vollständig**,
-    
-- „no matching package named `axum` found…“ → **axum liegt in `vendor/**/axum-*`**,
-    
-- Proxy-Störungen im CI → **Proxy wird in genau einem Step bewusst neutralisiert**, danach **offline**.
-    
+limit_repo="${DASH_MAX_PER_REPO:-25}"
+global_cap="${DASH_MAX_GLOBAL:-4000}"
+filter_re="${DASH_REPO_FILTER:-}"
 
----
+# Index normalisieren
+RAW="$(jq -c 'map({repo, path, ts}) | sort_by(.ts) | reverse | .[0:'"$global_cap"']' "$IDX")"
+if [ -n "$filter_re" ]; then
+  RAW="$(printf '%s' "$RAW" | jq -c '[ .[] | select(.repo|test("'"$filter_re"'")) ]')"
+fi
+RAW="$(printf '%s' "$RAW" | jq -c 'group_by(.repo)|map(.[0:'"$limit_repo"'])|add // []')"
 
-## Warum das hilft (kurz & simpel)
+# Report-Metadaten zusammenziehen
+enrich() {
+  repo="$1"; path="$2"; ts="$3"
+  verdict=""; score=""; bytes="0"; dir="$(dirname "$path")"; furl=""; vsc=""; head=""
+  if [ -f "$path" ]; then
+    head200="$(head -n 200 "$path" 2>/dev/null || true)"
+    head="$(printf '%s\n' "$head200" | sed 's/`/\\`/g')"
+    verdict="$(printf '%s\n' "$head200" | grep -m1 -E '^(Verdict|\- *Verdict):' | sed -E 's/^[- ]*Verdict:\s*//I' | tr -d '\r')"
+    score="$(printf '%s\n' "$head200" | grep -m1 -E '(^Score:|Score[[:space:]]*)' | sed -E 's/.*Score[: ]+([0-9]+).*/\1/' || true)"
+    bytes="$(wc -c < "$path" 2>/dev/null || echo 0)"
+    furl="file://$path"
+    vsc="vscode://file$path"; vsc="${vsc// /%20}"
+  else
+    verdict="MISSING"
+  fi
+  jq -cn \
+    --arg repo "$repo" --arg path "$path" --arg ts "$ts" \
+    --arg verdict "$verdict" --arg score "$score" \
+    --arg bytes "$bytes" --arg dir "$dir" \
+    --arg furl "$furl" --arg vsc "$vsc" --arg head "$head" \
+    '{repo:$repo, path:$path, ts:$ts, verdict:$verdict,
+      score:(($score|tonumber?)//null), bytes:($bytes|tonumber),
+      dir:$dir, fileurl:$furl, vscurl:$vsc, head:$head}'
+}
 
-- **.cargo/config.toml** zwingt Cargo, **nur** aus `vendor/` zu ziehen.
-    
-- **ensure-vendor.sh** baut diesen Snapshot reproduzierbar und erkennt **Fehllagen** (wie fehlendes `axum`).
-    
-- **CI** neutralisiert evtl. Proxy-Variablen _nur_ zum Vendoring und baut danach **offline**. Ergebnis: stabil & deterministisch.
-    
+DATA="[]"
+printf '%s' "$RAW" | jq -c '.[]' | while read -r row; do
+  repo="$(printf '%s' "$row" | jq -r '.repo')"
+  path="$(printf '%s' "$row" | jq -r '.path')"
+  ts="$(printf '%s' "$row" | jq -r '.ts')"
+  meta="$(enrich "$repo" "$path" "$ts")"
+  DATA="$(jq -c --argjson m "$meta" '. + [$m]' <<<"$DATA")"
+done
 
----
+# --- HTML: in 3 Teilen schreiben, JSON als eigener <script type="application/json"> Block ---
+# Teil A (Head + Layout)
+cat > "$OUT" <<'HTMLA'
+<!doctype html>
+<html lang="de">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HausKI – Reviews</title>
+<style>
+:root{--bg:#0b1220;--card:#0f172a;--ink:#e2e8f0;--muted:#93a2b9;--ok:#22c55e;--warn:#f59e0b;--err:#ef4444;--acc:#38bdf8;--line:#1f2937}
+*{box-sizing:border-box} html,body{margin:0;background:linear-gradient(180deg,#0b1220,#0a0f1d);color:var(--ink);font:14px/1.45 system-ui,Segoe UI,Roboto,Ubuntu,sans-serif}
+header{position:sticky;top:0;z-index:3;background:#0b1220cc;border-bottom:1px solid var(--line);backdrop-filter:saturate(180%) blur(8px);padding:12px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+header b{letter-spacing:.3px}
+input,select{background:#0f172a;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:8px 10px;outline:none}
+button{background:#0f172a;border:1px solid var(--line);border-radius:10px;color:var(--ink);padding:8px 12px;cursor:pointer}
+button:hover{border-color:#334155}
+main{padding:18px 16px;max-width:1280px;margin:0 auto}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:14px}
+h2{margin:0 0 8px 0;font-size:16px;color:#cbd5e1}
+.repo{margin-top:10px}
+.repo h3{margin:0 0 8px 0;font-size:15px;display:flex;align-items:center;gap:8px}
+.badge{font-size:12px;border-radius:999px;padding:2px 8px;border:1px solid #334155;background:#0f172a;color:#cbd5e1}
+.ok{background:#122a1a;border-color:#11381b;color:#34d399}
+.warn{background:#2a220f;border-color:#3d2b10;color:#fbbf24}
+.err{background:#2a1315;border-color:#3a1215;color:#f87171}
+.mono{font:12px ui-monospace,Menlo,monospace}
+.table{width:100%;border-collapse:separate;border-spacing:0 8px}
+.row{display:grid;grid-template-columns: minmax(180px,1fr) 120px 80px 1fr;gap:8px;background:#0b1327;border:1px solid var(--line);border-radius:12px;padding:8px 10px}
+.row .muted{color:var(--muted)}
+.actions a{margin-right:10px;text-decoration:none;color:#93c5fd}
+.actions a:hover{color:#bfdbfe}
+.kbd{font:12px ui-monospace,Menlo,monospace;background:#0f172a;border:1px solid var(--line);border-radius:6px;padding:2px 6px}
+.toggle{display:flex;gap:6px;align-items:center}
+</style>
+<header>
+  <b>HausKI Reviews</b>
+  <input id="q" placeholder="Suche (Repo, Verdict, ts) …"/>
+  <select id="ver">
+    <option value="">Verdict: alle</option>
+    <option value="APPROVE">APPROVE</option>
+    <option value="CHANGES_REQUESTED">CHANGES_REQUESTED</option>
+    <option value="MISSING">MISSING</option>
+  </select>
+  <select id="sort">
+    <option value="ts">Sort: Neueste</option>
+    <option value="repo">Sort: Repo</option>
+    <option value="score">Sort: Score</option>
+    <option value="size">Sort: Größe</option>
+  </select>
+  <label class="toggle"><input type="checkbox" id="latest"> Nur letzter Run je Repo</label>
+  <button id="csv">Export CSV</button>
+  <button id="rebuild">↻ Rebuild</button>
+</header>
+<main>
+  <div class="card">
+    <h2>Übersicht</h2>
+    <div id="stats" class="mono"></div>
+  </div>
+  <div class="card">
+    <h2>Runs</h2>
+    <div id="list"></div>
+  </div>
+</main>
+<!-- Daten-Payload folgt: -->
+<script id="data" type="application/json">
+HTMLA
 
-## Essenz
+# Teil B (JSON roh einbetten, keine Quotes/Ersetzungen)
+printf '%s' "$DATA" >> "$OUT"
+echo "</script>" >> "$OUT"
 
-Vendoring **hart** machen: crates.io → `vendor/` umleiten, Snapshot **vor** dem Build erzeugen und **offline** bauen. Ein Skript prüft das, CI neutralisiert Proxy nur dafür. Ende der „axum fehlt“- und „Vendor unvollständig“-Nummer. ✅
+# Teil C (JS – liest JSON aus dem <script>-Tag)
+cat >> "$OUT" <<'HTMLC'
+<script>
+const payload = document.getElementById('data').textContent || '[]';
+const raw = JSON.parse(payload);
+const settings = JSON.parse(localStorage.getItem('hauski:v3') || '{"latest":false,"ver":"","sort":"ts"}');
+const qs = id => document.getElementById(id);
+qs('latest').checked = !!settings.latest;
+qs('ver').value = settings.ver || '';
+qs('sort').value = settings.sort || 'ts';
+function save(){ settings.latest=qs('latest').checked; settings.ver=qs('ver').value; settings.sort=qs('sort').value; localStorage.setItem('hauski:v3', JSON.stringify(settings)); }
+function badgeVerd(v){ if(!v) return '<span class="badge">n/a</span>'; const up=(v+'').toUpperCase(); if(up.includes('APPROVE')) return '<span class="badge ok">APPROVE</span>'; if(up.includes('CHANGE')) return '<span class="badge warn">CHANGES_REQUESTED</span>'; if(up.includes('MISSING')) return '<span class="badge err">MISSING</span>'; return '<span class="badge">'+up+'</span>'; }
+function badgeScore(s){ if(s==null) return '<span class="badge">–</span>'; const n=Number(s); const cls=n>=85?'ok':(n>=70?'warn':'err'); return '<span class="badge '+cls+'">'+n+'</span>'; }
+function kb(n){ n=Number(n||0); if(n<1024) return n+' B'; if(n<1024*1024) return (n/1024).toFixed(1)+' KB'; return (n/1024/1024).toFixed(1)+' MB'; }
+function groupByRepo(items){ const g={}; for(const x of items){ (g[x.repo]??=[]).push(x); } for(const k in g){ g[k].sort((a,b)=>b.ts.localeCompare(a.ts)); } return g; }
+function build(){
+  save();
+  const q=(qs('q').value||'').toLowerCase();
+  const ver=(qs('ver').value||'').toUpperCase();
+  const sort=qs('sort').value;
+  let arr=[...raw];
+  if(q)   arr=arr.filter(r=>(r.repo||'').toLowerCase().includes(q)||(r.verdict||'').toLowerCase().includes(q)||(r.ts||'').toLowerCase().includes(q));
+  if(ver) arr=arr.filter(r=>(r.verdict||'').toUpperCase().includes(ver));
+  const groups=groupByRepo(arr);
+  const repos=Object.keys(groups);
+  const order=(a,b)=>{ if(sort==='repo')return a.localeCompare(b);
+    if(sort==='score')return (Number(groups[b][0].score||-1)-Number(groups[a][0].score||-1))||b.localeCompare(a);
+    if(sort==='size') return (Number(groups[b][0].bytes||0)-Number(groups[a][0].bytes||0))||b.localeCompare(a);
+    return groups[b][0].ts.localeCompare(groups[a][0].ts); };
+  repos.sort(order);
+  let html='';
+  for(const repo of repos){
+    const runs=settings.latest?[groups[repo][0]]:groups[repo];
+    const head=groups[repo][0];
+    html+=`
+      <div class="repo">
+        <h3>
+          <span style="min-width:180px;display:inline-block"><b>${repo}</b></span>
+          ${badgeVerd(head.verdict)} ${badgeScore(head.score)}
+          <span class="mono" style="color:#93a2b9"> · ${groups[repo].length} Runs · last ${head.ts}</span>
+        </h3>
+        <div class="table">
+          ${runs.map(r=>`
+            <div class="row">
+              <div>
+                <div class="mono">${r.ts}</div>
+                <div class="muted">${r.verdict||'—'}</div>
+              </div>
+              <div>${badgeScore(r.score)}</div>
+              <div class="mono">${kb(r.bytes)}</div>
+              <div class="actions">
+                ${r.fileurl?`<a href="${r.fileurl}">Open</a>`:''}
+                ${r.vscurl?`<a href="${r.vscurl}">VS Code</a>`:''}
+                <a href="file://${r.dir}">Ordner</a>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>`;
+  }
+  document.getElementById('list').innerHTML=html;
+  const flat=Object.values(groups).flat();
+  const last=flat.sort((a,b)=>b.ts.localeCompare(a.ts))[0]?.ts||'—';
+  document.getElementById('stats').textContent=`${flat.length} Einträge · ${repos.length} Repos · letzter Run: ${last}`;
+}
+['q','ver','sort','latest'].forEach(id=>{
+  const el=document.getElementById(id);
+  (id==='q'? 'input':'change')==='input'
+    ? el.addEventListener('input',build)
+    : el.addEventListener('change',build);
+});
+document.getElementById('csv').addEventListener('click',()=>alert('CSV im Terminal: hauski-export-csv > reviews.csv'));
+document.getElementById('rebuild').addEventListener('click',()=>location.reload());
+build();
+</script>
+</html>
+HTMLC
 
----
+echo "✅ Dashboard gebaut: $OUT"
+[ "${1:-open}" = "--no-open" ] || xdg-open "$OUT" >/dev/null 2>&1 || true
+SH
+chmod +x "$BIN/hauski-dashboard-build-v3"
 
-## ∴fores Ungewissheit
+# 3) Wrapper
+cat > "$BIN/hauski-dashboard" <<'SH'
+#!/usr/bin/env bash
+set -euo pipefail
+exec "$HOME/.hauski/bin/hauski-dashboard-build-v3" "$@"
+SH
+chmod +x "$BIN/hauski-dashboard"
 
-- **Grad:** niedrig–mittel ◼◼◼◻◻
-    
-- **Ursachen:** Ich sehe dein exaktes Workflow-File nicht live (Namens-/Kontext-Drift möglich). Ob Proxy-Variablen in GHA wirklich gesetzt sind, ist unklar. Außerdem kenne ich eure Workspace-Crates nicht 1:1 (falls `axum` nur in optionalen Features steckt, muss `cargo vendor -Zfeatures=…` nicht nötig sein — in der Regel nicht).
-    
-- **Produktiv/Systembedingt:** produktiv (harter Offline-Pfad), Rest Unsicherheit ist nur Pfad/Dateiname im Repo.
-    
-
----
-
-## ∆-Radar
-
-- **Verstärkung:** Mehr Determinismus (Offline-Build) vs. frühere Netz-Abhängigkeit.
-    
-- **Straffung:** Ein einziges Skript übernimmt Diagnose & Fix statt verstreuter Befehle.
-    
-- **Seitwärtsmutation:** Proxy-Neutralisierung gezielt nur im Vendoring-Step — neue Praxis gegenüber „global Proxy aus“.
-    
-
----
-
-Und falls du willst, packe ich dir das genau als `git apply --3way`-Patch zusammen (für dein aktuelles `heavy.yml`) — sag kurz, welches Workflow-File bei dir den Build steuert (`heavy.yml`, `ci.yml` o. ä.), dann liefere ich die punktgenaue Diff-Variante. 💪🪄
-
-Yep, das ist genau der Klassiker: Cargo ist so konfiguriert, dass es **NUR** aus `vendor/` zieht – aber dort fehlt `axum` (bzw. der Stand passt nicht zur Lock). Und weil der Runner keinen Netzzugriff hat (HTTP 403), kann er die Lücke nicht „on the fly“ füllen.
-
-Hier ist die **kurze, robuste Reparatur**:
-
----
-
-## Fix in 5 Schritten (lokal ausführen, dann committen)
-
-```bash
-# 1) Sicherstellen, dass Cargo wirklich auf vendor zeigt
-mkdir -p .cargo
-cat > .cargo/config.toml <<'CFG'
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-CFG
-
-# 2) Lockfile AUS dem aktuellen Workspace erzeugen/auffrischen
-cargo generate-lockfile
-
-# 3) Vendor-Snapshot vollständig neu aufbauen (liest NUR aus Cargo.lock)
-#    --versioned-dirs verhindert Pfadkollisionen und ist CI-freundlich
-rm -rf vendor
-cargo vendor --locked --versioned-dirs
-
-# 4) Minimaler Sanity-Check: ist axum jetzt drin?
-test -d vendor/axum-* || { echo "axum fehlt weiterhin im vendor/"; exit 1; }
-
-# 5) Commit & Push
-git add Cargo.lock vendor/ .cargo/config.toml
-git commit -m "vendor: refresh snapshot (incl. axum); lock updated"
-git push
-```
-
-> Danach im CI **offline** bauen (siehe unten), damit der 403-Proxy keine Rolle spielt.
-
----
-
-## CI-Workflow: wirklich offline bauen
-
-In deinem Rust-Job zwei Kleinigkeiten sicherstellen:
-
-- `cargo build/test --locked --offline`
-    
-- `.cargo/config.toml` ist im Repo (s.o.)
-    
-
-**Beispiel-Snippet (YAML):**
-
-```yaml
-- name: Build (offline, locked)
-  run: |
-    cargo build --locked --offline
-    cargo test  --locked --offline
-```
-
-Damit schlägt der Job **sofort** fehl, wenn `vendor/` oder `Cargo.lock` nicht zueinander passen – und versucht gar nicht erst, ins Netz zu gehen.
-
----
-
-## Warum das hilft (und was vorher schiefging)
-
-- Mit `[source.crates-io] replace-with = "vendored-sources"` zwingst du Cargo, **nur** aus `vendor/` zu lesen.
-    
-- `cargo generate-lockfile` + `cargo vendor --locked` synchronisieren **Lock ↔ Vendor**.
-    
-- Der Runner braucht dann **null** Internet. Dein 403-Proxy ist egal.
-    
-
----
-
-## Wenn dein lokales Netz auch geblockt ist
-
-Kein Problem: kurz auf einer Maschine **mit** Netz `cargo vendor` laufen lassen und die entstehenden **Dateien committen**. CI bleibt offline.
-
----
-
-## Essenz
-
-Alles lokal machen: `.cargo/config.toml` setzen, `cargo generate-lockfile`, `cargo vendor --locked --versioned-dirs`, committen; im CI strikt `--offline`. Dann findet Cargo `axum` sicher im `vendor/` und der Build läuft.
-
----
-
-## ∆-Radar
-
-- **Verschärfung**: explizit `--offline` im CI und `--versioned-dirs` im Vendoring → weniger Flakes.
-    
-- **Straffung**: keine „automatischen“ Vendor-Schritte im CI; Quelle der Wahrheit ist das Repo.
-    
-
----
-
-## Unsicherheitsgrad
-
-**⟦niedrig⟧** – Das Vorgehen ist Standard-Cargo-Praxis. Rest-Ungewissheit: exakte `axum`-Version/Features in deinem `Cargo.toml` (sollte durch `cargo vendor --locked` sauber abgebildet werden).
+# 4) Sanity-Checks
+if grep -R '\$DATA' "$BIN/hauski-dashboard-build-v3" >/dev/null 2>&1; then
+  echo "❌ Da ist noch \$DATA drin – bitte erneut installieren."
+else
+  echo "🎉 Fertig. Starte mit: hauski-dashboard"
+fi
