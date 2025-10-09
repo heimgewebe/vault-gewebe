@@ -1,5 +1,6 @@
 wgx:
   apiVersion: v1
+  org: "heimgewebe"
   requiredWgx: "^2.0.3"
   repoKind: "weltgewebe"
   hermetic: true

@@ -197,7 +197,7 @@ review:
   report_root: "~/.hauski/review"
   auto_after_codex: true
 meta:
-  author: "alexdermohr"
+  author: "heimgewebe"
   version: 1.4
 YML
 

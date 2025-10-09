@@ -16,9 +16,7 @@ Ziel: einfache Ähnlichkeitssuche über gespeicherte Vektoren.
 	•	Erwartet filters optional; Query-Embedding kommt für jetzt in meta["embedding"] (wie bei Upsert).
 	•	Antwort in SearchResponse.
 
-Akzeptanzkriterien
-	•	Neuer Test upsert_and_search_roundtrip:
-	•	2 Chunks mit 3D-Vektoren, Query nahe an A → A vor B, Score(A) > Score(B).
+> **Annahme/Faktenlage:** Ich habe das Repo live inspiziert und dabei Struktur & README gesehen (Rust-Workspace, Python-Tooling, `.gewebe/`, systemd etc.). Die folgenden Änderungen sind additive, kollisionsarm und passen zur bestehenden Struktur. ([GitHub](https://github.com/heimgewebe/semantah "GitHub - heimgewebe/semantAH"))
 
 ⸻
 

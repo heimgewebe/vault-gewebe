@@ -1,6 +1,6 @@
 Alright, Alex — ich geh systematisch ran und liefere dir konkrete, **merge-fertige** Verbesserungen in kleinen, klaren Schritten. Du kannst jeden Block direkt „c2b“ auf deiner Maschine laufen lassen oder über Codex ins Repo schieben. Ich erkläre dabei kurz, **warum** wir das tun und **was** es bringt (auch „für Dummies“).
 
-Ich hab dein Repo offen und die aktuelle Struktur + README gescannt ([GitHub](https://github.com/alexdermohr/wgx "GitHub - alexdermohr/wgx: wgx – Weltgewebe CLI (Termux/WSL/Linux/macOS), privat")). Unten starte ich mit 6 schnellen, hochwirksamen Verbesserungen. Wenn du die drin hast, schiebe ich die nächsten nach.
+Ich hab dein Repo offen und die aktuelle Struktur + README gescannt ([GitHub](https://github.com/heimgewebe/wgx "GitHub - heimgewebe/wgx: wgx – Weltgewebe CLI (Termux/WSL/Linux/macOS), privat")). Unten starte ich mit 6 schnellen, hochwirksamen Verbesserungen. Wenn du die drin hast, schiebe ich die nächsten nach.
 
 ---
 
@@ -274,4 +274,4 @@ Wir bewegen uns von „funktioniert bei mir“ → „reproduzierbar und überpr
 ## Unsicherheitsgrad
 
 **∴fores-Unsicherheit: niedrig–mittel.**  
-**Ursachen:** GitHub-Webansicht hatte zwischendurch Ladefehler; ich habe keine _alle_ Dateien einzeln geöffnet, sondern die Top-Struktur + README/Verlinkungen geprüft ([GitHub](https://github.com/alexdermohr/wgx "GitHub - alexdermohr/wgx: wgx – Weltgewebe CLI (Termux/WSL/Linux/macOS), privat")). Einzelne bereits vorhandene Files (z. B. ein bestehendes `Runbook` oder bereits vorhandene CI) könnten partiell existieren. Die Patches sind idempotent bzw. additive Stubs; falls es Konflikte gibt, passe ich sie sofort an.
+**Ursachen:** GitHub-Webansicht hatte zwischendurch Ladefehler; ich habe keine _alle_ Dateien einzeln geöffnet, sondern die Top-Struktur + README/Verlinkungen geprüft ([GitHub](https://github.com/heimgewebe/wgx "GitHub - heimgewebe/wgx: wgx – Weltgewebe CLI (Termux/WSL/Linux/macOS), privat")). Einzelne bereits vorhandene Files (z. B. ein bestehendes `Runbook` oder bereits vorhandene CI) könnten partiell existieren. Die Patches sind idempotent bzw. additive Stubs; falls es Konflikte gibt, passe ich sie sofort an.
