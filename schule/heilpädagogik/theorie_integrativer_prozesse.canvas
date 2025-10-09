@@ -30,8 +30,8 @@
 		{"id":"ziel_e","type":"text","text":"Essenz: Egalitäre Differenz","x":1102,"y":-248,"width":280,"height":80,"color":"3"},
 		{"id":"didaktik","type":"text","text":"Didaktische Prinzipien\n• Partizipation\n• Individualisierung\n• Ressourcenorientierung","x":369,"y":854,"width":440,"height":180,"color":"7"},
 		{"id":"didaktik_e","type":"text","text":"Essenz: Praxisprinzipien","x":904,"y":902,"width":260,"height":80,"color":"7"},
-		{"id":"kult","type":"text","text":"Ebene 4: Kulturell-gesellschaftlich\n• Akzeptanz inklusiver Ziele\n• Inklusion vs. Standardisierung\n• Partizipation","x":1042,"y":506,"width":460,"height":200,"color":"7"},
-		{"id":"ziel","type":"text","text":"[[t_i_p-ziel_leitprinzipien.canvas|Ziel & Leitprinzipien]]\n• Egalitäre Differenz\n• Teilhabe für alle\n• Unterschiede anerkennen ohne Exklusion\n• Bezug: Menschenrechte, UN-BRK\n","x":689,"y":-252,"width":480,"height":220,"color":"3"}
+		{"id":"ziel","type":"text","text":"[[t_i_p-ziel_leitprinzipien.canvas|Ziel & Leitprinzipien]]\n• Egalitäre Differenz\n• Teilhabe für alle\n• Unterschiede anerkennen ohne Exklusion\n• Bezug: Menschenrechte, UN-BRK\n","x":689,"y":-252,"width":480,"height":220,"color":"3"},
+		{"id":"kult","type":"text","text":"Ebene 4: Kulturell-gesellschaftlich\n• Akzeptanz inklusiver Ziele\n• Inklusion vs. Standardisierung\n• Partizipation","x":1045,"y":573,"width":460,"height":200,"color":"7"}
 	],
 	"edges":[
 		{"id":"e1","fromNode":"root","fromSide":"left","toNode":"def","toSide":"right","label":"Grundlage"},

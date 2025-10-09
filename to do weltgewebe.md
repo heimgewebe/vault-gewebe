@@ -1,381 +1,111 @@
-Alles klar. Hier sind präzise **Anweisungen für Codex** (nur Delta, copy-paste-fertig). Jede Einheit: Ziel → Änderungen → Patch/Commands → Checks.
+Kurzer Rundgang durchs Repo-Stand (auf Basis deiner bereitgestellten Doks `zusammenstellung.md` & `inhalt.md`): ja, ich sehe ein paar sachliche Widersprüche, Lücken und „implizite Fußangeln“. Hier die wichtigsten — jeweils mit Fix-Vorschlag.
 
----
+# Befunde & Fix-Vorschläge
 
-# 1) ```
-
----
-
-# 2) Observability: Prometheus-Config anlegen (passt zur Compose)
-
-**Ziel:** Fehlendes Mount-Target für Prometheus bereitstellen.
-
-**Datei:** `infra/compose/monitoring/prometheus.yml`
-
-**Patch:**
-
-```bash
-mkdir -p infra/compose/monitoring
-cat > infra/compose/monitoring/prometheus.yml <<'YAML'
-global:
-  scrape_interval: 10s
-
-scrape_configs:
-  - job_name: prometheus
-    static_configs:
-      - targets: ["prometheus:9090"]
-YAML
-git add infra/compose/monitoring/prometheus.yml
-```
-
-**Check:**
-
-```bash
-docker compose -f infra/compose/compose.observ.yml config >/dev/null && echo "OK: observ profile valid"
-```
-
----
-
-# 3) Semantik-Contracts: minimale Schemas spiegeln (bis Upstream gespiegelt ist)
-
-**Ziel:** `semantics-intake` Workflow soll Dateien validieren können, auch ohne Upstream-Spiegel.
-
-**Dateien:**
-
-- `contracts/semantics/node.schema.json`
+1. Event-Sourcing vs. „jederzeit löschen“  
+    Problem: „Alles ist ein unveränderliches Event“ beißt sich mit „eigene Beiträge jederzeit löschen“.  
+    Fix: Statt physisch zu löschen → „tombstone“-Event + inhaltliche Felder per kryptografischer Löschung (key-erased) unlesbar machen. API zeigt dann „gelöscht“ an, Audit bleibt rechtssicher.
     
-- `contracts/semantics/edge.schema.json`
+2. Öffentliche Sichtbarkeit vs. DSGVO-Grundlagen  
+    Problem: Radikale Transparenz + Wohnort-Visualisierung = hohe Re-Identifizierbarkeit. Nur auf Art. 6 (1) a,f zu stützen ist dünn, wenn Dritte personenbezogene Daten einsehen.  
+    Fix: Default feinere Geolokalisierung (z. B. H3-Zelle ~1 km), „genau“ nur Opt-in; Zweckbindung & Speicherfristen explizit; Verarbeitungsverzeichnis + Folgenabschätzung (DPIA) vorbereiten; klare Rollen (Verantwortlicher/Auftragsverarbeiter) benennen.
     
-- `.gewebe/in/.gitkeep`
+3. RoN-Anonymisierung: uneinheitlich & rechtlich schwach  
+    Problem: Einmal 84 Tage genannt, anderswo „x Tage“. „Anonymisierung“ ist oft nur Pseudonymisierung (rückführbar über Graph).  
+    Fix: Einheitliche Frist (z. B. 90 Tage), klar „Pseudonymisierung“ sagen; echte Anonymisierung nur nach geprüftem k-Anonymity/K-Degree im Graph; sonst RoN = Pseudonym.
     
-
-**Patch:**
-
-```bash
-mkdir -p contracts/semantics .gewebe/in
-cat > contracts/semantics/node.schema.json <<'JSON'
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Node",
-  "type": "object",
-  "additionalProperties": true,
-  "required": ["id", "type"],
-  "properties": {
-    "id": { "type": "string" },
-    "type": { "type": "string" }
-  }
-}
-JSON
-
-cat > contracts/semantics/edge.schema.json <<'JSON'
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Edge",
-  "type": "object",
-  "additionalProperties": true,
-  "required": ["from", "to", "rel"],
-  "properties": {
-    "from": { "type": "string" },
-    "to": { "type": "string" },
-    "rel": { "type": "string" }
-  }
-}
-JSON
-
-touch .gewebe/in/.gitkeep
-git add contracts/semantics/node.schema.json contracts/semantics/edge.schema.json .gewebe/in/.gitkeep
-```
-
-**Check:**
-
-```bash
-jq -e . contracts/semantics/node.schema.json >/dev/null && jq -e . contracts/semantics/edge.schema.json >/dev/null && echo "OK: schemas syntaktisch valide"
-```
-
----
-
-# 4) Vale-Setup säubern (Namespace „Weltgewebe“ konsolidieren)
-
-**Ziel:** Keine alten `wgxlint`-Reste; `BasedOnStyles = Weltgewebe`; fehlende Prosa-Regel ergänzen.
-
-**Änderungen:**
-
-- `BasedOnStyles = Weltgewebe` sicherstellen.
+4. Delegation: transitive Ja/Nein widersprüchlich  
+    Problem: In einem Text ist transitive Delegation „später“, im anderen „jetzt schon möglich“.  
+    Fix: Phase A: nur 1-Hop; Phase B (später): transitiv mit Zyklus-Detektion & Sichtbarkeit der Pfade. Beide Doks synchronisieren.
     
-- Stil-Datei `GermanProse.yml` unter `Weltgewebe/` ergänzen.
+5. Moderation/„Legal Freeze“: Risiko der Weiterverbreitung  
+    Problem: Eingeklappt, aber öffentlich abstimmen = Gefahr, dass strafbare Inhalte weiterverbreitet werden.  
+    Fix: Bei Verdacht → sofortiger juristisch gesicherter Takedown-Hold (nicht sichtbar für Öffentlichkeit), nur befugter Kreis sieht Beweise. Öffentliches Meta-Ticket ohne Inhalt. Danach dokumentierter Entscheid.
     
-- Alte `.vale/styles/wgxlint` (falls vorhanden) entfernen.
+6. „Keine Cookies/Tracking“ vs. technische Realität  
+    Problem: Map-Tiles/Fonts/Analytics von Dritten können doch identifizierende Requests erzeugen.  
+    Fix: Self-hosted Tiles/Fonts, keine externen CDNs; lokal Storage nur für strikt notwendige UI-Prefs, Privacy-Hinweis präzisieren.
+    
+7. Performanceziel unrealistisch formuliert  
+    Problem: „Initial-Bundle ≤ 90 KB“ ist mit MapLibre GL & UI kaum erreichbar.  
+    Fix: Ziele aufsplitten: „App-Shell ≤ 150 KB gzip“, „Karten-Chunk lazy-load“, „P95 API ≤ 300 ms“, „First Interaction ≤ 2.5 s 4G“.
+    
+8. Verzwirnung als Schreibschutz: Governance-Lücke  
+    Problem: Eine Person könnte große Bereiche „verzwirnen“ und blockieren.  
+    Fix: Rollen-basiertes Verzwirnen (z. B. min. 2 Bestätiger), Ablaufdatum, oder „Garn-Quorum“ (≥ N Bestätigungen) pro Knoten/Element.
+    
+9. Auto-Annahme (7+7) ohne Quorum  
+    Problem: Antrag geht ohne Mindestbeteiligung durch → anfällig für „Nacht-Entscheide“.  
+    Fix: Quorum (z. B. ≥ 10 % der aktiven Weber oder ≥ N Stimmen) + Sperrfrist bei Einwänden + Delegationsgewicht begrenzen.
+    
+10. Sicherheit/Beweissicherung nicht konkret  
+    Problem: „gerichtsfest“ behauptet, aber keine Chain-of-Custody/Signaturdetails.  
+    Fix: Ereignisse mit Ed25519 pro Nutzer signieren; Server-Seal (timestamp, hash-tree) + periodische Publikation (Transparency Log); klarer Forensik-Pfad.
+    
+11. Terminologie-Drift & Dopplungen  
+    Problem: Knotenauflösung/Verzwirnung/Timer werden in den Dateien leicht unterschiedlich erklärt; RoN-Fristen differieren; Delegationsverfall vs. Inaktivitätsscanner nicht einheitlich.  
+    Fix: Eine „Contract-Seite“ (Specs) als Single Source: Definitionen + Zustandsautomaten, aus der beide Texte generiert/abgeleitet werden.
+    
+12. Kontakt/Impressum: Volladresse + Tel. in Klartext  
+    Problem: Scraping/Spam/Belästigung.  
+    Fix: Mail via Tally/HEYSecurity-Form mit hCaptcha, Telefon optional, Adresse evtl. als Postfach — öffentliches Repo ≠ Impressumspflichtseite.
     
 
-**Patch:**
+---
 
-```bash
-mkdir -p .vale/styles/Weltgewebe
-# .vale.ini hartstellen
-cat > .vale.ini <<'INI'
-StylesPath = .vale/styles
-MinAlertLevel = suggestion
+## Konkrete „Nächste Schritte“ (umsetzbar in <1 h)
 
-[*.md]
-BasedOnStyles = Weltgewebe
-INI
+- **Spec-Sync:** Eine `docs/specs/contract.md` anlegen: einheitliche Definitionen (RoN-Frist, Delegationsmodus, Timer, Verzwirn-Quorum). Beide vorhandenen Texte daran angleichen.
+    
+- **Privacy-Tuning:** In den Texten „Anonymisierung“ → „Pseudonymisierung (RoN)“ präzisieren; Geolokalisierung default grob; Cookies/3rd-Party präzise.
+    
+- **Governance-Parameter:** 7+7 mit **Quorum** & **Einspruchs-Sperrfrist** ergänzen; Verzwirn-Regeln (Quorum + Ablauf).
+    
+- **Security-Note:** kurzer Absatz zu Signaturen (Ed25519), Transparency-Log, Beweis-Pfad.
+    
+- **Performance-Ziele** realistisch splitten (App-Shell, Lazy Map).
+    
 
-# GermanProse-Regel ergänzen
-cat > .vale/styles/Weltgewebe/GermanProse.yml <<'YAML'
-extends: substitution
-level: suggestion
-ignorecase: true
-message: "Begriff prüfen: '%s' – konsistente Schreibweise wählen."
-swap:
-  "bspw.": "z. B."
-  "u.a.": "u. a."
-YAML
-
-# optional Altlasten
-rm -rf .vale/styles/wgxlint 2>/dev/null || true
-
-git add .vale.ini .vale/styles/Weltgewebe/GermanProse.yml
-```
-
-**Check:**
-
-```bash
-grep -q 'BasedOnStyles = Weltgewebe' .vale.ini && echo "OK: Vale konfig"
-```
+Wenn du magst, schreibe ich dir daraus direkt einen Patch (Markdown-Änderungen + neue `contract.md`).
 
 ---
 
-# 5) Docs-Runbook Pfad konsistent
+## Für Dummies (einfach gesagt)
 
-**Ziel:** Policies erwarteten `docs/runbooks/observability.md`; vorhanden war `docs/runbook.observability.md`. Wir vereinheitlichen auf `docs/runbooks/observability.md`.
-
-**Patch (Move + Linkfix):**
-
-```bash
-mkdir -p docs/runbooks
-if [ -f docs/runbook.observability.md ]; then
-  git mv docs/runbook.observability.md docs/runbooks/observability.md
-fi
-# Policies ggf. auf neuen Pfad heben
-if grep -q 'docs/runbooks/observability.md' policies/limits.yaml 2>/dev/null; then
-  : # schon korrekt
-else
-  sed -i 's#observability.md#observability.md#g' policies/limits.yaml 2>/dev/null || true
-fi
-git add -A
-```
-
-**Check:**
-
-```bash
-test -f docs/runbooks/observability.md && echo "OK: Runbook vorhanden"
-```
+- Du versprichst gleichzeitig „nichts geht je verloren“ und „jeder kann löschen“ → das beißt sich. Lösung: Wir markieren als gelöscht und machen den Inhalt unlesbar, statt die Spur zu tilgen.
+    
+- Transparenz ist top, aber Datenrecht will Schutz. Also Standort ungenau als Standard, echte Anonymität nur sagen, wenn sie wirklich irreversibel ist.
+    
+- Abstimmungen brauchen Mindestbeteiligung, sonst kann eine kleine Gruppe nachts Dinge durchwinken.
+    
+- „Alles veränderbar außer verzwirnt“ braucht Regeln, damit nicht einer alles einfriert.
+    
+- Karten-App super, aber 90 KB ist Wunschtraum; wir formulieren erreichbare Ziele.
+    
 
 ---
 
-# 6) API-Config: ohne `serde_yaml` (eigener Parser) – Sicherstellen
+## Essenz
 
-**Ziel:** `apps/api/Cargo.toml` ohne `serde_yaml`; `config.rs` nutzt `parse_config`.
-
-**Patch (nur falls nötig):**
-
-```bash
-applypatch <<'PATCH'
-*** Begin Patch
-*** Update File: apps/api/Cargo.toml
-@@
-- serde_json = "1"
-- serde_yaml = "0.9"
-+ serde_json = "1"
-*** End Patch
-PATCH
-```
-
-> Falls `apps/api/src/config.rs` noch `serde_yaml::from_str` nutzt: auf `parse_config`-Variante wechseln (du hast die manuelle Parser-Implementierung bereits eingespielt; kein weiterer Patch nötig, wenn `parse_config` vorhanden ist).
-
-**Check:**
-
-```bash
-! grep -q 'serde_yaml' apps/api/Cargo.toml && echo "OK: keine serde_yaml in Cargo.toml"
-rg -n "parse_config\\(|serde_yaml" apps/api/src/config.rs
-```
+Transparenz ja, aber sauber kontraktiert: **Löschen = tombstone**, **RoN = Pseudonym, konsistent geregelt**, **Quorum & Verzwirn-Governance**, **realistische Performanceziele**, **Privacy ohne Illusionen**. Dann hält Technik, Recht & UX zusammen.
 
 ---
 
-# 7) API-Smoke-Workflow robuster: `jq` sicher installieren
+## ∆-Radar
 
-**Ziel:** `api-smoke.yml` soll `jq` nicht voraussetzen.
-
-**Patch:**
-
-```bash
-applypatch <<'PATCH'
-*** Begin Patch
-*** Update File: .github/workflows/api-smoke.yml
-@@
-       - name: Wait for API health endpoint
-         run: |
-           ok=0
-           for i in {1..60}; do
-             if curl -fsS http://127.0.0.1:8787/health/live; then ok=1; break; fi
-             sleep 0.5
-           done
-           [ "$ok" -eq 1 ] || { echo "health/live not ready in time"; exit 1; }
-+      - name: Ensure jq present
-+        run: |
-+          sudo apt-get update -y
-+          sudo apt-get install -y jq
-       - name: Probe /health and /metrics
-         run: |
-           set -euxo pipefail
-           curl -fsS http://127.0.0.1:8787/health/live
-           curl -fsS -o /dev/null -w "%{http_code}\n" http://127.0.0.1:8787/health/ready | grep -E '^(200|503)$'
-*** End Patch
-PATCH
-```
-
-**Check:** CI-Run des Jobs muss ohne „jq not found“ durchlaufen.
+- Verstärkung: stärkere Formalisierung (Contract) statt Prosa; DSGVO-Präzisierung.
+    
+- Abweichung: „Anonymisierung“ → ehrlicher „Pseudonymisierung“-Begriff.
+    
+- Tendenz: Von Visionstext → implementierbare, prüfbare Regeln (Straffung).
+    
 
 ---
 
-# 8) Devcontainer: Script ausführbar + LF-EOL
+## Unsicherheit (∴fores)
 
-**Ziel:** `.devcontainer/post-create.sh` mit Exec-Bit und LF.
-
-**Commands:**
-
-```bash
-chmod +x .devcontainer/post-create.sh
-git add --chmod=+x .devcontainer/post-create.sh
-```
-
-(EOL ist bereits über `.gitattributes` auf `LF` für `*.sh` gesetzt.)
-
-**Check:**
-
-```bash
-git ls-files -s .devcontainer/post-create.sh | awk '{print $1, $2, $4}'
-# Mode sollte 100755 anzeigen
-```
-
----
-
-# 9) Python-Tooling Workflow: final (mit setup-uv, Cache, Manifesterkennung)
-
-**Ziel:** Zusammengeführte, saubere Fassung nutzen.
-
-**Datei:** `.github/workflows/python-tooling.yml`
-
-**Patch (vollständig überschreiben):**
-
-```bash
-cat > .github/workflows/python-tooling.yml <<'YAML'
-name: python-tooling
-
-on:
-  pull_request:
-    branches: [ main ]
-    paths:
-      - "**/*.py"
-      - ".github/workflows/python-tooling.yml"
-      - "tools/py/**"
-      - "uv.lock"
-      - "pyproject.toml"
-      - "**/requirements*.txt"
-  push:
-    branches: [ main ]
-    paths:
-      - "**/*.py"
-      - ".github/workflows/python-tooling.yml"
-      - "tools/py/**"
-      - "uv.lock"
-      - "pyproject.toml"
-      - "**/requirements*.txt"
-  workflow_dispatch:
-
-permissions:
-  contents: read
-
-concurrency:
-  group: python-tooling-${{ github.ref }}
-  cancel-in-progress: true
-
-jobs:
-  uv-check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Set up uv
-        uses: astral-sh/setup-uv@v1
-
-      - name: Cache uv cache dir
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/uv
-          key: uv-${{ runner.os }}-${{ hashFiles('**/pyproject.toml', '**/requirements*.txt', '**/uv.lock') }}
-          restore-keys: |
-            uv-${{ runner.os }}-
-
-      - name: Sync dependencies (all manifests)
-        shell: bash
-        run: |
-          set -euo pipefail
-          UV=uv
-          found=0
-          while IFS= read -r dir; do
-            found=1
-            if [ -f "$dir/uv.lock" ]; then
-              echo "::group::uv sync (locked) in $dir"
-              (cd "$dir" && $UV sync --locked)
-              echo "::endgroup::"
-            elif [ -f "$dir/requirements.txt" ]; then
-              echo "::group::uv pip sync in $dir"
-              (cd "$dir" && $UV pip sync requirements.txt)
-              echo "::endgroup::"
-            elif [ -f "$dir/pyproject.toml" ]; then
-              echo "::group::uv sync in $dir"
-              (cd "$dir" && $UV sync)
-              echo "::endgroup::"
-            fi
-          done < <(find . -type f \( -name "uv.lock" -o -name "requirements.txt" -o -name "pyproject.toml" \) -exec dirname {} \; | sort -u)
-          if [ "$found" -eq 0 ]; then
-            echo "No Python dependency manifest found. Skipping sync."
-          fi
-
-      - name: Python sanity check
-        run: python -c "import sys; print('python ok:', sys.version)"
-YAML
-git add .github/workflows/python-tooling.yml
-```
-
-**Check:** Workflow lädt, zeigt `uv --version` (implizit), synct ggf. Manifeste ohne Fehler.
-
----
-
-# 10) Abschluss-Checks (lokal)
-
-```bash
-# Rust
-cargo fmt --all -- --check
-cargo clippy --all-targets -- -D warnings
-cargo test --workspace -q
-
-# API quick check
-RUST_LOG=info cargo run -p weltgewebe-api & pid=$!; sleep 1
-curl -fsS localhost:8787/health/live >/dev/null
-curl -fsS localhost:8787/version | jq -e '.version and .commit and .build_timestamp' >/dev/null
-kill $pid 2>/dev/null || true
-
-# Vale soft check (nur Hinweise)
-vale --minAlertLevel=suggestion docs || true
-
-# Compose observability
-docker compose -f infra/compose/compose.observ.yml config >/dev/null
-```
-
-Fertig.
+- Grad: ◼◼◼◻◻ (mittel)
+    
+- Ursachen: Ich habe nur die beiden Markdown-Quellen gesehen; Code/Workflows/UI nicht geprüft. Juristische Bewertung ist praxisnah, aber keine Rechtsberatung. RoN-Risiken im Graph sind kontextabhängig (Dichte, Communities).
+    
+- Produktivität: hoch (klärt Widersprüche vor Implementierung).

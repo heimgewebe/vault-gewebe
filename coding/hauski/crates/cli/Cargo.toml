@@ -10,3 +10,5 @@ clap.workspace = true
 serde.workspace = true
 serde_yaml.workspace = true
 hauski-core = { path = "../core", version = "0.1.0" }
+url.workspace = true
+shellexpand = "3"

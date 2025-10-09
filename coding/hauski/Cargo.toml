@@ -2,6 +2,8 @@
 members = [
   "crates/core",
   "crates/cli",
+  "crates/embeddings",
+  "crates/indexd",
   # weitere später: indexd, llm, asr, tts, audio, memory, commentary, bridge, observability, security, adapters/*
 ]
 resolver = "2"
@@ -30,4 +32,8 @@ reqwest = { version = "0.12", features = ["json"] }
 url = "2"
 
 [patch.crates-io]
+# Force all crates in this workspace to use the vendored minimal anyhow
+# implementation under vendor/anyhow instead of pulling from crates.io.
+# This keeps offline builds deterministic.
+anyhow = { path = "vendor/anyhow" }
 signal-hook-registry = { path = "vendor/signal-hook-registry" }
