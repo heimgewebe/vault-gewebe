@@ -1,0 +1,24 @@
+wgx:
+  apiVersion: v1
+  org: "heimgewebe"
+  requiredWgx: "^2.0.3"
+  repoKind: "weltgewebe"
+  hermetic: true
+  dirs:
+    web: "apps/web"
+    api: "apps/api"
+    data: ".local/state/weltgewebe"
+  env:
+    RUST_LOG: "info,weltgewebe=debug"
+  tasks:
+    web:dev: "npm --prefix apps/web run dev"
+    web:build: "npm --prefix apps/web run build"
+    web:check: "npm --prefix apps/web run check"
+    api:test: "cargo test --manifest-path apps/api/Cargo.toml -- --nocapture"
+    api:fmt: "cargo fmt --manifest-path apps/api/Cargo.toml"
+    api:clippy: "cargo clippy --manifest-path apps/api/Cargo.toml --all-targets --all-features -- -D warnings"
+  workflows:
+    dev-up:
+      steps:
+        - task: "api:test"
+        - task: "web:check"

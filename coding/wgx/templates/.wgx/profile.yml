@@ -1,0 +1,8 @@
+wgx:
+  apiVersion: v1
+  org: "heimgewebe"
+  requiredWgx: "^2.0"
+  repoKind: "generic"
+  tasks:
+    test: "bats -r tests"
+    lint: "FILES=$(git ls-files '*.sh' '*.bash'); shfmt -d $FILES && shellcheck -S style $FILES"
