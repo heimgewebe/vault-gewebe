@@ -1,6 +1,22 @@
 {
   "recentFiles": [
     {
+      "basename": "projektskizze",
+      "path": "schule/mathe/projektskizze.canvas"
+    },
+    {
+      "basename": "projektskizze old",
+      "path": "schule/mathe/projektskizze old.canvas"
+    },
+    {
+      "basename": "projektskizze2",
+      "path": "schule/mathe/projektskizze2.canvas"
+    },
+    {
+      "basename": "projektskizze",
+      "path": "schule/mathe/projektskizze.md"
+    },
+    {
       "basename": "to do weltgewebe",
       "path": "to do weltgewebe.md"
     },
@@ -183,10 +199,6 @@
     {
       "basename": "einstein-physik",
       "path": "helden/einstein-physik.canvas"
-    },
-    {
-      "basename": "alexander der große",
-      "path": "helden/alexander der große.canvas"
     }
   ],
   "omittedPaths": [],

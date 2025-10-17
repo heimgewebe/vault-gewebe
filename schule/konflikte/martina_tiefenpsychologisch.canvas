@@ -1,0 +1,27 @@
+{
+	"nodes":[
+		{"id":"kern","type":"text","text":"🔵 **Martinas inneres Dilemma**\n\n*Sicherheit durch Kontrolle 🆚 Beziehung durch Resonanz*\n\n→ Abwehr (Kontrolle) schützt vor Angst\n→ Resonanz (Antwort) würde heilen, ist aber riskant\n\n💡 Schlüssel: Von Abwehr zu Integration – Kontrolle wandeln in Haltung","backgroundColor":"#3B82F6","x":0,"y":160,"width":480,"height":200},
+		{"id":"meta","type":"text","text":"🎯 **Martina – Tiefenpsychologisches Profil im pädagogischen Kontext**\n\nLeitidee: *Kontrolle als Selbstschutz zwischen Angst, Ideal und Beziehung*.\n\nMartina steht zwischen zwei Epochen der Pädagogik – der alten Ordnung und der neuen Resonanz.","backgroundColor":"#5B8DEF","x":432,"y":-165,"width":507,"height":207},
+		{"id":"kultur","type":"text","text":"🟡 **Kultureller & Generationeller Kontext**\n\n• Übergang: Gehorsam → Partizipation, Regel → Resonanz\n• Generationenbruch: „Ich wurde erzogen – ihr begleitet“\n• Martina verkörpert das Dazwischen\n• Kultur der Kontrolle noch im Körper gespeichert\n• Angst vor Entgrenzung: 'Wenn alles offen ist, verliere ich Halt'\n\n💠 *Zwischen zwei Pädagogiken gefangen*","backgroundColor":"#FACC15","x":-282,"y":-222,"width":480,"height":280},
+		{"id":"legende","type":"text","text":"🗺️ **Legende & Achsenlogik**\n\nFarben:\n🔵 Meta | ⚫ Grau = Biografisch | 🔴 Psychodynamisch | 🟣 Systemisch | 🟢 Pädagogisch | 🟡 Kulturell | ⚪ Essenzen\n\nHorizontale Logik: Links Ursachen, rechts Wirkungen\nVertikal: Unten Psyche → Oben Kultur\n\n💬 Lesetipp: Rosa (Resonanz), Bowlby (Bindung), Freud (Abwehr), Deci/Ryan (Bedürfnisse)","backgroundColor":"#E5E7EB","x":-879,"y":-212,"width":503,"height":278},
+		{"id":"bio","type":"text","text":"🩶 **Biografische Wurzeln**\n\n• Frühe Erfahrung von Unzuverlässigkeit oder Chaos → Bedürfnis nach Struktur\n• Gelerntes Rollenbild: „Nur wer stark ist, wird respektiert.“\n• Berufliche Sozialisation in autoritärem Umfeld\n• Nähe erlebt als Risiko → emotionale Distanz schützt\n• Moralische Identität: Pflichtgefühl = Wert\n\n💠 *Kontrolle = Überlebensstrategie*","backgroundColor":"#9CA3AF","x":-860,"y":190,"width":445,"height":308},
+		{"id":"paed","type":"text","text":"🟢 **Pädagogisches Handeln**\n\n• Gegenüber Kindern: entscheidet über Köpfe hinweg\n• Gegenüber Selma: beschämend, hierarchisch\n• Konflikte werden moralisch gedeutet, nicht relational\n• Ideal: Kinderrechte – aber ohne Selbstreflexion integriert\n• Haltung: Idealismus als Schutzpanzer\n\n💠 *Pädagogik als Bühne des inneren Konflikts*","backgroundColor":"#10B981","x":788,"y":132,"width":443,"height":263},
+		{"id":"system","type":"text","text":"🟣 **Systemische Rolle**\n\n• Im Team als „psychische Halterin“: gibt Struktur, wenn andere schwimmen\n• Reaktion auf Wandel: Verlust von Kontrolle = Bedrohung\n• Stabilisierung durch Hierarchie & Moral\n• Teamdynamik: Angst der anderen → sie übernimmt Macht\n• Folge: Sicherheit entsteht – aber Entwicklung stockt\n\n💠 *Sie trägt Ordnung – und verhindert Resonanz*","backgroundColor":"#A855F7","x":377,"y":432,"width":460,"height":320},
+		{"id":"psycho","type":"text","text":"🔴 **Psychodynamische Struktur**\n\n• Abwehrmechanismen: Rationalisierung, Moralisierung, Projektion\n• Zwanghafte Ich-Struktur: Angst vor Kontrollverlust\n• Innerer Konflikt: Über-Ich (Ideal) vs. Ich (Unsicherheit)\n• Gefühle: Angst, Schuld, Scham → verdeckt durch Autorität\n• Projektion auf Selma: „Ich bin kompetent – du nicht“\n• Übertragung: Kinder als Spiegel unbewusster Anteile\n\n💠 *Ordnung nach außen – Unruhe im Inneren*","backgroundColor":"#EF4444","x":-394,"y":440,"width":460,"height":320},
+		{"id":"essenz","type":"text","text":"⚪ **Essenz**\n\nMartina kontrolliert nicht die Kinder – sie kontrolliert ihre Angst.\n\nReifung heißt: Sicherheit nicht aus Kontrolle, sondern aus Beziehung schöpfen.\n\n💠 *Von der Ordnung zur Resonanz – vom Ideal zur Authentizität*","backgroundColor":"#F3F4F6","x":-17,"y":800,"width":520,"height":160}
+	],
+	"edges":[
+		{"id":"e1","fromNode":"meta","fromSide":"bottom","toNode":"kern","toSide":"top","color":"#2563EB","label":"führt zu Dilemma"},
+		{"id":"e2","fromNode":"kern","fromSide":"left","toNode":"bio","toSide":"right","color":"#9CA3AF","label":"biografische Angst"},
+		{"id":"e4","fromNode":"kern","fromSide":"bottom","toNode":"system","toSide":"top","color":"#8B5CF6","label":"Teamrolle"},
+		{"id":"e5","fromNode":"kern","fromSide":"right","toNode":"paed","toSide":"left","color":"#059669","label":"sichtbares Verhalten"},
+		{"id":"e6","fromNode":"kern","fromSide":"top","toNode":"kultur","toSide":"bottom","color":"#EAB308","label":"gesellschaftlicher Rahmen"},
+		{"id":"e3","fromNode":"kern","fromSide":"bottom","toNode":"psycho","toSide":"top","color":"#DC2626","label":"innere Konflikte"},
+		{"id":"e7","fromNode":"kern","fromSide":"bottom","toNode":"essenz","toSide":"top","color":"#6B7280","label":"Kernbotschaft"}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{},
+		"startNode":"d5d1749a45f5a565"
+	}
+}

@@ -1,0 +1,30 @@
+{
+	"nodes":[
+		{"id":"ausgangslage","type":"text","text":"📍 Ausgangslage\nKinder unzufrieden mit Raumaufteilung → Anlass für partizipative Gestaltung & mathemische Exploration.","x":-600,"y":50,"width":400,"height":118,"color":"gray"},
+		{"id":"ziele","type":"text","text":"🎯 Ziele\nKurzfristig: Messen, Vergleichen, Raumverständnis, Partizipation.\nLangfristig: Nachhaltiges geometrisches Denken & Raumgefühl.","x":600,"y":50,"width":400,"height":162,"color":"4"},
+		{"id":"essenz","type":"text","text":"✨ Essenz:\nGestaltung ist Bildung – der Raum wird zum Spiegel mathematischen Denkens.","x":0,"y":-280,"width":480,"height":80,"color":"5"},
+		{"id":"legende","type":"text","text":"🗺️ Legende:\nBlau = Meta/Essenzen\nGrau = Grundlagen\nGelb = Prozesse\nRot = Risiken\nGrün = Ziele\nAchsenlogik: \nvertikal → Abstraktionsebene (oben = Idee, unten = Praxis)\nLinks = Ausgangslage · Mitte = Prozess · Rechts = Wirkung","x":-600,"y":-280,"width":400,"height":296},
+		{"id":"evaluation","type":"text","text":"🔍 Evaluation & Nachhaltigkeit\n• Beobachtung & Reflexion der Kinder\n• Fotodokumentation & Portfolio\n• Nachhaltiger Raum als Erinnerung an Selbstwirksamkeit","x":600,"y":330,"width":480,"height":120,"color":"3"},
+		{"id":"meta","type":"text","text":"Meta-Idee:\nKinder erleben Mathematik, indem sie ihren Gruppenraum planen, vermessen und gestalten.","x":0,"y":-180,"width":480,"height":80,"color":"5"},
+		{"id":"root","type":"text","text":"Projektskizze: Unser Gruppenraum – Mathematik erleben\nQuelle: Projektbeispiel3Gruppenraum.pdf","x":-10,"y":-50,"width":500,"height":100,"color":"blue"},
+		{"id":"phasen","type":"text","text":"🌀 Projektphasen\n1️⃣ Einstieg & Ideensammlung\n2️⃣ Vermessen & Dokumentieren\n3️⃣ Planung & Modellbau\n4️⃣ Umsetzung\n5️⃣ Reflexion","x":45,"y":168,"width":410,"height":167,"color":"3"},
+		{"id":"risiken","type":"text","text":"⚠️ Risiken & Herausforderungen\n• Konflikte durch unterschiedliche Ideen → Demokratie & Kompromisse\n• Abstraktion zu schwer → anschauliche Methoden\n• Zeitdruck → flexible Anpassung\n• Ungenaue Messung → als Lernanlass nutzen","x":0,"y":417,"width":500,"height":200,"color":"1"},
+		{"id":"ressourcen","type":"text","text":"🧰 Ressourcen\nPersonal: 2 Erzieher + evtl. Praktikant\nMaterial: Messwerkzeuge, Bastelmaterial, Tablet/Kamera\nBudget: 50–100 €","x":-600,"y":216,"width":400,"height":167,"color":"gray"},
+		{"id":"stakeholder","type":"text","text":"👥 Beteiligte / Stakeholder\nKinder (Hauptakteure)\nErzieher (Projektleitung)\nLeitung, Eltern, Träger, andere Gruppen","x":-550,"y":450,"width":400,"height":120,"color":"gray"}
+	],
+	"edges":[
+		{
+			"id":"d0955767f015e01b",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"stakeholder",
+			"fromSide":"right",
+			"toNode":"phasen",
+			"toSide":"left"
+		}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

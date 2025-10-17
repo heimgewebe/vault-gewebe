@@ -1,0 +1,28 @@
+{
+	"nodes":[
+		{"id":"root","type":"text","text":"Lebenslagenmodell nach Sabine Poppe\nQuelle: nifbe-Themenheft Nr. 32 »Armut und armutssensibles Handeln in der KiTa«","x":0,"y":0,"width":500,"height":100,"color":"blue"},
+		{"id":"meta","type":"text","text":"Meta-Idee: Armut ist mehrdimensional – keine reine Geldfrage, sondern eine Frage der Teilhabe.","x":0,"y":-200,"width":520,"height":80,"color":"blue"},
+		{"id":"ebene1","type":"text","text":"Ebene: Grundlagen / Definitionen","x":-780,"y":-60,"width":250,"height":50,"color":"violet"},
+		{"id":"ebene2","type":"text","text":"Ebene: Analyse / Screening","x":0,"y":210,"width":250,"height":50,"color":"violet"},
+		{"id":"essenz","type":"text","text":"Essenz\nArmut beschneidet Möglichkeitsräume über mehrere Dimensionen.\nWer stärken will, muss Lebenslagen verstehen – und Teilhabe konkret organisieren.","x":0,"y":-420,"width":700,"height":100,"color":"yellow"},
+		{"id":"legende","type":"text","text":"Legende\nBlau = Zentrum/Meta\nGrau = Grundlagen/Dimensionen\nRot = Risiken\nGrün = Ziele/Handlungshebel\nGelb = Essenz/Screening\nViolett = Ebenen (Layout)","x":-780,"y":380,"width":304,"height":211,"color":"gray"},
+		{"id":"dimensionen","type":"text","text":"Vier Lebenslagendimensionen:\n1 Materielle Versorgung\n2 Kulturelle Versorgung\n3 Soziale Integration\n4 Psychische & physische Lage","x":-726,"y":48,"width":360,"height":160,"color":"gray"},
+		{"id":"d1","type":"text","text":"1 Materielle Versorgung – Indikatoren\n• Wohnen: Enge, Lärm, Heizung\n• Grundbedarf: Nahrung, Kleidung\n• Lernraum: Tisch, Ruhe, Licht\nFragen:\n– Hat das Kind einen ruhigen Arbeitsplatz?\n– Gibt es wiederkehrende Engpässe (z. B. Hefte)?","x":-378,"y":-213,"width":351,"height":225,"color":"gray"},
+		{"id":"ziel","type":"text","text":"Zielbild\n• Wahrnehmen statt urteilen\n• Teilhabechancen erweitern\n• Belastungen reduzieren\n• Entwicklung sichern","x":958,"y":-226,"width":320,"height":130,"color":"green"},
+		{"id":"hebel","type":"text","text":"Handlungshebel (KiTa/Schule/Sozialraum)\n1 Beziehung: feste Bezugsperson, verlässliche Rituale\n2 Teilhabe: Fonds/Patenschaften, Materialpool\n3 Lernräume: Ruheplatz, Hausaufgabenzeit\n4 Kultur: kostenfreie Kurse, Leihinstrumente\n5 Lotsen: Anträge, Präventionskette, Beratung\n6 Entstigmatisierung: Sprache der Anerkennung","x":950,"y":275,"width":420,"height":220,"color":"green"},
+		{"id":"ebene3","type":"text","text":"Ebene: Pädagogisches Handeln / Ziele","x":1014,"y":18,"width":290,"height":50,"color":"violet"},
+		{"id":"schutz","type":"text","text":"Schutzfaktoren\n• Verlässliche Beziehung\n• Selbstwirksamkeit/Talente\n• Beste Freundschaft / Peer-Support\n• Positive Eltern-Kind-Interaktion\n• Lotsenhilfe / stabiles Netzwerk","x":539,"y":464,"width":320,"height":190,"color":"green"},
+		{"id":"screen","type":"text","text":"Kurz-Screening (Ampel) – je Dimension\n🟢 = unauffällig\n🟡 = einzelne Auffälligkeiten\n🔴 = mehrere Auffälligkeiten\n→ Einstufung:\n• Wohlergehen (meist 🟢)\n• Benachteiligung (häufig 🟡)\n• Multiple Deprivation (mehrfach 🔴)","x":331,"y":194,"width":330,"height":220,"color":"yellow"},
+		{"id":"d3","type":"text","text":"3 Soziale Integration – Indikatoren\n• Freundschaften, Zugehörigkeit\n• Teilnahme an Gruppenaktivitäten\n• Scham/Vermeidung (z. B. Ausflüge)\nFragen:\n– Rückzugstendenzen? Hänseleien?\n– Teilhabe an Freizeit/AGs?","x":-396,"y":489,"width":330,"height":200,"color":"gray"},
+		{"id":"risiken","type":"text","text":"Risikofaktoren\n• Einkommensarmut / Arbeitslosigkeit\n• Geringe Bildung / fehlende Netzwerke\n• Belastetes Familienklima, Enge, Lärm\n• Migrations-/Verfahrenshürden\n• Befristung/Schichtarbeit","x":56,"y":507,"width":320,"height":190,"color":"red"},
+		{"id":"lebenslagen","type":"text","text":"Lebenslagen-Typen:\n• Wohlergehen\n• Benachteiligung\n• Multiple Deprivation","x":-667,"y":234,"width":300,"height":110,"color":"gray"},
+		{"id":"tanja","type":"text","text":"Beispiel: Fall »Tanja« (Kurzprofil)\nD1 Materiell: Enge Wohnung, kein Schreibtisch → 🔴\nD2 Kulturell: Musikunterricht zu teuer → 🟡/🔴\nD3 Sozial: Rückzug, Ausflug geschwänzt → 🔴\nD4 Psy/Phy: Kopf-/Bauchschmerz, Stress daheim → 🔴\nEinstufung: Multiple Deprivation\nPrimärhebel: Beziehung + Teilhabe + Lotsen","x":968,"y":-603,"width":364,"height":304,"color":"gray"},
+		{"id":"d4","type":"text","text":"4 Psychische & physische Lage – Indikatoren\n• Gesundheit: Müdigkeit, Kopfschmerz\n• Emotion: Anspannung, Sorge\n• Familiäre Belastung: Streit, Überforderung\nFragen:\n– Somatische Beschwerden ohne Befund?\n– Anzeichen für Dauerstress?","x":560,"y":-127,"width":329,"height":277,"color":"gray"},
+		{"id":"d2","type":"text","text":"2 Kulturelle Versorgung – Indikatoren\n• Zugang: Bücher, Sprache, Medien\n• Lern-/Spielmaterial: Vielfalt, Qualität\n• Kulturteilhabe: Kurse, Musik, Ausflüge\nFragen:\n– Kann das Kind an Angeboten teilnehmen?\n– Gibt es systematische Hürden (Kosten, Anmeldung)?","x":-352,"y":172,"width":344,"height":249,"color":"gray"}
+	],
+	"edges":[],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

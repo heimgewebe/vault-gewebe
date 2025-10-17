@@ -11,15 +11,17 @@
             "id": "5b263b183ae1de92",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "canvas",
               "state": {
-                "file": "to do weltgewebe.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
+                "file": "schule/mathe/projektskizze.canvas",
+                "viewState": {
+                  "x": 110.59490084985833,
+                  "y": 569.3484419263456,
+                  "zoom": -0.7772669588907765
+                }
               },
-              "icon": "lucide-file",
-              "title": "to do weltgewebe"
+              "icon": "lucide-layout-dashboard",
+              "title": "projektskizze"
             }
           }
         ]
@@ -241,6 +243,11 @@
   },
   "active": "5b263b183ae1de92",
   "lastOpenFiles": [
+    "schule/mathe/projektskizze old.canvas",
+    "schule/mathe/projektskizze.canvas",
+    "schule/mathe/projektskizze2.canvas",
+    "schule/mathe/projektskizze.md",
+    "to do weltgewebe.md",
     "coding/hausKI/README.md",
     "schule/heilpädagogik/t_i_p-ziel_leitprinzipien.canvas",
     "coding/hausKI/hauski-skizze.md",
@@ -266,9 +273,6 @@
     "coding/hausKI-audio/docs/adr/0003-repo-standards-docs-ci.md",
     "coding/hausKI-audio/docs/adr/README.md",
     "coding/hausKI/seeds/obsidian.sample/Canvas/overview.canvas",
-    "coding/hausKI/docs/adr/README.md",
-    "coding/hausKI/models/piper/README.md",
-    "coding/hausKI/models/whisper/README.md",
     "coding/hausKI/vendor/signal-hook-registry/src",
     "coding/hausKI/seeds/obsidian.sample/Canvas",
     "coding/hausKI/seeds/obsidian.sample/notes",
@@ -285,8 +289,6 @@
     "out_of_comfort_zone.canvas",
     "weltverschwörung/mccloy.canvas",
     "julie.canvas",
-    "weltverschwörung/mccloy+.canvas",
-    "weltverschwörung/ordo ab chao 1914 - 57.canvas",
     "schule/arbeitsfelder/arbeitsfelder.jpeg",
     "schule/PNG-Bild.png",
     "schule/PNG-Bild 2.png",

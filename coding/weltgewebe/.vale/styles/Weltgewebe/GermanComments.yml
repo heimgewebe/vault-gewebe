@@ -1,8 +1,0 @@
-extends: existence
-message: "TODO/FIXME gefunden: Ergänze Kontext oder verlinke ein Ticket."
-level: suggestion
-ignorecase: true
-scope: raw
-tokens:
-  - TODO
-  - FIXME

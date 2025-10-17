@@ -1,6 +1,0 @@
-# Logs & tmp
-*.log
-*.bak
-*.swp
-.DS_Store
-.tmp/

@@ -1,0 +1,21 @@
+{
+	"nodes":[
+		{"id":"essenz","type":"text","text":"✨ Essenz:\nGestaltung ist Bildung – der Raum wird zum Spiegel mathematischen Denkens.","x":0,"y":-450,"width":520,"height":80,"color":"5"},
+		{"id":"meta","type":"text","text":"Meta-Idee:\nKinder erleben Mathematik, indem sie ihren Gruppenraum planen, vermessen und gestalten.","x":0,"y":-300,"width":520,"height":80,"color":"5"},
+		{"id":"titel","type":"text","text":"Projektskizze: Wir gestalten den Gruppenraum neu!\nQuelle: AAProjektskizzeerstellen.pdf + Projektbeispiel Gruppenraum","x":0,"y":-150,"width":520,"height":100,"color":"blue"},
+		{"id":"ausgangslage","type":"text","text":"📍 Ausgangslage / Problemstellung\n• Möbel 25 Jahre alt, teils defekt\n• Kinder wünschen Veränderung\n• Gelegenheit für partizipatives Mathe-Projekt","x":-650,"y":-100,"width":400,"height":140,"color":"gray"},
+		{"id":"kontext","type":"text","text":"🏫 Projektumfeld\nKita-Gruppe (20 Kinder, 4–6 Jahre)\n2 Fachkräfte, Eltern, Leitung, Träger","x":-650,"y":100,"width":360,"height":100,"color":"gray"},
+		{"id":"phasen","type":"text","text":"🌀 Phasen & Vorgehen\n1️⃣ Planung – Ideen, Finanzierung, Grundriss\n2️⃣ Einkauf – Recherche, Exkursion, Bestellung\n3️⃣ Aufbau – Lieferung, Zählen, Montieren\n4️⃣ Abschluss – Einräumen, Präsentation, Reflexion","x":0,"y":120,"width":540,"height":170,"color":"yellow"},
+		{"id":"methoden","type":"text","text":"🧩 Methoden\n• Gruppendiskussionen, Brainstorming\n• Messen & Modellbau\n• Rollenspiele, Expertenbefragung\n• Reflexionsgespräche","x":-200,"y":340,"width":355,"height":151,"color":"3"},
+		{"id":"evaluation","type":"text","text":"📊 Evaluation & Nachhaltigkeit\n• Prozessdokumentation mit Fotos & Plakaten\n• Regelmäßige Reflexionsgespräche\n• Raum bleibt als Lernort erhalten","x":650,"y":220,"width":440,"height":130,"color":"6"},
+		{"id":"risiken","type":"text","text":"⚠️ Risiken & Herausforderungen\n• Finanzierung unsicher → Spendenaktionen\n• Gruppendynamik → Moderation durch Fachkräfte\n• Komplexe Möbel → Elternhilfe","x":650,"y":60,"width":440,"height":120,"color":"1"},
+		{"id":"ressourcen","type":"text","text":"🧰 Ressourcen\n• Messwerkzeuge, Papier, Kataloge, Werkzeuge\n• Unterstützung durch Eltern & Experten\n• Budget: Spenden (~150 €)","x":0,"y":520,"width":400,"height":110,"color":"gray"},
+		{"id":"legende","type":"text","text":"🎨 Legende\nBlau = Meta / Essenz\nGrau = Grundlagen / Kontext\nGelb = Prozess / Methoden\nGrün = Ziele / Evaluation\nRot = Risiken / Herausforderungen\nAchsen: Links = Ausgangslage · Mitte = Prozess · Rechts = Wirkung","x":-750,"y":460,"width":404,"height":225,"color":"gray"},
+		{"id":"ziele","type":"text","text":"🎯 Ziele & Wirkungen\n• Mathematische Grunderfahrungen: Messen, Vergleichen, Formen, Mengen, Zeit\n• Partizipation & Demokratieverständnis\n• Selbstwirksamkeit & Lernfreude\n• Nachhaltige Raumgestaltung","x":652,"y":-136,"width":439,"height":170,"color":"4"}
+	],
+	"edges":[],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}
