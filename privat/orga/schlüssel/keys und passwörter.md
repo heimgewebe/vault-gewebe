@@ -1,7 +1,0 @@
-markmindkey: cac784a0f349971655b77fedde4fadd42ffc70615d6870b62839ce14681ee55616a40dbea99f07d9df4123560d109d39f51eab8d11107f5a5cbfb973afe204eccf
-
-openaipasswort: pozdi6-Mejgyf-hedsuw
-
-apple-id: Alex86@iclou
-
-openrouterkey: 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
