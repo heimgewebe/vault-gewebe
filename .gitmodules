@@ -1,1 +1,4 @@
 [submodule "coding/tools"]
+[submodule "privat"]
+	path = privat
+	url = git@github.com:heimgewebe/vault-privat.git
