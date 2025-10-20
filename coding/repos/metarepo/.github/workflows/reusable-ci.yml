@@ -1,0 +1,51 @@
+name: reusable-ci
+
+on:
+  workflow_call:
+    inputs:
+      run_lint:
+        description: "Run linting (default: true)"
+        required: false
+        default: true
+        type: boolean
+      run_tests:
+        description: "Run tests (default: true)"
+        required: false
+        default: true
+        type: boolean
+
+jobs:
+  reusable-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Just
+        uses: extractions/setup-just@v2
+
+      - name: Install Dependencies (optional)
+        run: |
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f package.json ]; then npm ci; fi
+
+      - name: Lint
+        if: ${{ inputs.run_lint == true }}
+        run: |
+          if just --summary 2>/dev/null | grep -q lint; then
+            just lint
+          else
+            echo "::notice::Kein Lint-Target gefunden – übersprungen."
+          fi
+
+      - name: Test
+        if: ${{ inputs.run_tests == true }}
+        run: |
+          if just --summary 2>/dev/null | grep -q test; then
+            just test
+          else
+            echo "::notice::Kein Test-Target gefunden – übersprungen."
+          fi
+
+      - name: Summary
+        run: echo "✅ reusable-ci completed successfully."

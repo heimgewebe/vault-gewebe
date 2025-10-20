@@ -1,0 +1,71 @@
+name: wgx metrics (reusable)
+
+on:
+  workflow_call:
+    inputs:
+      post_url:
+        required: false
+        type: string
+      schema_ref:
+        required: false
+        type: string
+        default: "contracts-v1"
+
+jobs:
+  metrics:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install tooling
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y jq curl || true
+          npm i -g ajv-cli@5
+
+      - name: Run wgx metrics snapshot
+        env:
+          OUTPUT_PATH: metrics.json
+        run: |
+          set -euo pipefail
+          if [ -x scripts/wgx-metrics-snapshot.sh ]; then
+            bash scripts/wgx-metrics-snapshot.sh > "$OUTPUT_PATH"
+          elif command -v just >/dev/null 2>&1; then
+            if just --list > /tmp/just-list 2>&1 && grep -q "wgx metrics snapshot" /tmp/just-list; then
+              just wgx metrics snapshot --json > "$OUTPUT_PATH"
+            fi
+          fi
+          if [ ! -s "$OUTPUT_PATH" ]; then
+            if command -v wgx >/dev/null 2>&1; then
+              wgx metrics snapshot --json > "$OUTPUT_PATH"
+            else
+              echo "::error::No wgx metrics snapshot command available"
+              exit 1
+            fi
+          fi
+          cat "$OUTPUT_PATH" | jq .
+
+      - name: Validate metrics payload
+        env:
+          SCHEMA_TAG: ${{ inputs.schema_ref }}
+        run: |
+          set -euo pipefail
+          SCHEMA_URL="https://raw.githubusercontent.com/heimgewebe/metarepo/${SCHEMA_TAG}/contracts/metrics.snapshot.schema.json"
+          echo "Fetching schema from $SCHEMA_URL"
+          curl -fsSL "$SCHEMA_URL" -o metrics.schema.json
+          ajv validate -s metrics.schema.json -d metrics.json
+
+      - name: Optional POST to ingest endpoint
+        if: ${{ inputs.post_url != '' }}
+        env:
+          POST_URL: ${{ inputs.post_url }}
+        run: |
+          set -euo pipefail
+          echo "POSTing metrics snapshot to $POST_URL"
+          curl -fsS --data-binary @metrics.json "$POST_URL"

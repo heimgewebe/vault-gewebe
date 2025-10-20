@@ -1,0 +1,13 @@
+# misc
+*.swp
+.DS_Store
+.env
+
+# local tooling bins (unpinned / developer-managed)
+# halte den Ordner selbst im Repo, aber lasse lokale Pins zu
+tools/bin/*
+!tools/bin/yq.sha256
+!tools/bin/.gitkeep
+
+# tmp
+tmp/

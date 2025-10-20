@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage(){ echo "Usage: $0 --repo <name> [--patterns \"glob1,glob2\"]"; }
+
+REPO=""
+PATTERNS="templates/.github/workflows/*.yml,templates/Justfile,templates/docs/**,templates/.wgx/profile.yml"
+OWNER="${GITHUB_OWNER:-heimgewebe}"
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --repo) REPO="$2"; shift 2 ;;
+    --patterns) PATTERNS="$2"; shift 2 ;;
+    --owner) OWNER="$2"; shift 2 ;;
+    --owner-from-env) OWNER="${GITHUB_OWNER:?Missing GITHUB_OWNER}"; shift ;;
+    -h|--help) usage; exit 0 ;;
+    *) shift ;;
+  esac
+done
+[[ -z "$REPO" ]] && { usage; exit 1; }
+
+TS="$(date +%Y%m%d-%H%M%S)"
+TMPDIR="$(mktemp -d)"; trap 'rm -rf -- "${TMPDIR:?}"' EXIT
+REPORT="reports/drift-${REPO}-${TS}.md"; mkdir -p reports
+echo "→ OWNER=${OWNER}  REPO=${REPO}"
+
+git clone --depth=1 "https://github.com/${OWNER}/${REPO}.git" "$TMPDIR/$REPO" >/dev/null 2>&1 || {
+  echo "Clone fehlgeschlagen: $REPO"; exit 1; }
+
+echo "# Drift Report: $REPO ($TS)" > "$REPORT"
+echo "" >> "$REPORT"
+
+IFS=',' read -r -a GLOBS <<< "$PATTERNS"
+
+adr_exception(){ [[ "$1" == docs/adr/* ]]; }
+
+for g in "${GLOBS[@]}"; do
+  case "$g" in
+    templates/*) CANON="$g"; REL="${g#templates/}" ;;
+    *) CANON="$g"; REL="$g" ;;
+  esac
+
+  shopt -q nullglob; NG_WAS_SET=$?
+  shopt -s nullglob
+  files=($CANON)
+  (( NG_WAS_SET != 0 )) && shopt -u nullglob
+  for f in "${files[@]}"; do
+    [[ -z "$f" ]] && continue
+    REL_PATH="${f#templates/}"
+    [[ "$REL_PATH" == "$f" ]] && REL_PATH="$f"
+    TARGET="$TMPDIR/$REPO/$REL_PATH"
+
+    if [[ -f "$f" && -f "$TARGET" ]]; then
+      if ! diff -u "$f" "$TARGET" > "$TMPDIR/diff.patch" 2>/dev/null; then
+        echo "## $REL_PATH" >> "$REPORT"
+        echo -e "\n\`\`\`diff" >> "$REPORT"
+        cat "$TMPDIR/diff.patch" >> "$REPORT"
+        echo -e "\n\`\`\`\n" >> "$REPORT"
+        if adr_exception "${REL_PATH}"; then
+          echo "- Entscheidung: **Feldversion prüfen** (ADR-Ausnahme)." >> "$REPORT"
+        else
+          echo "- Entscheidung: **Canonical wins** (Metarepo → Sub-Repo)." >> "$REPORT"
+        fi
+        echo "" >> "$REPORT"
+      fi
+    elif [[ ! -f "$f" && -f "$TARGET" ]]; then
+      echo "## $REL_PATH" >> "$REPORT"
+      echo "- Status: **DELETE in target** (nicht im Kanon vorhanden)" >> "$REPORT"
+      echo "" >> "$REPORT"
+    elif [[ -f "$f" && ! -f "$TARGET" ]]; then
+      echo "## $REL_PATH" >> "$REPORT"
+      echo "- Status: **CREATE in target** (nur im Kanon vorhanden)" >> "$REPORT"
+      echo "" >> "$REPORT"
+    fi
+  done
+done
+
+echo "Report geschrieben: $REPORT"

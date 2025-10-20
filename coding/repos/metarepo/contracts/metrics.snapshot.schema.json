@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "wgx metrics snapshot",
+  "type": "object",
+  "required": ["ts", "host", "updates", "backup", "drift"],
+  "properties": {
+    "ts": { "type": "integer" },
+    "host": { "type": "string" },
+    "temps": {
+      "type": "object",
+      "additionalProperties": { "type": "number" }
+    },
+    "updates": {
+      "type": "object",
+      "properties": {
+        "os": { "type": "integer", "minimum": 0 },
+        "pkg": { "type": "integer", "minimum": 0 },
+        "flatpak": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "backup": {
+      "type": "object",
+      "properties": {
+        "last_ok": { "type": "string" },
+        "age_days": { "type": "number", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "drift": {
+      "type": "object",
+      "properties": {
+        "templates": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

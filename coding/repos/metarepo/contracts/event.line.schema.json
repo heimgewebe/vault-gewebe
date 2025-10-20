@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "hausKI event line (JSONL)",
+  "type": "object",
+  "required": ["id", "node_id", "ts", "kind", "payload"],
+  "properties": {
+    "id": { "type": "string" },
+    "node_id": { "type": "string" },
+    "ts": { "type": "integer" },
+    "kind": { "type": "string" },
+    "payload": { "type": "object" }
+  },
+  "additionalProperties": false
+}

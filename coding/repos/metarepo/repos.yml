@@ -1,0 +1,75 @@
+# Repos, die vom Metarepo Templates bekommen
+mode: static
+
+github:
+  owner: heimgewebe
+
+repos:
+  - name: weltgewebe
+    url: https://github.com/heimgewebe/weltgewebe
+    default_branch: main
+    domain: aussen
+    scope: events
+    metrics:
+      enable: false
+  - name: hausKI
+    url: https://github.com/heimgewebe/hausKI
+    default_branch: main
+    domain: assistant
+    scope: policy
+    metrics:
+      enable: true
+  - name: hauski-audio
+    url: https://github.com/heimgewebe/hauski-audio
+    default_branch: main
+    depends_on:
+      - hausKI
+    domain: audio
+    scope: events
+    metrics:
+      enable: false
+  - name: semantAH
+    url: https://github.com/heimgewebe/semantAH
+    default_branch: main
+    domain: insights
+    scope: export
+    metrics:
+      enable: false
+  - name: wgx
+    url: https://github.com/heimgewebe/wgx
+    default_branch: main
+    domain: platform
+    scope: metrics
+    metrics:
+      enable: true
+  - name: tools
+    url: https://github.com/heimgewebe/tools
+    default_branch: main
+    domain: tooling
+    scope: shared
+    metrics:
+      enable: false
+  - name: leitstand
+    url: https://github.com/heimgewebe/leitstand
+    default_branch: main
+    domain: leitstand
+    scope: ingest
+    metrics:
+      enable: false
+  - name: aussensensor
+    url: https://github.com/heimgewebe/aussensensor
+    default_branch: main
+    domain: aussen
+    scope: events
+    metrics:
+      enable: false
+  - name: heimlern
+    url: https://github.com/heimgewebe/heimlern
+    default_branch: main
+    domain: policy
+    scope: library
+    metrics:
+      enable: false
+
+# exclude:
+#   - vault-gewebe

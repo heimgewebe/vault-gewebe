@@ -1,0 +1,26 @@
+name: validate-templates
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - 'templates/**'
+      - 'scripts/**'
+      - 'repos.yml'
+      - '.github/workflows/validate-templates.yml'
+  pull_request:
+    paths:
+      - 'templates/**'
+      - 'scripts/**'
+      - 'repos.yml'
+      - '.github/workflows/validate-templates.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: pip install pyyaml
+      - name: Run local validation script
+        run: ./.github/workflows/validate-local.sh

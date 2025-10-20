@@ -1,0 +1,49 @@
+```mermaid
+%%{init: {'theme':'neutral'}}%%
+flowchart LR
+    subgraph Producer
+      SEM[semantAH\ninsights/today.json]
+      WGX[wgx\nmetrics.json (Snapshot)]
+      AUD[hausKI-audio\naudio.session_*,\naudio.latency_ms]
+      AUS[aussensensor\nexport/feed.jsonl]
+    end
+
+    subgraph Core
+      HKI[hausKI\nState (SQLite)\nEvents (~/.hauski/events/*.jsonl)]
+      HLM[heimlern\nDecisions {action,score,why}]
+    end
+
+    subgraph UI
+      LST[leitstand\n/data/{domain}.jsonl]
+    end
+
+    subgraph Meta
+      META[metarepo\ncontracts/*.schema.json]
+    end
+
+    %% Contracts (Schemas)
+    META ---|insights.schema.json| SEM
+    META ---|metrics.snapshot.schema.json| WGX
+    META ---|audio.events.schema.json| AUD
+    META ---|aussen.event.schema.json| AUS
+    META ---|event.line.schema.json| HKI
+    META ---|policy.decision.schema.json| HLM
+
+    %% Flows
+    SEM -->|insights/today.json| HKI
+    SEM -->|insights/today.json| LST
+
+    WGX -->|metrics.json| HKI
+    HKI -->|/v1/ingest/metrics\n(append Event)| HKI
+
+    AUD -->|audio.events| HKI
+    AUD -->|audio.events| LST
+
+    AUS -->|feed.jsonl → HTTP /ingest/aussen| LST
+
+    HKI -->|/v1/policy/decide| HLM
+    HLM -->|{action,score,why}| HKI
+    HKI -->|/v1/policy/feedback {reward}| HLM
+
+    HKI -->|events JSONL| LST
+```

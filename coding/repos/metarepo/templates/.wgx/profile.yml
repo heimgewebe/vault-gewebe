@@ -1,0 +1,25 @@
+version: 1
+# Hinweis: Repo-spezifische Overlays optional unter .wgx/profile.overlay.yml
+project: metarepo
+roles:
+  - name: meta
+    provides:
+      - templates
+      - wgx-commands
+env_priority:
+  - devcontainer
+  - devbox
+  - mise/direnv
+  - termux
+sync:
+  include:
+    - ".github/workflows/*.yml"
+    - "Justfile"
+    - "docs/**"
+    - ".wgx/profile.yml"
+rules:
+  reconcile:
+    prefer: canonical
+    exceptions:
+      - pattern: "docs/adr/**"
+        prefer: improved_field_version

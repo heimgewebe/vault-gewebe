@@ -1,0 +1,79 @@
+name: contracts-validate (reusable)
+
+on:
+  workflow_call:
+    inputs:
+      schema_glob:
+        required: false
+        type: string
+        default: "contracts/*.schema.json"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install ajv-cli
+        run: npm i -g ajv-cli@5
+
+      - name: Compile schemas
+        env:
+          SCHEMA_GLOB: ${{ inputs.schema_glob }}
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          schemas=($SCHEMA_GLOB)
+          if [ ${#schemas[@]} -eq 0 ]; then
+            echo "::error::No schemas found under $SCHEMA_GLOB"
+            exit 1
+          fi
+          for schema in "${schemas[@]}"; do
+            echo "Compiling $schema"
+            ajv compile -s "$schema"
+          done
+
+      - name: Validate known JSON payloads
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          failed=0
+          while IFS= read -r -d '' file; do
+            case "$file" in
+              # harte Absicherung: falls der find-Filter jemals versagt,
+              # werden Schema-Dateien hier trotzdem übersprungen
+              *schema.json)
+                continue
+                ;;
+              *insights/*|*insights.json)
+                ajv validate -s contracts/insights.schema.json -d "$file" || failed=1
+                ;;
+              *metrics*.json)
+                ajv validate -s contracts/metrics.snapshot.schema.json -d "$file" || failed=1
+                ;;
+              *audio*events*.json|*audio*.jsonl)
+                ajv validate -s contracts/audio.events.schema.json -d "$file" || failed=1
+                ;;
+              *aussen*|*extern*events*.jsonl)
+                ajv validate -s contracts/aussen.event.schema.json -d "$file" || failed=1
+                ;;
+              *policy*decision*.json)
+                ajv validate -s contracts/policy.decision.schema.json -d "$file" || failed=1
+                ;;
+            esac
+          # Nur echte Beispieldaten prüfen – Schemas und Vendor-Verzeichnisse explizit ausschließen
+          done < <(find . \
+              -type f \
+              \( -name '*.json' -o -name '*.jsonl' \) \
+              -not -name '*schema.json' \
+              -not -path '*/node_modules/*' \
+              -not -path '*/.git/*' -print0)
+          if [ "$failed" -ne 0 ]; then
+            echo "::error::One or more payloads failed validation"
+            exit 1
+          fi

@@ -1,0 +1,59 @@
+name: heavy
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: heavy-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  ask-rollout:
+    name: Verify /ask availability
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      ASK_ENDPOINT_URL: ${{ secrets.ASK_ENDPOINT_URL }}
+      METRICS_SNAPSHOT_URL: ${{ secrets.METRICS_SNAPSHOT_URL }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Query /ask endpoint (optional)
+        if: ${{ env.ASK_ENDPOINT_URL != '' }}
+        run: |
+          set -euo pipefail
+          curl --fail --show-error --location \
+               --retry 3 --retry-connrefused --retry-delay 2 \
+               --max-time 15 "$ASK_ENDPOINT_URL" -o ask.txt
+          jq -e '.hits | length >= 1' ask.txt
+
+      - name: Upload /ask response artifact
+        if: ${{ hashFiles('ask.txt') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ask-response-${{ github.run_id }}
+          path: ask.txt
+          if-no-files-found: ignore
+
+      - name: Fetch metrics snapshot (optional)
+        if: ${{ env.METRICS_SNAPSHOT_URL != '' }}
+        run: |
+          set -euo pipefail
+          curl --fail --show-error --location \
+               --retry 3 --retry-connrefused --retry-delay 2 \
+               --max-time 15 "$METRICS_SNAPSHOT_URL" -o metrics.txt
+
+      - name: Inspect /ask latency histogram
+        if: ${{ hashFiles('metrics.txt') != '' }}
+        continue-on-error: true
+        run: |
+          ask_histogram_pattern='/http_request_duration_seconds_bucket/ && /path="\/ask"/ {print}'
+          awk "$ask_histogram_pattern" metrics.txt | head -n 5
+
+      - name: Done
+        run: echo "heavy job complete"

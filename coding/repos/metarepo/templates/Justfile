@@ -1,0 +1,40 @@
+set shell := ["bash", "-eu", "-o", "pipefail", "-c"]
+
+default: help
+help:
+	@echo "Targets: up validate smoke fmt lint test ci"
+
+up:
+	@if [ -x scripts/wgx ]; then \
+	  scripts/wgx up; \
+	else \
+	  echo "hint: scripts/wgx fehlt im Ziel-Repo - bitte WGX installieren oder das Repo mit metarepo spiegeln." >&2; \
+	  exit 1; \
+	fi
+
+validate:
+	@if [ -x scripts/wgx ]; then \
+	  scripts/wgx validate; \
+	else \
+	  echo "hint: scripts/wgx fehlt im Ziel-Repo - 'validate' nicht verfügbar." >&2; \
+	  exit 1; \
+	fi
+
+smoke:
+	@if [ -x scripts/wgx ]; then \
+	  scripts/wgx smoke; \
+	else \
+	  echo "hint: scripts/wgx fehlt im Ziel-Repo - 'smoke' nicht verfügbar." >&2; \
+	  exit 1; \
+	fi
+
+fmt:
+	@echo "formatting…"; true
+
+lint:
+	@echo "linting…"; true
+
+test:
+	@echo "testing…"; true
+
+ci: fmt lint test

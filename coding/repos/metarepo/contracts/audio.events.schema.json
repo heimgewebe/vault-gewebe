@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "hausKI-audio events",
+  "oneOf": [
+    {
+      "type": "object",
+      "required": ["ts", "kind", "session_id"],
+      "properties": {
+        "ts": { "type": "integer" },
+        "kind": { "const": "audio.session_started" },
+        "session_id": { "type": "string" },
+        "bpm": { "type": "number" },
+        "routing": { "type": "string" }
+      }
+    },
+    {
+      "type": "object",
+      "required": ["ts", "kind", "session_id"],
+      "properties": {
+        "ts": { "type": "integer" },
+        "kind": { "const": "audio.session_ended" },
+        "session_id": { "type": "string" },
+        "duration_ms": { "type": "integer", "minimum": 0 }
+      }
+    },
+    {
+      "type": "object",
+      "required": ["ts", "kind", "latency_ms"],
+      "properties": {
+        "ts": { "type": "integer" },
+        "kind": { "const": "audio.latency_ms" },
+        "latency_ms": { "type": "number", "minimum": 0 }
+      }
+    }
+  ]
+}

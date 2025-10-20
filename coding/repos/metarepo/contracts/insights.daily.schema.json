@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "semantAH insights (daily)",
+  "type": "object",
+  "required": ["ts", "topics"],
+  "properties": {
+    "ts": { "type": "string", "format": "date" },
+    "topics": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 2,
+        "items": [
+          { "type": "string" },
+          { "type": "number", "minimum": 0, "maximum": 1 }
+        ]
+      }
+    },
+    "questions": { "type": "array", "items": { "type": "string" } },
+    "deltas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["topic", "trend"],
+        "properties": {
+          "topic": { "type": "string" },
+          "trend": { "type": "string", "enum": ["+1", "0", "-1"] }
+        }
+      }
+    }
+  }
+}

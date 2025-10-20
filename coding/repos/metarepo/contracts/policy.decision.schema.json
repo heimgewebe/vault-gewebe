@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "heimlern decision",
+  "type": "object",
+  "required": ["action", "score", "why"],
+  "properties": {
+    "action": { "type": "string" },
+    "score": { "type": "number" },
+    "why": { "type": "string" },
+    "context": { "type": "object" }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://heimgewebe/contracts/insights.schema.json",
+  "title": "Heimgewebe Review Insight",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["type","repo","source","file","score","verdict","ingested_at"],
+  "properties": {
+    "id":            { "type":"string", "description":"stable hash/id (optional)" },
+    "type":          { "type":"string", "const": "review.insight" },
+    "repo":          { "type":"string", "minLength": 1 },
+    "source":        { "type":"string", "enum": ["hauski","ci","manual"] },
+    "file":          { "type":"string" },
+    "score":         { "type":"integer", "minimum": 0, "maximum": 100 },
+    "verdict":       { "type":"string" },
+    "pr":            { "type":"string" },
+    "tags":          { "type":"array", "items": { "type":"string" } },
+    "ingested_at":   { "type":"string", "format": "date-time" },
+    "schema_version":{ "type":"string" },
+    "source_version":{ "type":"string" },
+    "runner_host":   { "type":"string" },
+    "bucket":        { "type":"string", "enum": ["info","warn","fail"] }
+  }
+}
