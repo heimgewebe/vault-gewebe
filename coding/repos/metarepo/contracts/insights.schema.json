@@ -1,7 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://heimgewebe/contracts/insights.schema.json",
+  "$id": "https://schemas.heimgewebe.org/contracts/insights.schema.json",
   "title": "Heimgewebe Review Insight",
+  "x-producers": ["semantAH"],
+  "x-consumers": ["hausKI", "leitstand"],
   "type": "object",
   "additionalProperties": false,
   "required": ["type","repo","source","file","score","verdict","ingested_at"],

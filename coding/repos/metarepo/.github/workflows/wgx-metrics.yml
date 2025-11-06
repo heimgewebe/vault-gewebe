@@ -1,5 +1,15 @@
 name: wgx metrics (reusable)
 
+permissions:
+  contents: read
+concurrency:
+  group: wgx-metrics-${{ github.repository }}-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash --noprofile --norc -euo pipefail {0}
+
 on:
   workflow_call:
     inputs:
@@ -14,11 +24,12 @@ on:
 jobs:
   metrics:
     runs-on: ubuntu-latest
+    timeout-minutes: 40
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@dda4788290998366da86b6a4f497909644397bb2 # actions/setup-node@v4.0.2
         with:
           node-version: "20"
 

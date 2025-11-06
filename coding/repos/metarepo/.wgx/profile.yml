@@ -13,7 +13,7 @@ env_priority:
 
 tooling:
   python:
-    uv: true           # uv ist Standard-Layer für Python-Tools
+    uv: true           # uv ist Standard-Layer (0.7.x bewusst gepinnt; Upgrade nach Stabilisierung von 0.8)
     precommit: true    # falls .pre-commit-config.yaml vorhanden
   rust:
     cargo: auto        # wenn Cargo.toml vorhanden → Rust-Checks aktivieren

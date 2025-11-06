@@ -35,8 +35,11 @@
 - **Tags + Schemas**: Contracts (`contracts/*.schema.json`) & Workflow `.github/workflows/reusable-validate-jsonl.yml` werden über Tags gepflegt (z. B. `contracts-v1`)
   → Consumer pinnen auf den Tag
 
+### Optionales Betriebsmodell: Single Point of Ingest
+Statt `aussensensor` parallel an `leitstand` **und** `heimlern` senden zu lassen, kann `leitstand` als *einziger* Ingest-Punkt fungieren. Downstream-Dienste (z. B. `heimlern`) beziehen ihre Events dann **aus** `leitstand` (Event-Sourcing-Pattern). Vorteile: geringere Kopplung, klarere Verantwortlichkeit, zentralisiertes Auditing.
+
 ## Leitplanken für Releases
-- Neue Contracts → Branch & Review im metarepo, Dokumentation unter [`docs/contracts.md`](./contracts.md)
+- Neue Contracts → Branch & Review im metarepo, Dokumentation unter [`docs/contracts/index.md`](./contracts/index.md)
 - Reusable Workflow (`.github/workflows/reusable-validate-jsonl.yml`) in Sub-Repos via `uses: ...@contracts-v1`
 - Obsidian-Canvas (`docs/canvas/*.canvas`) spiegeln Architektur & Flüsse, dienen als visuelle Referenz
 - Übersichtliche Gesamtdarstellung: [`docs/heimgewebe-gesamt.md`](./heimgewebe-gesamt.md)

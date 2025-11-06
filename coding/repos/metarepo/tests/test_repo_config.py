@@ -80,6 +80,35 @@ class ParseSimpleYamlTests(unittest.TestCase):
             {"links": ["https://example.com", "ftp://example.org"]}
         )
 
+    def test_empty_values_are_interpreted_as_null(self) -> None:
+        yaml_text = textwrap.dedent(
+            """
+            empty_mapping:
+            another:
+            explicit_empty: ""
+            also_explicit: ''
+            nested:
+              value:
+              with_default: provided
+            list:
+              -
+              - item
+              - ""
+            """
+        )
+        parsed = repo_config.parse_simple_yaml(yaml_text)
+        self.assertEqual(
+            parsed,
+            {
+                "empty_mapping": None,
+                "another": None,
+                "explicit_empty": "",
+                "also_explicit": "",
+                "nested": {"value": None, "with_default": "provided"},
+                "list": [None, "item", ""],
+            },
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

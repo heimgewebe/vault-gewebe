@@ -1,0 +1,218 @@
+name: net-probe
+permissions:
+  contents: read
+on:
+  push:
+    paths:
+      - '.github/workflows/net-probe.yml'
+  pull_request:
+    paths:
+      - '.github/workflows/net-probe.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: net-probe-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash --noprofile --norc -euo pipefail {0}
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v5 # v4 (major tag)
+
+      - name: Check outbound HTTPS access (GitHub, PyPI, crates.io)
+        run: |
+          set -x
+          # Quick DNS sanity (avoids false negatives when DNS is down)
+          getent hosts api.github.com pypi.org >/dev/null || echo "DNS lookup had issues (continuing)"
+          UA="heimgewebe-net-probe/1.0"
+          CURL_COMMON_ARGS=(--connect-timeout 5 --max-time 10 --retry 2 --retry-all-errors --retry-connrefused -A "$UA" -sS)
+
+          probe_endpoint() {
+            local label="$1"
+            local url="$2"
+            shift 2
+
+            local allow_fail=""
+            local method="head"
+
+            while (($#)); do
+              case "$1" in
+                allow-fail)
+                  allow_fail="yes"
+                  ;;
+                method=*)
+                  method="${1#method=}"
+                  ;;
+              esac
+              shift
+            done
+            local mode
+
+            for mode in auto "-4" "-6"; do
+              local curl_flags=()
+              local mode_label
+              case "${mode}" in
+                auto)
+                  mode_label="auto"
+                  ;;
+                -4)
+                  curl_flags=(-4)
+                  mode_label="ipv4"
+                  ;;
+                -6)
+                  curl_flags=(-6)
+                  mode_label="ipv6"
+                  ;;
+              esac
+
+              local output status http_code http_version remote_ip time_connect time_total
+              local request_flags=()
+              if [[ "${method}" == "head" ]]; then
+                request_flags+=(--head)
+              else
+                request_flags+=(-L)
+              fi
+
+              if output=$(curl "${CURL_COMMON_ARGS[@]}" "${curl_flags[@]}" "${request_flags[@]}" "$url" -w '%{http_code} %{http_version} %{remote_ip} %{time_connect} %{time_total}' -o /dev/null); then
+                IFS=' ' read -r http_code http_version remote_ip time_connect time_total <<<"${output}"
+                printf '%s (%s): HTTP/%s %s ip=%s connect=%ss total=%ss\n' "${label}" "${mode_label}" "${http_version}" "${http_code}" "${remote_ip:-n/a}" "${time_connect}" "${time_total}"
+
+                if [[ "${http_code}" -ge 400 ]]; then
+                  if [[ -n "${allow_fail}" ]]; then
+                    echo "${label} (${mode_label}) HTTP ${http_code} (ignored)"
+                  else
+                    echo "${label} (${mode_label}) HTTP ${http_code}"
+                    return 1
+                  fi
+                fi
+              else
+                status=$?
+                if [[ "${mode}" == "-6" ]]; then
+                  echo "${label} (${mode_label}) probe failed with curl exit ${status} (continuing)"
+                  continue
+                fi
+
+                if [[ -n "${allow_fail}" ]]; then
+                  echo "${label} (${mode_label}) probe failed with curl exit ${status} (ignored)"
+                else
+                  echo "${label} (${mode_label}) probe failed with curl exit ${status}"
+                  return "${status}"
+                fi
+              fi
+            done
+          }
+
+          echo "::group::core endpoints"
+          probe_endpoint "GitHub API rate_limit" https://api.github.com/rate_limit method=get
+          probe_endpoint "PyPI simple index" https://pypi.org/simple/
+          probe_endpoint "crates.io" https://crates.io/ allow-fail
+          echo "::endgroup::"
+
+      - name: Detect proxy variables
+        run: |
+          echo "CI=${CI:-unset}"
+          # Print only variable NAMES to avoid leaking creds in logs
+          for var in http_proxy https_proxy HTTP_PROXY HTTPS_PROXY no_proxy NO_PROXY; do
+            if env | grep -q "^${var}="; then
+              echo "set: ${var}"
+            fi
+          done || true
+          if ! env | grep -q -iE '(^|_)(http|https)_proxy='; then
+            echo 'no HTTP(S)_PROXY set'
+          fi
+          if ! env | grep -q -iE '(^|_)no_proxy='; then
+            echo 'no NO_PROXY set'
+          fi
+
+      - name: Extra registry probes (npm, GitHub Packages)
+        run: |
+          UA="heimgewebe-net-probe/1.0"
+          CURL_COMMON_ARGS=(--connect-timeout 5 --max-time 10 --retry 2 --retry-all-errors --retry-connrefused -A "$UA" -sS)
+
+          probe_endpoint() {
+            local label="$1"
+            local url="$2"
+            shift 2
+
+            local method="head"
+            local allow_fail=""
+
+            while (($#)); do
+              case "$1" in
+                allow-fail)
+                  allow_fail="yes"
+                  ;;
+                method=*)
+                  method="${1#method=}"
+                  ;;
+              esac
+              shift
+            done
+
+            local mode
+
+            for mode in auto "-4" "-6"; do
+              local curl_flags=()
+              local mode_label
+              case "${mode}" in
+                auto)
+                  mode_label="auto"
+                  ;;
+                -4)
+                  curl_flags=(-4)
+                  mode_label="ipv4"
+                  ;;
+                -6)
+                  curl_flags=(-6)
+                  mode_label="ipv6"
+                  ;;
+              esac
+
+              local output status http_code http_version remote_ip time_connect time_total
+              local request_flags=()
+              if [[ "${method}" == "head" ]]; then
+                request_flags+=(--head)
+              else
+                request_flags+=(-L)
+              fi
+
+              if output=$(curl "${CURL_COMMON_ARGS[@]}" "${curl_flags[@]}" "${request_flags[@]}" "$url" -w '%{http_code} %{http_version} %{remote_ip} %{time_connect} %{time_total}' -o /dev/null); then
+                IFS=' ' read -r http_code http_version remote_ip time_connect time_total <<<"${output}"
+                printf '%s (%s): HTTP/%s %s ip=%s connect=%ss total=%ss\n' "${label}" "${mode_label}" "${http_version}" "${http_code}" "${remote_ip:-n/a}" "${time_connect}" "${time_total}"
+
+                if [[ "${http_code}" -ge 400 ]]; then
+                  if [[ -n "${allow_fail}" ]]; then
+                    echo "${label} (${mode_label}) HTTP ${http_code} (ignored)"
+                  else
+                    echo "${label} (${mode_label}) HTTP ${http_code}"
+                    return 1
+                  fi
+                fi
+              else
+                status=$?
+                if [[ "${mode}" == "-6" ]]; then
+                  echo "${label} (${mode_label}) probe failed with curl exit ${status} (continuing)"
+                  continue
+                fi
+
+                if [[ -n "${allow_fail}" ]]; then
+                  echo "${label} (${mode_label}) probe failed with curl exit ${status} (ignored)"
+                else
+                  echo "${label} (${mode_label}) probe failed with curl exit ${status}"
+                  return "${status}"
+                fi
+              fi
+            done
+          }
+
+          echo "::group::registries"
+          probe_endpoint "npm registry" https://registry.npmjs.org/ allow-fail
+          probe_endpoint "GitHub Packages (npm)" https://npm.pkg.github.com/ allow-fail
+          probe_endpoint "GitHub Container Registry" https://ghcr.io/v2/ allow-fail
+          echo "::endgroup::"

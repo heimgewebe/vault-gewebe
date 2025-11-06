@@ -1,0 +1,57 @@
+name: Org assets
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash --noprofile --norc -euo pipefail {0}
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - repos.yml
+      - scripts/generate_org_assets.py
+      - pyproject.toml
+      - uv.lock
+      - .github/workflows/org-assets.yml
+  pull_request:
+    paths:
+      - repos.yml
+      - scripts/generate_org_assets.py
+      - pyproject.toml
+      - uv.lock
+      - .github/workflows/org-assets.yml
+
+concurrency:
+  group: org-assets-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5 # v4 (major tag)
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6 # v5 (major tag)
+        with:
+          python-version: '3.11'
+      - uses: actions/cache@v4 # v4 (major tag)
+        with:
+          path: |
+            ~/.cache/uv
+            .venv
+          key: ${{ runner.os }}-py311-uv-${{ hashFiles('uv.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-py311-uv-
+      - uses: astral-sh/setup-uv@v7
+      - run: uv sync --frozen
+      - run: uv run scripts/generate_org_assets.py --repos-file repos.yml --index docs/org-index.md --graph docs/org-graph.mmd
+      - name: Fail PR if org assets drift
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          git add -N docs/org-index.md docs/org-graph.mmd
+          git diff --exit-code -- docs/org-index.md docs/org-graph.mmd || (echo "::warning::Org assets changed – commit in this PR" && exit 1)

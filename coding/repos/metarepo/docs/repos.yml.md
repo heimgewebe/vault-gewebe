@@ -3,6 +3,10 @@
 `repos.yml` definiert, welche Repositories vom metarepo als Teil der Fleet behandelt werden.
 Das File wird von `scripts/wgx` und `scripts/sync-templates.sh --repos-from` gelesen.
 
+> **Parser-Verhalten:** Leere Werte wie `key:` oder `-` (ohne nachfolgende Daten) werden von
+> `scripts/repo_config.py` als `null` (`None`) interpretiert. Verwende explizite
+> Anführungszeichen (`""`), falls ein leerer String benötigt wird.
+
 ## Schema
 ```yaml
 # Modus: "static" (nur Liste) oder "github" (per GitHub-API ermitteln)

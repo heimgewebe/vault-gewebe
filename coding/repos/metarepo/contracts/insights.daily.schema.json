@@ -1,6 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.heimgewebe.org/contracts/insights.daily.schema.json",
   "title": "semantAH insights (daily)",
+  "x-producers": ["semantAH"],
+  "x-consumers": ["hausKI", "leitstand"],
   "type": "object",
   "required": ["ts", "topics"],
   "properties": {

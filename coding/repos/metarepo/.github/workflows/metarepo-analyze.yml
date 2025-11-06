@@ -1,0 +1,106 @@
+name: metarepo-analyze
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/graph/**'
+      - 'docs/graph.md'
+      - 'Justfile'
+      - 'repos.yml'
+      - 'contracts/**/*.schema.json'
+      - 'docs/contracts/index.md'
+      - '.github/workflows/metarepo-analyze.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: metarepo-analyze-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash --noprofile --norc -euo pipefail {0}
+
+jobs:
+  graph:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade --disable-pip-version-check pip
+          python -m pip install --upgrade --disable-pip-version-check networkx PyYAML
+
+      - name: Build dependency graph
+        if: ${{ hashFiles('repos.yml') != '' }}
+        run: |
+          mkdir -p reports/graphs
+          python -m scripts.graph.deps_graph \
+            --output reports/graphs/deps_graph.gexf \
+            --json-output reports/graphs/deps_graph.json
+
+      - name: Note missing repos manifest
+        if: ${{ hashFiles('repos.yml') == '' }}
+        run: |
+          echo '::notice::Skipping dependency graph because repos.yml is missing.'
+
+      - name: Compute schema impact overview
+        if: ${{ hashFiles('repos.yml') != '' && hashFiles('docs/contracts/index.md') != '' && hashFiles('contracts/**/*.schema.json') != '' }}
+        run: |
+          mkdir -p reports/graphs
+          python -m scripts.graph.get_schemas > reports/graphs/_schemas.txt
+          python -m scripts.graph.impact_analysis \
+            --graph reports/graphs/deps_graph.gexf \
+            --changes-file reports/graphs/_schemas.txt \
+            --format text \
+            > reports/graphs/schema-impact.txt
+          python -m scripts.graph.impact_analysis \
+            --graph reports/graphs/deps_graph.gexf \
+            --changes-file reports/graphs/_schemas.txt \
+            --format json \
+            --json-output reports/graphs/schema-impact.json \
+            > /dev/null
+          rm -f reports/graphs/_schemas.txt
+
+      - name: Note missing schema inputs
+        if: ${{ hashFiles('repos.yml') == '' || hashFiles('docs/contracts/index.md') == '' || hashFiles('contracts/**/*.schema.json') == '' }}
+        run: |
+          echo '::notice::Skipping schema impact overview because repos.yml, docs/contracts/index.md or contracts/**/*.schema.json is missing.'
+
+      - name: Publish summary
+        run: |
+          echo '## Dependency graph' >> "$GITHUB_STEP_SUMMARY"
+          if [[ -f reports/graphs/deps_graph.json ]]; then
+            python -m scripts.graph.generate_summary >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo '_deps_graph.json not found_' >> "$GITHUB_STEP_SUMMARY"
+          fi
+          echo >> "$GITHUB_STEP_SUMMARY"
+          echo '## Schema impact overview' >> "$GITHUB_STEP_SUMMARY"
+          if [[ -f reports/graphs/schema-impact.txt ]]; then
+            cat reports/graphs/schema-impact.txt >> "$GITHUB_STEP_SUMMARY"
+          else
+            printf '%s\n' '_Skipped (contracts index or schema files missing)_' >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload artefacts
+        uses: actions/upload-artifact@v5
+        with:
+          name: metarepo-analyze
+          path: |
+            reports/graphs/deps_graph.gexf
+            reports/graphs/deps_graph.json
+            reports/graphs/schema-impact.txt
+            reports/graphs/schema-impact.json
+          retention-days: 7
+          if-no-files-found: ignore

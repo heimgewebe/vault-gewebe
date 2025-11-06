@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/heimgewebe/metarepo/contracts-v1/contracts/os.context.state.schema.json",
+  "title": "os.context.state",
+  "description": "Laufender OS-/Fensterkontext (Fokus & Aktivität) – ohne Rohtext.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "ts": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Zeitstempel in ISO 8601 (UTC empfohlen)."
+    },
+    "app": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "description": "Applikations-Identifikator (z. B. code, obsidian, firefox)."
+    },
+    "window": {
+      "type": "string",
+      "maxLength": 512,
+      "description": "Fenster-/Dokumenttitel (wenn verfügbar, ggf. redigiert)."
+    },
+    "focus": {
+      "type": "boolean",
+      "description": "true, wenn das Fenster im Vordergrund ist."
+    },
+    "activity_rpm": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10000,
+      "description": "Aktivität (Key/Mouse) pro Minute (geschätzt)."
+    },
+    "source": {
+      "type": "string",
+      "maxLength": 64,
+      "description": "Sensorquelle (default: mitschreiber)."
+    }
+  },
+  "required": ["ts", "app", "focus"],
+  "examples": [
+    {
+      "ts": "2025-10-05T10:15:30Z",
+      "app": "code",
+      "window": "project-x/main.py — Visual Studio Code",
+      "focus": true,
+      "activity_rpm": 120,
+      "source": "mitschreiber"
+    }
+  ]
+}

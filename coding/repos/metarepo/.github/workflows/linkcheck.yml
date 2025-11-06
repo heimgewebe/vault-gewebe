@@ -1,0 +1,48 @@
+name: linkcheck
+permissions:
+  contents: read
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - README.md
+      - docs/**
+      - .lychee.toml
+      - .github/workflows/linkcheck.yml
+  pull_request:
+    paths:
+      - README.md
+      - docs/**
+      - .lychee.toml
+      - .github/workflows/linkcheck.yml
+defaults:
+  run:
+    shell: bash --noprofile --norc -euo pipefail {0}
+concurrency:
+  group: linkcheck-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  lychee:
+    name: Link Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      # Für Core-Actions nutzen wir stabile Major-Tags statt SHAs, um 404-Risiken zu vermeiden.
+      - uses: actions/checkout@v5 # v4 (major tag)
+      - name: Install system dependencies for lychee
+        run: sudo apt-get update && sudo apt-get install -y jq
+      - name: Install lychee
+        run: ./scripts/tools/lychee-install.sh
+      - name: Cache lychee URL state
+        uses: actions/cache@v4 # v4 (major tag)
+        with:
+          path: ~/.cache/lychee
+          key: ${{ runner.os }}-lychee-${{ hashFiles('.lychee.toml', 'README.md', 'docs/**/*.md', 'contracts/**/*.md') }}
+          restore-keys: |
+            ${{ runner.os }}-lychee-
+      - name: Run lychee on docs & README (uses .lychee.toml)
+        run: lychee --config .lychee.toml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LYCHEE_CACHE_DIR: ~/.cache/lychee

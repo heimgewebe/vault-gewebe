@@ -1,5 +1,12 @@
 name: reusable-ci
 
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash --noprofile --norc -euo pipefail {0}
+
 on:
   workflow_call:
     inputs:
@@ -17,31 +24,36 @@ on:
 jobs:
   reusable-ci:
     runs-on: ubuntu-latest
+    timeout-minutes: 40
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Just
-        uses: extractions/setup-just@v2
+        uses: extractions/setup-just@2fa60cc7d6fb3586e4cbace17c1169c8d2bd0f5c # extractions/setup-just@v2 (pinned)
 
       - name: Install Dependencies (optional)
         run: |
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           if [ -f package.json ]; then npm ci; fi
 
+      - name: Skip Justfile-dependent steps when missing Justfile
+        if: ${{ hashFiles('Justfile') == '' }}
+        run: echo "::notice::Kein Justfile gefunden – Just-Schritte übersprungen."
+
       - name: Lint
-        if: ${{ inputs.run_lint == true }}
+        if: ${{ inputs.run_lint == true && hashFiles('Justfile') != '' }}
         run: |
-          if just --summary 2>/dev/null | grep -q lint; then
+          if just --show lint >/dev/null 2>&1; then
             just lint
           else
             echo "::notice::Kein Lint-Target gefunden – übersprungen."
           fi
 
       - name: Test
-        if: ${{ inputs.run_tests == true }}
+        if: ${{ inputs.run_tests == true && hashFiles('Justfile') != '' }}
         run: |
-          if just --summary 2>/dev/null | grep -q test; then
+          if just --show test >/dev/null 2>&1; then
             just test
           else
             echo "::notice::Kein Test-Target gefunden – übersprungen."

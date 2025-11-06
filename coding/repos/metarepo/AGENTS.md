@@ -5,8 +5,8 @@ Metarepo dient als zentraler, lernender Meta-Layer. Es spiegelt **kanonische Tem
 
 ## Repos
 - GitHub Organisation: `heimgewebe`
-- Alle Repos öffentlich, **außer** `vault-gewebe` (privat bei `alexdermohr`).
-- Primäre Kinder (Beispiele): `weltgewebe`, `hauski`, `hauski-audio`, `semantAH`, `wgx`, `metarepo`.
+- Alle Repos öffentlich, außer `vault-privat`.
+- Primäre Kinder: `weltgewebe`, `hauski`, `hauski-audio`, `semantAH`, `wgx`, `metarepo`, `leitstand`, `aussensensor`, `heimlern`, `tools`
 
 ## Rollen
 - **Metarepo**: Quelle der Wahrheit für Templates unter `templates/**`.
@@ -17,7 +17,7 @@ Metarepo dient als zentraler, lernender Meta-Layer. Es spiegelt **kanonische Tem
 - Einheitliche Pfade:
   - Workflows: `.github/workflows/*.yml`
   - WGX-Profil: `.wgx/profile.yml`
-  - Docs: `docs/**`, inkl. `docs/wgx-konzept.md`, ADR Template `docs/adr/0000-template.md`
+  - Docs: `docs/**`, inkl. `docs/wgx-konzept.md`, ADR Template `docs/adrs/0000-template.md`
   - Justfile: `Justfile`
 - Änderungen laufen über PRs mit **Reconciliation Report**.
 - Commit-Konvention (empfohlen):

@@ -32,7 +32,7 @@ echo "" >> "$REPORT"
 
 IFS=',' read -r -a GLOBS <<< "$PATTERNS"
 
-adr_exception(){ [[ "$1" == docs/adr/* ]]; }
+adr_exception(){ [[ "$1" == docs/adrs/* ]]; }
 
 for g in "${GLOBS[@]}"; do
   case "$g" in

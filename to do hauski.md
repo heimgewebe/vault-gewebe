@@ -1,347 +1,138 @@
-Alles klar – hier ist das Paket „Hauski lernt von Weltgewebe & wgx“, fertig als Codex-Anweisungen in klaren Blöcken (Dateipfade, Inhalte, Schritte). Du kannst die Blöcke nacheinander übernehmen.
+The job failed due to a failing test: chat_returns_503_when_unconfigured in crates/core/tests/chat_unconfigured.rs. The assertion expected an HTTP 503 response, but the actual response was 501.
 
-⸻
+Problem:
+- The test expects the code to return status code 503 (Service Unavailable) when chat is unconfigured.
+- However, the code returns 501 (Not Implemented).
 
-Block A — 
-Block B — CI: „Smart PR“, Heavy-On-Demand & Release
+Lösungsvorschlag:
 
-Ziel: Schnelle PR-Checks, schwere Tests nur bei Bedarf, Releases via Tags.
+1. Passe die entsprechende Stelle im Backend (vermutlich FastAPI oder Rust-Handler) an, sodass im Fall „unconfigured“ ein HTTP 503 statt 501 zurückgegeben wird.
 
-B1) .github/workflows/ci.yml (Smart PR)
+Vorschlag für Rust-Änderung (im zugehörigen Handler):
 
-name: CI (smart PR)
-
-on:
-  pull_request:
-    branches: [ main ]
-    types: [opened, synchronize, reopened, ready_for_review, labeled, unlabeled]
-  merge_group: {}
-  workflow_dispatch: {}
-
-permissions:
-  contents: read
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
-
-jobs:
-  changes:
-    name: Detect changes
-    runs-on: ubuntu-latest
-    outputs:
-      rust:  ${{ steps.filter.outputs.rust }}
-      docs:  ${{ steps.filter.outputs.docs }}
-      sh:    ${{ steps.filter.outputs.sh }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v3
-        id: filter
-        with:
-          filters: |
-            rust:
-              - '**/*.rs'
-              - 'Cargo.toml'
-              - 'Cargo.lock'
-            docs:
-              - '**/*.md'
-              - 'docs/**'
-            sh:
-              - '**/*.sh'
-              - '.github/workflows/**'
-
-  repo-lint:
-    name: Repo — Markdown & Shell
-    needs: changes
-    if: needs.changes.outputs.docs == 'true' || needs.changes.outputs.sh == 'true' || github.event_name == 'merge_group'
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v4
-      - name: Markdownlint
-        run: |
-          npm i -g markdownlint-cli@0.41.0
-          git ls-files '*.md' | xargs -r markdownlint
-      - name: ShellCheck
-        run: |
-          sudo apt-get update && sudo apt-get install -y shellcheck
-          git ls-files '*.sh' | xargs -r shellcheck -x
-
-  rust-check:
-    name: Rust — fmt & clippy & test
-    needs: changes
-    if: needs.changes.outputs.rust == 'true' || github.event_name == 'merge_group'
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-        with:
-          components: rustfmt, clippy
-      - name: Cargo fmt
-        run: cargo fmt --all -- --check
-      - name: Cargo clippy
-        run: cargo clippy --all-targets -- -D warnings
-      - name: Cargo test
-        run: cargo test --workspace --all-features --no-fail-fast
-
-B2) .github/workflows/heavy.yml (on-demand)
-
-name: CI (heavy on demand)
-
-on:
-  workflow_dispatch: {}
-  pull_request:
-    types: [labeled, synchronize, reopened, ready_for_review]
-    branches: [ main ]
-
-permissions: { contents: read }
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
-
-jobs:
-  gate:
-    runs-on: ubuntu-latest
-    outputs:
-      run_heavy: ${{ steps.flags.outputs.run_heavy }}
-    steps:
-      - id: flags
-        shell: bash
-        run: |
-          labels="${{ join(github.event.pull_request.labels.*.name, ' ') }}"
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            echo "run_heavy=true" >> "$GITHUB_OUTPUT"
-          elif echo "$labels" | grep -qiE '(^| )full-ci( |$)'; then
-            echo "run_heavy=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "run_heavy=false" >> "$GITHUB_OUTPUT"
-          fi
-
-  e2e:
-    needs: gate
-    if: needs.gate.outputs.run_heavy == 'true'
-    runs-on: ubuntu-latest
-    timeout-minutes: 45
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-      - name: Build (release)
-        run: cargo build --workspace --release
-      - name: Integration / Smoke
-        run: |
-          # TODO: ersetzen durch echte e2e für hauski (bins starten, API pingen)
-          cargo test --workspace --all-features -- --ignored
-      - name: Upload logs/artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: hauski-heavy-artifacts
-          path: target
-          if-no-files-found: ignore
-
-B3) .github/workflows/release.yml
-
-name: release
-on:
-  push:
-    tags: ['v*.*.*']
-jobs:
-  publish:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Build
-        run: cargo build --workspace --release
-      - uses: softprops/action-gh-release@v2
-        with:
-          generate_release_notes: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Upload binaries
-        uses: actions/upload-artifact@v4
-        with:
-          name: hauski-binaries
-          path: |
-            target/release/*
-
-
-⸻
-
-Block C — Policies (Sicherheit & Qualität)
-
-Ziel: Rust-Abhängigkeitsprüfungen, Sicherheits- und Lizenz-Checks.
-
-C1) deny.toml (cargo-deny)
-
-[advisories]
-ignore = []
-db-path = "~/.cargo/advisory-db"
-yanked = "warn"
-
-[bans]
-multiple-versions = "warn"
-
-[licenses]
-allow = ["MIT", "Apache-2.0", "BSD-3-Clause", "ISC", "Unicode-DFS-2016"]
-default = "deny"
-
-C2) CI-Job ergänzen (optional in ci.yml)
-
-  cargo-deny:
-    name: Rust — cargo-deny
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v4
-      - uses: EmbarkStudios/cargo-deny-action@v2
-
-
-⸻
-
-Block D — Tests & Projekt-Skeleton
-
-Ziel: Früh stabile Tests, klare Justfile-Kommandos.
-
-D1) Justfile
-
-default: test
-
-fmt:
-	cargo fmt --all
-
-clippy:
-	cargo clippy --all-targets -- -D warnings
-
-test:
-	cargo test --workspace --all-features
-
-test-ignored:
-	cargo test --workspace --all-features -- --ignored
-
-build-release:
-	cargo build --workspace --release
-
-D2) Beispiel-Tests (Rust)
-	•	crates/core/src/lib.rs (falls leer, ein Minimalmodul anlegen)
-
-pub fn add(a: i32, b: i32) -> i32 { a + b }
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-    #[test]
-    fn add_works() { assert_eq!(add(2, 3), 5) }
-    #[test]
-    #[ignore]
-    fn heavy_slow_e2e_placeholder() { assert!(true) }
+```rust
+// Beispiel: In der Chat-Handler-Funktion (z.B. in src/chat.rs oder ähnlichem)
+if !is_chat_configured() {
+    return Err(StatusCode::SERVICE_UNAVAILABLE); // 503 statt 501
 }
+```
+Stelle sicher:
+- Die Funktion gibt explizit StatusCode::SERVICE_UNAVAILABLE zurück, wenn der Chat nicht konfiguriert ist.
+
+2. Prüfe, ob es noch andere Fälle gibt, wo fälschlicherweise 501 verwendet wird und passe diese ggf. ebenfalls an.
+
+Betroffene Testdatei: crates/core/tests/chat_unconfigured.rs
+
+Weitere Schritte:
+- Nach Anpassung: Test mit cargo test -p hauski-core --test chat_unconfigured lokal ausführen, um den Fix zu verifizieren.
+
+Damit wird der Test erwartungsgemäß bestehen und die Pipeline sollte durchlaufen.
+Summary
+- Failing job: 54363384731
+- Failure reason: cargo-deny failed to deserialize deny.toml at line 36: the key `unknown = "deny"` was reported as an unknown field. The file uses [licenses] version = 2 (deny.toml lines 15–16) which the installed cargo-deny binary does not understand.
+- Root cause: schema mismatch between deny.toml (schema v2) and the cargo-deny binary installed by the workflow. Either the binary is older (no v2 support) or a different incompatible release was installed.
+
+Quick links (same ref as the failing job)
+- deny.toml: https://github.com/heimgewebe/hausKI/blob/d39e906b8cd86cce1f44555ce23f9ae44781b2c4/deny.toml
+- workflow: .github/workflows/security.yml (edit target): https://github.com/heimgewebe/hausKI/blob/d39e906b8cd86cce1f44555ce23f9ae44781b2c4/.github/workflows/security.yml
+
+Recommended fix (safe, minimal)
+Pin or install a cargo-deny release that supports config schema version 2. Update the workflow installation step so the installed cargo-deny matches the deny.toml schema.
+
+Patch suggestion for .github/workflows/security.yml (replace the Install cargo-deny step)
+Replace the existing step:
+  - name: Install cargo-deny
+    run: cargo install cargo-deny --locked --force
+
+With a pinned/explicit install that targets a release supporting config v2 (example uses a semver constraint so the CI installs a binary with v2 support):
+  - name: Install cargo-deny
+    run: |
+      # install a cargo-deny release that supports config v2
+      cargo install cargo-deny --locked --force --version '^0.15'
+      cargo deny --version
+
+Notes:
+- Replace '^0.15' with the minimum tested version in your environment if you have one. The caret range ensures a compatible minor/patch is selected while avoiding older incompatible major versions.
+- The added cargo deny --version helps CI logs show which version was installed and makes debugging easier.
+
+Alternative fix (if you prefer not to change the workflow)
+If you cannot pin/install a newer cargo-deny in CI, change deny.toml to the older schema that matches the installed binary. This is riskier and not recommended because the repo intentionally sets [licenses].version = 2 (deny.toml line 16). Only use this if you know the installed cargo-deny requires v1. Example minimal change (not ideal):
+
+In deny.toml:
+- set [licenses] version = 1 and adapt/remove v2-only keys (e.g. rename/remove keys not supported by v1). This requires consulting cargo-deny v1 docs and verifying license rule semantics after conversion.
+
+Verification steps to run in CI or locally
+1. Confirm the installed cargo-deny version:
+   - cargo deny --version
+2. Run the checks locally using the same cargo-deny version you pin in CI:
+   - cargo install cargo-deny --locked --force --version '^0.15'
+   - cargo deny check advisories
+   - cargo deny check bans
+   - cargo deny check licenses
+
+Why I recommend pinning the tool
+- deny.toml already declares config version = 2. It is safer to pin the tool to a version known to support that schema rather than changing policy/config semantics in deny.toml.
+- A pinned install produces reproducible CI runs and clear logs if the schema or CLI changes in future.
+
+If you want, I can provide a specific version number to pin after you tell me which cargo-deny releases you have tested locally or want to target.
 
 
-⸻
+Failure cause (from the job logs)
+- cargo-deny failed to deserialize the repository config file deny.toml. Logs show the parser error pointing at line 36: the entry unknown = "deny" — and then: "failed to deserialize config from '/home/runner/work/hausKI/hausKI/deny.toml'".
+- This is a schema mismatch between the deny.toml contents and the cargo-deny version used in the runner. Either the config uses fields introduced in a newer cargo-deny schema, or the runner has an older cargo-deny that does not recognise the key.
 
-Block E — Orchestrator-Contract für wgx
+Quick resolution (recommended)
+1) Pin/install a cargo-deny version in the security workflow that is compatible with your deny.toml (the file uses licenses.version = 2 and the unknown = "deny" key). Add an explicit step to install cargo-deny before running the checks so CI uses a known-good version.
 
-Ziel: Hauski von wgx steuerbar machen.
+Example workflow snippet to add to .github/workflows/security.yml (insert before running cargo-deny):
+- install the latest stable cargo-deny (or pin a supported version)
+- print cargo-deny version for future debugging
 
-E1) .wgx/profile.yml
+```yaml
+# insert into .github/workflows/security.yml before the cargo-deny step
+- name: Install cargo-deny
+  run: |
+    # pin to a reproducible version or install latest
+    cargo install --locked cargo-deny --version 0.13.0 || cargo install --locked cargo-deny
+    cargo-deny --version
 
-wgx:
-  apiVersion: v1
-  requiredWgx: "^2.0.0"  # an wgx-Version anpassen
-  repoKind: "service"
-  capabilities:
-    - "build"
-    - "test"
-    - "lint"
-    - "release"
-  commands:
-    build: "just build-release"
-    test: "just test"
-    lint: "just clippy"
-    fmt: "just fmt"
-  tasks:
-    quick:
-      description: "fmt + clippy + test"
-      run: "just fmt && just clippy && just test"
+- name: Show deny config (debug)
+  run: |
+    echo "deny.toml (ref d39e906b8cd86cce1f44555ce23f9ae44781b2c4):"
+    sed -n '1,120p' deny.toml
+```
 
+Notes:
+- Replace 0.13.0 with a specific release that you have verified supports licenses.version = 2 and the unknown field. Pinning gives reproducible CI results.
+- The debug step (printing cargo-deny version and the config) will make future failures clear.
 
-⸻
+Alternative (if you prefer to change the config)
+- If you cannot change the runner/tool version, alter deny.toml to match the older schema supported by the installed cargo-deny:
+  - Remove or rename the offending key (unknown = "deny") to the equivalent field the older schema expects, or drop it to use the tool’s default handling.
+  - Example minimal edit (comment out the line) — quick but less ideal than pinning the tool:
 
-Block F — Doku & Contributing (kurz, aber wirksam)
+```diff
+ 33| confidence-threshold = 0.9
+ 34| # Wie mit problematischen Klassen umgehen:
+ 35| unlicensed = "deny"
+-36| unknown = "deny"
++36| # unknown = "deny"  # removed because older cargo-deny does not accept this key
+ 37| copyleft = "deny" # auf "warn" setzen, wenn du temporäre Toleranz brauchst
+```
 
-F1) CONTRIBUTING.md
+How to verify locally (or in CI)
+- Check installed cargo-deny version:
+  - cargo-deny --version
+- Run the license check locally against your file:
+  - cargo deny check licenses -c deny.toml
+  - cargo deny check advisories -c deny.toml
 
-# Contributing to hauski
+Link to the failing config file (same ref used by the job)
+- deny.toml at ref d39e906b8cd86cce1f44555ce23f9ae44781b2c4:
+  https://github.com/heimgewebe/hausKI/blob/d39e906b8cd86cce1f44555ce23f9ae44781b2c4/deny.toml
 
-## Language
-Use concise **English** in code and docs.
+Recommended next steps
+1. Update the workflow to install/pin cargo-deny as shown and re-run the security job.
+2. If you prefer changing deny.toml, test that the modified file deserializes with the current cargo-deny in your CI by adding the debug steps above and running cargo deny locally first.
+3. Keep the cargo-deny version pinned in CI to avoid future schema drift or, alternatively, add a CI-only step to validate the config schema early with cargo-deny --version and fail with a clear message advising to update config or tool.
 
-## Dev Setup
-- VS Code with Devcontainer.
-- Rust stable; components: `rustfmt`, `clippy`.
-
-## Quality Gates
-- `cargo fmt --all` must be clean.
-- `cargo clippy -- -D warnings` must pass.
-- `cargo test --workspace --all-features` must pass.
-- For heavy E2E: label PR with `full-ci`.
-
-## Commit / PR
-- Small, focused commits.
-- PR title: type(scope): summary.
-- Link issues, describe rationale.
-
-## Release
-- Tag `vX.Y.Z` → CI publishes artifacts.
-
-F2) docs/adr/ADR-0001__architecture-scope.md (Kurz-ADR)
-
-# ADR-0001: Architecture Scope (hauski)
-## Status
-Accepted
-
-## Context
-Hauski acts as a local AI orchestrator with optional cloud offloading. Needs reproducible dev env, smart CI, and wgx contract.
-
-## Decision
-Adopt devcontainer, smart-PR CI, on-demand heavy pipeline, cargo-deny, and `.wgx/profile.yml`. Keep minimal surface; grow via crates.
-
-## Consequences
-+ Faster PRs, clearer quality gates, orchestratable by wgx.
-- Slight maintenance for CI and policies.
-
-
-⸻
-
-Block G — Make it stick (Schritte)
-	1.	Dateien anlegen/aktualisieren gemäß Blöcken A–F.
-	2.	Lokal prüfen:
-
-just fmt && just clippy && just test
-
-	3.	Branch erstellen: feat/infra-devcontainer-ci
-	4.	Committen (kleinteilig), PR öffnen, Label full-ci nur wenn Heavy-Tests nötig.
-	5.	Nach Merge: erstes Tag setzen v0.1.0 → Release läuft.
-
-⸻
-
-Verdichtete Essenz
-
-Hauski bekommt: Devcontainer, Smart-PR CI, Heavy on demand, Release-Flow, cargo-deny-Policy, Tests + Justfile, wgx-Contract, knackige Docs. Ergebnis: schneller, stabiler, orchestrierbar.
-
-Ironische Auslassung
-
-Bisher war Hauski der sprunghafte Straßenpoet. Mit diesen Blöcken bekommt er Taktstock, Metronom und Garderobe – und hört auf, in Jogginghose im Orchestergraben aufzutauchen.
-
-∴ Unsicherheitsgrad
-	•	Mittel (30 %): Ich kenne den exakten aktuellen Hauski-Quellcode nicht im Detail. Die Blöcke sind so gewählt, dass sie nicht invasiv sind und auf jedes Rust-Workspace-Layout passen. Geringes Risiko bei Integration.
-	•	Hauptursachen: fehlende Live-Sicht auf bestehende crate-Struktur, potenzielle CI-Sonderfälle.
-
-∆-Radar
-	•	Verstärkung: Wir übernehmen das wgx-Denken (Contract, Tasks) und die weltgewebe-CI-Philosophie (Smart vs. Heavy).
-	•	Straffung: Minimal-ADR statt Doku-Overkill.
-	•	Seitwärtsmutation: Devcontainer als Single-Source-of-Truth für Tooling.
-
-Möchtest du, dass ich dir daraus direkt eine PR-Branch-Checkliste (Commit-Reihenfolge + Messages) schreibe – oder gleich die Files als Patch-Bundle liefere?

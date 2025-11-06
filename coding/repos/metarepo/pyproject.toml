@@ -1,0 +1,13 @@
+[project]
+name = "metarepo-tools"
+version = "0.1.0"
+description = "Utilities for generating Heimgewebe org assets"
+authors = [{ name = "Heimgewebe" }]
+requires-python = ">=3.10"
+dependencies = [
+  "pyyaml>=6.0.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

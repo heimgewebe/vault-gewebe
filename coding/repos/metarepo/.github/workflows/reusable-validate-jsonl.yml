@@ -1,11 +1,23 @@
 name: reusable-validate-jsonl
 
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash --noprofile --norc -euo pipefail {0}
+
 on:
   workflow_call:
     inputs:
       jsonl_path:
         description: "Pfad zur JSONL-Datei (z. B. export/feed.jsonl)"
-        required: true
+        required: false
+        default: ""
+        type: string
+      jsonl_paths_list:
+        description: "Alternative zu jsonl_path: Komma- oder zeilengetrennte Liste von JSONL-Dateien (Globs erlaubt). Wird ignoriert, wenn leer."
+        required: false
         type: string
       schema_url:
         description: "Schema-URL (z. B. Raw-URL aus metarepo/contracts)"
@@ -25,17 +37,22 @@ on:
         required: false
         default: true
         type: boolean
+      fail_on_empty:
+        description: "Fehlschlagen, wenn keine Dateien gefunden werden (true/false)"
+        required: false
+        default: false
+        type: boolean
 
 jobs:
   validate-jsonl:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 40
     steps:
       - name: Checkout caller repo
-        uses: actions/checkout@8ade135a242bde00fd19c0e54fb3760beea110ee # v4.1.0
+        uses: actions/checkout@v5
 
       - name: Setup Node
-        uses: actions/setup-node@5e221d4786ffb21088b21dfc9c80efb16b52cd3b # v4.0.2
+        uses: actions/setup-node@dda4788290998366da86b6a4f497909644397bb2 # v4.0.2
 
       - name: Install ajv-cli
         run: npm i -g ajv-cli@5.0.0
@@ -44,18 +61,20 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          FILE="${{ inputs.jsonl_path }}"
+          SINGLE_FILE="${{ inputs.jsonl_path }}"
+          LIST_RAW="${{ inputs.jsonl_paths_list }}"
           SCHEMA_URL="${{ inputs.schema_url }}"
           SCHEMA_PATH_IN="${{ inputs.schema_path }}"
           STRICT="${{ inputs.strict }}"
           VALIDATE_FORMATS_RAW="${{ inputs.validate_formats }}"
+          FAIL_ON_EMPTY_RAW="${{ inputs.fail_on_empty }}"
           if [[ -z "${VALIDATE_FORMATS_RAW}" ]]; then
             VALIDATE_FORMATS_RAW="true"
           fi
-          if [[ ! -f "$FILE" ]]; then
-            echo "::notice title=validate-jsonl::Datei nicht gefunden: $FILE – übersprungen."
-            exit 0
+          if [[ -z "${FAIL_ON_EMPTY_RAW}" ]]; then
+            FAIL_ON_EMPTY_RAW="false"
           fi
+
           SCHEMA="/tmp/schema.json"
           if [[ -n "${SCHEMA_PATH_IN}" ]]; then
             if [[ ! -f "${SCHEMA_PATH_IN}" ]]; then
@@ -65,34 +84,99 @@ jobs:
             cp "${SCHEMA_PATH_IN}" "$SCHEMA"
             SCHEMA_SOURCE="${SCHEMA_PATH_IN}"
           else
-            if ! curl -fsSL "${SCHEMA_URL}" -o "$SCHEMA"; then
+            if ! curl --retry 3 --retry-delay 2 -fsSL "${SCHEMA_URL}" -o "$SCHEMA"; then
               echo "::error title=validate-jsonl::Schema konnte nicht geladen werden: ${SCHEMA_URL}"
               exit 1
             fi
             SCHEMA_SOURCE="${SCHEMA_URL}"
           fi
+
           VALIDATE_FORMATS="${VALIDATE_FORMATS_RAW,,}"
+          FAIL_ON_EMPTY="${FAIL_ON_EMPTY_RAW,,}"
           FORMAT_FLAG=$([[ "$VALIDATE_FORMATS" == "false" ]] && echo "--validate-formats=false" || echo "--validate-formats=true")
-          echo "Validiere $FILE gegen $SCHEMA_SOURCE (strict=$STRICT, formats=$VALIDATE_FORMATS)…"
-          line_no=0
+
+          # ---- Dateien ermitteln (Single oder Liste) -------------------------
+          declare -a FILES=()
+          declare -A SEEN=()
+
+          if [[ -n "${LIST_RAW:-}" ]]; then
+            # Split an Komma und Zeilenumbrüchen; trimmen; leere Zeilen filtern.
+            mapfile -t _raw_items < <(printf '%s\n' "$LIST_RAW" \
+              | tr ',' '\n' \
+              | sed 's/^[[:space:]]\+//;s/[[:space:]]\+$//' \
+              | awk 'NF')
+            for item in "${_raw_items[@]}"; do
+              # compgen -G expandiert Globs. Falls kein Match: exit-code != 0 -> daher "|| true".
+              mapfile -t matches < <(compgen -G "$item" || true)
+              if (( ${#matches[@]} == 0 )); then
+                echo "::notice title=validate-jsonl::Kein Treffer für Pattern: ${item}"
+                continue
+              fi
+              for m in "${matches[@]}"; do
+                # Deduplizieren identischer Treffer (z. B. wenn ein File mehrere Patterns matcht)
+                if [[ -n "${SEEN[$m]:-}" ]]; then
+                  continue
+                fi
+                SEEN["$m"]=1
+                FILES+=("$m")
+              done
+            done
+          else
+            if [[ -n "$SINGLE_FILE" ]]; then
+              FILES=( "$SINGLE_FILE" )
+            fi
+          fi
+
+          if (( ${#FILES[@]} == 0 )); then
+            if [[ "$FAIL_ON_EMPTY" == "true" ]]; then
+              echo "::error title=validate-jsonl::Keine Dateien gefunden (leere Inputs oder keine Glob-Treffer)"
+              exit 1
+            fi
+            echo "::notice title=validate-jsonl::Keine Dateien zu prüfen – übersprungen."
+            exit 0
+          fi
+
+          # ---- Validierung ----------------------------------------------------
+          overall_lines=0
           fail_file="$(mktemp /tmp/jsonl-violations.XXXX.txt)"
-          while IFS= read -r line || [[ -n "$line" ]]; do
-            line_no=$((line_no+1))
-            [[ -z "${line// }" ]] && continue
-            # CRLF defensiv entfernen
-            printf '%s\n' "$line" | tr -d '\r' > /tmp/event.json
-            ajv validate \
-              --spec=draft2020 \
-              $([[ "$STRICT" == "true" ]] && echo "--strict=true" || echo "--strict=false") \
-              $FORMAT_FLAG \
-              -s "$SCHEMA" \
-              -d /tmp/event.json || { echo "::error file=$FILE,line=$line_no::Schema-Verstoß in Zeile $line_no"; cat /tmp/event.json >> "$fail_file"; echo "" >> "$fail_file"; exit 1; }
-          done < "$FILE"
-          echo "OK: $((line_no)) Zeilen geprüft."
+          had_fail=0
+
+          for FILE in "${FILES[@]}"; do
+            if [[ ! -f "$FILE" ]]; then
+              echo "::notice title=validate-jsonl::Datei nicht gefunden: $FILE – übersprungen."
+              continue
+            fi
+            echo "Validiere $FILE gegen $SCHEMA_SOURCE (strict=$STRICT, formats=$VALIDATE_FORMATS)…"
+            line_no=0
+            while IFS= read -r line || [[ -n "$line" ]]; do
+              line_no=$((line_no+1))
+              [[ -z "${line// }" ]] && continue
+              # CRLF defensiv entfernen
+              printf '%s\n' "$line" | tr -d '\r' > /tmp/event.json
+              if ! ajv validate --spec=draft2020 \
+                   $([[ "$STRICT" == "true" ]] && echo "--strict=true" || echo "--strict=false") \
+                   $FORMAT_FLAG \
+                   -s "$SCHEMA" -d /tmp/event.json; then
+                echo "::error file=$FILE,line=$line_no::Schema-Verstoß in Zeile $line_no"
+                cat /tmp/event.json >> "$fail_file"; echo "" >> "$fail_file"
+                had_fail=1
+              fi
+            done < "$FILE"
+            overall_lines=$((overall_lines + line_no))
+            echo "::notice file=$FILE::$line_no Zeilen geprüft"
+          done
+
+          if (( had_fail )); then
+            echo "::error title=validate-jsonl::Validierung fehlgeschlagen in mindestens einer Datei"
+            exit 1
+          fi
+
+          rm -f "$fail_file"
+          echo "OK: $overall_lines Zeilen geprüft in ${#FILES[@]} Datei(en)."
 
       - name: Upload failing samples (if any)
         if: failure()
-        uses: actions/upload-artifact@604142bdf202109eb8df72c5824f1feae3d7f8e4 # v4.3.1
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v4.3.1
         with:
           name: jsonl-violations
           path: /tmp/jsonl-violations.*.txt

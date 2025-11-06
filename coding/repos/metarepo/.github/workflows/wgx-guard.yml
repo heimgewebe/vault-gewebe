@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5 # v4 (major tag)
 
       - name: Check .wgx/profile.yml presence
         run: |
@@ -30,9 +30,17 @@ jobs:
           echo "found .wgx/profile.yml"
 
       - name: Validate minimal schema keys
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6 # v5 (major tag)
         with:
           python-version: '3.12'
+
+      - name: Cache pip downloads
+        uses: actions/cache@v4 # v4 (major tag)
+        with:
+          path: ~/.cache/pip
+          key: pip-${{ runner.os }}-${{ hashFiles('.wgx/profile.yml', 'pyproject.toml', 'uv.lock') }}
+          restore-keys: |
+            pip-${{ runner.os }}-
 
       - name: Install PyYAML for schema check
         run: |
@@ -70,16 +78,25 @@ jobs:
 
       - name: (Optional) UV bootstrap (pyproject present)
         if: ${{ hashFiles('pyproject.toml') != '' }}
+        # Pin to a maintained major version to reduce supply-chain drift.
+        uses: astral-sh/setup-uv@v7
+        with:
+          version: "0.7.*"
+
+      - name: Sync Python project with uv
+        if: ${{ hashFiles('pyproject.toml') != '' && !cancelled() }}
         run: |
-          curl -LsSf https://astral.sh/uv/install.sh -o install-uv.sh
-          # SHA256 for install.sh as of 2024-06-01; update if script changes
-          echo "b2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2  install-uv.sh" > install-uv.sh.sha256
-          sha256sum -c install-uv.sh.sha256
-          if [ $? -ne 0 ]; then echo "::error::install.sh checksum failed"; exit 1; fi
-          sh install-uv.sh
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
-          uv --version
+          # Beispielausgabe: "uv 0.7.3 (rev abcdef)" – Regex toleriert Zusatzinfos am Ende
+          ver="$(uv --version)"
+          echo "$ver"
+          if ! [[ "$ver" =~ ^uv\ 0\.7\. ]]; then
+            echo "::error::uv 0.7.x erwartet, gefunden: $ver"
+            exit 1
+          fi
           uv sync --frozen
+          if ! uv pip check; then
+            echo "::warning::dependency conflicts detected"
+          fi
 
       - name: Done
         run: echo "wgx-guard passed ✅"

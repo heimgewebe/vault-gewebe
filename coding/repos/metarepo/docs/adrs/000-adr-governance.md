@@ -6,7 +6,7 @@ Owner: fleet-team
 ## Kontext
 Metarepo dient als Tower; zentrale Policies sollen nachvollziehbar versioniert sein.
 ## Entscheidung
-- Nummerierung fortlaufend, `docs/adr/NNN-title.md`.
+- Nummerierung fortlaufend, `docs/adrs/NNN-title.md`.
 - Status: Proposed → Accepted → Superseded.
 - Review-Fenster: 72h, mind. 1 Approver außerhalb des Autors.
 ## Konsequenzen

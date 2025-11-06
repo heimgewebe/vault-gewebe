@@ -1,0 +1,13 @@
+repos:
+  - name: heimgewebe/hausKI
+    default_branch: main
+  - name: heimgewebe/semantAH
+    default_branch: main
+  - name: heimgewebe/mitschreiber
+    default_branch: main
+  - name: heimgewebe/leitstand
+    default_branch: main
+  - name: heimgewebe/heimlern
+    default_branch: main
+  - name: heimgewebe/aussensensor
+    default_branch: main

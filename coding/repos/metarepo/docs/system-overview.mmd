@@ -1,0 +1,36 @@
+%% Heimgewebe – Systemübersicht (Mermaid)
+flowchart LR
+  subgraph Core Fleet
+    META[metarepo\nControl-Plane\nContracts/CI/Templates]
+    WGX[wgx\nSystem-Tasks\nMetrics Snapshots]
+    HKI[hausKI\nOrchestrator\nState/Jobs/Decisions]
+    HLN[heimlern\nPolicies/Bandits\nwhy/score]
+    SEMA[semantAH\nInsights/Graph]
+    HKA[hausKI-audio\nAudio Events/Sessions]
+    AUSS[aussensensor\nAußen-Events\nfeed.jsonl]
+    LEIT[leitstand\nHTTP Ingest\nPanels/Digest]
+  end
+
+  subgraph Related
+    WELT[weltgewebe\nCommunity/Maps\n(related)]
+    VAULT[vault-gewebe\npersönlicher Vault\n(nicht Fleet)]
+  end
+
+  %% Datenflüsse
+  AUSS -- aussen.event --> LEIT
+  AUSS -- aussen.event --> HLN
+  WELT -- optional events --> AUSS
+  WGX -- metrics.snapshot --> HKI
+  WGX -- metrics.snapshot --> LEIT
+  SEMA -- insights --> HKI
+  SEMA -- insights --> LEIT
+  HKA -- audio.events --> HKI
+  HKA -- audio.events --> LEIT
+  HKI -- decide(ctx) --> HLN
+  HLN -- action/why --> HKI
+  HKI -- playbooks --> WGX
+  HKI -- audio-control --> HKA
+
+  %% Verträge
+  classDef contract fill:#eef,stroke:#99c,stroke-width:1px,color:#334;
+  class WGX,SEMA,HKA,AUSS,HKI,HLN contract;

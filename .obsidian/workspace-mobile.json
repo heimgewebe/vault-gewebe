@@ -8,20 +8,20 @@
         "type": "tabs",
         "children": [
           {
-            "id": "5b263b183ae1de92",
+            "id": "0684828ceb065553",
             "type": "leaf",
             "state": {
               "type": "canvas",
               "state": {
-                "file": "schule/mathe/projektskizze.canvas",
+                "file": "schule/konflikte/martina.canvas",
                 "viewState": {
-                  "x": 110.59490084985833,
-                  "y": 569.3484419263456,
-                  "zoom": -0.7772669588907765
+                  "x": 235.12641934829946,
+                  "y": 563.2679007557376,
+                  "zoom": -1.2205275876506172
                 }
               },
               "icon": "lucide-layout-dashboard",
-              "title": "projektskizze"
+              "title": "martina"
             }
           }
         ]
@@ -213,7 +213,7 @@
         "state": {
           "type": "file-properties",
           "state": {
-            "file": "to do weltgewebe.md"
+            "file": "schule/theater/projektmethode.canvas"
           },
           "icon": "lucide-info",
           "title": "Dateieigenschaften"
@@ -241,10 +241,39 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "5b263b183ae1de92",
+  "active": "0684828ceb065553",
   "lastOpenFiles": [
-    "schule/mathe/projektskizze old.canvas",
+    "zwischenspeicher.md",
+    "schule/theater/projektmethode.canvas",
+    "to do hauski-audio.md",
+    "to do metarepo.md",
+    "schule/theater/klausur/theater klausur-4.jpg",
+    "schule/theater/freyProjektmethode.canvas",
+    "schule/theater/klausur/theater klausur-7.jpg",
+    "schule/theater/klausur/theater klausur-6.jpg",
+    "schule/theater/klausur/theater klausur-5.jpg",
+    "schule/theater/klausur/theater klausur-1.jpg",
+    "schule/theater/klausur/theater klausur-2.jpg",
+    "schule/theater/klausur/theater klausur-3.jpg",
+    "schule/theater/klausur/theater klausur-10.jpg",
+    "schule/theater/klausur/theater klausur-8.jpg",
+    "schule/theater/klausur/theater klausur-9.jpg",
+    "to do aussensensor.md",
+    "schule/theater/klausur/Text.txt",
+    "schule/theater/klausur/Datei-URL",
+    "to do hauski 1.md",
+    "orga/wichtige dokumente",
+    "orga/schule/BAFöG",
+    "orga/schlüssel",
+    "orga/verträge",
+    "orga/schule",
+    "orga",
+    "to do hauski.md",
+    "mitschreiber.md",
     "schule/mathe/projektskizze.canvas",
+    "halde/_Akkushop.pdf",
+    "coding/repos/semantAH/semantAH/target/debug/incremental/embeddings-1f7g0bp801f7k/s-hbwq7xhv77-0epb7x9-a20sbpagfgny0htxypyd0tn1k",
+    "schule/mathe/projektskizze old.canvas",
     "schule/mathe/projektskizze2.canvas",
     "schule/mathe/projektskizze.md",
     "to do weltgewebe.md",
@@ -266,38 +295,9 @@
     "coding/hausKI/docs/runbooks/local-dev.md",
     "coding/hausKI/docs/runbooks/troubleshooting.md",
     "coding/hausKI-audio/docs/adr/0001-player-backend-mopidy-qobuz.md",
-    "coding/hausKI-audio/docs/adr/0002-audio-path-pulse-vs-alsa.md",
-    "coding/hausKI/docs/index.md",
-    "coding/hausKI-audio/docs/README_ALSA.md",
-    "coding/hausKI-audio/docs/process/CONTRIBUTING.md",
-    "coding/hausKI-audio/docs/adr/0003-repo-standards-docs-ci.md",
-    "coding/hausKI-audio/docs/adr/README.md",
     "coding/hausKI/seeds/obsidian.sample/Canvas/overview.canvas",
-    "coding/hausKI/vendor/signal-hook-registry/src",
-    "coding/hausKI/seeds/obsidian.sample/Canvas",
-    "coding/hausKI/seeds/obsidian.sample/notes",
-    "coding/hausKI/vendor/signal-hook-registry",
-    "coding/hausKI-audio/crates/backend/tests",
-    "coding/hausKI-audio/crates/backend/src",
-    "coding/hausKI/crates/embeddings/src",
-    "coding/hausKI/scripts/codex-prompts",
-    "coding/hausKI/seeds/obsidian.sample",
-    "coding/hausKI-audio/crates/backend",
     "schule/heilpädagogik/theorie_integrativer_prozesse.canvas",
     "schule/heilpädagogik/foerderschwerpunkt_geistige_behinderung.canvas",
-    "out_of_comfort_zone_with_sustainability.canvas",
-    "out_of_comfort_zone.canvas",
-    "weltverschwörung/mccloy.canvas",
-    "julie.canvas",
-    "schule/arbeitsfelder/arbeitsfelder.jpeg",
-    "schule/PNG-Bild.png",
-    "schule/PNG-Bild 2.png",
-    "schule/senioren_perspektive.png",
-    "Pasted image 20250814212038.png",
-    "homo.domesticus.png",
-    "rezepte/cheesecake.png",
-    "orga/wichtige dokumente/Identifikationsnummer.jpeg",
-    "orga/wichtige dokumente/Identifikationsnummer.jpg",
-    "orga/wichtige dokumente/Identifikationsnummer.png"
+    "out_of_comfort_zone_with_sustainability.canvas"
   ]
 }

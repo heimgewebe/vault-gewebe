@@ -12,7 +12,7 @@ from typing import Any, Dict, Iterable, List, Tuple
 def parse_scalar(value: str) -> Any:
     value = value.strip()
     if not value:
-        return ""
+        return None
     lowered = value.lower()
     if lowered in {"null", "~"}:
         return None
@@ -92,13 +92,13 @@ def preprocess_lines(text: str) -> List[Tuple[int, str]]:
 def parse_child_block(
     lines: List[Tuple[int, str]], start: int, parent_indent: int
 ) -> Tuple[Any, int]:
-    """Parse a nested block starting at *start* if it is indented relative to parent."""
+    """Parse a nested block at *start* or return ``None`` when no child block follows."""
 
     if start >= len(lines):
-        return {}, start
+        return None, start
     child_indent = lines[start][0]
     if child_indent <= parent_indent:
-        return {}, start
+        return None, start
     return parse_block(lines, start, child_indent)
 
 
@@ -154,6 +154,14 @@ def parse_block(lines: List[Tuple[int, str]], start: int, indent: int) -> Tuple[
                 continue
             sequence.append(parse_scalar(item_body))
             i += 1
+            continue
+        if content == "-":
+            if mapping:
+                raise ValueError("Cannot mix mapping and sequence at same level")
+            if sequence is None:
+                sequence = []
+            value, i = parse_child_block(lines, i + 1, indent)
+            sequence.append(value)
             continue
         if sequence is not None:
             raise ValueError("Cannot mix mapping and sequence at same level")

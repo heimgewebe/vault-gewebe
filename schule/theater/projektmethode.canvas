@@ -1,0 +1,19 @@
+{
+	"nodes":[
+		{"id":"root","type":"text","text":"Projektmethode nach Karl Frey\n(Grundmuster eines idealisierten Projektablaufs)","x":0,"y":0,"width":480,"height":120,"color":"blue"},
+		{"id":"1","type":"text","text":"① Projektinitiative\n– Idee / Erlebnis / Wunsch als Angebot\n– offene Ausgangssituation, noch ohne Bildungswert","x":-600,"y":200,"width":320,"height":160,"color":"gray"},
+		{"id":"2","type":"text","text":"② Auseinandersetzung mit der Initiative\n– Rahmen festlegen (Zeit, Regeln)\n– Austausch, Brainstorming\n→ Ergebnis: Projektskizze","x":-250,"y":200,"width":320,"height":160,"color":"yellow"},
+		{"id":"3","type":"text","text":"③ Entwicklung des Betätigungsgebietes\n– Wer tut was, wie, warum, wann?\n– Priorisierung & Planung\n→ Ergebnis: Projektplan","x":100,"y":200,"width":320,"height":160,"color":"yellow"},
+		{"id":"4","type":"text","text":"④ Aktivitäten im Betätigungsgebiet\n– Durchführung des Projektplanes\n– Arbeitsteiliges Handeln, Eigenverantwortung\n– Qualität des Tuns im Mittelpunkt","x":450,"y":200,"width":340,"height":160,"color":"green"},
+		{"id":"5","type":"text","text":"⑤ Projektabschluss\n1) bewusster Abschluss (Präsentation)\n2) Rückkopplung zur Initiative (Reflexion)\n3) Auslaufenlassen (Integration in Alltag)","x":800,"y":200,"width":340,"height":180,"color":"green"},
+		{"id":"6","type":"text","text":"⑥ Fixpunkte\n– Geplante oder spontane Meilensteine\n– Reflexion & Koordination\n– Gegenmittel zu blinder Betriebsamkeit","x":250,"y":450,"width":300,"height":140,"color":"violet"},
+		{"id":"7","type":"text","text":"⑦ Metainteraktion / Zwischengespräch\n– Unterbrechung zur Reflexion über Zusammenarbeit\n– Überprüfung des Verständigungsrahmens\n– Bearbeitung von Beziehungsproblemen","x":600,"y":450,"width":340,"height":140,"color":"violet"},
+		{"id":"essenz","type":"text","text":"Essenz: Bildung entsteht nicht durch Stoff, sondern durch die Art des gemeinsamen Tuns.","x":400,"y":-120,"width":480,"height":100,"color":"blue"},
+		{"id":"legende","type":"text","text":"Legende:\nBlau = Zentrum / Meta\nGrau = Ausgangspunkt\nGelb = Planung / Struktur\nGrün = Durchführung / Abschluss\nViolett = Reflexionsebenen (Fixpunkte, Meta)\nAchsenlogik: links → rechts = zeitlicher Ablauf","x":-600,"y":450,"width":400,"height":200,"color":"gray"}
+	],
+	"edges":[],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

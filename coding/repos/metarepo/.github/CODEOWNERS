@@ -1,2 +1,3 @@
 # CODEOWNERS for architecture decision records
-/docs/adr/** @alexdermohr
+/docs/adr/**  @alexdermohr
+/docs/adrs/** @alexdermohr

@@ -2,6 +2,17 @@
 *.swp
 .DS_Store
 .env
+.venv/
+/.uv/
+__pycache__/
+
+# E2E & Reports
+.e2e-logs/
+.hauski-reports/
+scripts/e2e/.env
+
+# Impact Guard
+reports/impact/
 
 # local tooling bins (unpinned / developer-managed)
 # halte den Ordner selbst im Repo, aber lasse lokale Pins zu
@@ -11,3 +22,7 @@ tools/bin/*
 
 # tmp
 tmp/
+
+# Devcontainer
+.devcontainer/devcontainer.json
+.devcontainer/.devcache/

@@ -1,0 +1,59 @@
+{
+  "name": "metarepo (dind)",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/yq:1": { "version": "{{YQ_VERSION}}" },
+    "ghcr.io/devcontainers/features/uv:1": { "version": "{{UV_VERSION}}" },
+    "ghcr.io/devcontainers/features/rust:1": {
+      "profile": "minimal",
+      "components": "clippy,rustfmt",
+      "version": "{{RUST_VERSION}}"
+    },
+    "ghcr.io/devcontainers/features/just:1": {},
+    "ghcr.io/devcontainers/features/shellcheck:1": {},
+    "ghcr.io/devcontainers/features/vale:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rust-lang.rust-analyzer",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "tamasfe.even-better-toml",
+        "redhat.vscode-yaml",
+        "streetsidesoftware.code-spell-checker",
+        "davidAnson.vscode-markdownlint",
+        "bierner.markdown-mermaid",
+        "foxundermoon.shell-format"
+      ],
+      "settings": {
+        "rust-analyzer.checkOnSave.command": "clippy",
+        "editor.formatOnSave": true,
+        "files.trimFinalNewlines": true,
+        "markdownlint.config": { "default": true }
+      }
+    }
+  },
+  "containerEnv": {
+    "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+    "UV_LINK_MODE": "copy",
+    "CARGO_TERM_COLOR": "always",
+    "CARGO_INCREMENTAL": "0",
+    "CARGO_TARGET_DIR": "/workspaces/.cache/target"
+  },
+  "mounts": [
+    "source=${containerWorkspaceFolder}/.devcache,target=/workspaces/.cache,type=bind",
+    "source=${localEnv:HOME}/.cache/uv,target=/home/vscode/.cache/uv,type=bind",
+    "source=${localEnv:HOME}/.cargo/registry,target=/home/vscode/.cargo/registry,type=bind",
+    "source=${localEnv:HOME}/.cargo/git,target=/home/vscode/.cargo/git,type=bind"
+  ],
+  "postCreateCommand": "uv sync --frozen || true",
+  "postStartCommand": "just --list >/dev/null 2>&1 && just validate || true",
+  "remoteUser": "vscode",
+  "overrideCommand": false,
+  "runArgs": [
+    "--init",
+    "--cap-add=SYS_PTRACE",
+    "--security-opt", "seccomp=unconfined"
+  ]
+}

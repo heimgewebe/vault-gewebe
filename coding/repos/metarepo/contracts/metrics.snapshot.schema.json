@@ -1,6 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.heimgewebe.org/contracts/metrics.snapshot.schema.json",
   "title": "wgx metrics snapshot",
+  "x-producers": ["wgx"],
+  "x-consumers": ["hausKI", "leitstand"],
   "type": "object",
   "required": ["ts", "host", "updates", "backup", "drift"],
   "properties": {

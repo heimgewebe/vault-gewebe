@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.heimgewebe.org/agent.tool.schema.json",
+  "title": "Agent Tool Call Envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["tool", "args"],
+  "properties": {
+    "tool": { "type": "string", "minLength": 1 },
+    "args": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "trace_id": { "type": "string" },
+    "ts": { "type": "string", "format": "date-time" }
+  }
+}

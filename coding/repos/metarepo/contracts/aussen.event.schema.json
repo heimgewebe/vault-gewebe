@@ -1,7 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://schemas.heimgewebe.org/aussen.event.schema.json",
+  "$id": "https://schemas.heimgewebe.org/contracts/aussen.event.schema.json",
   "title": "Aussensensor Event",
+  "x-producers": ["aussensensor", "weltgewebe"],
+  "x-consumers": ["leitstand"],
   "description": "Zentrales Contract-Schema für kuratierte Außensensor-Ereignisse (JSONL: 1 Objekt pro Zeile).",
   "type": "object",
   "additionalProperties": false,

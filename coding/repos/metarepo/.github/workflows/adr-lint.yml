@@ -1,20 +1,29 @@
 name: adr-lint
 permissions:
   contents: read
+concurrency:
+  group: adr-lint-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash --noprofile --norc -euo pipefail {0}
+
 on:
   pull_request:
-    paths: ['docs/adr/**']
+    paths: ['docs/adrs/**']
   workflow_dispatch:
 jobs:
   lint:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Check filenames & headers
         run: |
           fail=0
           shopt -s nullglob
-          for f in docs/adr/[0-9][0-9][0-9]-*.md; do
+          for f in docs/adrs/[0-9][0-9][0-9]-*.md; do
             bn=$(basename "$f")
             head -n 1 "$f" | grep -q "^# ADR-" || { echo "::error Missing H1 ADR header in $bn"; fail=1; }
           done
@@ -47,5 +56,5 @@ jobs:
                 echo "::warning ::ADR $bn is Proposed for $days days"
               fi
             fi
-          done < <(find docs/adr -maxdepth 1 -name '*.md' -print0)
+          done < <(find docs/adrs -maxdepth 1 -name '*.md' -print0)
           exit $fail

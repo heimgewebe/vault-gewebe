@@ -1,6 +1,46 @@
 {
   "recentFiles": [
     {
+      "basename": "martina",
+      "path": "schule/konflikte/martina.canvas"
+    },
+    {
+      "basename": "zwischenspeicher",
+      "path": "zwischenspeicher.md"
+    },
+    {
+      "basename": "projektmethode",
+      "path": "schule/theater/projektmethode.canvas"
+    },
+    {
+      "basename": "to do hauski-audio",
+      "path": "to do hauski-audio.md"
+    },
+    {
+      "basename": "to do metarepo",
+      "path": "to do metarepo.md"
+    },
+    {
+      "basename": "freyProjektmethode",
+      "path": "schule/theater/freyProjektmethode.canvas"
+    },
+    {
+      "basename": "projektmethode",
+      "path": "schule/theater/projektmethode.md"
+    },
+    {
+      "basename": "to do aussensensor",
+      "path": "to do aussensensor.md"
+    },
+    {
+      "basename": "to do hauski",
+      "path": "to do hauski.md"
+    },
+    {
+      "basename": "mitschreiber",
+      "path": "mitschreiber.md"
+    },
+    {
       "basename": "projektskizze",
       "path": "schule/mathe/projektskizze.canvas"
     },
@@ -159,46 +199,6 @@
     {
       "basename": "situation_vielfalt_bachweg_full",
       "path": "schule/diversität/situation_vielfalt_bachweg_full.canvas"
-    },
-    {
-      "basename": "inklusion_vs_integration",
-      "path": "inklusion_vs_integration.canvas"
-    },
-    {
-      "basename": "bri",
-      "path": "bri.canvas"
-    },
-    {
-      "basename": "canvas-richtlinien",
-      "path": "obsidian/canvas-richtlinien.canvas"
-    },
-    {
-      "basename": "tip-ziel.canvas",
-      "path": "tip-ziel.canvas.md"
-    },
-    {
-      "basename": "Unbenannt 2",
-      "path": "Unbenannt 2.md"
-    },
-    {
-      "basename": "ahrensburger_weg",
-      "path": "schule/konflikte/ahrensburger_weg.md"
-    },
-    {
-      "basename": "t_i_p-ziel.canvas 1",
-      "path": "t_i_p-ziel.canvas 1.md"
-    },
-    {
-      "basename": "aufgabe",
-      "path": "schule/konflikte/aufgabe.md"
-    },
-    {
-      "basename": "einstein",
-      "path": "helden/einstein.canvas"
-    },
-    {
-      "basename": "einstein-physik",
-      "path": "helden/einstein-physik.canvas"
     }
   ],
   "omittedPaths": [],
