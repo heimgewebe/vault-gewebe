@@ -11,17 +11,15 @@
             "id": "0684828ceb065553",
             "type": "leaf",
             "state": {
-              "type": "canvas",
+              "type": "markdown",
               "state": {
-                "file": "schule/konflikte/martina.canvas",
-                "viewState": {
-                  "x": 235.12641934829946,
-                  "y": 563.2679007557376,
-                  "zoom": -1.2205275876506172
-                }
+                "file": "repos feedback.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
               },
-              "icon": "lucide-layout-dashboard",
-              "title": "martina"
+              "icon": "lucide-file",
+              "title": "repos feedback"
             }
           }
         ]
@@ -243,6 +241,20 @@
   },
   "active": "0684828ceb065553",
   "lastOpenFiles": [
+    "schule/mathe/projektskizze.canvas",
+    "coding/repos/vault-gewebe/weltweberei/altes weltgewebe/Homepage/Launchvsc/ui/diskurs",
+    "coding/repos/vault-gewebe/weltweberei/altes weltgewebe/Homepage/Launchvsc/ui/knoten",
+    "coding/repos/vault-gewebe/weltweberei/altes weltgewebe/Homepage/Launchvsc/ui/extras",
+    "coding/repos/vault-gewebe/weltweberei/altes weltgewebe/Homepage/Launchvsc/ui/antrag",
+    "coding/repos/vault-gewebe/weltweberei/altes weltgewebe/Homepage/Launchvsc/ui/layer",
+    "coding/repos/vault-gewebe/weltweberei/altes weltgewebe/Homepage/Launchvsc/visuals",
+    "coding/repos/vault-gewebe/weltweberei/altes weltgewebe/Homepage/Launchvsc/models",
+    "coding/repos/vault-gewebe/weltweberei/altes weltgewebe/Homepage/Launchvsc/utils",
+    "coding/repos/vault-gewebe/weltweberei/altes weltgewebe/Homepage/Launchvsc/data",
+    "coding/repos/vault-gewebe/weltweberei/altes weltgewebe/Homepage/Launchvsc/core",
+    "schule/mathe/projektskizze2.canvas",
+    "schule/konflikte/martina.canvas",
+    "Pasted image 20251106223410.png",
     "zwischenspeicher.md",
     "schule/theater/projektmethode.canvas",
     "to do hauski-audio.md",
@@ -257,24 +269,11 @@
     "schule/theater/klausur/theater klausur-3.jpg",
     "schule/theater/klausur/theater klausur-10.jpg",
     "schule/theater/klausur/theater klausur-8.jpg",
-    "schule/theater/klausur/theater klausur-9.jpg",
     "to do aussensensor.md",
-    "schule/theater/klausur/Text.txt",
-    "schule/theater/klausur/Datei-URL",
     "to do hauski 1.md",
-    "orga/wichtige dokumente",
-    "orga/schule/BAFöG",
-    "orga/schlüssel",
-    "orga/verträge",
-    "orga/schule",
-    "orga",
     "to do hauski.md",
     "mitschreiber.md",
-    "schule/mathe/projektskizze.canvas",
-    "halde/_Akkushop.pdf",
-    "coding/repos/semantAH/semantAH/target/debug/incremental/embeddings-1f7g0bp801f7k/s-hbwq7xhv77-0epb7x9-a20sbpagfgny0htxypyd0tn1k",
     "schule/mathe/projektskizze old.canvas",
-    "schule/mathe/projektskizze2.canvas",
     "schule/mathe/projektskizze.md",
     "to do weltgewebe.md",
     "coding/hausKI/README.md",
@@ -294,10 +293,8 @@
     "coding/hausKI-audio/docs/ARCHITECTURE.md",
     "coding/hausKI/docs/runbooks/local-dev.md",
     "coding/hausKI/docs/runbooks/troubleshooting.md",
-    "coding/hausKI-audio/docs/adr/0001-player-backend-mopidy-qobuz.md",
     "coding/hausKI/seeds/obsidian.sample/Canvas/overview.canvas",
     "schule/heilpädagogik/theorie_integrativer_prozesse.canvas",
-    "schule/heilpädagogik/foerderschwerpunkt_geistige_behinderung.canvas",
-    "out_of_comfort_zone_with_sustainability.canvas"
+    "schule/heilpädagogik/foerderschwerpunkt_geistige_behinderung.canvas"
   ]
 }

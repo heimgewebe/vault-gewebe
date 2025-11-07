@@ -1,6 +1,26 @@
 {
   "recentFiles": [
     {
+      "basename": "repos feedback",
+      "path": "repos feedback.md"
+    },
+    {
+      "basename": "projektskizze",
+      "path": "schule/mathe/projektskizze.canvas"
+    },
+    {
+      "basename": "projektskizze2",
+      "path": "schule/mathe/projektskizze2.canvas"
+    },
+    {
+      "basename": "Projektbeispiel3Gruppenraum",
+      "path": "schule/mathe/Projektbeispiel3Gruppenraum.pdf"
+    },
+    {
+      "basename": "AAProjektskizzeerstellen",
+      "path": "schule/mathe/AAProjektskizzeerstellen.pdf"
+    },
+    {
       "basename": "martina",
       "path": "schule/konflikte/martina.canvas"
     },
@@ -41,16 +61,8 @@
       "path": "mitschreiber.md"
     },
     {
-      "basename": "projektskizze",
-      "path": "schule/mathe/projektskizze.canvas"
-    },
-    {
       "basename": "projektskizze old",
       "path": "schule/mathe/projektskizze old.canvas"
-    },
-    {
-      "basename": "projektskizze2",
-      "path": "schule/mathe/projektskizze2.canvas"
     },
     {
       "basename": "projektskizze",
@@ -75,10 +87,6 @@
     {
       "basename": "wgx myc",
       "path": "halde/wgx myc.md"
-    },
-    {
-      "basename": "repos feedback",
-      "path": "repos feedback.md"
     },
     {
       "basename": "blaupause hauski-audio",
@@ -191,14 +199,6 @@
     {
       "basename": "senioren",
       "path": "schule/arbeitsfelder/senioren.canvas"
-    },
-    {
-      "basename": "situation_vielfalt_bachweg_minimal",
-      "path": "schule/diversität/situation_vielfalt_bachweg_minimal.canvas"
-    },
-    {
-      "basename": "situation_vielfalt_bachweg_full",
-      "path": "schule/diversität/situation_vielfalt_bachweg_full.canvas"
     }
   ],
   "omittedPaths": [],
