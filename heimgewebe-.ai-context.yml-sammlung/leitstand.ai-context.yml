@@ -11,10 +11,14 @@ dependencies:
   internal:
     - name: contracts
       relationship: uses
-      interface: json_schema | proto
+      interface:
+        - json_schema
+        - proto
     - name: heimlern
       relationship: provides
-      interface: metrics | reports
+      interface:
+        - metrics
+        - reports
     - name: wgx
       relationship: consumes
       interface: orchestration_cli
