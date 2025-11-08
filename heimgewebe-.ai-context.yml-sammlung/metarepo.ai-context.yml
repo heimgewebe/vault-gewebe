@@ -11,7 +11,9 @@ dependencies:
   internal:
     - name: contracts
       relationship: uses
-      interface: validation_workflows | fixtures
+      interface:
+        - validation_workflows
+        - fixtures
     - name: wgx
       relationship: uses
       interface: fleet_rollout
