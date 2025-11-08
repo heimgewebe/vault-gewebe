@@ -11,7 +11,9 @@ dependencies:
   internal:
     - name: leitstand
       relationship: uses
-      interface: event_feed | metrics
+      interface:
+        - event_feed
+        - metrics
     - name: contracts
       relationship: uses
       interface: json_schema
