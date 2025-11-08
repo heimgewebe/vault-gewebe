@@ -17,7 +17,9 @@ dependencies:
       interface: ingest_events (knowledge updates)
     - name: hauski
       relationship: uses
-      interface: ui_sync | note_links
+      interface:
+        - ui_sync
+        - note_links
   external:
     - name: obsidian
       note: local editor platform
