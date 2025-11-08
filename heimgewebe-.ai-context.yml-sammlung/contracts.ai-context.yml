@@ -11,7 +11,9 @@ dependencies:
   internal:
     - name: leitstand
       relationship: provides
-      interface: json_schema | proto
+      interface:
+        - json_schema
+        - proto
     - name: aussensensor
       relationship: provides
       interface: json_schema
