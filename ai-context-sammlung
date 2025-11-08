@@ -1,682 +1,776 @@
-Super—wir machen’s wirklich Schritt für Schritt. Erster Schritt für alle Repos (Weltgewebe weiterhin außen vor): .ai-context.yml anlegen, damit Codex/Jules & Co. überall denselben, verlässlichen Kontext haben. Unten bekommst du für jedes Repo eine knapp befüllte, sofort nutzbare Datei. Danach kannst du sie 1:1 einchecken (oder per Script ausrollen).
+im folgenden erhältst du eine sammlung aller .ai-context.yml dateien des heimgewebes.
+lege die passende datei aus dieser sammlung für dieses repo als entsprechende .ai-context.yml datei an, die anderen gesammmelt in einen ordner (heimgewebe-.ai-context.yml-sammlung).
+
+
+Absolutely—shipping a small, uniform .ai-context.yml to every repo is a great first step. I’ve tightened structure, naming, and wording so it’s:
+	•	consistent across all repos,
+	•	safe for assistants (no secrets),
+	•	specific enough to be useful but easy to extend later,
+	•	aligned with your folder reality (e.g., contracts uses json/ & proto/).
+
+I standardized the file to the same fields everywhere:
+	•	ai_context_version: schema version for future migrations
+	•	project: name, summary, role, primary_language, visibility
+	•	dependencies: internal and external with relationship & interface (or package pins)
+	•	architecture: entrypoints, key_paths, data_flow
+	•	conventions: branching, commit_prefix, ci_platform
+	•	documentation: where to add ADR/runbooks
+	•	ai_guidance: “do / don’t” for assistants
+
+Drop these into each repo at the path: .ai-context.yml.
 
 ⸻
 
-.ai-context.yml Vorlagen (repo-spezifisch)
+contracts — .ai-context.yml
 
-Hinweis: Werte sind absichtlich kompakt gehalten. Du kannst sie später beliebig verfeinern.
-Sprache/Role/Dependencies sind so gesetzt, dass sie mit dem bisherigen Heimgewebe-Zuschnitt harmonieren.
-
-⸻
-
-contracts
-
-# .ai-context.yml
-AI Context Configuration for contracts
-Version: 1.0
+ai_context_version: 1.0
 
 project:
-  name: "contracts"
-  description: "Central contract repo providing JSON/Proto schemas and fixtures."
-  role: "Schema/contract provider for the Heimgewebe ecosystem"
-  language: "Mixed"
+  name: contracts
+  summary: Central contracts repo providing JSON Schemas, Protobufs, and fixtures.
+  role: schema_provider
+  primary_language: mixed
+  visibility: internal
 
 dependencies:
   internal:
-    - name: "leitstand"
-      relationship: "provides"
-      interface: "JSON Schema / Proto"
-    - name: "aussensensor"
-      relationship: "provides"
-      interface: "JSON Schema"
-    - name: "heimlern"
-      relationship: "provides"
-      interface: "JSON Schema"
-    - name: "wgx"
-      relationship: "provides"
-      interface: "CLI inputs/contracts"
+    - name: leitstand
+      relationship: provides
+      interface: json_schema | proto
+    - name: aussensensor
+      relationship: provides
+      interface: json_schema
+    - name: heimlern
+      relationship: provides
+      interface: json_schema
+    - name: wgx
+      relationship: provides
+      interface: cli_contracts
   external:
-    - "ajv-cli (5.x)"
-    - "buf (for proto, optional)"
+    - name: ajv-cli
+      version: "^5"
+    - name: buf
+      note: optional, for proto workflows
 
 architecture:
-  entry_points:
-    - "json/  (JSON Schemas)"
-    - "proto/ (Protobuf files)"
-  key_modules:
-    - path: "json/"
-      purpose: "Validation contracts (JSON Schema)"
-    - path: "proto/"
-      purpose: "IDL for services/events"
-    - path: "fixtures/"
-      purpose: "Golden samples for validation"
+  entrypoints:
+    - json/          # JSON Schemas
+    - proto/         # Protobuf IDL
+  key_paths:
+    - path: json/
+      purpose: validation contracts (JSON Schema)
+    - path: proto/
+      purpose: service and event IDL
+    - path: fixtures/
+      purpose: golden samples / JSONL fixtures
   data_flow:
-    input: "Change proposals via PR"
-    processing: "Guard checks + AJV validation"
-    output: "Pinned, versioned contracts for consumers"
+    input: PR change proposals
+    processing: guard checks + AJV validation
+    output: versioned, pinned contracts for consumers
 
 conventions:
-  branching: "main + feature/* + hotfix/*"
+  branching: "main, feature/*, hotfix/*"
   commit_prefix: "contracts"
-  ci_platform: "GitHub Actions"
+  ci_platform: "github_actions"
 
 documentation:
-  architecture_decisions: "docs/adr/"
-  runbook: "docs/runbook.md"
-  api_reference: "json/* / proto/*"
+  adr: docs/adr/
+  runbook: docs/runbook.md
+  references:
+    - json/*
+    - proto/*
 
-ai_hints:
-  - "Never break schemas without adding new versions; prefer additive change."
-  - "Validate JSONL fixtures with AJV; keep examples minimal but complete."
-  - "PRs must pass the deletion/rename guard in protected folders."
+ai_guidance:
+  do:
+    - prefer additive schema changes; add new versions when breaking
+    - validate JSONL fixtures with AJV; keep examples minimal yet complete
+  dont:
+    - remove/rename files in protected folders without a migration plan
 
 
 ⸻
 
-leitstand
+leitstand — .ai-context.yml
 
-AI Context Configuration for leitstand
-Version: 1.0
+ai_context_version: 1.0
 
 project:
-  name: "leitstand"
-  description: "Event ingest + processing hub."
-  role: "Central event store and processing service"
-  language: "Rust"
+  name: leitstand
+  summary: Event ingest and processing hub.
+  role: event_store_pipeline
+  primary_language: rust
+  visibility: internal
 
 dependencies:
   internal:
-    - name: "contracts"
-      relationship: "uses"
-      interface: "JSON Schema / Proto"
-    - name: "heimlern"
-      relationship: "provides"
-      interface: "HTTP events/metrics"
-    - name: "wgx"
-      relationship: "consumes"
-      interface: "CLI orchestration"
+    - name: contracts
+      relationship: uses
+      interface: json_schema | proto
+    - name: heimlern
+      relationship: provides
+      interface: metrics | reports
+    - name: wgx
+      relationship: consumes
+      interface: orchestration_cli
   external:
-    - "tokio (1.x)"
-    - "serde/serde_json"
-    - "tracing"
+    - name: tokio
+      version: "^1"
+    - name: serde/serde_json
+    - name: tracing
 
 architecture:
-  entry_points:
-    - "src/main.rs"
-  key_modules:
-    - path: "src/ingest/"
-      purpose: "HTTP ingest + validation"
-    - path: "src/pipeline/"
-      purpose: "Event processing"
+  entrypoints:
+    - src/main.rs
+  key_paths:
+    - path: src/ingest/
+      purpose: HTTP ingest + validation
+    - path: src/pipeline/
+      purpose: event processing
   data_flow:
     input: "HTTP POST /ingest/*"
-    processing: "JSON Schema validation + pipelines"
-    output: "storage + metrics"
+    processing: schema validation then pipelines
+    output: storage + metrics
 
 conventions:
-  branching: "main + feature/* + hotfix/*"
+  branching: "main, feature/*, hotfix/*"
   commit_prefix: "leitstand"
-  ci_platform: "GitHub Actions"
+  ci_platform: "github_actions"
 
 documentation:
-  architecture_decisions: "docs/adr/"
-  runbook: "docs/runbook.md"
+  adr: docs/adr/
+  runbook: docs/runbook.md
 
-ai_hints:
-  - "Pull validation rules from contracts repo; reject non-conforming events."
-  - "Prefer structured logs via tracing; no println! in hot paths."
+ai_guidance:
+  do:
+    - use contracts repo for validation; reject non-conforming events
+    - prefer structured logs via tracing; ensure backpressure handling
+  dont:
+    - introduce println! in hot paths
 
 
 ⸻
 
-aussensensor
+aussensensor — .ai-context.yml
 
-AI Context Configuration for aussensensor
-Version: 1.0
+ai_context_version: 1.0
 
 project:
-  name: "aussensensor"
-  description: "Scripted data collection pushing events to leitstand."
-  role: "Sensor → event producer"
-  language: "Bash"
+  name: aussensensor
+  summary: Scripted data collection pushing events to leitstand.
+  role: sensor_event_producer
+  primary_language: bash
+  visibility: internal
 
 dependencies:
   internal:
-    - name: "leitstand"
-      relationship: "uses"
+    - name: leitstand
+      relationship: uses
       interface: "HTTP POST /ingest/aussen"
-    - name: "contracts"
-      relationship: "uses"
-      interface: "JSON Schema (for self-check before sending)"
+    - name: contracts
+      relationship: uses
+      interface: json_schema (preflight validation)
   external:
-    - "curl"
-    - "jq"
+    - name: curl
+    - name: jq
 
 architecture:
-  entry_points:
-    - "scripts/*.sh"
-  key_modules:
-    - path: "lib/validation.sh"
-      purpose: "Local JSON/JSONL validation"
+  entrypoints:
+    - scripts/*.sh
+  key_paths:
+    - path: lib/validation.sh
+      purpose: local JSON/JSONL validation
   data_flow:
-    input: "polling / external sensors"
-    processing: "map to contract shape"
-    output: "POST to leitstand"
+    input: polling/external sensors
+    processing: map to contract shape + validate
+    output: POST to leitstand
 
 conventions:
-  branching: "main + feature/*"
+  branching: "main, feature/*"
   commit_prefix: "aussensensor"
-  ci_platform: "GitHub Actions"
+  ci_platform: "github_actions"
 
 documentation:
-  runbook: "docs/runbook.md"
+  runbook: docs/runbook.md
 
-ai_hints:
-  - "Keep network calls retriable; exponential backoff."
-  - "Validate JSON before sending to avoid noisy ingest failures."
+ai_guidance:
+  do:
+    - implement exponential backoff/retries
+    - validate JSON before sending to reduce ingest noise
+  dont:
+    - send oversized payloads or unbounded retries
 
 
 ⸻
 
-heimlern
+heimlern — .ai-context.yml
 
-AI Context Configuration for heimlern
-Version: 1.0
+ai_context_version: 1.0
 
 project:
-  name: "heimlern"
-  description: "Learning/feedback loops over events, scoring & policies."
-  role: "Analytics + policy feedback"
-  language: "Python"
+  name: heimlern
+  summary: Learning/feedback loops over events, scoring & policies.
+  role: analytics_policy_feedback
+  primary_language: python
+  visibility: internal
 
 dependencies:
   internal:
-    - name: "leitstand"
-      relationship: "uses"
-      interface: "event feed / metrics"
-    - name: "contracts"
-      relationship: "uses"
-      interface: "JSON Schemas"
+    - name: leitstand
+      relationship: uses
+      interface: event_feed | metrics
+    - name: contracts
+      relationship: uses
+      interface: json_schema
   external:
-    - "pydantic"
-    - "pandas"
+    - name: pydantic
+    - name: pandas
 
 architecture:
-  entry_points:
-    - "src/main.py"
-  key_modules:
-    - path: "src/scoring/"
-      purpose: "Quality scoring & policy checks"
+  entrypoints:
+    - src/main.py
+  key_paths:
+    - path: src/scoring/
+      purpose: quality scoring & policy checks
   data_flow:
-    input: "events/metrics from leitstand"
-    processing: "scoring + feedback"
-    output: "reports, signals"
+    input: events/metrics from leitstand
+    processing: scoring + feedback
+    output: reports/signals
 
 conventions:
-  branching: "main + feature/*"
+  branching: "main, feature/*"
   commit_prefix: "heimlern"
-  ci_platform: "GitHub Actions"
+  ci_platform: "github_actions"
 
 documentation:
-  adr: "docs/adr/"
+  adr: docs/adr/
+  runbook: docs/runbook.md
 
-ai_hints:
-  - "Always log model versions + seeds for reproducibility."
+ai_guidance:
+  do:
+    - log model versions and seeds for reproducibility
+  dont:
+    - change scoring semantics without a version bump
 
 
 ⸻
 
-wgx
+wgx — .ai-context.yml
 
-AI Context Configuration for wgx
-Version: 1.0
+ai_context_version: 1.0
 
 project:
-  name: "wgx"
-  description: "CLI orchestrator for dev/ops tasks and multi-agent flows."
-  role: "Tooling/Orchestration"
-  language: "Bash"
+  name: wgx
+  summary: CLI orchestrator for dev/ops tasks and multi-agent flows.
+  role: orchestration_tooling
+  primary_language: bash
+  visibility: internal
 
 dependencies:
   internal:
-    - name: "contracts"
-      relationship: "uses"
-      interface: "contracts validation hooks"
-    - name: "leitstand"
-      relationship: "uses"
-      interface: "CI/E2E orchestration"
+    - name: contracts
+      relationship: uses
+      interface: contracts_validation_hooks
+    - name: leitstand
+      relationship: uses
+      interface: ci_e2e_orchestration
   external:
-    - "jq"
-    - "curl"
+    - name: jq
+    - name: curl
 
 architecture:
-  entry_points:
-    - "wgx/cmd/*"
-  key_modules:
-    - path: "modules/"
-      purpose: "subcommand implementations"
+  entrypoints:
+    - wgx/cmd/*
+  key_paths:
+    - path: modules/
+      purpose: subcommand implementations
   data_flow:
-    input: "developer commands"
-    processing: "fan out to repos"
-    output: "reports/metrics"
+    input: developer commands
+    processing: orchestration fan-out
+    output: reports/metrics
 
 conventions:
-  branching: "main + feature/*"
+  branching: "main, feature/*"
   commit_prefix: "wgx"
-  ci_platform: "GitHub Actions"
+  ci_platform: "github_actions"
 
 documentation:
-  runbook: "docs/runbook.md"
+  runbook: docs/runbook.md
 
-ai_hints:
-  - "Subcommands must be composable; avoid global mutable state."
+ai_guidance:
+  do:
+    - keep subcommands composable and stateless
+  dont:
+    - introduce hidden global state
 
 
 ⸻
 
-tools
+tools — .ai-context.yml
 
-AI Context Configuration for tools
-Version: 1.0
+ai_context_version: 1.0
 
 project:
-  name: "tools"
-  description: "Pinned tool installers & shared scripts (e.g., yq/just pin)."
-  role: "Shared developer tooling"
-  language: "Bash"
+  name: tools
+  summary: Pinned tool installers & shared scripts (yq/just pin, etc.).
+  role: shared_dev_tooling
+  primary_language: bash
+  visibility: internal
 
 dependencies:
   internal:
-    - name: "wgx"
-      relationship: "provides"
-      interface: "cli helpers"
+    - name: wgx
+      relationship: provides
+      interface: cli_helpers
   external:
-    - "curl"
-    - "bash >=4"
+    - name: curl
+    - name: bash
+      version: ">=4"
 
 architecture:
-  entry_points:
-    - "scripts/tools/*-pin.sh"
-  key_modules:
-    - path: "scripts/tools/yq-pin.sh"
-      purpose: "Install/pin yq v4"
+  entrypoints:
+    - scripts/tools/*-pin.sh
+  key_paths:
+    - path: scripts/tools/yq-pin.sh
+      purpose: install/pin yq v4
   data_flow:
-    input: "CI & local setup"
-    processing: "download/pin utilities"
-    output: "tools/bin/*"
+    input: CI & local setup
+    processing: download/pin utilities
+    output: tools/bin/*
 
 conventions:
-  branching: "main + feature/*"
+  branching: "main, feature/*"
   commit_prefix: "tools"
-  ci_platform: "GitHub Actions"
+  ci_platform: "github_actions"
 
 documentation:
-  runbook: "docs/runbook.md"
+  runbook: docs/runbook.md
 
-ai_hints:
-  - "Fail fast on missing commands; give actionable install hints."
+ai_guidance:
+  do:
+    - fail fast on missing commands and print actionable hints
+  dont:
+    - silently ignore errors or change PATH globally
 
 
 ⸻
 
-mitschreiber
+mitschreiber — .ai-context.yml
 
-AI Context Configuration for mitschreiber
-Version: 1.0
+ai_context_version: 1.0
 
 project:
-  name: "mitschreiber"
-  description: "Scripted content capture/append utilities (JSONL)."
-  role: "Producer of structured logs/notes"
-  language: "Bash"
+  name: mitschreiber
+  summary: Scripted content capture/append utilities (JSONL).
+  role: structured_log_producer
+  primary_language: bash
+  visibility: internal
 
 dependencies:
   internal:
-    - name: "contracts"
-      relationship: "uses"
-      interface: "JSONL line schema"
-    - name: "leitstand"
-      relationship: "provides"
-      interface: "optional feed"
+    - name: contracts
+      relationship: uses
+      interface: jsonl_line_schema
+    - name: leitstand
+      relationship: provides
+      interface: optional_event_feed
   external:
-    - "jq"
+    - name: jq
 
 architecture:
-  entry_points:
-    - "scripts/*.sh"
-  key_modules:
-    - path: "lib/locking.sh"
-      purpose: "atomic append"
+  entrypoints:
+    - scripts/*.sh
+  key_paths:
+    - path: lib/locking.sh
+      purpose: atomic append
   data_flow:
-    input: "user/agent inputs"
-    processing: "normalize → validate"
-    output: "append *.jsonl"
+    input: user/agent inputs
+    processing: normalize → validate
+    output: append *.jsonl
 
 conventions:
-  branching: "main + feature/*"
+  branching: "main, feature/*"
   commit_prefix: "mitschreiber"
-  ci_platform: "GitHub Actions"
+  ci_platform: "github_actions"
 
-ai_hints:
-  - "Each JSONL line must be valid standalone JSON."
+documentation:
+  runbook: docs/runbook.md
+
+ai_guidance:
+  do:
+    - ensure each JSONL line is valid standalone JSON
+  dont:
+    - write partial/multiline JSON objects
 
 
 ⸻
 
-sichter
+sichter — .ai-context.yml
 
-AI Context Configuration for sichter
-Version: 1.0
+ai_context_version: 1.0
 
 project:
-  name: "sichter"
-  description: "Review/QA gate for content, policies, and outputs."
-  role: "Gatekeeper / quality checks"
-  language: "Mixed"
+  name: sichter
+  summary: Review/QA gate for content, policies, and outputs.
+  role: gatekeeper_quality
+  primary_language: mixed
+  visibility: internal
 
 dependencies:
   internal:
-    - name: "contracts"
-      relationship: "uses"
-      interface: "policies + validation schemas"
-    - name: "heimlern"
-      relationship: "uses"
-      interface: "quality scores"
+    - name: contracts
+      relationship: uses
+      interface: policies | validation_schemas
+    - name: heimlern
+      relationship: uses
+      interface: quality_scores
   external:
-    - "ajv-cli"
+    - name: ajv-cli
+      version: "^5"
 
 architecture:
-  entry_points:
-    - "cli/*"
-  key_modules:
-    - path: "checks/"
-      purpose: "rulesets & validators"
+  entrypoints:
+    - cli/*
+  key_paths:
+    - path: checks/
+      purpose: rulesets & validators
   data_flow:
-    input: "artifacts from repos"
-    processing: "policy + schema checks"
-    output: "approve/block"
+    input: artifacts from repos
+    processing: policy + schema checks
+    output: approve/block
 
 conventions:
-  branching: "main + feature/*"
+  branching: "main, feature/*"
   commit_prefix: "sichter"
-  ci_platform: "GitHub Actions"
+  ci_platform: "github_actions"
 
 documentation:
-  runbook: "docs/runbook.md"
+  runbook: docs/runbook.md
 
-ai_hints:
-  - "Prefer non-blocking warnings unless contract-violating."
+ai_guidance:
+  do:
+    - emit non-blocking warnings unless contract-violating
+  dont:
+    - change policy defaults without ADR
 
 
 ⸻
 
-semantah
+semantah — .ai-context.yml
 
-AI Context Configuration for semantah
-Version: 1.0
+ai_context_version: 1.0
 
 project:
-  name: "semantah"
-  description: "Semantic ingest/index & retrieval services."
-  role: "Knowledge graph + retrieval"
-  language: "Python"
+  name: semantah
+  summary: Semantic ingest/index & retrieval services.
+  role: knowledge_index_retrieval
+  primary_language: python
+  visibility: internal
 
 dependencies:
   internal:
-    - name: "metarepo"
-      relationship: "uses"
-      interface: "knowledge exports"
-    - name: "contracts"
-      relationship: "uses"
-      interface: "knowledge graph schemas"
+    - name: metarepo
+      relationship: uses
+      interface: knowledge_exports
+    - name: contracts
+      relationship: uses
+      interface: knowledge_graph_schemas
   external:
-    - "fastapi"
-    - "uvicorn"
-    - "faiss/ann"
+    - name: fastapi
+    - name: uvicorn
+    - name: faiss
 
 architecture:
-  entry_points:
-    - "src/main.py"
-  key_modules:
-    - path: "src/ingest/"
-      purpose: "document/code ingest"
-    - path: "src/search/"
-      purpose: "semantic search APIs"
+  entrypoints:
+    - src/main.py
+  key_paths:
+    - path: src/ingest/
+      purpose: document/code ingest
+    - path: src/search/
+      purpose: semantic search APIs
   data_flow:
-    input: "docs/code exports"
-    processing: "chunk → embed → index"
-    output: "search APIs"
+    input: docs/code exports
+    processing: chunk → embed → index
+    output: search APIs
 
 conventions:
-  branching: "main + feature/*"
+  branching: "main, feature/*"
   commit_prefix: "semantah"
-  ci_platform: "GitHub Actions"
+  ci_platform: "github_actions"
 
 documentation:
-  adr: "docs/adr/"
+  adr: docs/adr/
+  runbook: docs/runbook.md
 
-ai_hints:
-  - "Store embeddings deterministically for reproducible tests."
+ai_guidance:
+  do:
+    - store embeddings deterministically for reproducible tests
+  dont:
+    - change index params without reindex plan
 
 
 ⸻
 
-hauski
+hauski — .ai-context.yml
 
-AI Context Configuration for hauski
-Version: 1.0
+ai_context_version: 1.0
 
 project:
-  name: "hauski"
-  description: "User-facing assistant UI + orchestration hooks."
-  role: "Frontend/UX for multi-agent flows"
-  language: "TypeScript"
+  name: hauski
+  summary: User-facing assistant UI and orchestration hooks.
+  role: frontend_multi_agent
+  primary_language: typescript
+  visibility: internal
 
 dependencies:
   internal:
-    - name: "semantah"
-      relationship: "uses"
-      interface: "search APIs"
-    - name: "heimlern"
-      relationship: "uses"
-      interface: "scores/feedback"
+    - name: semantah
+      relationship: uses
+      interface: search_apis
+    - name: heimlern
+      relationship: uses
+      interface: scores_feedback
   external:
-    - "React"
-    - "Vite"
+    - name: react
+    - name: vite
 
 architecture:
-  entry_points:
-    - "apps/web/src/main.tsx"
-  key_modules:
-    - path: "apps/web/src/agents/"
-      purpose: "agent wiring"
+  entrypoints:
+    - apps/web/src/main.tsx
+  key_paths:
+    - path: apps/web/src/agents/
+      purpose: agent wiring
   data_flow:
-    input: "user queries"
-    processing: "route → agents → backends"
-    output: "answers + traces"
+    input: user queries
+    processing: route → agents → backends
+    output: answers + traces
 
 conventions:
-  branching: "main + feature/*"
+  branching: "main, feature/*"
   commit_prefix: "hauski"
-  ci_platform: "GitHub Actions"
+  ci_platform: "github_actions"
 
 documentation:
-  runbook: "docs/runbook.md"
+  runbook: docs/runbook.md
 
-ai_hints:
-  - "Keep agent I/O typed; generate types from contracts if possible."
+ai_guidance:
+  do:
+    - keep agent IO typed; generate types from contracts when possible
+  dont:
+    - bypass policy checks in production builds
 
 
 ⸻
 
-hauski-audio
+hauski-audio — .ai-context.yml
 
-AI Context Configuration for hauski-audio
-Version: 1.0
+ai_context_version: 1.0
 
 project:
-  name: "hauski-audio"
-  description: "Audio capture, VAD/ASR pipeline, and event emission."
-  role: "Audio → text events"
-  language: "Mixed"
+  name: hauski-audio
+  summary: Audio capture, VAD/ASR pipeline, and event emission.
+  role: audio_to_text_events
+  primary_language: mixed
+  visibility: internal
 
 dependencies:
   internal:
-    - name: "contracts"
-      relationship: "uses"
-      interface: "audio.events schema"
-    - name: "leitstand"
-      relationship: "provides"
-      interface: "audio events"
+    - name: contracts
+      relationship: uses
+      interface: audio.events_schema
+    - name: leitstand
+      relationship: provides
+      interface: audio_events
   external:
-    - "ffmpeg"
-    - "whisper.cpp (optional)"
+    - name: ffmpeg
+    - name: whisper.cpp
+      note: optional
 
 architecture:
-  entry_points:
-    - "cli/*"
-  key_modules:
-    - path: "pipeline/"
-      purpose: "VAD + ASR + packaging"
+  entrypoints:
+    - cli/*
+  key_paths:
+    - path: pipeline/
+      purpose: VAD + ASR + packaging
   data_flow:
-    input: "mic/streams"
-    processing: "segment → transcribe → package"
-    output: "JSONL events"
+    input: mic/streams
+    processing: segment → transcribe → package
+    output: JSONL events
 
 conventions:
-  branching: "main + feature/*"
+  branching: "main, feature/*"
   commit_prefix: "hauski-audio"
-  ci_platform: "GitHub Actions"
+  ci_platform: "github_actions"
 
 documentation:
-  runbook: "docs/runbook.md"
+  runbook: docs/runbook.md
 
-ai_hints:
-  - "Emit small, well-formed JSONL chunks; avoid giant payloads."
+ai_guidance:
+  do:
+    - emit small, well-formed JSONL chunks
+  dont:
+    - block on long recordings without chunking
 
 
 ⸻
 
-metarepo
+metarepo — .ai-context.yml
 
-AI Context Configuration for metarepo
-Version: 1.0
+ai_context_version: 1.0
 
 project:
-  name: "metarepo"
-  description: "Docs/templates/workflows for all repos."
-  role: "Standards and reusable automation"
-  language: "Mixed"
+  name: metarepo
+  summary: Docs, templates, and reusable workflows for all repos.
+  role: standards_and_automation
+  primary_language: mixed
+  visibility: internal
 
 dependencies:
   internal:
-    - name: "contracts"
-      relationship: "uses"
-      interface: "validation workflows/fixtures"
-    - name: "wgx"
-      relationship: "uses"
-      interface: "fleet rollout"
+    - name: contracts
+      relationship: uses
+      interface: validation_workflows | fixtures
+    - name: wgx
+      relationship: uses
+      interface: fleet_rollout
   external:
-    - "GitHub Actions"
+    - name: github_actions
 
 architecture:
-  entry_points:
-    - "docs/*"
-    - ".github/workflows/*"
-  key_modules:
-    - path: "templates/"
-      purpose: "repo templates"
+  entrypoints:
+    - docs/*
+    - .github/workflows/*
+  key_paths:
+    - path: templates/
+      purpose: repo templates
   data_flow:
-    input: "proposals"
-    processing: "codify → templates"
-    output: "standards"
+    input: proposals
+    processing: codify → templates/workflows
+    output: standards
 
 conventions:
-  branching: "main + feature/*"
+  branching: "main, feature/*"
   commit_prefix: "metarepo"
-  ci_platform: "GitHub Actions"
+  ci_platform: "github_actions"
 
 documentation:
-  adr: "docs/adr/"
+  adr: docs/adr/
+  runbook: docs/runbook.md
 
-ai_hints:
-  - "Prefer workflow_call for reuse; pin external actions."
+ai_guidance:
+  do:
+    - prefer workflow_call for reuse; pin external actions
+  dont:
+    - introduce floating refs in org-wide templates
 
+
+	
+	
+	Perfekt — hier die ergänzte .ai-context.yml für vault-gewebe, im selben optimierten Format wie bei den übrigen Repos, sofort einsetzbar (du kannst sie einfach als vault-gewebe/.ai-context.yml einchecken oder per Rollout-Script miterstellen):
 
 ⸻
 
-merges
 
-AI Context Configuration for merges
-Version: 1.0
+vault-gewebe — .ai-context.yml
+
+ai_context_version: 1.0
 
 project:
-  name: "merges"
-  description: "Repo merge utilities and consistency checks."
-  role: "Cross-repo synchronization logic"
-  language: "Bash"
+  name: vault-gewebe
+  summary: Unified personal and shared Obsidian vault for structured knowledge, notes, and educational materials.
+  role: knowledge_vault
+  primary_language: markdown
+  visibility: internal
 
 dependencies:
   internal:
-    - name: "wgx"
-      relationship: "uses"
-      interface: "orchestration"
+    - name: semantah
+      relationship: provides
+      interface: document_exports | embeddings_source
+    - name: leitstand
+      relationship: uses
+      interface: ingest_events (knowledge updates)
+    - name: hauski
+      relationship: uses
+      interface: ui_sync | note_links
   external:
-    - "git"
-    - "jq"
+    - name: obsidian
+      note: local editor platform
+    - name: pandoc
+      note: for export to other formats (pdf/docx/rtf)
 
 architecture:
-  entry_points:
-    - "scripts/*.sh"
-  key_modules:
-    - path: "lib/"
-      purpose: "merge helpers"
+  entrypoints:
+    - vault/
+    - vault/.obsidian/
+  key_paths:
+    - path: vault/
+      purpose: main knowledge base (markdown + canvas files)
+    - path: vault/templates/
+      purpose: content and project templates
+    - path: vault/meta/
+      purpose: metadata, indices, linkmaps
   data_flow:
-    input: "upstream repos"
-    processing: "merge + patch"
-    output: "synced branches"
+    input: notes, interviews, transcripts, project docs
+    processing: tagging → linking → export
+    output: semantic index for semantah and synced UI state for hauski
 
 conventions:
-  branching: "main + feature/*"
-  commit_prefix: "merges"
-  ci_platform: "GitHub Actions"
+  branching: "main, feature/*"
+  commit_prefix: "vault-gewebe"
+  ci_platform: "github_actions"
 
 documentation:
-  runbook: "docs/runbook.md"
+  adr: docs/adr/
+  runbook: docs/runbook.md
 
-ai_hints:
-  - "Always run in a clean workspace; guard against uncommitted changes."
-
-
-⸻
-
-Einmaliges Ausrollen (optional)
-
-Wenn du alle Dateien automatisch erstellen willst, hier ein kleines Script (lokal ausführen, branch selbst wählen):
-
-#!/usr/bin/env bash
-set -euo pipefail
-
-# Repos ohne weltgewebe:
-REPOS=(contracts leitstand aussensensor heimlern wgx tools mitschreiber sichter semantah hauski hauski-audio metarepo merges)
-
-for repo in "${REPOS[@]}"; do
-  test -d "$repo" || { echo "skip $repo (dir missing)"; continue; }
-  file="$repo/.ai-context.yml"
-  test -f "$file" && { echo "exists $file"; continue; }
-  # --> Kopiere die oben passende YAML in $file (hier nur Platzhalter):
-  printf 'AI Context Configuration for %s\nVersion: 1.0\nproject:\n  name: "%s"\n' "$repo" "$repo" > "$file"
-  (cd "$repo" && git add .ai-context.yml)
-done
-
-git commit -m "chore: add .ai-context.yml to core repos"
+ai_guidance:
+  do:
+    - preserve structure of vault folders; keep filenames human-readable
+    - prefer markdown + frontmatter for metadata
+    - when exporting, validate frontmatter fields against contracts repo
+  dont:
+    - insert generated text directly into primary vault without review
+    - modify Obsidian config files automatically
 
 
 ⸻
 
-Nächster Schritt (wenn diese Dateien drin sind)
-	•	Dependencies/Relations schärfen (Matrix in den .ai-context.yml Einträgen konkretisieren)
-	•	Kleine CI-Health-Checks (z. B. prüfen, dass .ai-context.yml vorhanden ist)
-	•	Danach gezielt pro Repo Typ-Spezialthemen (Rust-Workspace, Script-Modularisierung, Contracts-Guard etc.)
+Einordnung im Heimgewebe-Verbund
 
-Wenn du willst, packe ich dir im nächsten Schritt die repo-health-workflow-Datei als Reuseable ins Metarepo und die Minimal-Callers für jedes Repo dazu.
+Verbindung	Richtung	Zweck
+semantah → vault-gewebe	nutzt Exporte aus semantah (Embeddings)	semantische Verknüpfungen und Suche
+vault-gewebe → leitstand	sendet Aktualisierungs-Events	Wissensänderungen als Eventfeed
+vault-gewebe ↔ hauski	bidirektional	UI-Sync zwischen lokalem Vault und HausKI-Frontend
+
+
+
+⸻
+
+
+
+Add a guard workflow to each repo so .ai-context.yml can’t silently disappear:
+
+.github/workflows/ai-context-guard.yml
+
+name: ai-context-guard
+permissions:
+  contents: read
+on:
+  pull_request:
+    paths:
+      - ".ai-context.yml"
+      - ".github/workflows/ai-context-guard.yml"
+  push:
+    branches: [ main ]
+    paths:
+      - ".ai-context.yml"
+      - ".github/workflows/ai-context-guard.yml"
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Ensure AI context exists and is non-empty
+        run: |
+          test -s .ai-context.yml || { echo "::error::.ai-context.yml missing or empty"; exit 1; }
+

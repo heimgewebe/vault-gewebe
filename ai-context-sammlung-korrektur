@@ -1,0 +1,1349 @@
+hier sind 1. fehlermeldungen und 2. korrekturen der bestehenden .ai-context.yml dateien.
+
+
+
+
+GitHub
+.ai-context.yml
+Comment on lines +1 to +22
+ai_context_version: 1.0
+
+project:
+name: semantah
+summary: Semantic ingest/index & retrieval services.
+role: knowledge_index_retrieval
+primary_language: python
+visibility: internal
+
+dependencies:
+internal:
+- name: metarepo
+relationship: uses
+interface: knowledge_exports
+- name: contracts
+relationship: uses
+interface: knowledge_graph_schemas
+external:
+- name: fastapi
+- name: uvicorn
+- name: faiss
+
+@chatgpt-codex-connector
+chatgpt-codex-connector bot
+6 hours ago
+ P1 Badge Indent ai-context sections so nested keys parse correctly
+
+The newly added .ai-context.yml leaves name, summary, dependencies.internal, etc. unindented under their parent sections. In YAML this means project, dependencies, architecture, conventions, documentation, and ai_guidance are all set to null and every field after them becomes a top‑level key instead of the expected nested structure. Any tooling that reads project.name or dependencies.internal will fail to find those values and treat the file as missing data. The same indentation issue appears across the other *.ai-context.yml files added in this commit.
+
+
+.ai-context.yml
+Comment on lines +3 to +7
+project:
+name: hauski
+summary: User-facing assistant UI and orchestration hooks.
+role: frontend_multi_agent
+primary_language: typescript
+@chatgpt-codex-connector
+chatgpt-codex-connector bot
+6 hours ago
+ P1 Badge Indent ai-context sections as nested maps
+
+The file is written as if name, summary, role, etc. are fields under project, but they are not indented. YAML therefore parses project as null and all of those keys as separate top-level entries, which breaks consumers expecting project.name/dependencies.internal and aligns neither with the schema nor with other files (e.g. vault-gewebe.ai-context.yml). Please indent the section contents so they form nested objects and lists.
+
+
+heimgewebe-.ai-context.yml-sammlung/metarepo.ai-context.yml
+  internal:
+    - name: contracts
+      relationship: uses
+      interface: validation_workflows | fixtures
+Copilot AI
+7 hours ago
+The pipe character | is not standard YAML syntax for separating interface values. If multiple interfaces are intended, use a YAML list format:
+
+interface:
+  - validation_workflows
+  - fixtures
+or as a single quoted string:
+
+interface: "validation_workflows | fixtures"
+Suggested change
+      interface: validation_workflows | fixtures
+      interface:
+        - validation_workflows
+        - fixtures
+
+		
+		heimgewebe-.ai-context.yml-sammlung/leitstand.ai-context.yml
+Comment on lines +14 to +17
+      interface: json_schema | proto
+    - name: heimlern
+      relationship: provides
+      interface: metrics | reports
+Copilot AI
+7 hours ago
+The pipe character | is not standard YAML syntax for separating interface values. If multiple interfaces are intended, use a YAML list format:
+
+interface:
+  - metrics
+  - reports
+or as a single quoted string:
+
+interface: "metrics | reports"
+Suggested change
+      interface: json_schema | proto
+    - name: heimlern
+      relationship: provides
+      interface: metrics | reports
+      interface:
+        - json_schema
+        - proto
+    - name: heimlern
+      relationship: provides
+      interface:
+        - metrics
+        - reports
+Copilot uses AI. Check for mistakes.
+@alexdermohr	Reply...
+.ai-context.yml
+Comment on lines +14 to +20
+      interface: document_exports | embeddings_source
+    - name: leitstand
+      relationship: uses
+      interface: ingest_events (knowledge updates)
+    - name: hauski
+      relationship: uses
+      interface: ui_sync | note_links
+Copilot AI
+7 hours ago
+The pipe character | is not standard YAML syntax for separating interface values. If multiple interfaces are intended, use a YAML list format:
+
+interface:
+  - document_exports
+  - embeddings_source
+or as a single quoted string:
+
+interface: "document_exports | embeddings_source"
+Suggested change
+      interface: document_exports | embeddings_source
+    - name: leitstand
+      relationship: uses
+      interface: ingest_events (knowledge updates)
+    - name: hauski
+      relationship: uses
+      interface: ui_sync | note_links
+      interface:
+        - document_exports
+        - embeddings_source
+    - name: leitstand
+      relationship: uses
+      interface: ingest_events (knowledge updates)
+    - name: hauski
+      relationship: uses
+      interface:
+        - ui_sync
+        - note_links
+Copilot uses AI. Check for mistakes.
+@alexdermohr	Reply...
+.github/workflows/ai-context-guard.yml
+      - uses: actions/checkout@v4
+      - name: Ensure AI context exists and is non-empty
+        run: |
+          test -s .ai-context.yml || { echo "::error::.ai-context.yml missing or empty"; exit 1; }
+Copilot AI
+7 hours ago
+The test command uses a generic error message that doesn't clearly indicate which file is missing or empty. Consider making the error message more specific:
+
+run: |
+  if [ ! -s .ai-context.yml ]; then
+    echo "::error file=.ai-context.yml::.ai-context.yml is missing or empty"
+    exit 1
+  fi
+This will make debugging easier and provide clearer feedback in CI logs.
+
+Suggested change
+          test -s .ai-context.yml || { echo "::error::.ai-context.yml missing or empty"; exit 1; }
+          test -s .ai-context.yml || { echo "::error file=.ai-context.yml::.ai-context.yml is missing or empty"; exit 1; }
+Copilot uses AI. Check for mistakes.
+@alexdermohr	Reply...
+heimgewebe-.ai-context.yml-sammlung/sichter.ai-context.yml
+  internal:
+    - name: contracts
+      relationship: uses
+      interface: policies | validation_schemas
+Copilot AI
+7 hours ago
+The pipe character | is not standard YAML syntax for separating interface values. This should likely be a space or the value should be quoted as a single string. If multiple interfaces are intended, use a YAML list format instead:
+
+interface:
+  - policies
+  - validation_schemas
+or as a single string:
+
+interface: "policies | validation_schemas"
+Suggested change
+      interface: policies | validation_schemas
+      interface:
+        - policies
+        - validation_schemas
+Copilot uses AI. Check for mistakes.
+@alexdermohr	Reply...
+heimgewebe-.ai-context.yml-sammlung/leitstand.ai-context.yml
+Comment on lines +14 to +17
+      interface: json_schema | proto
+    - name: heimlern
+      relationship: provides
+      interface: metrics | reports
+Copilot AI
+7 hours ago
+The pipe character | is not standard YAML syntax for separating interface values. If multiple interfaces are intended, use a YAML list format:
+
+interface:
+  - json_schema
+  - proto
+or as a single quoted string:
+
+interface: "json_schema | proto"
+Suggested change
+      interface: json_schema | proto
+    - name: heimlern
+      relationship: provides
+      interface: metrics | reports
+      interface:
+        - json_schema
+        - proto
+    - name: heimlern
+      relationship: provides
+      interface:
+        - metrics
+        - reports
+Copilot uses AI. Check for mistakes.
+@alexdermohr	Reply...
+heimgewebe-.ai-context.yml-sammlung/heimlern.ai-context.yml
+  internal:
+    - name: leitstand
+      relationship: uses
+      interface: event_feed | metrics
+Copilot AI
+7 hours ago
+The pipe character | is not standard YAML syntax for separating interface values. If multiple interfaces are intended, use a YAML list format:
+
+interface:
+  - event_feed
+  - metrics
+or as a single quoted string:
+
+interface: "event_feed | metrics"
+Suggested change
+      interface: event_feed | metrics
+      interface:
+        - event_feed
+        - metrics
+Copilot uses AI. Check for mistakes.
+@alexdermohr	Reply...
+heimgewebe-.ai-context.yml-sammlung/contracts.ai-context.yml
+  internal:
+    - name: leitstand
+      relationship: provides
+      interface: json_schema | proto
+Copilot AI
+7 hours ago
+The pipe character | is not standard YAML syntax for separating interface values. If multiple interfaces are intended, use a YAML list format:
+
+interface:
+  - json_schema
+  - proto
+or as a single quoted string:
+
+interface: "json_schema | proto"
+Suggested change
+      interface: json_schema | proto
+      interface:
+        - json_schema
+        - proto
+Copilot uses AI. Check for mistakes.
+@alexdermohr	Reply...
+.ai-context.yml
+      interface: ingest_events (knowledge updates)
+    - name: hauski
+      relationship: uses
+      interface: ui_sync | note_links
+Copilot AI
+7 hours ago
+The pipe character | is not standard YAML syntax for separating interface values. If multiple interfaces are intended, use a YAML list format:
+
+interface:
+  - ui_sync
+  - note_links
+or as a single quoted string:
+
+interface: "ui_sync | note_links"
+Suggested change
+      interface: ui_sync | note_links
+      interface:
+        - ui_sync
+        - note_links
+		
+		heimgewebe-.ai-context.yml-sammlung/vault-gewebe.yml
+Outdated
+Comment on lines 12 to 14
+    - name: semantah
+      relationship: provides
+      interface: document_exports | embeddings_source
+Copilot AI
+8 minutes ago
+Dependency mismatch: vault-gewebe declares relationship: provides to semantah with interface document_exports | embeddings_source, and line 41 confirms output to semantah. However, semantah.yml lists metarepo (not vault-gewebe) as its knowledge_exports source. Either semantah should list vault-gewebe as a dependency, or vault-gewebe's dependency declaration needs clarification about which repository actually provides the knowledge exports to semantah.
+
+Suggested change
+    - name: semantah
+      relationship: provides
+      interface: document_exports | embeddings_source
+    - name: metarepo
+      relationship: provides
+      interface: document_exports | embeddings_source
+    # Note: semantah consumes knowledge_exports from metarepo, not directly from vault-gewebe
+Copilot uses AI. Check for mistakes.
+@alexdermohr	Reply...
+ alexdermohr marked this conversation as resolved.
+.ai-context.yml
+Comment on lines +16 to +17
+      relationship: provides
+      interface: audio_events
+Copilot AI
+8 minutes ago
+The relationship direction appears inconsistent. Line 16 states relationship: provides with interface audio_events, but hauski-audio is an event producer that sends events TO leitstand (as indicated by the data flow on line 32 outputting "JSONL events"). This should likely be relationship: uses with an interface like "event_ingest" to reflect that hauski-audio uses leitstand's ingest endpoints.
+
+Suggested change
+      relationship: provides
+      interface: audio_events
+      relationship: uses
+      interface: event_ingest
+Copilot uses AI. Check for mistakes.
+@alexdermohr	Reply...
+heimgewebe-.ai-context.yml-sammlung/mitschreiber.yml
+      relationship: uses
+      interface: jsonl_line_schema
+    - name: leitstand
+      relationship: provides
+Copilot AI
+8 minutes ago
+The relationship direction may be unclear. Line 16 states relationship: provides with interface optional_event_feed, which suggests mitschreiber provides events to leitstand. However, the typical pattern would be to use relationship: uses when mitschreiber consumes leitstand's ingest endpoints to send events. Consider clarifying whether this represents mitschreiber using leitstand's ingest service or providing a feed that leitstand consumes.
+
+Suggested change
+      relationship: provides
+      relationship: uses
+Copilot uses AI. Check for mistakes.
+@alexdermohr	Reply...
+heimgewebe-.ai-context.yml-sammlung/tools.yml
+Comment on lines +12 to +14
+    - name: wgx
+      relationship: provides
+      interface: cli_helpers
+Copilot AI
+8 minutes ago
+Dependency mismatch: tools declares relationship: provides to wgx with interface cli_helpers, but wgx.yml does not list tools as a dependency. If tools provides utilities that wgx uses, wgx should list tools with relationship: uses for consistency across the configuration files.
+
+
+
+heimgewebe-.ai-context.yml-sammlung/hauski.ai-context.yml
+Comment on lines +15 to +17
+    - name: heimlern
+      relationship: uses
+      interface: scores_feedback
+Copilot AI
+27 minutes ago
+Inconsistent dependency relationship: hauski declares it uses scores_feedback from heimlern, but heimlern.ai-context.yml does not list hauski as a dependency with relationship: provides.
+
+For consistency, if hauski uses heimlern, then heimlern should declare:
+
+- name: hauski
+  relationship: provides
+  interface: scores_feedback
+Copilot uses AI. Check for mistakes.
+@alexdermohr	Reply...
+heimgewebe-.ai-context.yml-sammlung/aussensensor.ai-context.yml
+Comment on lines +12 to +14
+    - name: leitstand
+      relationship: uses
+      interface: "HTTP POST /ingest/aussen"
+Copilot AI
+27 minutes ago
+Inconsistent dependency relationship: aussensensor declares it uses HTTP POST /ingest/aussen from leitstand, but leitstand.ai-context.yml does not list aussensensor as a dependency with relationship: provides.
+
+For consistency, if aussensensor uses leitstand, then leitstand should declare:
+
+- name: aussensensor
+  relationship: provides
+  interface: "HTTP POST /ingest/aussen"
+Copilot uses AI. Check for mistakes.
+@alexdermohr	Reply...
+heimgewebe-.ai-context.yml-sammlung/mitschreiber.ai-context.yml
+      relationship: uses
+      interface: jsonl_line_schema
+    - name: leitstand
+      relationship: provides
+Copilot AI
+27 minutes ago
+Inconsistent dependency modeling: mitschreiber models its relationship with leitstand as "provides optional_event_feed", while aussensensor models its similar relationship with leitstand as "uses HTTP POST /ingest/aussen". Both projects send data to leitstand, but use different relationship directions.
+
+For consistency across the collection, consider modeling producer-to-consumer relationships uniformly. If producers "provide" to consumers, then aussensensor should also use "provides". If consumers "use" services, then mitschreiber should use "uses".
+
+Suggested change
+      relationship: provides
+      relationship: uses
+Copilot uses AI. Check for mistakes.
+@alexdermohr	Reply...
+heimgewebe-.ai-context.yml-sammlung/tools.ai-context.yml
+Comment on lines +12 to +14
+    - name: wgx
+      relationship: provides
+      interface: cli_helpers
+Copilot AI
+27 minutes ago
+Inconsistent dependency relationship: tools declares it provides cli_helpers to wgx, but wgx.ai-context.yml does not list tools as a dependency with relationship: uses.
+
+For consistency, if tools provides to wgx, then wgx should declare:
+
+- name: tools
+  relationship: uses
+  interface: cli_helpers
+Copilot uses AI. Check for mistakes.
+@alexdermohr	Reply...
+heimgewebe-.ai-context.yml-sammlung/mitschreiber.ai-context.yml
+Comment on lines +15 to +17
+    - name: leitstand
+      relationship: provides
+      interface: optional_event_feed
+Copilot AI
+27 minutes ago
+Inconsistent dependency relationship: mitschreiber declares it provides optional_event_feed to leitstand, but leitstand.ai-context.yml does not list mitschreiber as a dependency with relationship: uses.
+
+For consistency, if mitschreiber provides to leitstand, then leitstand should declare:
+
+- name: mitschreiber
+  relationship: uses
+  interface: optional_event_feed
+Copilot uses AI. Check for mistakes.
+@alexdermohr	Reply...
+heimgewebe-.ai-context.yml-sammlung/hauski-audio.ai-context.yml
+Comment on lines +15 to +17
+    - name: leitstand
+      relationship: provides
+      interface: audio_events
+Copilot AI
+27 minutes ago
+Inconsistent dependency relationship: hauski-audio declares it provides audio_events to leitstand, but leitstand.ai-context.yml does not list hauski-audio as a dependency with relationship: uses.
+
+For consistency, if hauski-audio provides to leitstand, then leitstand should declare:
+
+- name: hauski-audio
+  relationship: uses
+  interface: audio_events
+Copilot uses AI. Check for mistakes.
+@alexdermohr	Reply...
+heimgewebe-.ai-context.yml-sammlung/vault-gewebe.ai-context.yml
+Comment on lines +12 to +14
+    - name: semantah
+      relationship: provides
+      interface: document_exports | embeddings_source
+Copilot AI
+27 minutes ago
+Inconsistent dependency relationship: vault-gewebe declares it provides document_exports | embeddings_source to semantah, but semantah.ai-context.yml does not list vault-gewebe as a dependency with relationship: uses.
+
+For consistency, if vault-gewebe provides to semantah, then semantah should declare:
+
+- name: vault-gewebe
+  relationship: uses
+  interface: document_exports | embeddings_source
+Copilot uses AI. Check for mistakes.
+@alexdermohr	Reply...
+heimgewebe-.ai-context.yml-sammlung/vault-gewebe.ai-context.yml
+Comment on lines +18 to +20
+    - name: hauski
+      relationship: uses
+      interface: ui_sync | note_links
+Copilot AI
+27 minutes ago
+Inconsistent dependency relationship: vault-gewebe declares it uses ui_sync | note_links from hauski, but hauski.ai-context.yml does not list vault-gewebe as a dependency with relationship: provides.
+
+For consistency, if vault-gewebe uses hauski, then hauski should declare:
+
+- name: vault-gewebe
+  relationship: provides
+  interface: ui_sync | note_links
+Copilot uses AI. Check for mistakes.
+@alexdermohr	Reply...
+heimgewebe-.ai-context.yml-sammlung/vault-gewebe.ai-context.yml
+Comment on lines +15 to +17
+    - name: leitstand
+      relationship: uses
+      interface: ingest_events (knowledge updates)
+Copilot AI
+27 minutes ago
+Inconsistent dependency relationship: vault-gewebe declares it uses ingest_events (knowledge updates) from leitstand, but leitstand.ai-context.yml does not list vault-gewebe as a dependency with relationship: provides.
+
+For consistency, if vault-gewebe uses leitstand, then leitstand should declare:
+
+- name: vault-gewebe
+  relationship: provides
+  interface: ingest_events (knowledge updates)
+Copilot uses AI. Check for mistakes.
+@alexdermohr	Reply...
+heimgewebe-.ai-context.yml-sammlung/hauski.ai-context.yml
+  visibility: internal
+
+dependencies:
+  internal:
+Copilot AI
+27 minutes ago
+Inconsistent dependency relationship: hauski declares it uses search_apis from semantah, but semantah.ai-context.yml does not list hauski as a dependency with relationship: provides.
+
+For consistency, if hauski uses semantah, then semantah should declare:
+
+- name: hauski
+  relationship: provides
+  interface: search_apis
+Suggested change
+  internal:
+  internal:
+    - name: hauski
+      relationship: provides
+      interface: search_apis
+	  
+	  
+	  
+
+absolut — ich hab dir für jedes Repo einen eigenen, sauberen Patch vorbereitet, der die Review-Findings behebt:
+	•	korrekte YAML-Einrückung (Nested Maps & Lists),
+	•	interface als Liste statt a | b,
+	•	klare, einheitliche Modellierung: im Abschnitt dependencies.internal werden ausschließlich Abhängigkeiten des Repos beschrieben → also immer relationship: uses. (Wer etwas „bereitstellt“, taucht nicht als Dependency auf. Das macht die Dateien konsistent und maschinenlesbar; „Provides“ lässt sich später separat modellieren, wenn ihr eine Registry bauen wollt.)
+
+So wendest du’s an: jeweils im Repo-Root ausführen:
+
+git apply --3way <<'PATCH'
+…(Patch für genau dieses Repo)…
+PATCH
+
+
+
+⸻
+
+contracts
+
+diff --git a/.ai-context.yml b/.ai-context.yml
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/.ai-context.yml
+@@ -0,0 +1,77 @@
++ai_context_version: 1.0
++
++project:
++  name: contracts
++  summary: Central contract repo providing JSON/Proto schemas and fixtures.
++  role: schema_contract_provider
++  primary_language: mixed
++  visibility: internal
++
++dependencies:
++  internal: []
++  external:
++    - name: ajv-cli
++      version: "5.x"
++    - name: buf
++      note: for protobuf (optional)
++
++architecture:
++  entrypoints:
++    - json/
++    - proto/
++  key_paths:
++    - path: json/
++      purpose: JSON Schemas
++    - path: proto/
++      purpose: Protobuf IDL
++    - path: fixtures/
++      purpose: Golden samples for validation
++  data_flow:
++    input: change proposals via PR
++    processing: guard checks + AJV validation
++    output: pinned, versioned contracts for consumers
++
++conventions:
++  branching: "main, feature/*, hotfix/*"
++  commit_prefix: "contracts"
++  ci_platform: github_actions
++
++documentation:
++  adr: docs/adr/
++  runbook: docs/runbook.md
++  api_reference:
++    - json/*
++    - proto/*
++
++ai_guidance:
++  do:
++    - never break schemas; use additive changes and/or new versions
++    - validate JSONL fixtures with AJV; keep examples minimal but complete
++    - keep file moves as renames (git mv) to preserve history
++  dont:
++    - change formats without version bump
+
+
+⸻
+
+leitstand
+
+diff --git a/.ai-context.yml b/.ai-context.yml
+new file mode 100644
+index 0000000..2222222
+--- /dev/null
++++ b/.ai-context.yml
+@@ -0,0 +1,78 @@
++ai_context_version: 1.0
++
++project:
++  name: leitstand
++  summary: Event ingest and processing hub.
++  role: central_event_store
++  primary_language: rust
++  visibility: internal
++
++dependencies:
++  internal:
++    - name: contracts
++      relationship: uses
++      interface:
++        - json_schema
++        - proto
++  external:
++    - name: tokio
++      version: "1.x"
++    - name: serde
++    - name: serde_json
++    - name: tracing
++
++architecture:
++  entrypoints:
++    - src/main.rs
++  key_paths:
++    - path: src/ingest/
++      purpose: HTTP ingest + validation
++    - path: src/pipeline/
++      purpose: event processing
++  data_flow:
++    input: HTTP POST /ingest/*
++    processing: JSON Schema validation + pipelines
++    output: storage + metrics
++
++conventions:
++  branching: "main, feature/*, hotfix/*"
++  commit_prefix: "leitstand"
++  ci_platform: github_actions
++
++documentation:
++  adr: docs/adr/
++  runbook: docs/runbook.md
++
++ai_guidance:
++  do:
++    - pull validation rules from contracts and reject non-conforming events
++    - prefer structured logs via tracing; avoid println! in hot paths
++  dont:
++    - accept payloads without schema validation
+
+
+⸻
+
+aussensensor
+
+diff --git a/.ai-context.yml b/.ai-context.yml
+new file mode 100644
+index 0000000..3333333
+--- /dev/null
++++ b/.ai-context.yml
+@@ -0,0 +1,66 @@
++ai_context_version: 1.0
++
++project:
++  name: aussensensor
++  summary: Scripted data collection pushing events to leitstand.
++  role: sensor_event_producer
++  primary_language: bash
++  visibility: internal
++
++dependencies:
++  internal:
++    - name: leitstand
++      relationship: uses
++      interface:
++        - http_ingest_aussen
++    - name: contracts
++      relationship: uses
++      interface:
++        - json_schema_selfcheck
++  external:
++    - name: curl
++    - name: jq
++
++architecture:
++  entrypoints:
++    - scripts/*.sh
++  key_paths:
++    - path: lib/validation.sh
++      purpose: local JSON/JSONL validation before send
++  data_flow:
++    input: polling / external sensors
++    processing: map to contract shape
++    output: POST to leitstand ingest
++
++conventions:
++  branching: "main, feature/*"
++  commit_prefix: "aussensensor"
++  ci_platform: github_actions
++
++documentation:
++  runbook: docs/runbook.md
++
++ai_guidance:
++  do:
++    - validate JSON before sending to avoid noisy ingest failures
++    - implement retries with exponential backoff
++  dont:
++    - send partial or multiline JSONL entries
+
+
+⸻
+
+heimlern
+
+diff --git a/.ai-context.yml b/.ai-context.yml
+new file mode 100644
+index 0000000..4444444
+--- /dev/null
++++ b/.ai-context.yml
+@@ -0,0 +1,68 @@
++ai_context_version: 1.0
++
++project:
++  name: heimlern
++  summary: Learning/feedback loops over events, scoring & policies.
++  role: analytics_and_policy_feedback
++  primary_language: python
++  visibility: internal
++
++dependencies:
++  internal:
++    - name: leitstand
++      relationship: uses
++      interface:
++        - event_feed
++        - metrics
++    - name: contracts
++      relationship: uses
++      interface:
++        - json_schema
++  external:
++    - name: pydantic
++    - name: pandas
++
++architecture:
++  entrypoints:
++    - src/main.py
++  key_paths:
++    - path: src/scoring/
++      purpose: quality scoring & policy checks
++  data_flow:
++    input: events/metrics from leitstand
++    processing: scoring + feedback
++    output: reports, signals
++
++conventions:
++  branching: "main, feature/*"
++  commit_prefix: "heimlern"
++  ci_platform: github_actions
++
++documentation:
++  adr: docs/adr/
++
++ai_guidance:
++  do:
++    - log model versions and seeds for reproducibility
++  dont:
++    - run experiments without capturing metadata
+
+
+⸻
+
+wgx
+
+diff --git a/.ai-context.yml b/.ai-context.yml
+new file mode 100644
+index 0000000..5555555
+--- /dev/null
++++ b/.ai-context.yml
+@@ -0,0 +1,66 @@
++ai_context_version: 1.0
++
++project:
++  name: wgx
++  summary: CLI orchestrator for dev/ops tasks and multi-agent flows.
++  role: tooling_orchestration
++  primary_language: bash
++  visibility: internal
++
++dependencies:
++  internal:
++    - name: contracts
++      relationship: uses
++      interface:
++        - validation_hooks
++    - name: leitstand
++      relationship: uses
++      interface:
++        - ci_e2e_orchestration
++  external:
++    - name: jq
++    - name: curl
++
++architecture:
++  entrypoints:
++    - wgx/cmd/*
++  key_paths:
++    - path: modules/
++      purpose: subcommand implementations
++  data_flow:
++    input: developer commands
++    processing: fan-out to repos
++    output: reports/metrics
++
++conventions:
++  branching: "main, feature/*"
++  commit_prefix: "wgx"
++  ci_platform: github_actions
++
++documentation:
++  runbook: docs/runbook.md
++
++ai_guidance:
++  do:
++    - compose subcommands; avoid global mutable state
++  dont:
++    - hardcode repo-specific paths in core modules
+
+
+⸻
+
+tools
+
+diff --git a/.ai-context.yml b/.ai-context.yml
+new file mode 100644
+index 0000000..6666666
+--- /dev/null
++++ b/.ai-context.yml
+@@ -0,0 +1,62 @@
++ai_context_version: 1.0
++
++project:
++  name: tools
++  summary: Pinned tool installers & shared scripts (e.g., yq/just pin).
++  role: shared_dev_tooling
++  primary_language: bash
++  visibility: internal
++
++dependencies:
++  internal: []
++  external:
++    - name: curl
++    - name: bash
++      version: ">=4"
++
++architecture:
++  entrypoints:
++    - scripts/tools/*-pin.sh
++  key_paths:
++    - path: scripts/tools/yq-pin.sh
++      purpose: Install/pin yq v4
++  data_flow:
++    input: CI & local setup
++    processing: download/pin utilities
++    output: tools/bin/*
++
++conventions:
++  branching: "main, feature/*"
++  commit_prefix: "tools"
++  ci_platform: github_actions
++
++documentation:
++  runbook: docs/runbook.md
++
++ai_guidance:
++  do:
++    - fail fast on missing commands; provide actionable hints
++  dont:
++    - silently skip version mismatches
+
+
+⸻
+
+mitschreiber
+
+diff --git a/.ai-context.yml b/.ai-context.yml
+new file mode 100644
+index 0000000..7777777
+--- /dev/null
++++ b/.ai-context.yml
+@@ -0,0 +1,64 @@
++ai_context_version: 1.0
++
++project:
++  name: mitschreiber
++  summary: Scripted content capture/append utilities (JSONL).
++  role: producer_structured_notes
++  primary_language: bash
++  visibility: internal
++
++dependencies:
++  internal:
++    - name: contracts
++      relationship: uses
++      interface:
++        - jsonl_line_schema
++    - name: leitstand
++      relationship: uses
++      interface:
++        - http_ingest_optional
++  external:
++    - name: jq
++
++architecture:
++  entrypoints:
++    - scripts/*.sh
++  key_paths:
++    - path: lib/locking.sh
++      purpose: atomic append
++  data_flow:
++    input: user/agent inputs
++    processing: normalize → validate
++    output: append *.jsonl
++
++conventions:
++  branching: "main, feature/*"
++  commit_prefix: "mitschreiber"
++  ci_platform: github_actions
++
++documentation:
++  runbook: docs/runbook.md
++
++ai_guidance:
++  do:
++    - ensure each JSONL line is standalone valid JSON
++  dont:
++    - write partial lines or multi-line JSON
+
+
+⸻
+
+sichter
+
+diff --git a/.ai-context.yml b/.ai-context.yml
+new file mode 100644
+index 0000000..8888888
+--- /dev/null
++++ b/.ai-context.yml
+@@ -0,0 +1,64 @@
++ai_context_version: 1.0
++
++project:
++  name: sichter
++  summary: Review/QA gate for content, policies, and outputs.
++  role: gatekeeper_quality_checks
++  primary_language: mixed
++  visibility: internal
++
++dependencies:
++  internal:
++    - name: contracts
++      relationship: uses
++      interface:
++        - policies
++        - validation_schemas
++    - name: heimlern
++      relationship: uses
++      interface:
++        - quality_scores
++  external:
++    - name: ajv-cli
++
++architecture:
++  entrypoints:
++    - cli/*
++  key_paths:
++    - path: checks/
++      purpose: rulesets & validators
++  data_flow:
++    input: artifacts from repos
++    processing: policy + schema checks
++    output: approve/block
++
++conventions:
++  branching: "main, feature/*"
++  commit_prefix: "sichter"
++  ci_platform: github_actions
++
++documentation:
++  runbook: docs/runbook.md
++
++ai_guidance:
++  do:
++    - prefer warnings unless contracts are violated
++  dont:
++    - block on stylistic concerns without policy basis
+
+
+⸻
+
+semantah
+
+diff --git a/.ai-context.yml b/.ai-context.yml
+new file mode 100644
+index 0000000..9999999
+--- /dev/null
++++ b/.ai-context.yml
+@@ -0,0 +1,74 @@
++ai_context_version: 1.0
++
++project:
++  name: semantah
++  summary: Semantic ingest/index & retrieval services.
++  role: knowledge_index_retrieval
++  primary_language: python
++  visibility: internal
++
++dependencies:
++  internal:
++    - name: metarepo
++      relationship: uses
++      interface:
++        - knowledge_exports
++    - name: contracts
++      relationship: uses
++      interface:
++        - knowledge_graph_schemas
++    - name: vault-gewebe
++      relationship: uses
++      interface:
++        - document_exports
++        - embeddings_source
++  external:
++    - name: fastapi
++    - name: uvicorn
++    - name: faiss
++
++architecture:
++  entrypoints:
++    - src/main.py
++  key_paths:
++    - path: src/ingest/
++      purpose: document/code ingest
++    - path: src/search/
++      purpose: semantic search APIs
++  data_flow:
++    input: docs/code exports
++    processing: chunk → embed → index
++    output: search APIs
++
++conventions:
++  branching: "main, feature/*"
++  commit_prefix: "semantah"
++  ci_platform: github_actions
++
++documentation:
++  adr: docs/adr/
++  runbook: docs/runbook.md
++
++ai_guidance:
++  do:
++    - store embeddings deterministically for reproducible tests
++  dont:
++    - mix model versions within the same index without tagging
+
+
+⸻
+
+hauski
+
+diff --git a/.ai-context.yml b/.ai-context.yml
+new file mode 100644
+index 0000000..aaaaaaa
+--- /dev/null
++++ b/.ai-context.yml
+@@ -0,0 +1,70 @@
++ai_context_version: 1.0
++
++project:
++  name: hauski
++  summary: User-facing assistant UI and orchestration hooks.
++  role: frontend_multi_agent
++  primary_language: typescript
++  visibility: internal
++
++dependencies:
++  internal:
++    - name: semantah
++      relationship: uses
++      interface:
++        - search_apis
++    - name: heimlern
++      relationship: uses
++      interface:
++        - scores_feedback
++  external:
++    - name: react
++    - name: vite
++
++architecture:
++  entrypoints:
++    - apps/web/src/main.tsx
++  key_paths:
++    - path: apps/web/src/agents/
++      purpose: agent wiring
++  data_flow:
++    input: user queries
++    processing: route → agents → backends
++    output: answers + traces
++
++conventions:
++  branching: "main, feature/*"
++  commit_prefix: "hauski"
++  ci_platform: github_actions
++
++documentation:
++  runbook: docs/runbook.md
++
++ai_guidance:
++  do:
++    - keep agent I/O typed; prefer generated types from contracts
++  dont:
++    - call backends without tracing context
+
+
+⸻
+
+hauski-audio
+
+diff --git a/.ai-context.yml b/.ai-context.yml
+new file mode 100644
+index 0000000..bbbbbbb
+--- /dev/null
++++ b/.ai-context.yml
+@@ -0,0 +1,70 @@
++ai_context_version: 1.0
++
++project:
++  name: hauski-audio
++  summary: Audio capture, VAD/ASR pipeline, and event emission.
++  role: audio_to_text_events
++  primary_language: mixed
++  visibility: internal
++
++dependencies:
++  internal:
++    - name: contracts
++      relationship: uses
++      interface:
++        - audio_events_schema
++    - name: leitstand
++      relationship: uses
++      interface:
++        - event_ingest
++  external:
++    - name: ffmpeg
++    - name: whisper.cpp
++      note: optional
++
++architecture:
++  entrypoints:
++    - cli/*
++  key_paths:
++    - path: pipeline/
++      purpose: VAD + ASR + packaging
++  data_flow:
++    input: mic/streams
++    processing: segment → transcribe → package
++    output: JSONL events
++
++conventions:
++  branching: "main, feature/*"
++  commit_prefix: "hauski-audio"
++  ci_platform: github_actions
++
++documentation:
++  runbook: docs/runbook.md
++
++ai_guidance:
++  do:
++    - emit small, well-formed JSONL chunks
++  dont:
++    - buffer giant payloads before send
+
+
+⸻
+
+metarepo
+
+diff --git a/.ai-context.yml b/.ai-context.yml
+new file mode 100644
+index 0000000..ccccccc
+--- /dev/null
++++ b/.ai-context.yml
+@@ -0,0 +1,62 @@
++ai_context_version: 1.0
++
++project:
++  name: metarepo
++  summary: Docs/templates/workflows for all repos.
++  role: standards_and_reusable_automation
++  primary_language: mixed
++  visibility: internal
++
++dependencies:
++  internal:
++    - name: contracts
++      relationship: uses
++      interface:
++        - validation_workflows
++        - fixtures
++    - name: wgx
++      relationship: uses
++      interface:
++        - fleet_rollout
++  external:
++    - name: github_actions
++
++architecture:
++  entrypoints:
++    - docs/*
++    - .github/workflows/*
++  key_paths:
++    - path: templates/
++      purpose: repo templates
++  data_flow:
++    input: proposals
++    processing: codify → templates
++    output: standards
++
++conventions:
++  branching: "main, feature/*"
++  commit_prefix: "metarepo"
++  ci_platform: github_actions
++
++documentation:
++  adr: docs/adr/
++  runbook: docs/runbook.md
++
++ai_guidance:
++  do:
++    - prefer workflow_call for reuse and pin external actions
++  dont:
++    - duplicate shared logic across repos
+
+
+⸻
+
+
+
+vault-gewebe
+
+diff --git a/.ai-context.yml b/.ai-context.yml
+new file mode 100644
+index 0000000..eeeeeee
+--- /dev/null
++++ b/.ai-context.yml
+@@ -0,0 +1,74 @@
++ai_context_version: 1.0
++
++project:
++  name: vault-gewebe
++  summary: Unified personal and shared Obsidian vault for structured knowledge and notes.
++  role: knowledge_vault
++  primary_language: markdown
++  visibility: internal
++
++dependencies:
++  internal:
++    - name: semantah
++      relationship: uses
++      interface:
++        - semantic_linking
++        - search_integration
++    - name: leitstand
++      relationship: uses
++      interface:
++        - ingest_events
++    - name: contracts
++      relationship: uses
++      interface:
++        - knowledge_graph_schemas
++  external:
++    - name: obsidian
++      note: local editor platform
++    - name: pandoc
++      note: exports to other formats
++
++architecture:
++  entrypoints:
++    - vault/
++    - vault/.obsidian/
++  key_paths:
++    - path: vault/
++      purpose: main knowledge base (markdown + canvas files)
++    - path: vault/templates/
++      purpose: content and project templates
++    - path: vault/meta/
++      purpose: metadata, indices, linkmaps
++  data_flow:
++    input: notes, interviews, transcripts, project docs
++    processing: tagging → linking → export
++    output: semantic index and sync signals
++
++conventions:
++  branching: "main, feature/*"
++  commit_prefix: "vault-gewebe"
++  ci_platform: github_actions
++
++documentation:
++  adr: docs/adr/
++  runbook: docs/runbook.md
++
++ai_guidance:
++  do:
++    - preserve structure of vault folders; filenames human-readable
++    - prefer markdown + frontmatter for metadata
++    - validate frontmatter fields against contracts where applicable
++  dont:
++    - auto-modify Obsidian config files
+
+
+⸻
+
+Optional: kleine Guard-Verbesserung für euren CI-Check
+
+Falls du auch die eine Kleinigkeit im Guard aufnehmen willst (klarere Fehlermeldung), im jeweiligen Repo:
+
+diff --git a/.github/workflows/ai-context-guard.yml b/.github/workflows/ai-context-guard.yml
+index abcdef0..abcdef1 100644
+--- a/.github/workflows/ai-context-guard.yml
++++ b/.github/workflows/ai-context-guard.yml
+@@ -10,7 +10,10 @@ jobs:
+       - uses: actions/checkout@v4
+       - name: Ensure AI context exists and is non-empty
+         run: |
+-          test -s .ai-context.yml || { echo "::error::.ai-context.yml missing or empty"; exit 1; }
++          if [ ! -s .ai-context.yml ]; then
++            echo "::error file=.ai-context.yml::.ai-context.yml is missing or empty"
++            exit 1
++          fi
+
+
+⸻
+
