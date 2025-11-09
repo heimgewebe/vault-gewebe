@@ -1,0 +1,36 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://schemas.heimgewebe.org/dev.tooling.schema.json",
+ "title": "Development Tooling Contract",
+ "type": "object",
+ "additionalProperties": false,
+ "properties": {
+ "language": {
+ "type": "string",
+ "enum": ["rust", "python", "typescript", "bash"]
+ },
+ "lsp_config": {
+ "type": "object",
+ "description": "IDE/LSP Konfiguration (z. B. rust-analyzer, pylsp, tsserver).",
+ "additionalProperties": true
+ },
+ "code_generation": {
+ "type": "object",
+ "additionalProperties": false,
+ "properties": {
+ "templates": { "type": "array", "items": { "type": "string" }, "default": [] },
+ "generators": { "type": "array", "items": { "type": "string" }, "default": [] },
+ "validation_rules": { "type": "array", "items": { "type": "string" }, "default": [] }
+ }
+ },
+ "test_framework": {
+ "type": "object",
+ "additionalProperties": false,
+ "properties": {
+ "kind": { "type": "string", "enum": ["cargo", "pytest", "node", "bash"] },
+ "watch": { "type": "boolean", "default": false }
+ }
+ }
+ },
+ "required": ["language"]
+}

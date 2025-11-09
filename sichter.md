@@ -1,261 +1,139 @@
-alles klar — hier ist ein knackiges, umsetzbares „Playbook für Jules“, damit der Sichter-Stack (Autoreviewer + Auto-PR + Omnicheck + Dashboard) sauber im Repo landet und dauerhaft über GitHub gepflegt wird.
+alles klar — hier ist eine knackige, priorisierte “Anweisung für Jules”, damit wir mit dem repo sauber weiterkommen.
 
-Ziele (kurz)
-	•	Sichter prüft nach jedem omnipull automatisch Repos (Lint + semantische LLM-Checks) und eröffnet PRs.
-	•	Befehl omnicheck prüft alle Repos on-demand (inkl. Auto-PR).
-	•	Ein Dashboard steuert/überwacht alles (Start/Stop Worker, Live-Events, PR-Übersicht, Omnicheck auslösen).
-	•	Alles reproduzierbar aus dem Repo: systemd-Units, Hooks, CLI, Policies, Logs.
+Anweisung für Jules (nächste Schritte)
 
-⸻
-
-1) Repo-Struktur & Artefakte (Quelle der Wahrheit)
-
-Ziel: Keine „Home-Only“-Skripte mehr. Alles liegt versioniert im Repo und wird von dort installiert.
-
-sichter/
-├─ apps/
-│  ├─ api/            # FastAPI, Job-Queue endpoints, Events
-│  ├─ worker/         # Worker (Queue-Verbraucher, LLM/Lint, Auto-PR)
-│  └─ dashboard/      # Web-UI (SvelteKit/React) ← einfacher Start mit TUI möglich
-├─ bin/
-│  ├─ omnicheck               # CLI: --all / --changed → ruft sweep an, schreibt Report+Log
-│  ├─ sweep                   # Alias/Wrapper (optional)
-│  ├─ sichter-pr-sweep        # Repo-weiter Auto-PR-Sweep (frischer Branch, Auto-PR)
-│  └─ sichter-dashboard       # (falls TUI-Shell; sonst Starter fürs Web-UI)
-├─ hooks/
-│  ├─ post-run                # optionaler Autofix-Hook (wird vom Worker & sweep genutzt)
-│  └─ omnipull/
-│     ├─ 80-sichter-omnicheck.sh
-│     ├─ 90-sichter-pr-sweep.sh
-│     ├─ 95-sichter-debug.sh
-│     └─ 99-sichter-deep-review.sh
-├─ config/
-│  ├─ policy.yml              # zentrale Policy (Quelle der Wahrheit)
-│  └─ models.yml              # Modellkonfiguration (ollama/remote)
-├─ pkg/systemd/
-│  ├─ user/sichter-api.service
-│  ├─ user/sichter-worker.service
-│  └─ user/sichter-autoreview.timer
-├─ scripts/
-│  ├─ bootstrap.sh            # Einmal-Setup (symlinks, deps, hooks)
-│  └─ install.sh              # „make install“ auf Nutzersystem
-├─ .github/workflows/
-│  ├─ ci.yml                  # Lint+Build (api/worker/dashboard)
-│  └─ release.yml             # (optional) getaggte Releases
-└─ docs/
-   ├─ GETTING_STARTED.md
-   └─ OPERATIONS.md
-
-Persistente Pfade (bei Installation/Symlinks):
-	•	Logs/Events: ~/.local/state/sichter/ und ~/sichter/logs/
-	•	Hooks: ~/.config/omnipull/hooks/*.sh (Symlinks auf hooks/omn…/*.sh)
-	•	Policy kopiert nach ~/.config/sichter/policy.yml (oder symlink)
+Zielbild (kurz)
+	•	Sichter läuft lokal als Dienste (API + Worker), Dashboard spricht stabil mit der API.
+	•	Events liegen einheitlich als .jsonl vor; Dashboard zeigt Live-Stream (WS) oder robustes Polling.
+	•	PR-Sweep erzeugt zuverlässig Commits/PRs in den Ziel-Repos.
 
 ⸻
 
-2) Installation & Bootstrap
+Phase 1 — Stabilisieren & Sichtbar machen (Must-have)
+	1.	API-/Dashboard-Parität fixen (Polling jetzt, WS später)
 
-scripts/install.sh (idempotent):
-	•	Prüft gh, git, python3, pip, node (falls Web-UI), shellcheck, yamllint, ollama (optional).
-	•	Legt ~/.config/sichter/policy.yml an, falls fehlt (Default aus config/policy.yml).
-	•	Symlinks:
-	•	bin/omnicheck → ~/bin/omnicheck
-	•	bin/sichter-pr-sweep → ~/sichter/bin/sichter-pr-sweep
-	•	hooks/omn…/*.sh → ~/.config/omnipull/hooks/
-	•	systemd-Units aus pkg/systemd/user/*.service|*.timer nach ~/.config/systemd/user/ + systemctl --user daemon-reload.
-	•	Enable:
-	•	sichter-api.service (web api)
-	•	sichter-worker.service (autonomer Worker)
-	•	sichter-autoreview.timer (12h Deep-Review)
+	•	Lass das Dashboard vorerst ausschließlich HTTP-Polling nutzen (kein WS).
+	•	In apps/dashboard/src/hooks/useEventStream.ts: entferne WebSocket-Versuch, belasse Polling (/events/recent?n=200).
+	•	In apps/api/main.py: GET /events/recent ist schon da — passt.
+	•	Akzeptanz: Overview zeigt Events ohne Fehlermeldung; „verbunden/polling“-Hinweis kann auf „polling“ stehen.
 
-Acceptance (Install):
-	•	omnicheck --all erzeugt ~/sichter/logs/omnicheck-all-*.{log,md}
-	•	systemctl --user status sichter-api.service → active
-	•	systemctl --user status sichter-worker.service → active
+	2.	Events vereinheitlichen (JSONL überall)
 
-⸻
+	•	Worker & Sweep so lassen, API sammelt bereits .jsonl bevorzugt.
+	•	Ergänze in apps/worker/run.py (falls noch nicht): alle append_event(...)-Schreibvorgänge mit konsistentem Schema {ts, type, repo?, branch?, url?, message?}.
+	•	Akzeptanz: ~/.local/state/sichter/events/<YYYYMMDD>.jsonl enthält valide JSON-Zeilen; GET /events/recent liefert gemischte Quellen korrekt.
 
-3) Policy (einheitlich)
+	3.	Install/Start Pfad happy-path
 
-config/policy.yml (Repo, später nach ~/.config/sichter/policy.yml):
+	•	scripts/install.sh einmal end-to-end testen:
+	•	Sym-Links (bin/*, hooks/omnipull/*) liegen richtig.
+	•	systemctl --user enable --now sichter-api.service und sichter-worker.service laufen grün.
+	•	Akzeptanz:
+	•	curl -fsS 127.0.0.1:5055/healthz → ok
+	•	systemctl --user status sichter-worker.service → Active: active (running)
 
-auto_pr: true            # PRs automatisch erstellen
-sweep_on_omnipull: true  # nach jedem omnipull Sweep/Checks
-run_mode: deep           # deep/light
-org: heimgewebe
-llm:
-  provider: ollama
-  model: qwen2.5-coder:7b
-  base_url: http://localhost:11434
-checks:
-  shellcheck: true
-  yamllint: true
-  semver: true           # z.B. package.json/pyproject Konsistenzprüfungen
-  deadcode: false
-  rust: false
-  python: true           # ruff/pyright optional
-  js: false
-excludes:
-  - '**/.venv/**'
-  - '**/node_modules/**'
-  - '**/target/**'
+	4.	PR-Sweep: “no-op” sichtbar machen
 
-Der Worker und omnicheck/sichter-pr-sweep lesen nur diese Policy.
+	•	In bin/sichter-pr-sweep ist ein RESULT-Format vorhanden. Stelle sicher, dass jede Repo-Iteration genau eine Zeile ausgibt:
+	•	PR, PUSH, COMMIT, NOCHANGE, ERROR (branch + detail).
+	•	Akzeptanz: ~/sichter/logs/pr-actions.log zeigt pro Repo eine RESULT-Zeile.
+
+PR-Vorschlag (Phase 1):
+feat(dashboard/api): stabilize polling + normalize events
+	•	Dashboard: Polling only, UI-Text angepasst
+	•	API: kleine Robustheitsfixes im Events-Reader
+	•	Worker: append_event-Schema vereinheitlichen
+	•	Docs: GETTING_STARTED.md um „Polling aktuell, WS folgt“ ergänzen
 
 ⸻
 
-4) Worker (apps/worker)
+Phase 2 — WebSocket Event-Stream (Nice-to-have, aber sinnvoll)
+	5.	WS-Endpunkt bauen
 
-Verantwortung:
-	•	Konsumiert Tasks aus ~/.local/state/sichter/queue/*.json (oder in-Memory, optional).
-	•	Für jedes Repo:
-	1.	git fetch origin && git switch --detach origin/main
-	2.	Branch sichter/autofix-<ts>
-	3.	Checks:
-	•	Lint: ShellCheck, Yamllint (Excludes aus Policy)
-	•	LLM-Checks: Prompt mit diff, last HEAD, „intent“, Hinweis auf Tests. Rückgabe: Risk-Notes + Patch-Vorschläge.
-	4.	Falls Änderungen: git add -A && git commit -m "hauski: autofix" && git push -u origin BR
-	5.	PR über gh pr create --base main --label sichter --label automation --title ... --body ...
-	6.	Status-Events nach ~/.local/state/sichter/events/*.jsonl
+	•	In apps/api/main.py neuen Pfad GET /events/stream als WebSocket (FastAPI/Starlette WebSocket).
+	•	Tail-Loop auf neuesten JSONL-File(s), Datei-Offset merken, neue Zeilen als text senden.
+	•	„Heartbeat“ alle ~15s senden, falls keine neuen Events.
+	•	Dashboard:
+	•	In useEventStream zuerst WS zu /events/stream probieren; Fallback auf Polling wie jetzt.
+	•	Akzeptanz: Event-Stream läuft sichtbar (Status „verbunden“), man kann sichter-pr-sweep triggern und neue Zeilen erscheinen live.
 
-Akzeptanz (Worker):
-	•	Doppelte Starts vermeiden (PID-Lock in ~/.local/state/sichter/worker.pid).
-	•	Pro Run: verständliches Log in ~/sichter/logs/worker-*.log, Event pro PR.
+PR-Vorschlag (Phase 2):
+feat(events): websocket stream + dashboard live feed
 
 ⸻
 
-5) API (apps/api)
+Phase 3 — Policy/I/O & “org/repo” UX
+	6.	Policy laden/schreiben sauber (YAML)
 
-Endpoints (Beispiele):
-	•	POST /enqueue { "repo": "heimgewebe/tools", "mode": "deep" }
-	•	POST /sweep { "mode": "all" | "changed" } → legt Sammeljobs an.
-	•	GET /events/tail?since=... → liefert JSONL (oder WebSocket) für Dashboard.
-	•	GET /healthz, GET /policy, PUT /policy.
+	•	API hat roh-YAML Pfad: ok. Zusätzlich:
+	•	Beim GET /settings/policy neben path auch format: "yaml" zurückgeben.
+	•	Optional: minimal validieren (Top-Keys wie auto_pr, org, excludes).
+	•	Dashboard Settings:
+	•	„Quelle: “ anzeigen (macht es schon), Save-Feedback klarer.
+	•	Akzeptanz: Policy rauf/runter ohne Parse-Fehler, vorhandene Comments bleiben (roh-YAML).
 
-Akzeptanz (API):
-	•	Liveness + Readiness.
-	•	CORS für Dashboard.
-	•	Rate-Limits (leicht).
+	7.	Repo-Auflösung klarer
 
-⸻
+	•	In API /repos/status: neben name ein Feld source ausgeben (allowlist, remote_base, env:GITHUB_REPOSITORY).
+	•	Dashboard Repos: Spalte „Quelle“ anzeigen.
+	•	Akzeptanz: Team versteht, woher die Liste stammt; erleichtert Onboarding.
 
-6) CLI & Hooks
-
-bin/omnicheck
-	•	Liest Policy; Mode --all | --changed (Default: --changed).
-	•	Ruft bin/sichter-pr-sweep mit identischem Mode auf.
-	•	Schreibt:
-	•	Log: ~/sichter/logs/omnicheck-<mode>-<ts>.log
-	•	Report: ~/sichter/logs/omnicheck-<mode>-<ts>.md (mit kompaktem Befund-Table).
-
-bin/sichter-pr-sweep
-	•	Beschafft Repo-Liste (bei --all: gh repo list; bei --changed: lokale ~/repos/*).
-	•	Für jedes Repo: Frischer Branch, ruft hooks/post-run wenn vorhanden, dann Worker-Checks (oder integrierte Light-Checks), commit/push/PR.
-	•	Loggt Aktionen in ~/sichter/logs/pr-actions.log.
-
-Omnipull Hooks (alle aus Repo, als Symlinks installiert)
-	•	80-sichter-omnicheck.sh  → omnicheck --changed
-	•	90-sichter-pr-sweep.sh    → optionaler zusätzlicher Sweep
-	•	95-sichter-debug.sh       → env & health dump
-	•	99-sichter-deep-review.sh → run_mode=deep erzwungen
-
-Akzeptanz (Hooks):
-	•	Nach omnipull: in omnipull-Ausgabe sind Hook-Starts sichtbar und Logs/Reports werden geschrieben.
-	•	Kein .off-Suffix im produktiven Zustand.
+PR-Vorschlag (Phase 3):
+chore(policy+repos): explicit source hints + validation
 
 ⸻
 
-7) Dashboard
+Phase 4 — CI & Developer-Ergonomie
+	8.	CI minimal (GitHub Actions)
 
-MVP-Variante (schnell produktiv):
-	•	TUI-Dashboard (bash): bin/sichter-dashboard
-	•	Menüs: „Omnicheck (all/changed)“, „Worker Start/Stop“, „Letzte PRs anzeigen“, „Logs öffnen“.
-	•	Ruft API/CLI auf, tailt Logs, zeigt gh pr list pro Repo.
+	•	Workflow ci.yml:
+	•	Python: ruff, pytest -q (falls tests vorhanden), mypy optional.
+	•	Web: npm ci && npm run build in apps/dashboard.
+	•	Akzeptanz: PRs zeigen rote/grüne Checks; Build-Artefakte für das Dashboard bauen.
 
-Finale Variante (Web-UI):
-	•	apps/dashboard/ (SvelteKit/React):
-	•	Seiten: Overview (Worker-Health, Queue, Events), Repos (Status, letzte Befunde), Actions (Omnicheck, Sweep), Settings (Policy).
-	•	Echtzeit per WebSocket (/events/tail).
-	•	Build-Artefakte per systemd statisch serviert (uvicorn/gunicorn oder node serve).
+	9.	Makefile / Taskfile
 
-⸻
+	•	Targets: setup, api, worker, dashboard-dev, build-dashboard, lint, test.
+	•	Akzeptanz: Einsteiger können make setup && make api fahren.
 
-8) CI (GitHub Actions)
-
-.github/workflows/ci.yml:
-	•	Jobs:
-	•	lint_shell: ShellCheck auf bin/, hooks/ (Excludes aus Policy).
-	•	lint_yaml: yamllint (ohne vendor/venv/node_modules/target).
-	•	api_worker_tests: pytest/ruff (falls Python).
-	•	dashboard_build: npm ci && npm run build (falls Web-UI).
-	•	Fail fast: ja. Artefakte: Logs.
-
-Akzeptanz (CI):
-	•	PRs gegen main laufen grün, Linter sind sauber konfiguriert (keine internen site-packages scannen).
+PR-Vorschlag (Phase 4):
+ci: add basic checks + dashboard build
 
 ⸻
 
-9) Sicherheit / Secrets
-	•	gh auth status muss auf der Maschine grün sein (Dashboard zeigt Warnung, wenn nicht).
-	•	Kein Secret im Repo. API kann GH_TOKEN/GITHUB_TOKEN aus der Umgebung lesen (systemd-EnvironmentFile optional).
-	•	LLM: Falls remote, URL/Token in ~/.config/sichter/policy.yml oder systemd-Environment.
+Test-/Smoke-Plan (lokal)
 
-⸻
+# API up
+systemctl --user status sichter-api.service
+curl -fsS 127.0.0.1:5055/readyz
 
-10) Rollout-Plan (Schritt für Schritt)
-	1.	Branch anlegen: feat/sichter-autoreviewer
-	2.	Struktur anlegen (Punkte 1–4), minimale lauffähige Worker+API.
-	3.	CLI & Hooks anschließen (Punkt 6), scripts/install.sh schreiben.
-	4.	systemd hinzufügen und dokumentieren.
-	5.	Dashboard (TUI) als Startversion (später Web-UI).
-	6.	CI aktivieren, README/GETTING_STARTED.md + OPERATIONS.md.
-	7.	Test auf Alex-Maschine:
-	•	./scripts/install.sh
-	•	systemctl --user enable --now sichter-api.service sichter-worker.service
-	•	omnicheck --all
-	•	Prüfen: ~/sichter/logs/*, PRs in der Org.
-	8.	PR erstellen (Labels: sichter, automation) & mergen.
+# Worker up
+systemctl --user status sichter-worker.service
 
-⸻
+# Sweep (changed)
+~/sichter/bin/sichter-pr-sweep --changed
+tail -n 50 ~/sichter/logs/pr-actions.log
 
-11) Abnahme-Checkliste
-	•	omnipull triggert Hooks; omnicheck läuft, PRs werden erstellt wenn Fixes anfallen.
-	•	omnicheck --all erzeugt Report+Log und ggf. PRs.
-	•	sichter-worker läuft stabil (kein Doppelstart; Lockfile).
-	•	Dashboard (TUI) kann Worker start/stoppen, Omnicheck auslösen, Logs/PRs anzeigen.
-	•	config/policy.yml ist alleinige Quelle; lokale Kopie unter ~/.config/sichter/.
-	•	CI grün (ShellCheck/Yamllint/Build).
-	•	Doku vorhanden (Install/Operate/Troubleshoot).
-
-⸻
-
-12) Nützliche Kommandos (für Doku/README)
-
-# Install (idempotent)
-./scripts/install.sh
-
-# Dienste
-systemctl --user enable --now sichter-api.service sichter-worker.service
-systemctl --user status sichter-api.service sichter-worker.service
-
-# Omnicheck on-demand
-omnicheck --changed
-omnicheck --all
-
-# Dashboard (TUI)
-sichter-dashboard
-
-# Logs
-ls -1t ~/sichter/logs | head
-tail -f ~/sichter/logs/pr-actions.log
+# Dashboard (dev)
+cd apps/dashboard && npm i && VITE_API_BASE="http://127.0.0.1:5055" npm run dev
+# Browser → Overview: Events erscheinen
 
 
 ⸻
 
-13) „Was ist mit bestehenden lokalen Skripten?“
-	•	Alles, was aktuell nur unter ~/sichter/bin oder ~/.config/omnipull/hooks lebt, wandert ins Repo (unter bin/ bzw. hooks/omn…/) und wird bei der Installation als Symlink abgelegt.
-	•	Falls es lokale Anpassungen gibt, die GitHub-Stand verbessern: als Commits übernehmen (kein Shadowing im Home-FS).
+Rollback & Safety
+	•	Jeder Schritt als eigener PR; bei Problemen: PR schließen/reverten.
+	•	Keine API-Breaking Changes ohne Fallback (Polling bleibt; WS ist additive Option).
 
 ⸻
 
-Wenn du magst, formuliere ich das oben als GitHub Issue(s) + PR-Template gleich mit Akzeptanzkriterien — sag einfach Bescheid, dann bekommst du die Texte in „copy-paste“-Form für die Repo-Tickets.
+Zuständigkeiten / Handover an Jules
+	•	Phase 1 PR erstellen, mergen.
+	•	Nach Merge: scripts/install.sh erneut laufen lassen und Smoke-Plan ausführen.
+	•	Issues anlegen:
+	•	„Add WebSocket event stream“
+	•	„Policy source in repos view“
+	•	„CI build for dashboard“
+	•	Phase 2+3+4 in separaten PRs.
+
+Wenn du magst, schreibe ich die konkreten Code-Snippets für den WS-Endpoint und die angepasste useEventStream-Hook direkt mit — sag’s einfach, dann packe ich sie in die nächste Nachricht.
