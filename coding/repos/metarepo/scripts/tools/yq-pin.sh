@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -euxo pipefail
 # Pin & Ensure für mikefarah/yq v4.x – ohne Netz zur Laufzeit.
 # Erwartet, dass ein kompatibles Binary entweder in ./tools/bin/yq liegt oder im PATH verfügbar ist.
 
@@ -55,6 +55,7 @@ read_pinned_version() {
 }
 
 download_yq() {
+        ensure_dir
         log "yq nicht gefunden/inkompatibel. Lade v${REQ_MAJOR}.x herunter..."
         require_cmd curl "Bitte curl installieren oder in PATH bereitstellen."
 
@@ -79,7 +80,6 @@ download_yq() {
         esac
 
         local binary_name="yq_${os}_${arch}"
-        local yq_version tag_primary tag_alt
         local yq_version
         yq_version="$(read_pinned_version)"
         yq_version=$(printf '%s' "${yq_version}" | sed "s/['\"]//g")
@@ -90,10 +90,10 @@ download_yq() {
 
         ensure_dir
 
-        local tmp
+        local tmp tmp_file
         tmp="$(mktemp "${YQ_LOCAL}.dl.XXXXXX")"
         trap 'tmp_file=${tmp-}; if [[ -n "${tmp_file}" ]]; then rm -f -- "${tmp_file}" 2>/dev/null || true; fi' EXIT
-        log "Probiere Download-URL für ${yq_version}..."
+        log "Probiere Download-URL für ${yq_version}: ${url}"
         if curl -fsSL "${url}" -o "${tmp}"; then
                 log "Downloading from ${url}"
         else
@@ -128,7 +128,6 @@ resolved_yq() {
 
 cmd_ensure() {
 	ensure_dir
-	local yq_bin
 	local v
 	local version_is_ok=false
 

@@ -11,15 +11,17 @@
             "id": "0684828ceb065553",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "canvas",
               "state": {
-                "file": "repos feedback.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": false
+                "file": "schule/konflikte/martina.canvas",
+                "viewState": {
+                  "x": 324.93398305084736,
+                  "y": 612.851779661017,
+                  "zoom": -1.2833191218135733
+                }
               },
-              "icon": "lucide-file",
-              "title": "repos feedback"
+              "icon": "lucide-layout-dashboard",
+              "title": "martina"
             }
           }
         ]
@@ -241,17 +243,19 @@
   },
   "active": "0684828ceb065553",
   "lastOpenFiles": [
+    "orga/verträge",
+    "orga/schlüssel",
+    "orga/schule/BAFöG",
+    "orga/schule",
+    "orga/wichtige dokumente",
+    "orga",
+    "coding/repos/wgx/archiv",
+    "coding/repos/vault-gewebe/nexus",
+    "coding/repos/vault-gewebe/halde",
+    "coding/repos/vault-gewebe/orga/schule/BAFöG",
+    "coding/repos/hausKI-audio/tests",
+    "repos feedback.md",
     "schule/mathe/projektskizze.canvas",
-    "coding/repos/vault-gewebe/weltweberei/altes weltgewebe/Homepage/Launchvsc/ui/diskurs",
-    "coding/repos/vault-gewebe/weltweberei/altes weltgewebe/Homepage/Launchvsc/ui/knoten",
-    "coding/repos/vault-gewebe/weltweberei/altes weltgewebe/Homepage/Launchvsc/ui/extras",
-    "coding/repos/vault-gewebe/weltweberei/altes weltgewebe/Homepage/Launchvsc/ui/antrag",
-    "coding/repos/vault-gewebe/weltweberei/altes weltgewebe/Homepage/Launchvsc/ui/layer",
-    "coding/repos/vault-gewebe/weltweberei/altes weltgewebe/Homepage/Launchvsc/visuals",
-    "coding/repos/vault-gewebe/weltweberei/altes weltgewebe/Homepage/Launchvsc/models",
-    "coding/repos/vault-gewebe/weltweberei/altes weltgewebe/Homepage/Launchvsc/utils",
-    "coding/repos/vault-gewebe/weltweberei/altes weltgewebe/Homepage/Launchvsc/data",
-    "coding/repos/vault-gewebe/weltweberei/altes weltgewebe/Homepage/Launchvsc/core",
     "schule/mathe/projektskizze2.canvas",
     "schule/konflikte/martina.canvas",
     "Pasted image 20251106223410.png",
@@ -292,7 +296,6 @@
     "coding/hausKI-audio/docs/adr/0004-recording-pw-record-helper.md",
     "coding/hausKI-audio/docs/ARCHITECTURE.md",
     "coding/hausKI/docs/runbooks/local-dev.md",
-    "coding/hausKI/docs/runbooks/troubleshooting.md",
     "coding/hausKI/seeds/obsidian.sample/Canvas/overview.canvas",
     "schule/heilpädagogik/theorie_integrativer_prozesse.canvas",
     "schule/heilpädagogik/foerderschwerpunkt_geistige_behinderung.canvas"
