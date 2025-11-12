@@ -1,6 +1,14 @@
 {
   "recentFiles": [
     {
+      "basename": "zwischenspeicher",
+      "path": "zwischenspeicher.md"
+    },
+    {
+      "basename": "heimgewebe",
+      "path": "heimgewebe.md"
+    },
+    {
       "basename": "martina",
       "path": "schule/konflikte/martina.canvas"
     },
@@ -23,10 +31,6 @@
     {
       "basename": "AAProjektskizzeerstellen",
       "path": "schule/mathe/AAProjektskizzeerstellen.pdf"
-    },
-    {
-      "basename": "zwischenspeicher",
-      "path": "zwischenspeicher.md"
     },
     {
       "basename": "projektmethode",
@@ -195,10 +199,6 @@
     {
       "basename": "altersübergreifende_gruppen",
       "path": "schule/arbeitsfelder/altersübergreifende_gruppen.canvas"
-    },
-    {
-      "basename": "senioren",
-      "path": "schule/arbeitsfelder/senioren.canvas"
     }
   ],
   "omittedPaths": [],

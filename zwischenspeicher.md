@@ -1,225 +1,324 @@
-/home/alex/vault-gewebe/schule/konflikte/martina.canvasuper — hier sind knackige, ausführbare Anweisungen für Jules. Ich habe sie in 2 PRs gegliedert (klein → groß), inkl. Branch-Namen, Shell-Snippets, Commit-Texte, DoD & Checks. PR 1 — „ci+context cleanup & schema checks“ Branch: feat/ci-context-and-schemas Ziele .ai-context.yml auf Rust korrigieren. eine konsolidierte Rust-CI (Clippy/Tests/Smoke). Schema-Validierung der JSON-Beispiele in CI. Schritte
+Hier kommt das vollständige, minimal realistische Demo-Datenpaket für .gewebe/in/ – perfekt abgestimmt auf den neuen API-Slice, Tests und Map-Frontend.
+Ziel: Out-of-the-box sichtbare Marker und Fäden rund um Hamburg (damit man gleich was sieht, wenn /map aufgerufen wird).
 
-Branch git checkout -b feat/ci-context-and-schemas
-.ai-context.yml korrigieren primary_language: rust architecture.entrypoints auf Beispiele zeigen, z. B.: crates/heimlern-bandits/examples/decide.rs crates/heimlern-bandits/examples/integrate_hauski.rs (falls vorhanden) Minimalbeispiel: name: heimlern primary_language: rust architecture: entrypoints:
+⸻
 
-crates/heimlern-bandits/examples/decide.rs
-crates/heimlern-bandits/src/lib.rs
-CI konsolidieren Behalte/erstelle eine Datei, z. B. .github/workflows/rust.yml. Entferne die zweite, redundante CI (.github/workflows/ci.yml), falls sie das gleiche tut. Inhalt für rust.yml (anpassen, falls schon vorhanden): name: rust (cached)
-on: push: pull_request:
+📁 Struktur
 
-jobs: build-test: runs-on: ubuntu-latest steps: - uses: actions/checkout@v4
+.gewebe/
+└─ in/
+   ├─ demo.nodes.jsonl
+   └─ demo.edges.jsonl
 
-  - uses: dtolnay/rust-toolchain@stable
-    with:
-      toolchain: stable
-      components: clippy, rustfmt
 
-  - name: Cache cargo
-    uses: Swatinem/rust-cache@v2
+⸻
 
-  - name: fmt
-    run: cargo fmt --all --check
+🧩 .gewebe/in/demo.nodes.jsonl
 
-  - name: clippy
-    run: cargo clippy --all-targets -- -D warnings
+{"type":"Feature","id":"n1","geometry":{"type":"Point","coordinates":[9.9937,53.5511]},"properties":{"title":"Marktplatz Hamburg","type":"Ort","updated_at":"2025-11-01T09:00:00Z"}}
+{"type":"Feature","id":"n2","geometry":{"type":"Point","coordinates":[10.0002,53.5523]},"properties":{"title":"Nachbarschaftshaus","type":"Initiative","updated_at":"2025-11-02T12:15:00Z"}}
+{"type":"Feature","id":"n3","geometry":{"type":"Point","coordinates":[9.9813,53.5456]},"properties":{"title":"Tauschbox Altona","type":"Projekt","updated_at":"2025-10-30T18:45:00Z"}}
+{"type":"Feature","id":"n4","geometry":{"type":"Point","coordinates":[10.0184,53.5631]},"properties":{"title":"Gemeinschaftsgarten","type":"Ort","updated_at":"2025-11-05T10:00:00Z"}}
+{"type":"Feature","id":"n5","geometry":{"type":"Point","coordinates":[9.9708,53.5615]},"properties":{"title":"Reparaturcafé","type":"Initiative","updated_at":"2025-11-03T16:20:00Z"}}
 
-  - name: test
-    run: cargo test --all --locked --workspace --verbose
+💡 Erklärung
+	•	Jede Zeile = eigenständiges JSON-Objekt (GeoJSON Feature).
+	•	Koordinaten: [Längengrad, Breitengrad] – alle rund um Hamburg.
+	•	Properties enthalten minimale Anzeigeinfos (title, type, updated_at).
+	•	Wird direkt vom GET /api/nodes geladen.
 
-  - name: smoke: run decide example
-    run: cargo run -p heimlern-bandits --example decide --quiet
-schema-validate: runs-on: ubuntu-latest steps: - uses: actions/checkout@v4
+⸻
 
-  - name: Setup Python
-    uses: actions/setup-python@v5
-    with:
-      python-version: '3.x'
+🧵 .gewebe/in/demo.edges.jsonl
 
-  - name: Install jsonschema
-    run: python -m pip install --upgrade pip jsonschema
+{"id":"e1","src":"n1","dst":"n2","kind":"connection","title":"Kooperation Marktplatz ↔ Nachbarschaftshaus"}
+{"id":"e2","src":"n2","dst":"n4","kind":"support","title":"Gemeinschaftsaktion Gartenpflege"}
+{"id":"e3","src":"n1","dst":"n3","kind":"exchange","title":"Tauschbox liefert Material"}
+{"id":"e4","src":"n5","dst":"n1","kind":"support","title":"Reparaturcafé hilft Marktplatz"}
 
-  - name: Validate sample JSONs
-    run: |
-      python scripts/validate_json.py \
-        --schemas contracts/ \
-        --samples samples/
-Falls scripts/validate_json.py andere Flags/Ordner erwartet: im Schritt oben die Pfade anpassen (Ordner contracts/ & samples/ sind Platzhalter für euren aktuellen Stand). 4) Commit & Push git add -A git commit -m "ci: consolidate rust workflow, add schema validation; fix .ai-context to Rust" git push -u origin feat/ci-context-and-schemas
+💡 Erklärung
+	•	Jede Zeile = einfache gerichtete Verbindung (Faden).
+	•	Felder src und dst referenzieren ids aus demo.nodes.jsonl.
+	•	kind und title sind optional, aber hilfreich fürs spätere Overlay/Labeling.
 
-PR eröffnen (Titel + Body) Titel: chore(ci): consolidate rust workflow + add schema validation; fix AI context Body (Kurzfassung): .ai-context.yml auf Rust korrigiert. Redundante CI zusammengeführt → ein Rust-Workflow. JSON-Schema-Validierung in CI ergänzt (jsonschema). Smoke-Run (examples/decide) bleibt enthalten. Definition of Done ✅ CI läuft grün (fmt, clippy, tests, smoke). ✅ Schema-Job validiert Beispiele. ✅ Keine doppelte CI mehr. ✅ .ai-context.yml zeigt auf Rust & gültige Entry-Points. PR 2 — „docs+release + extra smoke“ Branch: feat/docs-and-release Ziele Rust-Docs bauen & als CI-Artefakt anhängen. Zweiten Smoke-Run (z. B. integrate_hauski) ergänzen. Versionspflege & einfacher Release-Workflow (Tag → Artefakte). Schritte
-Branch git checkout -b feat/docs-and-release
-CI: Rust-Docs als Artefakt In .github/workflows/rust.yml neuen Job oder Step ergänzen: docs: runs-on: ubuntu-latest steps:
+⸻
 
-uses: actions/checkout@v4
-uses: dtolnay/rust-toolchain@stable with: toolchain: stable
-uses: Swatinem/rust-cache@v2
-name: build docs run: cargo doc --no-deps --workspace
-name: upload docs artifact uses: actions/upload-artifact@v4 with: name: rustdoc path: target/doc
-CI: zweiter Smoke-Run Im vorhandenen Job (build-test) zusätzlichen Schritt:
+✅ Smoke-Checks (direkt in Shell)
 
-name: smoke: run integrate_hauski example run: cargo run -p heimlern-bandits --example integrate_hauski --quiet
-Falls das Beispiel noch nicht existiert oder temporär fehlschlägt, als || true markieren und Issue anlegen – ideal ist aber: Beispiel funktionsfähig halten. 4) Versionen & Changelog In beiden Cargo.toml (workspace/crates) Version anheben (patch/minor). CHANGELOG.md hinzufügen (Keep a Changelog-Stil reicht). Optional: workspace.package (falls genutzt) angleichen. 5) Release-Workflow (optional aber nützlich) .github/workflows/release.yml: name: release
+# Nodes abrufen
+curl -s http://localhost:8080/api/nodes | jq length
+# → sollte 5 ergeben
 
-on: push: tags: - 'v*..'
+# BBox-Filter auf Innenstadt
+curl -s 'http://localhost:8080/api/nodes?bbox=9.98,53.54,10.02,53.56' | jq '.[].properties.title'
+# → nur n1, n2, n3
 
-jobs: build-and-artifacts: runs-on: ubuntu-latest steps: - uses: actions/checkout@v4 with: { fetch-depth: 0 } - uses: dtolnay/rust-toolchain@stable - uses: Swatinem/rust-cache@v2 - run: cargo test --all --locked --workspace --verbose - run: cargo build --release --workspace - name: Upload binaries uses: actions/upload-artifact@v4 with: name: binaries path: target/release/ - name: Build docs run: cargo doc --no-deps --workspace - name: Upload docs uses: actions/upload-artifact@v4 with: name: rustdoc path: target/doc
+# Kanten abrufen
+curl -s http://localhost:8080/api/edges | jq '.[].title'
 
-Commit & Push git add -A git commit -m "docs(ci): publish rustdoc as artifact; add extra smoke; prep release workflow + changelog" git push -u origin feat/docs-and-release
-PR eröffnen Titel: feat(docs/release): rustdoc artifacts, extra smoke, versions & changelog Body (Kurzfassung): Rust-Docs als CI-Artefakte. Zweiter Smoke-Run für Haus-Integration. Versionen aktualisiert + CHANGELOG. Release-Workflow (on tag) vorbereitet. Definition of Done ✅ Beide PRs grün. ✅ decide und integrate_hauski laufen als Smoke. ✅ Docs-Artefakte sind im CI downloadbar. ✅ Version/Changelog konsistent. Nach dem Merge (Mini-Runbook) Tag setzen, um Release-Workflow zu triggern: git checkout main git pull git tag v0.1.0 git push origin v0.1.0
-In der PR-Diskussion kurz dokumentieren, wie Schema-Beispiele erweitert werden (einfach neue JSON unter samples/ droppen → CI validiert automatisch). Optional: README-Badges aktualisieren („CI“, „Docs artifact“ Link in PR-Beschreibung). Wenn du möchtest, schreibe ich direkt die PR-Beschreibung als Markdown (ready-to-paste) und reiche die gezeigten YAML-Snippets als Patches mit ein.
 
-perfekt — hier kommt alles für Jules ready-to-paste (PR-Texte + fertige Patch-Snippets).Ziel: beide PRs lassen sich ohne Nachfragen einspielen und sofort mergen, sobald CI grün läuft. 🧩 PR 1 — feat/ci-context-and-schemas 📋 PR-Beschreibung (copy-ready)
+⸻
 
-chore(ci): consolidate rust workflow + add schema validation; fix AI context
+🎯 Bonus (für Jules’ Verständnis)
+	•	Diese Dateien sind nicht migrations- oder schema-kritisch – sie dienen nur als live stub dataset.
+	•	Sie können gefahrlos im Repo bleiben (unter .gewebe/in/ wird ohnehin versioniert).
+	•	Das Frontend kann später diese Daten nutzen, um Marker direkt auf der Map zu zeigen, sobald /api/nodes implementiert ist.
 
-✨ Änderungen
+⸻
 
-.ai-context.yml korrigiert → Rust als primary_language.
-CI konsolidiert: nur noch eine rust.yml.
-JSON-Schema-Validierung eingebaut (über scripts/validate_json.py).
-Beispiel-Smoke (heimlern-bandits/examples/decide.rs) bleibt enthalten.
-✅ Definition of Done
+Möchtest du, dass ich gleich noch eine kleine just task oder make target formuliere (just serve-demo), damit Jules lokal mit einem Befehl den Axum-Server + API starten und curl testen kann?
 
-CI läuft grün (fmt, clippy, test, smoke)
-Schema-Job validiert Beispiel-Daten
-.ai-context.yml zeigt auf Rust-Entry-Points
-🧠 Patch 1 – .ai-context.yml korrigieren (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' *** Begin Patch *** Update File: .ai-context.yml @@ project:
+super — hier kommt ein komplett lauffähiger Demo-Server (ohne weitere Abhängigkeiten) plus just- und make-Targets. Damit kann Jules lokal in <10 Sek. /api/nodes und /api/edges** bereitstellen, inkl. bbox-Filter.
 
-name: heimlern
-summary: Semantic ingest/index & retrieval services.
-role: knowledge_index_retrieval
-primary_language: python
-visibility: internal
--architecture:
+⸻
 
-entrypoints:
-src/main.py
-name: heimlern
-summary: Reinforcement-/Bandit-Policy-Framework (Rust)
-role: policy_engine
-primary_language: rust
-visibility: internal
-+architecture:
+1) Datei: scripts/dev/gewebe-demo-server.mjs
 
-entrypoints:
-crates/heimlern-bandits/examples/decide.rs
-crates/heimlern-bandits/src/lib.rs *** End Patch EOF )
-🧠 Patch 2 – CI Workflow (zusammengeführt) (cd "$(git rev-parse --show-toplevel)" && mkdir -p .github/workflows && git apply --3way <<'EOF' *** Begin Patch *** Add File: .github/workflows/rust.yml +name: rust (cached) + +on:
+mkdir -p scripts/dev
 
-push:
-pull_request:
-+jobs:
+// scripts/dev/gewebe-demo-server.mjs
+// Minimaler, dependency-freier HTTP-Server (Node >= 18/20) für die Demo-APIs.
+// Endpunkte:
+//   GET /api/nodes[?bbox=west,south,east,north]
+//   GET /api/edges
+// Liest JSONL aus ./.gewebe/in/*.jsonl
 
-build-test:
-runs-on: ubuntu-latest
-steps:
- - uses: actions/checkout@v4
- - uses: dtolnay/rust-toolchain@stable
-   with:
-     toolchain: stable
-     components: clippy, rustfmt
- - name: Cache cargo
-   uses: Swatinem/rust-cache@v2
- - name: fmt
-   run: cargo fmt --all --check
- - name: clippy
-   run: cargo clippy --all-targets -- -D warnings
- - name: test
-   run: cargo test --all --locked --workspace --verbose
- - name: smoke: run decide example
-   run: cargo run -p heimlern-bandits --example decide --quiet
-schema-validate:
-runs-on: ubuntu-latest
-steps:
- - uses: actions/checkout@v4
- - name: Setup Python
-   uses: actions/setup-python@v5
-   with:
-     python-version: '3.x'
- - name: Install jsonschema
-   run: python -m pip install --upgrade pip jsonschema
- - name: Validate sample JSONs
-   run: |
-     python scripts/validate_json.py \
-       --schemas contracts/ \
-       --samples samples/
-*** End Patch EOF )
+import { createServer } from 'node:http';
+import { readFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-✅ PR-Workflow git checkout -b feat/ci-context-and-schemas git add -A git commit -m "ci: consolidate rust workflow, add schema validation; fix .ai-context to Rust" git push -u origin feat/ci-context-and-schemas
+const __dirname = resolve(fileURLToPath(import.meta.url), '..', '..', '..');
+const PORT = Number(process.env.PORT || 8080);
 
-🧩 PR 2 — feat/docs-and-release 📋 PR-Beschreibung (copy-ready)
+const NODES_FILE = resolve(__dirname, '.gewebe/in/demo.nodes.jsonl');
+const EDGES_FILE = resolve(__dirname, '.gewebe/in/demo.edges.jsonl');
 
-feat(docs/release): rustdoc artifacts, extra smoke, versions & changelog
+async function readJsonl(path) {
+  const raw = await readFile(path, 'utf8').catch(() => '');
+  return raw
+    .split(/\r?\n/)
+    .map((l) => l.trim())
+    .filter(Boolean)
+    .map((l) => JSON.parse(l));
+}
 
-✨ Änderungen
+function parseBBox(q) {
+  // bbox=west,south,east,north
+  if (!q || !('bbox' in q)) return null;
+  const parts = String(q.bbox).split(',').map(Number);
+  if (parts.length !== 4 || parts.some((n) => Number.isNaN(n))) return null;
+  const [west, south, east, north] = parts;
+  return { west, south, east, north };
+}
 
-CI erzeugt und veröffentlicht Rust-Dokumentation als Artefakt.
-Zweiter Smoke-Run (integrate_hauski) ergänzt.
-Versionen + CHANGELOG.md hinzugefügt.
-Release-Workflow (Tag → Build + Docs) vorbereitet.
-✅ Definition of Done
+function withinBBox(feature, bbox) {
+  if (!feature?.geometry || feature.geometry.type !== 'Point') return false;
+  const [lng, lat] = feature.geometry.coordinates || [];
+  return (
+    typeof lng === 'number' &&
+    typeof lat === 'number' &&
+    lng >= bbox.west &&
+    lng <= bbox.east &&
+    lat >= bbox.south &&
+    lat <= bbox.north
+  );
+}
 
-decide und integrate_hauski laufen als Smoke.
-Rust-Docs als CI-Artefakt downloadbar.
-Changelog + Versionen konsistent.
-🧠 Patch 1 – zusätzliche Smoke-Steps + Docs (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' *** Begin Patch *** Update File: .github/workflows/rust.yml @@ - name: smoke: run decide example run: cargo run -p heimlern-bandits --example decide --quiet +
+function sendJson(res, status, body, extraHeaders = {}) {
+  res.writeHead(status, {
+    'Content-Type': 'application/json; charset=utf-8',
+    'Access-Control-Allow-Origin': '*',
+    'Cache-Control': 'no-store',
+    ...extraHeaders,
+  });
+  res.end(JSON.stringify(body));
+}
 
- - name: smoke: run integrate_hauski example
-   run: cargo run -p heimlern-bandits --example integrate_hauski --quiet
-docs:
-runs-on: ubuntu-latest
-steps:
- - uses: actions/checkout@v4
- - uses: dtolnay/rust-toolchain@stable
-   with:
-     toolchain: stable
- - uses: Swatinem/rust-cache@v2
- - name: build docs
-   run: cargo doc --no-deps --workspace
- - name: upload docs artifact
-   uses: actions/upload-artifact@v4
-   with:
-     name: rustdoc
-     path: target/doc
-*** End Patch EOF )
+function notFound(res) {
+  sendJson(res, 404, { error: 'Not Found' });
+}
 
-🧠 Patch 2 – Release-Workflow (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' *** Begin Patch *** Add File: .github/workflows/release.yml +name: release + +on:
+function badRequest(res, msg) {
+  sendJson(res, 400, { error: 'Bad Request', message: msg });
+}
 
-push:
-tags:
- - 'v*.*.*'
-+jobs:
+function parseQuery(url) {
+  const idx = url.indexOf('?');
+  const q = {};
+  if (idx === -1) return q;
+  const usp = new URLSearchParams(url.slice(idx + 1));
+  for (const [k, v] of usp.entries()) q[k] = v;
+  return q;
+}
 
-build-and-artifacts:
-runs-on: ubuntu-latest
-steps:
- - uses: actions/checkout@v4
-   with:
-     fetch-depth: 0
- - uses: dtolnay/rust-toolchain@stable
- - uses: Swatinem/rust-cache@v2
- - name: Run tests
-   run: cargo test --all --locked --workspace --verbose
- - name: Build release
-   run: cargo build --release --workspace
- - name: Upload binaries
-   uses: actions/upload-artifact@v4
-   with:
-     name: binaries
-     path: target/release/
- - name: Build docs
-   run: cargo doc --no-deps --workspace
- - name: Upload docs
-   uses: actions/upload-artifact@v4
-   with:
-     name: rustdoc
-     path: target/doc
-*** End Patch EOF )
+const server = createServer(async (req, res) => {
+  try {
+    const url = req.url || '/';
+    const path = url.split('?')[0];
 
-🧠 Patch 3 – Changelog & Version-Bump (Minimal) (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' *** Begin Patch *** Add File: CHANGELOG.md +## v0.1.0 – Initial release candidate +- Consolidated CI & schema validation. +- Added dual smoke tests (decide, integrate_hauski). +- Added doc build and release workflow. *** End Patch EOF )
+    if (req.method === 'GET' && path === '/api/nodes') {
+      const q = parseQuery(url);
+      const bbox = parseBBox(q);
+      const nodes = await readJsonl(NODES_FILE);
 
-✅ PR-Workflow git checkout -b feat/docs-and-release git add -A git commit -m "docs(ci): publish rustdoc artifacts; add extra smoke; prep release workflow + changelog" git push -u origin feat/docs-and-release
+      const data = bbox ? nodes.filter((f) => withinBBox(f, bbox)) : nodes;
+      return sendJson(res, 200, data);
+    }
 
-🧭 Nach Merge git checkout main git pull git tag v0.1.0 git push origin v0.1.0
+    if (req.method === 'GET' && path === '/api/edges') {
+      const edges = await readJsonl(EDGES_FILE);
+      return sendJson(res, 200, edges);
+    }
 
-→ Release-Workflow startet automatisch→ Artefakte: binaries + rustdoc im Actions-Tab Nächster logischer Schritt nach diesen beiden PRs:Sichter-Dashboard oder HausKI-Integration kann die Heimlern-Policy live abrufen. Dafür lohnt sich danach ein policy/decide-HTTP-Handler + kurze JSON-Schema-Erweiterung (Phase 3).
+    if (req.method === 'OPTIONS') {
+      // CORS preflight
+      res.writeHead(204, {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET,OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Max-Age': '600',
+      });
+      return res.end();
+    }
+
+    return notFound(res);
+  } catch (err) {
+    console.error('[demo-server] error:', err);
+    return sendJson(res, 500, { error: 'Internal Server Error' });
+  }
+});
+
+server.listen(PORT, () => {
+  console.log(`▶ Demo-API läuft:  http://127.0.0.1:${PORT}`);
+  console.log('   GET /api/nodes[?bbox=west,south,east,north]');
+  console.log('   GET /api/edges');
+});
+
+
+⸻
+
+2) Demo-Daten schnell anlegen (falls noch nicht vorhanden)
+
+mkdir -p .gewebe/in
+cat > .gewebe/in/demo.nodes.jsonl <<'JSONL'
+{"type":"Feature","id":"n1","geometry":{"type":"Point","coordinates":[9.9937,53.5511]},"properties":{"title":"Marktplatz Hamburg","type":"Ort","updated_at":"2025-11-01T09:00:00Z"}}
+{"type":"Feature","id":"n2","geometry":{"type":"Point","coordinates":[10.0002,53.5523]},"properties":{"title":"Nachbarschaftshaus","type":"Initiative","updated_at":"2025-11-02T12:15:00Z"}}
+{"type":"Feature","id":"n3","geometry":{"type":"Point","coordinates":[9.9813,53.5456]},"properties":{"title":"Tauschbox Altona","type":"Projekt","updated_at":"2025-10-30T18:45:00Z"}}
+{"type":"Feature","id":"n4","geometry":{"type":"Point","coordinates":[10.0184,53.5631]},"properties":{"title":"Gemeinschaftsgarten","type":"Ort","updated_at":"2025-11-05T10:00:00Z"}}
+{"type":"Feature","id":"n5","geometry":{"type":"Point","coordinates":[9.9708,53.5615]},"properties":{"title":"Reparaturcafé","type":"Initiative","updated_at":"2025-11-03T16:20:00Z"}}
+JSONL
+
+cat > .gewebe/in/demo.edges.jsonl <<'JSONL'
+{"id":"e1","src":"n1","dst":"n2","kind":"connection","title":"Kooperation Marktplatz ↔ Nachbarschaftshaus"}
+{"id":"e2","src":"n2","dst":"n4","kind":"support","title":"Gemeinschaftsaktion Gartenpflege"}
+{"id":"e3","src":"n1","dst":"n3","kind":"exchange","title":"Tauschbox liefert Material"}
+{"id":"e4","src":"n5","dst":"n1","kind":"support","title":"Reparaturcafé hilft Marktplatz"}
+JSONL
+
+
+⸻
+
+3) just-Targets
+
+Falls ihr bereits eine Justfile habt: ergänzen. Sonst neue Justfile anlegen.
+
+# Justfile
+
+# .PHONY-ähnlich:
+set shell := ["bash", "--noprofile", "--norc", "-euo", "pipefail", "-c"]
+
+# Port überschreibbar: `just serve-demo PORT=9090`
+PORT := "8080"
+
+# Erzeugt Demo-Daten falls nicht vorhanden.
+demo-data:
+    mkdir -p .gewebe/in
+    test -s .gewebe/in/demo.nodes.jsonl || { echo "→ seeds: nodes"; cat > .gewebe/in/demo.nodes.jsonl <<'JSONL'
+    {"type":"Feature","id":"n1","geometry":{"type":"Point","coordinates":[9.9937,53.5511]},"properties":{"title":"Marktplatz Hamburg","type":"Ort","updated_at":"2025-11-01T09:00:00Z"}}
+    {"type":"Feature","id":"n2","geometry":{"type":"Point","coordinates":[10.0002,53.5523]},"properties":{"title":"Nachbarschaftshaus","type":"Initiative","updated_at":"2025-11-02T12:15:00Z"}}
+    {"type":"Feature","id":"n3","geometry":{"type":"Point","coordinates":[9.9813,53.5456]},"properties":{"title":"Tauschbox Altona","type":"Projekt","updated_at":"2025-10-30T18:45:00Z"}}
+    {"type":"Feature","id":"n4","geometry":{"type":"Point","coordinates":[10.0184,53.5631]},"properties":{"title":"Gemeinschaftsgarten","type":"Ort","updated_at":"2025-11-05T10:00:00Z"}}
+    {"type":"Feature","id":"n5","geometry":{"type":"Point","coordinates":[9.9708,53.5615]},"properties":{"title":"Reparaturcafé","type":"Initiative","updated_at":"2025-11-03T16:20:00Z"}}
+    JSONL
+    }
+    test -s .gewebe/in/demo.edges.jsonl || { echo "→ seeds: edges"; cat > .gewebe/in/demo.edges.jsonl <<'JSONL'
+    {"id":"e1","src":"n1","dst":"n2","kind":"connection","title":"Kooperation Marktplatz ↔ Nachbarschaftshaus"}
+    {"id":"e2","src":"n2","dst":"n4","kind":"support","title":"Gemeinschaftsaktion Gartenpflege"}
+    {"id":"e3","src":"n1","dst":"n3","kind":"exchange","title":"Tauschbox liefert Material"}
+    {"id":"e4","src":"n5","dst":"n1","kind":"support","title":"Reparaturcafé hilft Marktplatz"}
+    JSONL
+    }
+
+# Startet den Demo-API-Server auf :${PORT}
+serve-demo: demo-data
+    node scripts/dev/gewebe-demo-server.mjs
+
+# Schneller Smoke-Test der Endpunkte
+check-demo:
+    curl -fsS "http://127.0.0.1:{{PORT}}/api/nodes" | jq length
+    curl -fsS "http://127.0.0.1:{{PORT}}/api/edges" | jq 'length'
+
+Aufruf:
+
+just serve-demo        # startet :8080
+# oder:
+PORT=9090 just serve-demo
+
+
+⸻
+
+4) Makefile-Targets (optional parallel zu just)
+
+# Makefile
+
+PORT ?= 8080
+
+.PHONY: demo-data serve-demo check-demo
+demo-data:
+	mkdir -p .gewebe/in
+	@if [ ! -s .gewebe/in/demo.nodes.jsonl ]; then \
+		echo "→ seeds: nodes"; \
+		cat > .gewebe/in/demo.nodes.jsonl <<'JSONL'; \
+{"type":"Feature","id":"n1","geometry":{"type":"Point","coordinates":[9.9937,53.5511]},"properties":{"title":"Marktplatz Hamburg","type":"Ort","updated_at":"2025-11-01T09:00:00Z"}}
+{"type":"Feature","id":"n2","geometry":{"type":"Point","coordinates":[10.0002,53.5523]},"properties":{"title":"Nachbarschaftshaus","type":"Initiative","updated_at":"2025-11-02T12:15:00Z"}}
+{"type":"Feature","id":"n3","geometry":{"type":"Point","coordinates":[9.9813,53.5456]},"properties":{"title":"Tauschbox Altona","type":"Projekt","updated_at":"2025-10-30T18:45:00Z"}}
+{"type":"Feature","id":"n4","geometry":{"type":"Point","coordinates":[10.0184,53.5631]},"properties":{"title":"Gemeinschaftsgarten","type":"Ort","updated_at":"2025-11-05T10:00:00Z"}}
+{"type":"Feature","id":"n5","geometry":{"type":"Point","coordinates":[9.9708,53.5615]},"properties":{"title":"Reparaturcafé","type":"Initiative","updated_at":"2025-11-03T16:20:00Z"}}
+JSONL \
+	fi
+	@if [ ! -s .gewebe/in/demo.edges.jsonl ]; then \
+		echo "→ seeds: edges"; \
+		cat > .gewebe/in/demo.edges.jsonl <<'JSONL'; \
+{"id":"e1","src":"n1","dst":"n2","kind":"connection","title":"Kooperation Marktplatz ↔ Nachbarschaftshaus"}
+{"id":"e2","src":"n2","dst":"n4","kind":"support","title":"Gemeinschaftsaktion Gartenpflege"}
+{"id":"e3","src":"n1","dst":"n3","kind":"exchange","title":"Tauschbox liefert Material"}
+{"id":"e4","src":"n5","dst":"n1","kind":"support","title":"Reparaturcafé hilft Marktplatz"}
+JSONL \
+	fi
+
+serve-demo: demo-data
+	node scripts/dev/gewebe-demo-server.mjs
+
+check-demo:
+	curl -fsS "http://127.0.0.1:$(PORT)/api/nodes" | jq length
+	curl -fsS "http://127.0.0.1:$(PORT)/api/edges" | jq 'length'
+
+
+⸻
+
+5) Quick-Test
+
+# Terminal 1
+just serve-demo
+# ▶ Demo-API läuft:  http://127.0.0.1:8080
+
+# Terminal 2
+curl -s http://127.0.0.1:8080/api/nodes | jq length
+curl -s 'http://127.0.0.1:8080/api/nodes?bbox=9.98,53.54,10.02,53.56' | jq '.[].properties.title'
+curl -s http://127.0.0.1:8080/api/edges | jq -r '.[].title'
+
+
+⸻
+
+Wenn du möchtest, passe ich dir jetzt noch den Svelte /map-Fetch so an, dass er gegen http://127.0.0.1:8080 geht, solange keine echte Backend-URL konfiguriert ist (z. B. via VITE_API_BASE + Fallback).

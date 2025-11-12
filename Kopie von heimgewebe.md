@@ -1,0 +1,393 @@
+  
+
+Heimgewebe-Architektur: Analyse der Konsistenz
+
+  
+
+  
+
+  
+
+1. Repository-Zuständigkeiten und Rollen
+
+  
+
+  
+
+Die Heimgewebe-Architektur besteht aus mehreren spezialisierten Repositories/Komponenten, die jeweils klar definierte Rollen im Gesamtsystem einnehmen. Die Dokumentation beschreibt ein Schichtenmodell (0–6), in dem jede Schicht durch ein Modul repräsentiert wird . Im Einzelnen:
+
+  
+
+- Metarepo – Zentrale Steuerzentrale (Meta-Layer) für alle Heimgewebe-Repos. Enthält Vorlagen, Automatisierungen und umfassende Dokumentation, damit Sub-Repos synchron bleiben . Metarepo ist die „Quelle der Wahrheit“ für gemeinsame Templates und CI-Konventionen . Überschneidungen mit anderen Repos bestehen kaum, da es primär Koordination und Governance dient.
+- WGX – Die „System-Motorik“ bzw. der Flotten-Motor (Schicht 0 Physisch) . WGX stellt ein zentrales CLI-Tool zur Verfügung, um die Entwicklungsumgebung zu verwalten (Tasks wie doctor, smoke, start etc.) und Automation/Synchronisation fleetweit zu ermöglichen. WGX selbst führt keine inhaltliche KI-Logik aus, sondern dient der Infrastruktur (z.B. Starten/Überwachen von Diensten, Erfassen von Metriken) . Die Rollenabgrenzung zwischen WGX und z.B. hausKI ist damit klar: WGX kümmert sich um Automatisierung und Maintenance, hausKI um KI-Funktionalität.
+- aussensensor – Modul der Schicht 6 (Dialogisch-Semantisch Umgebungssensorik). Sammelt externe Signale/„Außen“-Ereignisse (z.B. Nachrichten, Sensordaten), normalisiert sie in JSONL-Events des Typs aussen.event und validiert diese gegen das definierte Schema . Die Ergebnisse werden im lokalen Feed (export/feed.jsonl) gesammelt und schließlich an andere Komponenten weitergereicht. Die Verantwortung ist klar umrissen (Außenwelt-Eingang). Überschneidungen gibt es nur optional mit weltgewebe: Letzteres ist als separates Community-/Außensphäre-Projekt konzipiert, das ebenfalls Außen-Events liefern kann, aber nicht Teil der Kern-Fleet ist .
+- leitstand – Modul der Schicht 4 (Memorativ). Dient als Ingest-API und Persistenzschicht für Ereignisse sowie als Dashboard („Panels“) für Operatoren . Leitstand speichert die Events (z.B. alle aussen.event-Zeilen) und stellt sie für andere bereit. Die Verantwortlichkeiten sind deutlich: Leitstand ist das zentrale Log-/Audit-System (Episoden-Speicher) und UI, im Gegensatz zu Sichter (der Reviews durchführt) oder heimlern (das Policies verwaltet).
+- heimlern – Modul der Schicht 5 (Politisch-Adaptiv). Verarbeitet eingehende Informationen zu Policies, Entscheidungen und Lern-Feedback . Heimlern erstellt policy.decision-Events (Policy-Entscheidungen inkl. Begründungen) und verwaltet Lern-Scores. Diese Komponente greift auf die Daten aus Leitstand (persistierte Events) zurück und gibt Feedback ins System. Heimlerns Rolle ist damit spezialisiert auf den „Lern-Loop“ und Policy-Entscheidungen. Unklar war initial, wie heimlern die Daten erhält (siehe Datenfluss), doch konzeptionell ist die Zuständigkeit abgegrenzt von hausKI (Planung/Ausführung) und sichter (Review).
+- hausKI – Modul der Schicht 2 (Operativ). Agiert als zentrale Orchestrierungs- und Planungsinstanz für Aktionen und Entscheidungen . HausKI konsumiert z.B. Intents und entscheidet über nächste Schritte (führt Pläne aus, triggert ggf. weitere Komponenten). Es koordiniert auch den Review-Prozess, indem es z.B. nach einer Policy-Entscheidung heimlerns den Sichter anstößt. HausKI ist somit klar als KI-Controller definiert, während WGX rein technische Automation macht. Eine kleine Unschärfe besteht darin, dass hausKI intern auch Logging (JSONL-Event-Log) nutzt – das ist aber getrennt vom WGX-Metrik-Logging (siehe Tooling).
+- semantAH – Modul der Schicht 1 (Semantisch). Verantwortlich für den Wissensgraphen und Embeddings . SemantAH generiert aus Events und Kontext sogenannte Insights (Graph-Daten, Relationen) und stellt diese dem System bereit. Beispielsweise verarbeitet semantAH intent/declare-Events von mitschreiber zu Graphabfragen (graph/query) und aktualisiert seinen Knowledge-Graph. Es erzeugt insight-Events (z.B. neue Knoten/Relationen), die wiederum von hausKI oder Leitstand genutzt werden . SemantAH’s Rolle (Knowledge-Base) ist gut getrennt von mitschreiber (der Kontext liefert) und hausKI (das Entscheidungen trifft).
+- sichter – Modul der Schicht 3 (Reflexiv). Übernimmt automatisierte Reviews, Diagnosen und Selbstkorrektur des Systems . Sichter prüft z.B. Entscheidungen oder Aktionen (Reviews der KI-Ausgaben) und meldet Probleme oder Korrekturvorschläge zurück. Es emittiert review.*-Events, die ins System (Leitstand und ggf. weitere) zurückfließen. Überschneidungen mit Leitstand bestehen kaum: Leitstand speichert zwar Reviews, aber die Überprüfung/Diagnose logischer Inhalte ist Sichter’s alleinige Aufgabe.
+- mitschreiber – Modul der Schicht 6 (Dialogisch-Semantisch). Stellt den Intent- und Kontext-Sensor dar, der lokale Benutzerinteraktionen aufzeichnet (Tastatureingaben, Fensterkontext etc.) und in semantische Kontext-Events (os.context.*) umwandelt . Diese Events speist mitschreiber in den Bus ein, von wo aus semantAH und hausKI sie weiterverarbeiten. Wichtig: mitschreiber ist kein Keylogger, sondern filtert auf semantische Bedeutungen . Die Rolle ist eindeutig (Input aus Benutzerkontext), ohne Überschneidung mit aussensensor (Input aus Umwelt) oder hausKI (Verarbeitung der Intents).
+- hausKI-audio – Spezialisiertes Modul (gehört zur dialogischen Ebene) für Audio- und Telemetrie-Ereignisse . Es nimmt Audioeingaben (z.B. Mikrofon oder Musik/Hörbuch-Kontext) entgegen und erzeugt audio.events-Events daraus . Diese Audio-Events dienen hausKI als zusätzliche Kontextquelle und werden auch im Leitstand (Panel „Musik/PC“) visualisiert . HausKI-audio ist technisch eigenständig (vermutlich in Rust, siehe CI), überschneidet sich aber nicht mit hausKI direkt – es liefert nur Input.
+- tools – Sammlung von Hilfswerkzeugen für Entwicklung und Repository-Management. Enthält z.B. Repomergers (Skripte zum Zusammenführen von Ordnern/Repos für Dokumentationszwecke) , JSONL-Utility-Skripte (jsonl-tail.sh, jsonl-validate.sh etc. in tools/scripts ) und verschiedene Automatisierungshilfen. Das Tools-Repo hat eine eher unterstützende Rolle außerhalb des laufenden Systems. Es gibt kleine Überschneidungen mit Metarepo/CI: Einige Skripte in tools (z.B. Metrik-Skripte, s.u.) ähneln Funktionen, die auch im Metarepo oder WGX behandelt werden. Hier könnte langfristig konsolidiert werden, um Redundanzen zu vermeiden (siehe Abschnitt Tooling).
+- vault-gewebe – Außerhalb der eigentlichen Fleet (persönlicher Wissensspeicher, z.B. Obsidian Vault). Laut Dokumentation gehört vault-gewebe nicht zur public Fleet und wird aus Datenschutzgründen bewusst nicht dokumentiert . Wir erwähnen es der Vollständigkeit halber, aber es fließt in die Konsistenzbewertung nicht ein (kein Fleet-Target, keine gemeinsamen Standards nötig) .
+- weltgewebe – Ebenfalls kein Kern-Repo der Heimgewebe-Architektur. Es wird als unabhängiges Projekt beschrieben, das ggf. Außen-Signale zuliefern kann, aber nicht zur Fleet gehört . Somit ist es rollentechnisch separiert (Quellprojekt für externe Events) und die Interaktion erfolgt höchstens über definierte Event-Schnittstellen (aussen.event). Die klare Trennung ist dokumentiert; hier besteht keine Vermischung der Zuständigkeiten, lediglich eine optionale Datenquelle.
+
+  
+
+  
+
+Bewertung: Die Verantwortlichkeiten der zentralen Komponenten sind größtenteils klar abgegrenzt und durch das Schichtkonzept konsistent beschrieben. Jeder Dienst hat eine eindeutige Kernaufgabe (siehe obige Liste), was sowohl in ADRs als auch im System-Overview deutlich wird. Die Systemübersicht fasst die Rollen gut zusammen , und Diagramme (Mermaid/Canvas) visualisieren die Zusammenarbeit . Eine kleine Inkonsistenz in der Dokumentation: In manchen Zusammenfassungen (z.B. docs/architecture.md) werden sichter und mitschreiber nicht explizit in der Liste der Komponenten erwähnt , obwohl sie Teil der Architektur sind – wohingegen die Systemübersicht-Tabelle alle Schichten 0–6 vollständig nennt . Dies sollte vereinheitlicht werden, damit keine Module „vergessen“ scheinen.
+
+  
+
+Zudem gibt es geringe Redundanz in unterstützenden Repos: Sowohl Metarepo als auch Tools bieten Scripts/Mechanismen zur Repo-Verwaltung (z.B. Template-Sync in Metarepo vs. Merge-Skripte in Tools). Diese Überschneidung ist jedoch funktional getrennt (Templates vs. Dokumentations-Merging) und derzeit nicht kritisch. Dennoch könnte geprüft werden, ob langfristig Tools-Funktionen ins Metarepo integriert werden, um die Anzahl der Hilfs-Repos zu minimieren.
+
+  
+
+Empfehlung: In der Dokumentation aller Kern-Module konsistent alle Komponenten aufführen (inkl. sichter, mitschreiber, hausKI-audio), damit die Rollenverteilung lückenlos klar ist. Redundante Hilfsfunktionen (Metarepo vs. Tools) könnten durch Zusammenführung vereinfacht werden (siehe Tabelle unten).
+
+  
+
+  
+
+2. Datenflüsse, Event-Typen und Contracts
+
+  
+
+  
+
+Die Kommunikation der Komponenten erfolgt über einen lokalen JSONL-Event-Bus, der verschiedene Topics nutzt (u.a. intent/*, graph/*, review/*, policy/*, state/*, insight/*, error/*) . Jeder Event-Typ folgt einem Contract (JSON-Schema), zentral verwaltet unter contracts/*.schema.json. Die Architektur sieht dabei klare Producer→Consumer-Beziehungen vor, die in den Dokumenten tabellarisch und in Flussdiagrammen festgehalten sind. Beispiele aus der Repo-Matrix :
+
+  
+
+- Außen-Events (aussen.event): Produziert von aussensensor (und optional weltgewebe), konsumiert primär von leitstand . Leitstand persistiert diese Events und bietet darauf basierend einen „Außen“-Panel und Exporte an.
+- Intent-Events (intent/*): Entstehen aus Mitschreiber (lokale OS-Kontext-Intents) oder hausKI-audio (Sprachbefehl → Intent) und werden via Topic an semantAH weitergeleitet . SemantAH nutzt diese, um Graph-Abfragen durchzuführen, deren Resultate (graph/*) an hausKI gehen . Zusätzlich gibt es ein allgemeines Schema intent_event.schema.json für manuelle Intents (Audio/Text-Kommando), das als Schnittstelle für Leitstand/HausKI dient .
+- Policy-Entscheidungen (policy.decision): Produziert von heimlern (Policy-Engine), konsummiert von hausKI (um Entscheidungen auszuführen) und im Leitstand zu Audit-Zwecken . Heimlern liefert darin auch Begründungen und ggf. Lern-Scores.
+- Review-Events (review/*): Entstehen aus sichter’s Diagnose/Review-Schritten. Sichter sendet z.B. ein review/report Event, wenn eine Überprüfung erfolgt ist . Interessanterweise wird dieser im aktuellen Design auf den Topic state/* gemappt, der dann von Leitstand empfangen wird . Diese Implementierung – Review-Resultate als State-Update – ist etwas unintuitiv (man könnte erwarten, es bleibt unter review/*). Vermutlich soll damit ausgedrückt werden, dass ein Review eine Zustandsänderung (z.B. Korrektur des Systemzustands) bewirkt. Dies könnte in der Doku klarer erläutert werden, da das Mermaid-Diagramm hier zunächst verwirrt .
+- State-Kontext (os.context.*): Kommt von mitschreiber (z.B. os.context.state, os.context.text.embed etc.), wird vom Leitstand persistiert und insbesondere von semantAH für den Aufbau des semantischen Kontextes genutzt . HausKI greift ebenfalls auf Intents aus dem OS-Kontext zurück (z.B. os.context.intent), um sie in Pläne umzusetzen . Die Verträge dafür sind in contracts/os.context.*.schema.json definiert.
+- Insights (insight/*): Generiert durch semantAH (Graph-/Embedding-Erkenntnisse, z.B. insight.graph oder tägliche Zusammenfassungen). Konsumenten sind hausKI (um angereicherte Infos bei Entscheidungen zu nutzen) und leitstand (zur Anzeige historischer Erkenntnisse) . Es gibt z.B. insights.schema.json und insights.daily.schema.json für entsprechende Ereignisse. Aktuell erscheinen diese Pfade in der Doku; ob semantAH diese schon aktiv nutzt, bleibt offen – zumindest gibt es ADRs/Blueprints, die die Vision dafür beschreiben. Wichtig: vault-gewebe (Privatnotizen) exportiert täglich eine Insight-Datei, die semantAH validieren kann , aber vault ist wie erwähnt außerhalb der öffentlichen Architektur.
+- Metrics Snapshot (metrics.snapshot): Wird vom WGX-CLI erzeugt (wgx metrics snapshot) und enthält System-Metriken oder Zustandsdaten (z.B. Versionen, letzte Sync-Zeitpunkte, Anzahl Events etc.). Laut Doku konsumieren hausKI und leitstand diese Snapshots – HausKI wohl zur Laufzeitdiagnose, Leitstand zur Visualisierung. In der Praxis werden Metrik-Snapshots im CI validiert und können optional an hausKI gesendet werden . Das zugehörige Schema heißt metrics.snapshot.schema.json.
+- Audio-Events (audio.events): Stammen von hausKI-audio (z.B. erkannte Sprachbefehle oder akustische Ereignisse) und fließen an hausKI (für die Kontextverarbeitung/Intent-Generierung) sowie an leitstand (Panel für Audio/Telemetrie) . Hier stellt hausKI-audio die Brücke zwischen Roh-Audio und einem strukturierten Event dar (audio.events.schema.json).
+
+  
+
+  
+
+Die Topic-Namen und Schema-Dateien sind größtenteils konsistent benannt, allerdings gibt es kleinere Uneinheitlichkeiten: Beispielsweise werden mehrteilige Topics manchmal mit Punktnotation, manchmal mit Unterstrich im Dateinamen geführt. policy.decision.schema.json oder knowledge.graph.schema.json nutzen einen Punkt, wohingegen intent_event.schema.json einen Unterstrich hat . Das könnte verwirren – vermutlich stammt intent_event aus früherer Benennung, während neuere Contracts die Punktnotation verwenden. Ein Abgleich zeigt, dass in neueren Dokumenten eher os.context.intent als Begriff genutzt wird, aber die alte intent_event-Schema-Datei existiert weiterhin . Es wäre konsistenter, die Namenskonvention zu vereinheitlichen (z.B. intent.event.schema.json analog zu policy.decision.schema.json), sofern technisch möglich. Zumindest sollte die Doku klarstellen, dass intent_event das gleiche Konzept wie intent/* Events abbildet, damit kein „toter“ Contract herumliegt.
+
+  
+
+Producer-Consumer-Konsistenz: Die meisten Datenflüsse sind schlüssig dokumentiert und technisch unterlegt durch JSON-Schemas, die in allen beteiligten Repos verwendet werden. Jeder definierte Eventtyp hat Producer und Consumer, die in Tabellen aufgeführt sind . So ist erkennbar, ob eventuell ein blinder Fleck existiert (z.B. ein Event wird erzeugt, aber nirgends genutzt). Im aktuellen Stand scheint jeder Haupt-Event einen Zweck zu haben. Einige Events sind allerdings noch in Planung oder wenig genutzt:
+
+  
+
+- Insights.daily: Schema vorhanden, Producer (semantAH) und Consumer (Leitstand) definiert, aber noch keine klare Implementierung ersichtlich (möglicherweise zukünftige Erweiterung für Tagesberichte).
+- knowledge.graph: Schema vorhanden; semantAH würde solche Events (Graph-Updates) produzieren, HausKI/Leitstand konsumieren. Hier ist semantAH aber evtl. noch im Aufbau, d.h. die praktische Nutzung dieser Events kann noch gering sein.
+- error/ Events*: Global vorgesehene Fehler-Events. Hier fehlt in der Doku, wer diese tatsächlich absetzt und konsumiert – vermutlich sollen alle Module bei Fehlern auf error/* loggen, und Leitstand könnte sie sammeln. Dies könnte noch deutlicher beschrieben sein (momentan nur im Topics-Listing erwähnt ). Ein blinder Fleck wäre hier die fehlende konkrete Handhabung der Fehler-Events (z.B. gibt es keinen speziellen Error-Collector-Service – vermutlich übernimmt Leitstand diese Rolle implizit).
+
+  
+
+  
+
+Datenfluss-Implementierung: Eine Diskrepanz zeigt sich zwischen Soll-Architektur und aktueller MVP-Umsetzung beim Aussensensor→Heimlern-Fluss. Laut Architektur sollte die Kette aussensensor → leitstand → heimlern laufen – d.h. Heimlern bezieht die Außen-Daten aus dem Leitstand-Persistenzlayer. In der Praxis jedoch gibt es im Aussensensor-Repo zwei Push-Skripte: push_leitstand.sh und push_heimlern.sh . Das bedeutet, der Aussensensor-Feed wird derzeit dupliziert an zwei Endpunkte geschickt (Leitstand und direkt Heimlern). Diese redundante Flussimplementierung deutet darauf hin, dass Heimlern (noch) nicht selbstständig die Daten aus Leitstand abruft. Zwar funktioniert so der End-to-End-Durchlauf (wie im E2E-Runbook beschrieben ), aber es birgt Risiken: z.B. könnten Inkonsistenzen entstehen, wenn Heimlern Events erhält, die Leitstand vielleicht verwirft, oder umgekehrt. Empfehlung: Langfristig sollte dieser Fluss konsolidiert werden – idealerweise schickt Aussensensor nur an Leitstand, und Heimlern holt von dort oder Leitstand leitet weiter. Die ADR 0002-mvp-to-daemon (im Aussensensor vorhanden) deutet bereits an, dass die aktuelle Lösung MVP-Charakter hat und zu einem dauerhaften Daemon (wohl mit integriertem Fluss) migrieren soll . Eine Vereinheitlichung würde die Architekturkonsistenz stärken.
+
+  
+
+Contract-Konsistenz: Für jeden Eventtyp existiert ein JSON-Schema im zentralen Contracts-Pool (heute im Metarepo). Viele Repositories enthalten zudem lokal eine Kopie der relevanten Schema(s) unter contracts/. Beispiel: Aussensensor führt contracts/aussen.event.schema.json mit, um lokal validieren zu können . Diese Duplizierung erfordert Synchronisation, wird aber durch das Metarepo unterstützt (siehe CI/Automation unten). Wichtig ist, dass die Versionierung eingehalten wird – dazu unten mehr. Bisher sind keine Fälle bekannt, wo Producer und Consumer unterschiedliche Stände eines Contracts verwenden; alle Repos pinnen sich auf eine gemeinsame Version (z.B. contracts-v1 Tag), was die Konsistenz sicherstellt .
+
+  
+
+Zusammengefasst sind die Datenflüsse sinnvoll gestaltet und weitgehend konsistent umgesetzt, mit Ausnahme einiger MVP-Kurzwege (Doppel-Push Heimlern) und geplanter aber noch nicht ausgeschöpfter Streams (Insights, Errors). Die Contracts dienen als gemeinsame Sprache und sind in den meisten Fällen stringent angewendet. Kleinere Inkonsistenzen (Naming, temporäre Workarounds) sollten in der nächsten Iteration behoben werden (siehe Tabelle). Zudem sollten Stellen, wo die technische Umsetzung vom idealen Fluss abweicht, in der Dokumentation als solche markiert werden, um Missverständnisse zu vermeiden.
+
+  
+
+  
+
+3. CI/CD-Konventionen (Contracts-Validierung, Tags vs. Branches, Workflows)
+
+  
+
+  
+
+Die CI/CD-Pipelines der Heimgewebe-Repos sind stark vereinheitlicht und auf Vertragsprüfung und Synchronität ausgerichtet. Es zeigen sich folgende zentrale Elemente in den Workflows aller (oder der meisten) Repositories:
+
+  
+
+- JSONL-Validierung in CI: Repos, die JSONL-Eventdaten produzieren (z.B. Aussensensor, Mitschreiber, etc.), haben automatisierte Checks, die sicherstellen, dass alle Event-Dateien dem Schema entsprechen. Dafür wird ein wiederverwendbarer Workflow eingesetzt (reusable-validate-jsonl.yml im Metarepo) . Beispiel Aussensensor: Bei jedem Push auf export/feed.jsonl wird der Workflow getriggert, welcher export/feed.jsonl gegen das zentrale Schema validiert . Intern nutzt dieser Workflow die Node-basierte AJV Schema-Validierung (via ajv-cli), entweder direkt oder über ein zentrales Action-Workflow-Fragment. Die Konsistenz ist hier hoch: Sowohl Aussensensor als auch andere Producer-Repos binden alle den gleichen zentralen Validator an (uses: heimgewebe/metarepo/.github/workflows/reusable-validate-jsonl.yml@contracts-v1) . Dadurch wird garantiert, dass überall der identische Validierungsprozess läuft.
+- Schema-Versionierung – Tags vs. Branches: Anstatt auf bewegliche Branches zu verweisen, pinnen alle Repos die gemeinsamen CI-Komponenten an einen statischen Tag, derzeit contracts-v1. Dieser Tag kapselt eine Version aller relevanten Contracts und CI-Workflows. In den YAML-Dateien sieht man z.B. @contracts-v1 bei Aufrufen der Reusable Workflows . Zusätzlich gibt es einen speziellen CI-Job in jedem Repo (contracts-validate.yml), der überprüft, ob in allen Workflow-Dateien die Verwendung zentraler Actions korrekt gepinnt ist . Dieser Job (Version-Sync-Check) durchsucht alle uses:-Zeilen nach Referenzen auf heimgewebe/contracts/... und wirft einen Fehler, falls nicht @contracts-v1 angegeben ist oder eine variable Ref genutzt würde . Damit wird unternehmensweit konsistente Tag-Nutzung erzwungen – ein wichtiger Schutz gegen Drifts. Die ADR 003-ci-reusables-pinning.md beschreibt diesen Governance-Ansatz vermutlich im Detail. Insgesamt ist die Tags vs. Branches-Frage also gelöst zugunsten von Tags für geteilte Ressourcen, was für Stabilität sorgt . (In Einzelfällen, z.B. während einer neuen Contracts-Welle, existieren parallele Branches wie work für die Vorbereitung, aber die Default-Refs der CI bleiben beim letzten stabilen Tag .)
+- Zentrale vs. lokale Workflows: Viele CI-Checks sind als reusable workflows im Metarepo definiert und werden von den Sub-Repos nur noch aufgerufen. Beispiele: JSONL-Validierung (siehe oben), WGX-Metrics-Check, Org-Assets-Check etc. . Vorteile: Einmalige Definition, leichter Rollout via Tag-Bump. Einige Workflows sind jedoch bewusst lokal pro Repo gehalten, etwa solche, die wirklich repo-spezifische Dinge prüfen (z.B. HausKI’s Rust-Tests, Sichter’s spezifische Fixtures, semantAH Graph-Checks). Auch der contracts-validate.yml selbst liegt dupliziert in jedem Repo, da er ja genau dort die Workflow-Dateien inspizieren muss. Diese Duplizierung ist konsistent – interessanterweise sind die Inhalte dieser Dateien fast überall identisch (gleiche MD5-Prüfsumme) , was die erfolgreiche Template-Synchronisierung belegt. Eine Ausnahme war hausKI-audio, wo der MD5 der contracts-validate.yml leicht abwich . Die inhaltliche Prüfung zeigt jedoch, dass es vermutlich nur YAML-Formatierungsunterschiede sind (z.B. Anführungszeichen um on: in hausKI-audio) – funktional ist es gleich und greift denselben Tag-Prüfmechanismus . Solche minimalen Abweichungen stellen keine ernsthafte Inkonsistenz dar, sollten aber bei Gelegenheit mit dem Template abgeglichen werden, um 100% Gleichstand herzustellen.
+- Verifizierung von Contracts in Consumer-Repos: Neben den Producer-Validierungen (die JSONL-Ausgaben prüfen) gibt es auch Workflows in Consumer- oder allgemeinen Repos, um beispielsweise fixierte Beispiel-Daten zu validieren. Z.B. der Leitstand verfügt über Tests für Ingest-Funktionen mit Beispiel-JSONL (sample-ok.jsonl) , semantAH hat validate-intent-fixtures.yml und validate-knowledge-graph.yml Workflows, um Beispielgraph-Knoten/-Kanten gegen Schemas zu prüfen . Diese stellen sicher, dass die Contracts auch auf Konsumentenseite eingehalten werden. Insbesondere wenn ein Repo mehrere Contracts berührt (semantAH z.B. Insights und Graph), sind entsprechende Validierungen vorhanden. Eine eventuelle Unstimmigkeit ist, dass heimlern – obwohl es policy.decision-Events ausgibt – anscheinend keinen eigenen Contracts-Validierungsjob besitzt (kein contracts-validate.yml dort) . Das mag daran liegen, dass heimlern keine JSONL-Datei committet, die geprüft werden kann (es sendet Entscheidungen zur Laufzeit). Dennoch könnte man einen Test (z.B. Beispiel-Decision JSON) analog zu anderen Fixtures erwägen, um auch diesen Contract regelmäßig zu verproben. Momentan ist hier eine Lücke: die Policy-Decision-Events werden nicht in CI validiert, sondern nur durch die Schema-Präsenz im Metarepo definiert. Da heimlern noch jung (Rust-Projekt) ist, kommt das sicher später; ein Hinweis in der Doku könnte aber schon jetzt helfen.
+- Metrics und weitere CI-Automatisierungen: Jeder Repo enthält einen metrics.yml Workflow, um regelmäßig Metrik-Snapshots zu erzeugen und optional hochzuladen. Auch hier wurde zentralisiert gearbeitet: Im Metarepo gibt es einen Reusable Workflow .github/workflows/wgx-metrics.yml . In den Sub-Repos wird dieser wiederverwendet oder zumindest nach Template erstellt. In Aussensensor z.B. wird an passender Stelle just wgx metrics snapshot ausgeführt und per actions/upload-artifact gespeichert . Zudem pinnt der zentrale Workflow optional einen Upload an hausKI an . Die Konsistenz: Alle Repos mit .wgx/profile definieren ein metrics-Task (Templatevorgabe) und entsprechende CI, sodass überall ein metrics.json entsteht . Eine winzige Abweichung ist die Implementierung: Es existiert sowohl eine WGX-interne Implementation (wgx metrics snapshot Befehl) als auch in mehreren Repos ein Shell-Skript scripts/wgx-metrics-snapshot.sh . Dies war nötig, weil WGX v2 dieses Feature wohl erst erhalten hat. Tatsächlich prüft der CI-Workflow: Wenn just wgx metrics snapshot fehlschlägt, wird das lokale Script als Fallback genutzt . Tests in mehreren Repos (z.B. Sichter, Aussensensor) stellen die Funktionsfähigkeit des Skripts sicher . Aus CI-Sicht ist dies konsistent gehandhabt, aber es ist redundant, zwei Implementierungen vorzuhalten. Künftig, wenn WGX-CLI stabil das Feature bietet, sollte man die Skripte entfernen zugunsten des einen WGX-Befehls, um Wartung zu sparen.
+- Release und Deployment: Aktuell gibt es Hinweise auf Release-Workflows (z.B. release.yml in wgx und hausKI). Diese veröffentlichen Versionen (z.B. WGX als eigenes CLI-Tool) und verwalten evtl. Changelog und Tagging. Es scheint, dass Tags primär für Contracts/CI benutzt werden und die Applikationen selbst vielleicht weniger oft getaggt (noch in Entwicklung). Branching-Strategie: Alle wichtigen Repos nutzen main als Default-Branch , es gibt keine Verwirrung durch unterschiedliche Hauptbranches. Einzelne technische Branches (work) im Metarepo werden in der Doku erwähnt, betreffen aber nur die Vorbereitung neuer Contract-Versionen und tangieren die CI der Sub-Repos nicht .
+
+  
+
+  
+
+CI/CD-Verhalten insgesamt: Sehr einheitlich und sicherheitsbewusst. Durch das Metarepo als zentrale Stelle für Workflows sind alle Repos auf dem gleichen Stand (z.B. alle JSONL-Validatoren prüfen dieselben Regeln). Die Policy, Pins auf Tags zu erzwingen, verhindert Versionsdrift und ist eine gute Praxis . Inkonsequenz gibt es kaum – nur in Details: Einige Repos (heimlern) haben aufgrund fehlender Exportdaten weniger Checks; Kleinigkeiten wie unterschiedliche YAML-Formatierung oder veraltete Skriptreste (hausKI-audio quotes, Metrics-Skripte) könnten vereinheitlicht werden.
+
+  
+
+Eine weitere positive Sache: Dokumentation der CI. Die Entwickler haben im Metarepo Markdown-Dateien zur CI (z.B. docs/automation.md, docs/ci-reusables.md) , die die Verwendung der Justfile-Targets (für CI-Tasks) und die Reusable Workflows erläutern. Dadurch sind die CI-Konventionen transparent. Als Verbesserungspotential bliebe, Consumer-Validierungen (z.B. heimlerns Decisions) künftig ebenso streng zu automatisieren wie Producer-Validierungen, um die Kette vollständig zu machen.
+
+  
+
+  
+
+4. Tooling, Skripte und gemeinsame Infrastruktur
+
+  
+
+  
+
+Gemeinsame Infrastruktur: Der Heimgewebe-Stack bringt einige gemeinsame Tools mit, insbesondere WGX (CLI/DevTool) und in geringerem Maße die Just-Build-Skripte sowie geteilte Libraries.
+
+  
+
+- WGX (WeGeX): Dieses Tool ist zentraler Baustein, um alle Repos konsistent zu handhaben. Jedes Repo hat eine Konfigurationsdatei .wgx/profile.yml (bzw. .wgx/profile.example.yml), die definiert, welche Aufgaben (tasks) es unterstützt . Templates im Metarepo stellen sicher, dass alle Repos mindestens Standard-Tasks haben (up, lint, test, smoke, metrics etc.) . Somit kann WGX globale Operationen orchestrieren (z.B. “führe just smoke in allen Repos aus” über wgx run --all …). Diese Einheitlichkeit ist ein Pluspunkt. Die profile.yml Dateien sind größtenteils identisch (Repo-Typ = generic, requiredWgx ~2.0) . Inkonstanz: Manche Repos committen eine ausgefüllte profile.yml, andere nur ein profile.example.yml. Beispielsweise hat semantAH sowohl eine profile.yml (mit spezifischen Overrides, etwa RUST_LOG für Debugging) , als auch eine example-Datei, während aussensensor nur eine Example-Vorlage committed und vom Entwickler erwartet, sie ggf. zu kopieren. Dies ist ein kleiner Unterschied in Praxis. Einheitlicher wäre, entweder überall nur Vorlagen zu haben oder (besser) die Default-Profile gleich als profile.yml auszurollen, sofern sie keine geheimen Daten enthalten. So wäre WGX out-of-the-box funktionsfähig in jedem Klon.
+- WGX vs. lokale Skripte: WGX deckt viele Funktionen als Bash-Module intern ab (lib/*.bash und cmd/*.bash in wgx) . Einige Funktionalitäten wurden aber (noch) nicht vollständig in WGX integriert, weshalb lokale Skripte existieren. Der deutlichste Fall ist Metrik-Snapshot: WGX 2.0 soll wgx metrics snapshot beherrschen, aber trotzdem liegt in fast jedem Repo ein scripts/wgx-metrics-snapshot.sh als Fallback . Das führt zu Redundanz – Änderungen am Metrikformat müssten in WGX und in jedem Skript erfolgen. Hier versucht man, Übergangslösungen abzufedern (siehe CI-Check der Verfügbarkeit). Ähnlich: JSONL-Validierung. WGX bietet keinen eigenen JSONL-Check-Befehl, daher existieren in Aussensensor scripts/validate.sh (nutzt npx ajv) oder in Tools jsonl-validate.sh. Diese Skripte erfüllen ihren Zweck, aber man könnte überlegen, WGX modular zu erweitern, um solche häufigen Helfer (JSONL prüfen, JSONL trimmen) als Commands bereitzustellen. Dann könnten die separaten Skripte entfallen. Positiv ist, dass zumindest in der Tools-Sammlung generische Varianten existieren (jsonl-validate, jsonl-tail), was Wiederverwendung erlaubt – einige Repos (aussensensor) haben dennoch eigene Variationen (z.B. append-feed.sh, jsonl-compact.sh) , teils aus historischen Gründen des MVP. Hier besteht Aufräumpotential: Wenn der Daemon-Ansatz umgesetzt wird, werden diese Shellskripte durch dauerhafte Services ersetzt, wodurch die Duplikate wegfallen können.
+- Gemeinsame Libraries und Scripts im Metarepo: Metarepo enthält unter templates/ und scripts/ zahlreiche Hilfsmittel, um Konsistenz sicherzustellen. Z.B. scripts/sync-templates.sh verteilt Änderungen aus templates/** in alle Repos (so bleiben z.B. GitHub-Workflows auf Stand) . Auch scripts/validate-contracts.sh im Metarepo dient vermutlich dazu, alle Schema-Dateien einmal global zu validieren oder Repo-spezifische Schema-Differenzen aufzudecken. Diese Tools adressieren direkt mögliche Drift-Probleme. Insgesamt wirkt das Tooling durchdacht und trägt viel zur Homogenisierung bei. Die Repos verweisen auch in README oder Developer-Docs auf diese Tools, z.B. wie man mit just up alle Templates spiegelt oder mit wgx doctor Drifts prüft . Das CI nutzt diese Tools ebenfalls (z.B. Org-Index-Generator). Hier gibt es keine auffälligen Lücken; die existierenden Mechanismen scheinen in den ADRs begründet (ADR-002 Reusable Actions Rollout, ADR-004 WGX Profile v1 etc.).
+- Redundanzen und Inkonsistenzen im Tooling: Abgesehen von bereits genannten (Metrik-Skript vs. WGX, JSONL-Skripte mehrfach) sind kleinere Inkosistenzen feststellbar:  
+    
+
+- Einige Repos haben custom Scripts, die ähnliches tun wie Tools-Scripts. Z.B. sichter hat ci-smoke-sichter.sh, während andere Repos einfach das generische Template ci.yml nutzen. Das liegt an unterschiedlichen Technologien (Sichter kombiniert Python und Bash, HausKI-Audio ist Rust etc.), aber man könnte prüfen, ob solche spezialisierten CI-Skripte nicht auch als Template moduliert werden können.
+- Pfadanordnung: hausKI hat in .github/workflows eine Fülle an Checks (Policy-CI, Vendor, etc.), manche davon sind generisch (z.B. vendor.yml für Abhängigkeitsupdates, security.yml). Tools und WGX haben teils ähnliche Workflows. Es wäre konsequent, alle generischen Security/Vendor Checks ebenso zentral bereitzustellen. Aktuell sind diese aber teils in jedem Repo einzeln vorhanden, was auf Duplikation hindeutet (z.B. secret_scanning.yml in HausKI, aber nicht in allen Repos). Ein Blind Spot hier: Es sollte überprüft werden, ob Sicherheits- und Abhängigkeitschecks für alle gelten (z.B. Dependabot nur in code-lastigen Repos wie HausKI, WGX aktiviert?). Konsistenz in CI bedeutet auch, dass solche Baseline-Workflows einheitlich verteilt sind. Metarepo könnte hier noch mehr als Schablone dienen (in templates/.github/workflows liegen einige .keep-Dateien und beispielhafte Workflows wie validate-agent-workflow.yml, wgx-smoke.yml , was andeutet, dass man plant, noch mehr zu templaten).
+
+-   
+    
+
+  
+
+  
+
+Zusammengefasst ist das Tooling-Konzept robust: WGX als einheitliche Steuerung, Metarepo-Scripts für Fleet-weit Operationen, Repo-eigene Scripts nur wo nötig. Redundanzen entstehen vor allem durch den aktuellen Übergangszustand (MVP zu langfristiger Lösung): doppelte Implementierungen (Skripte vs. WGX-Kommandos) und verteilte Helfer. Diese gilt es mittelfristig aufzulösen, um die Pflege zu erleichtern. Inkonsistenzen sind minimal und stören den Betrieb nicht direkt, könnten aber für Entwickler verwirrend sein (z.B. welches validate.sh Script gilt – das im Repo oder das im Tools-Ordner? Antwort: meistens Repo-spezifisch). Eine bessere Dokumentation der Tool-Landschaft könnte helfen, klarzustellen, wann man WGX benutzt, wann Skripte, und wie Just/Makefiles ins Bild passen.
+
+  
+
+  
+
+5. Dokumentation und Architektur-Dokumente
+
+  
+
+  
+
+Die Heimgewebe-Dokumentation ist umfangreich und deckt viele Aspekte ab: README-Dateien in den Repos, ein systemweiter Überblick (system-overview.md) im Metarepo, ADR-Verzeichnisse pro Repo, spezielle Contracts-Dokumente, Templates und mehr.
+
+  
+
+Positiv auffallend: Es gibt eine hohe Transparenz durch die Docs im Metarepo:
+
+  
+
+- Systemübersicht und Repo-Matrix beschreiben die Rollen der Repos und ihre Schnittstellen sehr detailliert .
+- Das Vision-Dokument und IDEal_Blueprint erklären die langfristige Zielarchitektur inkl. aller Datenflüsse .
+- Contracts.md sowie spezifische Seiten (z.B. docs/contracts/mitschreiber.md) erläutern die Bedeutung einzelner Schnittstellen und enthalten teils sogar Versionierungstabellen (z.B. Mitschreiber-Contracts v1, v2 geplant) .
+- Für kritische Entscheidungen gibt es ADRs: z.B. ADR-0001 im Aussensensor definiert das aussen.event-Format , ADR-0001 im semantAH definiert Semantic-Graph-Contracts, ADRs im Metarepo (0001-contracts-v1-jsonl, 0002-reusable-actions-rollout etc.) definieren übergreifende Strategien. Diese ADRs sind vorhanden und zeigen, dass die Doku nicht nur den Was, sondern auch den Warum adressiert.
+
+  
+
+  
+
+Dokumentationskonsistenz: Trotz der Fülle an Infos sind die Kernbotschaften weitgehend konsistent. Die Schichten und Module werden an mehreren Stellen gleich beschrieben (siehe Abschnitt Rollen). Die Datenflüsse aus Diagrammen decken sich mit den tabellarischen Aufstellungen in den Texten. Dadurch entsteht ein stimmiges Gesamtbild. Wo gibt es dennoch blinde Flecken oder Inkonsistenzen?
+
+  
+
+- Mitschreiber & Sichter in der high-level Doku: Wie erwähnt, fehlten diese in einer Liste im architecture.md , obwohl im Blueprint vorhanden. Das ist vermutlich ein Versehen und sollte korrigiert werden, damit Leser nicht annehmen, es gäbe nur 5 Hauptmodule, obwohl es 7 sind.
+- Vault-gewebe und Weltgewebe: Hier ist die Doku absichtlich knapp/offen – man erfährt nur, dass sie nicht Teil der Fleet sind . Das ist okay (privates Repo), allerdings taucht vault-gewebe in manchen Diagrammen als Knoten auf (mit Hinweis „nicht Fleet“) . Diese Erwähnungen können Fragen aufwerfen; die Doku löst es, indem sie klar sagt, dass keine öffentliche Dokumentation erfolgt . Aus Konsistenzsicht wäre es hilfreich, im Repo-Matrix/Overview vorne einen Satz zu haben, dass vault- und weltgewebe existieren, aber außen vor bleiben – dann muss man nicht im Fließtext suchen.
+- Technologie-Spezifika: Manche Repos haben Tech-spezifische Doku, z.B. hausKI-audio (Rust) wird wohl ein README zur Entwicklung in Rust haben, heimlern könnte über Reinforcement-Learning Ansätze informieren. Im Metarepo finden wir generische Leitlinien (z.B. Language-Policy.md, Konzept-Kern.md über Governance ). Was etwas fehlt, sind detailierte Runbooks für jeden Service: Zwar gibt es z.B. aussensensor/docs/runbook.md oder semantAH/docs/runbooks, aber nicht jede Komponente scheint ein eigenes README mit Quickstart zur Inbetriebnahme zu haben. Evtl. wird das durch den System-Quickstart (just up, uv etc. in Metarepo) ersetzt. Dennoch: Für neue Entwickler wäre ein kurzer Abschnitt „So startest du Komponente X im Alleingang“ nützlich. Teilweise ist das im Metarepo-README unter Schnelleinstieg schon adressiert (Verweis auf Systemübersicht und uv Start) – aber verteilt auf viele Orte.
+- Verlinkung und Redundanz in Dokumenten: Durch die Menge an Doku kommt es zu etwas Dopplung. Beispielsweise überschneiden sich overview.md und system-overview.md inhaltlich, oder architecture.md und heimgewebe-gesamt.md. Die Doku strukturiert sich in Executive Summary vs. Detailed (z.B. Heimgewebe-v2-detailed.md vs. eine Maximeffizienz-Zusammenfassung) . Diese Redundanz ist intendiert (verschiedene Zielgruppen). Wichtig ist hier, dass sie synchron bleiben. Aktuell gibt es eine hohe Pflege: z.B. wurde in allen Diagrammen die Schichten angepasst, die ADRs nennen entsprechende Versionsnummern (IDEal v0.2 etc.). Sollte sich etwas ändern (z.B. ein geplanter mitschreiber v2 Contract), muss dies an mehreren Stellen nachgezogen werden (Docs, ADR-Tabelle, JSON-Schema, evtl. Comments in Code). Das birgt die Gefahr von Drift in der Doku. Noch ist das nicht akut sichtbar, aber ein fortlaufendes Augenmerk wert. Tools wie der Docs Link Check Workflow sorgen zumindest für Konsistenz der Querverweise.
+- README-Qualität der einzelnen Repos: Einige Repos (Sichter, HausKI) haben zusätzliche README-Dateien (z.B. README-cotmux.md, README-loom.md in Sichter für bestimmte Tools) . Das ist gut, kann aber ungeübte Leser irritieren, wenn unklar ist, was davon aktuell ist. HausKI und WGX scheinen sehr ausführliche README/CLI-Dokumentation zu haben (Command-Reference etc. in docs) . Aussensensor hat eine gute README mit Nutzungsbeispielen (Append, Validate, Push), wie die Ausschnitte in der repomerge zeigen . Heimlern als Rust-Projekt hat evtl. noch knappere README (nur Build/CI?). Insgesamt ist die Dokumentationsdichte hoch und kaum Lücken zu finden, was bemerkenswert ist.
+
+  
+
+  
+
+Die Vertragsdokumentation verdient noch Erwähnung: In docs/contracts/index.md werden Schnittstellenverträge aufgelistet, inkl. Producer/Consumer und Zweck . Dies veranschaulicht sehr gut die Konsistenz zwischen Code und Doku. Zum Beispiel: contracts/aussen.event.schema.json ist mit „Producer: aussensensor, weltgewebe; Consumer: leitstand (Panel Außen)…“ beschrieben , was genau so in Implementierung und ADR reflektiert ist . Solche Übersichten in Tabellenform sind gold wert für die Konsistenzprüfung. Auch wird hier transparent gemacht, welche Schema-Versionen eingeführt wurden (z.B. Mitschreiber Contracts v1 = Tag contracts-v1, v2 in Planung) .
+
+  
+
+Verbesserungsmöglichkeiten:
+
+  
+
+- Eine tabellarische Übersicht aller Repos (ähnlich Repo-Matrix) könnte prominenter im README stehen. Momentan ist die Repo-Matrix im Metarepo vergraben, aber eine einfachere Tabelle „Repo → Zweck → Programmiersprache → CI-Status“ im Haupt-README könnte neuen Mitwirkenden helfen.
+- Für die Inkonsistenzen, die wir fanden (z.B. mitschreiber nicht überall erwähnt, intent_event vs. os.context.intent Benennung, temporäre Doppelwege), sollten Issues oder ADRs ergänzt werden, damit nachvollziehbar ist, ob das bewusst so ist oder noch bereinigt wird. Evtl. existieren schon ADRs, die MVP-Workarounds (wie doppeltes Push) erklären – falls nicht, wären kurze ADR-Notizen sinnvoll.
+
+  
+
+  
+
+Insgesamt aber ist die Dokumentation vorbildlich ausführlich und weitgehend konsistent mit der Implementierung. Nur an vereinzelten Stellen hinkt die Dokupflege dem Code leicht hinterher oder umgekehrt (typisch in aktiver Entwicklung). Wichtig ist, diese Stellen zu identifizieren und anzugehen – was in der folgenden Tabelle zusammengefasst wird.
+
+  
+
+  
+
+Inkonsistenzen & Empfehlungen (Übersicht)
+
+  
+
+  
+
+Nachfolgend sind die identifizierten Inkonsistenzen, Redundanzen oder undokumentierten Punkte tabellarisch aufgelistet, mit Angabe der betroffenen Repos/Dateien, einer kurzen Beschreibung und einem Lösungsvorschlag:
+
+|   |   |   |   |
+|---|---|---|---|
+|Betroffene Komponente(n)|Datei/Bereich|Beschreibung des Problems|Empfehlung zur Behebung|
+|Dokumentation (Architekturübersicht)|Metarepo docs/architecture.md|Sichter und Mitschreiber fehlen in der Komponentenauflistung, obwohl sie Teil der Architektur sind . Leser könnten annehmen, es gäbe diese Module nicht.|Liste der Komponenten in architecture.md und ähnlichen Übersichten vervollständigen (Schichten 3 und 6 mit aufnehmen), um Vollständigkeit herzustellen.|
+|Naming Contracts|intent_event.schema.json vs. os.context.intent.schema.json (Metarepo contracts)|Uneinheitliche Benennung: intent_event verwendet Unterstrich statt Punkt, anders als z.B. policy.decision . Kann Verwirrung stiften, ob es ein anderer Typ ist.|Vereinheitlichen der Schema-Dateinamen (z.B. Umbenennen zu intent.event.schema.json und Doku entsprechend anpassen) oder in Doku klar erklären, dass dies dasselbe Intent-Event bedeutet.|
+|Datenfluss Aussensensor→Heimlern|Aussensensor scripts/push_heimlern.sh (duplikative Nutzung)|Architektur sieht Sequenz über Leitstand vor, dennoch pusht Aussensensor derzeit direkt an Heimlern (MVP-Workaround) . Redundanter Datenfluss, Gefahr von Divergenz.|In Zukunft Fluss konsolidieren: Heimlern über Leitstand versorgen. Kurzfristig: In Doku/ADR den MVP-Weg erläutern (damit Entwickler den doppelten Push einordnen können). Langfristig: Heimlern-Ingest in Leitstand integrieren oder Automatisierung, sodass ein Push reicht.|
+|Wiederverwendbare Skripte vs. WGX|wgx-metrics-snapshot.sh (in aussensensor, sichter, tools, semantAH) vs. WGX metrics snapshot|Metrik-Snapshot doppelt implementiert: als WGX-Command und als Shell-Skript in mehreren Repos . Pflegeaufwändig und potenziell auseinanderlaufend.|Sobald WGX v2 stabil metrics snapshot bietet, Skripte entfernen und alle CI auf den WGX-Befehl umstellen. In Zwischenzeit Scripts zentral in tools vorhalten und in Repos nur referenzieren, um Duplikat-Code zu reduzieren.|
+|Lokale JSONL-Tool-Skripte|z.B. aussensensor scripts/validate.sh vs. tools jsonl-validate.sh|Mehrere ähnliche Hilfsskripte für JSONL (validate, tail, compact) existieren in verschiedenen Repos, teils mit überschneidender Funktion.|Prüfung, ob tools/scripts (jsonl-validate, jsonl-tail etc.) als allgemeine Version genutzt werden können. Ggf. diese Skripte via Metarepo in die Repos syncen, um Einheitlichkeit herzustellen, oder Funktion in WGX integrieren.|
+|CI-Workflow-Pinning (geringe Abweichung)|hausKI-audio .github/workflows/contracts-validate.yml|YAML-Format unterscheidet sich leicht (Quotes um on:), anderer Hash . Funktional zwar gleich, aber nicht 1:1 Template-konform.|Template-Sync für Workflows erneut durchführen, um Formatabweichungen zu beseitigen. Evtl. Prettier/YAML-Linter einsetzen, damit alle Workflows denselben Stil haben.|
+|Fehlende CI-Checks für bestimmten Contract|heimlern (Rust) – kein contracts-validate Workflow, keine JSONL-Validierung|Heimlern erzeugt policy.decision Events, aber es gibt keinen Workflow, der Beispiel-Decision-Objekte gegen policy.decision.schema.json prüft (im Gegensatz z.B. zu Mitschreiber oder Aussensensor mit ihren Events).|Einen minimalen CI-Test ergänzen: z.B. ein Fixture tests/fixtures/decision/sample.json anlegen und mit dem zentralen AJV-Workflow prüfen. Alternativ in Leitstand oder HausKI-Tests sicherstellen, dass eingehende Decisions validiert werden. Dokumentation (README/ADR) sollte darauf hinweisen, dass dies noch manuell im Auge zu behalten ist, bis automatisiert.|
+|Verteilte Security/Dependency Workflows|hausKI, wgx etc. – z.B. secret_scanning.yml, dependabot.yml nur in manchen Repos|Einige Baseline-CI-Themen (Secrets-Scan, Dependency Updates) sind nicht in allen Repos konsistent konfiguriert – evtl. weil nicht überall relevant (z.B. Rust vs. Python). Dennoch uneinheitliches Bild.|Entscheiden, welche Repos diese Checks brauchen, und entweder überall einführen (kann via Metarepo-Template gesteuert werden) oder dokumentieren, warum Repo X es nicht hat. Z.B. Dependabot für Cargo in heimlern aktivieren, wenn sinnvoll. Einheitliche Security-Standards definieren und in docs/policies/github-actions-pinning.md oder orientierung.md ergänzen.|
+|Vault/Weltgewebe Erwähnung|Metarepo Docs (overview, vision) & Diagramme|Vault-Gewebe taucht in Diagrammen auf, aber mit Vermerk „nicht in Fleet“. Manche Leser könnten nähere Erklärung vermissen.|Klarstellung an zentraler Stelle (z.B. in system-overview Einleitung): Vault- und Weltgewebe sind externe Bestandteile, werden in Fleet-Doku nicht vertieft. Gegebenenfalls im Diagramm eine Legende hinzufügen, die diese ausgegrauten Komponenten erklärt.|
+|Aktualität vs. Planung|Diverse (Contracts v2, geplante Flüsse)|Einige Dokumentpassagen beschreiben geplante Features (z.B. Mitschreiber Contracts v2 geplant , weitere Topics wie feedback/reward schon genannt vor Implementierung). Könnte Leser irritieren, was schon real ist.|In den Docs klar kennzeichnen, was Vision/Zukunft (z.B. mit (geplant) markiert) ist. Eventuell eine Sektion „In Planung“ je Komponente, damit der aktuelle Umfang vs. kommende Erweiterungen unterscheidbar sind. ADRs für zukünftige Änderungen (Contracts v2 etc.) bereits anlegen, um den Plan festzuhalten.|
+
+Diese Maßnahmen würden dazu beitragen, die funktionale, technische und dokumentarische Konsistenz der Heimgewebe-Architektur weiter zu steigern. Insgesamt befindet sich das Projekt auf einem guten Weg – die meisten Inkonsistenzen sind bereits bekannt oder Folge des agilen Fortschritts (MVP-Phasen) und können mit gezielter Vereinheitlichung und Dokumentationspflege behoben werden.
+
+
+
+
+
+bitte folgenden punkt zuerst bearbeiten:
+
+Dokumentation angleichen (metarepo)
+
+A1 — Komponentenliste komplett machen
+	•	Dateien: docs/architecture.md, docs/overview.md (oder die jeweilige Übersicht, die nach außen zeigt)
+	•	Aufgabe:
+	•	Schichten 0–6 inkl. sichter (3) und mitschreiber (6) ergänzen.
+	•	Am Anfang „Nicht-Fleet“ explizit: vault-gewebe (privat), weltgewebe (unabhängig).
+	•	Akzeptanz:
+	•	Beide Seiten listen dieselben 7 Kernkomponenten.
+	•	Ein Satz „Vault/Weltgewebe nicht Teil der Fleet“ in den Einleitungen.
+
+A2 — Contracts-Benennung klarziehen
+	•	Dateien: docs/contracts.md + Hinweisbox in docs/architecture.md
+	•	Aufgabe:
+	•	Hinweis „intent_event.schema.json ≙ intent/* (historische Benennung)“ ergänzen.
+	•	(Optional, wenn gewünscht) Issue anlegen: Rename zu intent.event.schema.json + Migrationshinweis.
+	•	Akzeptanz:
+	•	Tabelle in docs/contracts.md führt beide Namen, verweist auf dasselbe Konzept.
+
+A3 — MVP-Doppelpfad dokumentieren
+	•	Dateien: docs/flows.md (oder passende Seite), Abschnitt „aussensensor → leitstand → heimlern“
+	•	Aufgabe:
+	•	Aktueller Stand: aussensensor pusht an leitstand und direkt an heimlern (MVP).
+	•	Zielbild markieren: nur leitstand ingest; heimlern konsumiert von dort (oder webhook/stream).
+	•	Akzeptanz:
+	•	Box „MVP-Workaround“ + „Zielarchitektur“ vorhanden.
+
+	
+	(cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF'
+diff --git a/docs/architecture.md b/docs/architecture.md
+new file mode 100644
+index 0000000..e9d9a23
+--- /dev/null
++++ b/docs/architecture.md
+@@ -0,0 +1,64 @@
++# Heimgewebe – Architektur (Schichten & Komponenten)
++
++> Ergänzung zur Übersicht: konsistente Benennung aller Kern-Komponenten und klare Abgrenzung von Nicht-Fleet Repos.
++
++## Schichtenmodell (0–6)
++- **0 Physisch** · OS / systemd / wgx
++- **1 Semantisch** · **semantAH** (Embeddings & Graph)
++- **2 Operativ** · **hausKI** (Plan · Simulation · Ausführung)
++- **3 Reflexiv** · **sichter** (Diagnose · Review · Selbstkorrektur)
++- **4 Memorativ** · **leitstand** (Episoden · Metriken · Audit)
++- **5 Politisch-Adaptiv** · **heimlern** (Policies · Lern-Feedback · Scores)
++- **6 Dialogisch-Semantisch** · **mitschreiber** (Intent · Kontext · Text- & State-Embeddings)
++
++## Fleet (Core-Repos)
++- `metarepo` · Control-Plane, Contracts, Reusable Workflows
++- `wgx` · System-Motorik & Automation
++- `hausKI` · Orchestrator/Planner
++- `heimlern` · Policy-/Bandit-Layer
++- `semantAH` · Wissensgraph/Insights
++- `leitstand` · Ingest & Panels
++- `hausKI-audio` · Audio-Events
++- `aussensensor` · Außenfeeds → kuratierte Events
++- `mitschreiber` · Intent-/Kontext-Sensorik
++
++## Nicht-Fleet (explizit)
++- **vault-gewebe** (inkl. privat) – persönlicher Wissensspeicher
++- **weltgewebe** – unabhängiges Projekt; kann Signale liefern, gehört aber **nicht** zur Fleet
++
++Siehe auch: [`docs/overview.md`](./overview.md), [`docs/contracts.md`](./contracts.md).
+diff --git a/docs/contracts.md b/docs/contracts.md
+index d3ed14e..b1c1e06 100644
+--- a/docs/contracts.md
++++ b/docs/contracts.md
+@@ -1,6 +1,12 @@
+ # Contracts v1 – Kurzreferenz
+ 
+ Die Contracts definieren den gemeinsamen Korridor für alle Fleet-Repos. Jede Producer-Anwendung erzeugt Artefakte, die zu einem der Schemas passen, während Consumer und Control-Plane Workflows dieselben Schemas zur Validierung heranziehen.
++
++> **Benennungshinweis:** Historisch taucht für Intent-Events teils der Name `intent_event.schema.json` auf. Gemeint ist dasselbe wie `events/intent.schema.json`. Beide Bezeichnungen verweisen auf denselben Contract-Sachverhalt (Topic `intent/*`). Migrationspfad: Konsolidierung auf `events/intent.schema.json`.
+ 
+ ## Übersicht
+@@ -16,6 +22,9 @@
+  | `contracts/aussen.event.schema.json` | `aussensensor`, `weltgewebe` | `leitstand` Panel „Außen“, Downstream Exports |
+  | `contracts/event.line.schema.json` | `hausKI` JSONL Event-Log | Fleet-Debugging, Replays, Append-only Sync |
+  | `contracts/policy.decision.schema.json` | `heimlern` Policies | `hausKI` erklärt Entscheidungen („Warum“), `leitstand` zeigt Begründungen |
++ | `contracts/events/intent.schema.json` *(Alias: intent_event)* | `mitschreiber` Intent-Sensorik | `hausKI` Planung, `leitstand` Audit |
++ | `contracts/insights.schema.json` | `semantAH` | `hausKI`, `leitstand` |
++ | `contracts/metrics.snapshot.schema.json` | `wgx` | `hausKI`, `leitstand` |
+ 
+ ### `contracts/aussen.event.schema.json`
+ 
+diff --git a/docs/flows.md b/docs/flows.md
+new file mode 100644
+index 0000000..8a1f8a1
+--- /dev/null
++++ b/docs/flows.md
+@@ -0,0 +1,54 @@
++# Event-Flüsse: Außen → Leitstand → Policies
++
++## Aktueller MVP-Pfad (bewusst doppelt)
++1. `aussensensor` erzeugt kuratierte Außen-Events (`export/feed.jsonl` · `aussen.event.schema.json`).
++2. Push **an `leitstand`** (*Bevorzugt*): `POST /ingest/aussen` (oder `/v1/ingest` sobald verfügbar).
++3. Parallel (MVP): **direkter Push an `heimlern`** zur frühen Policy-Evaluation.
++
++→ Dieser Doppelpfad ist **temporär** und dient der iterativen Entwicklung von Policies.
++
++## Zielarchitektur (Single Ingest)
++1. `aussensensor → leitstand` (einziger Ingest).
++2. `heimlern` konsumiert Ereignisse **von `leitstand`** (z. B. Stream/Webhook/Batch).
++3. `hausKI` fragt `heimlern` (`/v1/policy/decide`) und liefert Feedback (`/v1/policy/feedback`).
++
++### Migrationsnotizen
++- `aussensensor`: `push_heimlern.sh` im Header als **MVP-Pfad** markieren; `push_leitstand.sh` als Preferred.
++- `leitstand`: OpenAPI-Spec für `POST /v1/ingest` bereitstellen (Domains intern geroutet).
++- `heimlern`: Ingest von `leitstand` (Polling/Stream) vorbereiten.
++
++Siehe auch: [`docs/architecture.md`](./architecture.md), [`docs/overview.md`](./overview.md).
+diff --git a/docs/overview.md b/docs/overview.md
+index f777f4a..e2f5d1a 100644
+--- a/docs/overview.md
++++ b/docs/overview.md
+@@ -1,7 +1,18 @@
+ # Heimgewebe Fleet – Kurzüberblick
+ 
+ > **Kernabgrenzung:** Die Heimgewebe-**Fleet** besteht aus den *Core-Repos*. Zusätzlich existieren verwandte Repos, die parallel entwickelt werden oder persönliche Daten enthalten, aber **nicht** zur Fleet zählen.
+ 
++## Schichten & Kern-Komponenten (konsolidiert)
++- 0 Physisch · OS/systemd/wgx
++- 1 Semantisch · **semantAH**
++- 2 Operativ · **hausKI**
++- 3 Reflexiv · **sichter**
++- 4 Memorativ · **leitstand**
++- 5 Politisch-Adaptiv · **heimlern**
++- 6 Dialogisch-Semantisch · **mitschreiber**
++
++Nicht-Fleet: **vault-gewebe** (privat), **weltgewebe** (unabhängig).
++
+ ## Rollen (Control vs. Ausführung)
+ - **metarepo** · Control-Plane, Verträge & Reusable Workflows (Tags wie `contracts-v1`)
+ - **wgx** · Motorik & PC-Wartung (führt Playbooks aus, liefert Metrics)
+EOF
+)
