@@ -1,5 +1,0 @@
-*.md
-!.gitkeep
-!sync-logs/
-!sync-logs/*.md
-!sync-logs/.gitkeep
