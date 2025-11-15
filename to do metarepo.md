@@ -1,207 +1,141 @@
-3) perfekt — du bekommst jetzt den Agent-Workflow-Validator fertig verdrahtet:
-	•	metarepo: legt die drei angekündigten Contracts wirklich an
-(dev.tooling.schema.json, knowledge.graph.schema.json, agent.workflow.schema.json)
-	•	wgx: bekommt ein CLI-Skript zum lokalen Validieren und einen CI-Workflow, der alle
-Agent-Workflow-Manifeste prüft (JSON, nicht JSONL), gepinnt auf ajv-cli@5 und den Tag contracts-v1
+Die Aufgabe ist beim Link-Check gescheitert. Es gibt drei Hauptproblemtypen:
 
-Kopiere die Blöcke jeweils 1:1 ins Terminal im Root des entsprechenden Repos.
+1. **Fehlende Markdown-Fragmente:**  
+   - `docs/contracts.md#rollout-checkliste`  
+   - `docs/leitlinien.md#contracts-first`  
+   → Diese Fragmente (Überschriften mit diesen Namen) existieren nicht innerhalb der Ziel-Dateien oder sind falsch geschrieben.
 
-⸻
+2. **Fehlende Datei:**  
+   - `docs/contracts/sichter.md`  
+   → Die Datei `sichter.md` im Verzeichnis `docs/contracts/` ist nicht vorhanden oder im PR gelöscht.
 
-1) metarepo · neue Contracts anlegen
+3. **Broken Links zu externen Repos:**  
+   - `https://github.com/heimgewebe/chronik`  
+   - `https://github.com/heimgewebe/chronik/tree/main/docs`  
+   → Das Repository existiert nicht oder ist privat.
 
-(cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'PATCH'
-*** Begin Patch
-*** Add File: contracts/dev.tooling.schema.json
-+{
-+  "$schema": "https://json-schema.org/draft/2020-12/schema",
-+  "$id": "https://schemas.heimgewebe.org/dev.tooling.schema.json",
-+  "title": "Development Tooling Contract",
-+  "type": "object",
-+  "additionalProperties": false,
-+  "properties": {
-+    "language": {
-+      "type": "string",
-+      "enum": ["rust", "python", "typescript", "bash"]
-+    },
-+    "lsp_config": {
-+      "type": "object",
-+      "description": "IDE/LSP Konfiguration (z. B. rust-analyzer, pylsp, tsserver).",
-+      "additionalProperties": true
-+    },
-+    "code_generation": {
-+      "type": "object",
-+      "additionalProperties": false,
-+      "properties": {
-+        "templates": { "type": "array", "items": { "type": "string" }, "default": [] },
-+        "generators": { "type": "array", "items": { "type": "string" }, "default": [] },
-+        "validation_rules": { "type": "array", "items": { "type": "string" }, "default": [] }
-+      }
-+    },
-+    "test_framework": {
-+      "type": "object",
-+      "additionalProperties": false,
-+      "properties": {
-+        "kind": { "type": "string", "enum": ["cargo", "pytest", "node", "bash"] },
-+        "watch": { "type": "boolean", "default": false }
-+      }
-+    }
-+  },
-+  "required": ["language"]
-+}
-+
-*** End Patch
-PATCH
-)
+### Lösungsvorschläge im Detail
 
-(cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'PATCH'
-*** Begin Patch
-*** Add File: contracts/knowledge.graph.schema.json
-+{
-+  "$schema": "https://json-schema.org/draft/2020-12/schema",
-+  "$id": "https://schemas.heimgewebe.org/knowledge.graph.schema.json",
-+  "title": "Knowledge Graph Export",
-+  "type": "object",
-+  "additionalProperties": false,
-+  "properties": {
-+    "nodes": {
-+      "type": "array",
-+      "items": {
-+        "type": "object",
-+        "additionalProperties": false,
-+        "properties": {
-+          "id": { "type": "string", "minLength": 1 },
-+          "type": { "type": "string", "enum": ["concept", "code_entity", "document", "decision"] },
-+          "labels": { "type": "array", "items": { "type": "string" }, "default": [] },
-+          "props": { "type": "object", "additionalProperties": true }
-+        },
-+        "required": ["id", "type"]
-+      },
-+      "default": []
-+    },
-+    "edges": {
-+      "type": "array",
-+      "items": {
-+        "type": "object",
-+        "additionalProperties": false,
-+        "properties": {
-+          "source": { "type": "string", "minLength": 1 },
-+          "target": { "type": "string", "minLength": 1 },
-+          "relation": {
-+            "type": "string",
-+            "enum": ["implements", "references", "supersedes", "depends_on", "mentions", "fixes", "has_smell"]
-+          },
-+          "weight": { "type": "number" },
-+          "meta": { "type": "object", "additionalProperties": true }
-+        },
-+        "required": ["source", "target", "relation"]
-+      },
-+      "default": []
-+    },
-+    "metadata": {
-+      "type": "object",
-+      "additionalProperties": false,
-+      "properties": {
-+        "last_updated": { "type": "string", "format": "date-time" },
-+        "authors": { "type": "array", "items": { "type": "string" }, "default": [] },
-+        "tags": { "type": "array", "items": { "type": "string" }, "default": [] }
-+      },
-+      "default": {}
-+    }
-+  },
-+  "required": ["nodes", "edges"]
-+}
-+
-*** End Patch
-PATCH
-)
+#### 1. Fehlende Fragmente reparieren
+- Öffne z.B. [`docs/contracts.md`](https://github.com/heimgewebe/metarepo/blob/ee3235bb0b7dcb1b37442d69caf5e601b88477fe/docs/contracts.md) und füge die Überschrift hinzu:
+  ```markdown
+  ## Rollout-Checkliste
+  <!-- Inhalt der Checkliste -->
+  ```
+- Gleiches gilt für [`docs/leitlinien.md`](https://github.com/heimgewebe/metarepo/blob/ee3235bb0b7dcb1b37442d69caf5e601b88477fe/docs/leitlinien.md):
+  ```markdown
+  ## Contracts-First
+  <!-- Inhalt -->
+  ```
+- Falls die Überschrift bereits existiert, kontrolliere die genaue Schreibweise und darauf, dass Sonderzeichen und Umlaute passen.
 
-(cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'PATCH'
-*** Begin Patch
-*** Add File: contracts/agent.workflow.schema.json
-+{
-+  "$schema": "https://json-schema.org/draft/2020-12/schema",
-+  "$id": "https://schemas.heimgewebe.org/agent.workflow.schema.json",
-+  "title": "Agent Workflow Manifest",
-+  "type": "object",
-+  "additionalProperties": false,
-+  "properties": {
-+    "workflow_id": { "type": "string", "minLength": 1 },
-+    "name": { "type": "string" },
-+    "orchestration": { "type": "string", "enum": ["sequential", "parallel", "graph"], "default": "sequential" },
-+    "agents": {
-+      "type": "array",
-+      "minItems": 1,
-+      "items": {
-+        "type": "object",
-+        "additionalProperties": false,
-+        "properties": {
-+          "id": { "type": "string", "minLength": 1 },
-+          "type": { "type": "string", "enum": ["code", "knowledge", "research", "supervisor", "ingest", "policy"] },
-+          "capabilities": { "type": "array", "items": { "type": "string" }, "default": [] },
-+          "inputs": { "type": "object", "additionalProperties": true, "default": {} },
-+          "outputs": { "type": "object", "additionalProperties": true, "default": {} },
-+          "command": {
-+            "oneOf": [
-+              { "type": "string" },
-+              { "type": "array", "items": { "type": "string" } }
-+            ]
-+          },
-+          "env": { "type": "object", "additionalProperties": { "type": "string" }, "default": {} }
-+        },
-+        "required": ["id", "type"]
-+      }
-+    },
-+    "graph": {
-+      "type": "object",
-+      "additionalProperties": false,
-+      "properties": {
-+        "edges": {
-+          "type": "array",
-+          "items": {
-+            "type": "object",
-+            "additionalProperties": false,
-+            "properties": {
-+              "from": { "type": "string" },
-+              "to": { "type": "string" },
-+              "when": { "type": "string", "description": "optional condition/expression" }
-+            },
-+            "required": ["from", "to"]
-+          },
-+          "default": []
-+        }
-+      },
-+      "default": { "edges": [] }
-+    },
-+    "policies": {
-+      "type": "object",
-+      "additionalProperties": false,
-+      "properties": {
-+        "retry_strategy": {
-+          "type": "object",
-+          "additionalProperties": false,
-+          "properties": {
-+            "max_retries": { "type": "integer", "minimum": 0, "default": 0 },
-+            "backoff": { "type": "string", "enum": ["none", "fixed", "exponential"], "default": "none" }
-+          },
-+          "default": { "max_retries": 0, "backoff": "none" }
-+        },
-+        "timeout_sec": { "type": "integer", "minimum": 1 },
-+        "cost_limits": {
-+          "type": "object",
-+          "additionalProperties": false,
-+          "properties": {
-+            "max_tokens": { "type": "integer", "minimum": 0 },
-+            "max_requests": { "type": "integer", "minimum": 0 }
-+          }
-+        }
-+      },
-+      "default": {}
-+    }
-+  },
-+  "required": ["workflow_id", "agents"]
-+}
-+
-*** End Patch
-PATCH
-)
+#### 2. Fehlende Datei erstellen  
+Falls die Datei `docs/contracts/sichter.md` benötigt wird, erstelle eine leere oder mit Grundinhalt versehene Datei:
+```markdown
+# Sichter
+<!-- Beschreibenden Inhalt ergänzen -->
+```
+Falls sie bewusst entfernt wurde, entferne den Link darauf aus der referenzierenden Datei (`docs/contracts/index.md` o.ä.).
+
+#### 3. Broken externe Links
+- Prüfe, ob das Ziel-Repo `heimgewebe/chronik` wirklich existiert oder noch erstellt werden muss.
+- Falls es entfernt/privatisiert wurde, entferne die Links in den Markdown-Dateien:
+  ```markdown
+  [Chronik](https://github.com/heimgewebe/chronik)
+  ```
+- Alternativ: Mit `<!-- TODO: Link zu Chronik einfügen sobald verfügbar -->` kommentieren.
+
+---
+
+**Zusammengefasst:**  
+- Fehlende Fragmente als Überschriften anlegen oder Links korrigieren.  
+- Fehlende Dateien erstellen oder Links entfernen.  
+- Broken externe Links bereinigen oder als TODO markieren.
+
+Falls du gezielt eine der betroffenen Dateien per Code zeigst, kann ich die Korrekturen direkt für dich formulieren!
+
+
+
+Die Ursache für den Fehler im Job 55390998558 liegt in folgendem CI-Skript-Schritt:
+
+```bash
+git add -N docs/org-index.md docs/org-graph.mmd
+git diff --exit-code -- docs/org-index.md docs/org-graph.mmd || (echo "::warning::Org assets changed – commit in this PR" && exit 1)
+```
+
+Der Build schlägt fehl, weil sich die Dateien `docs/org-index.md` und/oder `docs/org-graph.mmd` geändert haben (bzw. Änderungen im PR vorliegen). Das Skript fordert, dass die Änderungen in diesem Pull Request committed werden.
+
+### Lösung
+
+**Commit die geänderten Dateien:**
+
+1. Stelle sicher, dass `docs/org-index.md` und `docs/org-graph.mmd` im PR wirklich die gewünschten Änderungen enthalten.
+2. Füge die Dateien deinem Commit hinzu:
+   ```bash
+   git add docs/org-index.md docs/org-graph.mmd
+   git commit -m "Aktualisiere org-index und org-graph entsprechend aktuellen Events"
+   git push
+   ```
+3. Falls die Änderung automatisch während der CI entsteht: Sorge dafür, dass die auslösende Aktion lokal ausgeführt wird und die Resultate committed werden – andernfalls gerät der CI-Status immer in Fehler.
+
+**Hintergrund**  
+Das Skript prüft, ob die genannten Assets „dirty“ sind, also nicht committed wurden. Damit wird Transparenz garantiert und verhindert, dass automatisch generierte Dateien „unsichtbar“ verändert werden – dies entspricht den Governance-Prinzipien.
+
+---
+
+**Kurzfassung:**  
+Committe die geänderten Dateien `docs/org-index.md` und/oder `docs/org-graph.mmd` in deinem PR, damit die CI durchläuft. Vermeide uncommitted Änderungen in diesen Assets.
+
+Direkter Bezug zum Workflow: [.github/workflows/org-assets.yml@ee3235bb0b7dcb1b37442d69caf5e601b88477fe](https://github.com/heimgewebe/metarepo/blob/ee3235bb0b7dcb1b37442d69caf5e601b88477fe/.github/workflows/org-assets.yml)
+
+
+Die Ursache für den Fehler im Job 55390937282 liegt beim Versuch, Puppeteer zu starten, um Diagramme zu rendern. Die Fehlermeldung:
+```
+Error: Failed to launch the browser process!
+[1114/093812.340797:FATAL:zygote_host_impl_linux.cc(127)] No usable sandbox!
+Update your kernel or see https://chromium.googlesource.com/chromium/src/+/main/docs/linux/suid_sandbox_development.md
+```
+bedeutet, dass die Chromium-Browser-Instanz (die von Puppeteer genutzt wird) auf der CI-Maschine keinen passenden Sandbox-Modus findet.
+
+**Lösung für CI/Linux-Umgebung:**
+
+Puppeteer kann die Sandbox deaktivieren, indem die Option `--no-sandbox` gesetzt wird. Für die meisten CI-Umgebungen ist das ausreichend und DSGVO-konform – es ist kein „Quick Hack“, sondern offizieller Workaround für headless-Browser in CI.
+
+**Strikte Umsetzung:**
+Passe den Script-Aufruf so an, dass Puppeteer immer mit `--no-sandbox` ausgeführt wird.
+
+**Code-Vorschlag:**
+
+Erweitere den Puppeteer-Launch so (z.B. in deinem Render-Tool oder node.js-Script, das Puppeteer verwendet):
+
+```js
+const browser = await puppeteer.launch({
+  args: ['--no-sandbox', '--disable-setuid-sandbox']
+});
+```
+Alternativ, falls du ein CLI-Tool wie mermaid-cli verwendest, dann:
+```sh
+mmdc -i input.mmd -o output.png --puppeteerConfigFile puppeteer-config.json
+```
+und die Datei `puppeteer-config.json`:
+```json
+{
+  "args": ["--no-sandbox", "--disable-setuid-sandbox"]
+}
+```
+**Zusätzlich** kannst du im CI-Workflow (z.B. .github/workflows/render-diagrams.yml) sicherstellen, dass vor dem Rendern die Umgebungsvariablen passend gesetzt sind:
+```yaml
+env:
+  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+  PUPPETEER_ALLOW_NO_SANDBOX: 'true'
+```
+
+**Wichtig für Transparenz & Nachvollziehbarkeit:**  
+Dokumentiere im Repository, warum `--no-sandbox` nötig ist, z.B. in README oder als Kommentar im Workflow.
+
+**Damit wird der Fehler zuverlässig behoben, ohne Sicherheitsrisiken oder Quick Hacks.**
+
+
+
+
+

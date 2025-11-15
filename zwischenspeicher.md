@@ -1,324 +1,243 @@
-Hier kommt das vollständige, minimal realistische Demo-Datenpaket für .gewebe/in/ – perfekt abgestimmt auf den neuen API-Slice, Tests und Map-Frontend.
-Ziel: Out-of-the-box sichtbare Marker und Fäden rund um Hamburg (damit man gleich was sieht, wenn /map aufgerufen wird).
+Okay, Jules bekommt jetzt einen klaren Fahrplan.
 
 ⸻
 
-📁 Struktur
+∴ Kurz-Denke vorweg
+	•	Das heutige leitstand-Repo ist faktisch: Ingest + Persistenz + Audit → also Gedächtnis / Event-Store.
+	•	Der geplante Monitor/UI ist: Dashboard, Panels, Systemüberblick → das ist semantisch der eigentliche Leitstand.
 
-.gewebe/
-└─ in/
-   ├─ demo.nodes.jsonl
-   └─ demo.edges.jsonl
-
-
-⸻
-
-🧩 .gewebe/in/demo.nodes.jsonl
-
-{"type":"Feature","id":"n1","geometry":{"type":"Point","coordinates":[9.9937,53.5511]},"properties":{"title":"Marktplatz Hamburg","type":"Ort","updated_at":"2025-11-01T09:00:00Z"}}
-{"type":"Feature","id":"n2","geometry":{"type":"Point","coordinates":[10.0002,53.5523]},"properties":{"title":"Nachbarschaftshaus","type":"Initiative","updated_at":"2025-11-02T12:15:00Z"}}
-{"type":"Feature","id":"n3","geometry":{"type":"Point","coordinates":[9.9813,53.5456]},"properties":{"title":"Tauschbox Altona","type":"Projekt","updated_at":"2025-10-30T18:45:00Z"}}
-{"type":"Feature","id":"n4","geometry":{"type":"Point","coordinates":[10.0184,53.5631]},"properties":{"title":"Gemeinschaftsgarten","type":"Ort","updated_at":"2025-11-05T10:00:00Z"}}
-{"type":"Feature","id":"n5","geometry":{"type":"Point","coordinates":[9.9708,53.5615]},"properties":{"title":"Reparaturcafé","type":"Initiative","updated_at":"2025-11-03T16:20:00Z"}}
-
-💡 Erklärung
-	•	Jede Zeile = eigenständiges JSON-Objekt (GeoJSON Feature).
-	•	Koordinaten: [Längengrad, Breitengrad] – alle rund um Hamburg.
-	•	Properties enthalten minimale Anzeigeinfos (title, type, updated_at).
-	•	Wird direkt vom GET /api/nodes geladen.
+Deshalb:
+	•	Backend-Repo umbenennen zu chronik (oder eventstore – wir nehmen hier chronik).
+	•	Neues UI-Repo anlegen, das leitstand heißt und als Kontrollraum fungiert.
 
 ⸻
 
-🧵 .gewebe/in/demo.edges.jsonl
+Aufgabe für Jules – Umbauplan in Phasen
 
-{"id":"e1","src":"n1","dst":"n2","kind":"connection","title":"Kooperation Marktplatz ↔ Nachbarschaftshaus"}
-{"id":"e2","src":"n2","dst":"n4","kind":"support","title":"Gemeinschaftsaktion Gartenpflege"}
-{"id":"e3","src":"n1","dst":"n3","kind":"exchange","title":"Tauschbox liefert Material"}
-{"id":"e4","src":"n5","dst":"n1","kind":"support","title":"Reparaturcafé hilft Marktplatz"}
+Phase 0 – Bestandsaufnahme (read-only)
 
-💡 Erklärung
-	•	Jede Zeile = einfache gerichtete Verbindung (Faden).
-	•	Felder src und dst referenzieren ids aus demo.nodes.jsonl.
-	•	kind und title sind optional, aber hilfreich fürs spätere Overlay/Labeling.
-
-⸻
-
-✅ Smoke-Checks (direkt in Shell)
-
-# Nodes abrufen
-curl -s http://localhost:8080/api/nodes | jq length
-# → sollte 5 ergeben
-
-# BBox-Filter auf Innenstadt
-curl -s 'http://localhost:8080/api/nodes?bbox=9.98,53.54,10.02,53.56' | jq '.[].properties.title'
-# → nur n1, n2, n3
-
-# Kanten abrufen
-curl -s http://localhost:8080/api/edges | jq '.[].title'
-
-
-⸻
-
-🎯 Bonus (für Jules’ Verständnis)
-	•	Diese Dateien sind nicht migrations- oder schema-kritisch – sie dienen nur als live stub dataset.
-	•	Sie können gefahrlos im Repo bleiben (unter .gewebe/in/ wird ohnehin versioniert).
-	•	Das Frontend kann später diese Daten nutzen, um Marker direkt auf der Map zu zeigen, sobald /api/nodes implementiert ist.
+Ziel: Verstehen, wo „leitstand“ heute überall vorkommt.
+	1.	Suchlauf in allen Heimgewebe-Repos:
+	•	In der heimgewebe Org / lokalem Monorepo:
+	•	rg "leitstand" -n
+in:
+	•	metarepo
+	•	aussensensor
+	•	heimlern
+	•	hauski
+	•	semantah
+	•	mitschreiber
+	•	sichter
+	•	tools
+	•	hauski-audio
+	•	vault-gewebe (nur referenziert, nicht Fleet)
+	•	Funde grob clustern:
+	•	Code-Imports / Paketnamen
+	•	CI-Workflows
+	•	Docs (Markdown, ADRs, Overviews)
+	•	.ai-context.yml
+	2.	Kurze Notiz anlegen
+	•	Markdown in metarepo: docs/adr/00xx-rename-leitstand-chronik.md (Draft)
+	•	„Aktuell: leitstand = Event-Ingest/Persistenz, Zukunft: leitstand = UI, Backend → chronik.“
 
 ⸻
 
-Möchtest du, dass ich gleich noch eine kleine just task oder make target formuliere (just serve-demo), damit Jules lokal mit einem Befehl den Axum-Server + API starten und curl testen kann?
+Phase 1 – Konzepte fixieren
 
-super — hier kommt ein komplett lauffähiger Demo-Server (ohne weitere Abhängigkeiten) plus just- und make-Targets. Damit kann Jules lokal in <10 Sek. /api/nodes und /api/edges** bereitstellen, inkl. bbox-Filter.
+Ziel: Klar definieren, wie die Rollen nach dem Umbau aussehen.
+	1.	Namensentscheidung (festhalten):
+	•	Backend: chronik
+	•	UI/Dashboard: leitstand
+	2.	metarepo-Doku anpassen (nur Entwürfe, noch kein Codebruch):
+	•	In docs/heimgewebe-gesamt.md und docs/repo-matrix.md:
+	•	Rolle von „leitstand“ aufsplitten in:
+	•	chronik – Event-Ingest + Persistenz + Audit
+	•	leitstand – UI/Dashboard über chronik + semantAH + hausKI
+	•	In docs/contracts/*.md:
+	•	Klarstellen: chronik ist der primäre Consumer/Episode-Speicher für Events (aussen.event, os.context.*, policy.decision, review, insight etc.), an den leitstand später andockt.
 
-⸻
-
-1) Datei: scripts/dev/gewebe-demo-server.mjs
-
-mkdir -p scripts/dev
-
-// scripts/dev/gewebe-demo-server.mjs
-// Minimaler, dependency-freier HTTP-Server (Node >= 18/20) für die Demo-APIs.
-// Endpunkte:
-//   GET /api/nodes[?bbox=west,south,east,north]
-//   GET /api/edges
-// Liest JSONL aus ./.gewebe/in/*.jsonl
-
-import { createServer } from 'node:http';
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-const __dirname = resolve(fileURLToPath(import.meta.url), '..', '..', '..');
-const PORT = Number(process.env.PORT || 8080);
-
-const NODES_FILE = resolve(__dirname, '.gewebe/in/demo.nodes.jsonl');
-const EDGES_FILE = resolve(__dirname, '.gewebe/in/demo.edges.jsonl');
-
-async function readJsonl(path) {
-  const raw = await readFile(path, 'utf8').catch(() => '');
-  return raw
-    .split(/\r?\n/)
-    .map((l) => l.trim())
-    .filter(Boolean)
-    .map((l) => JSON.parse(l));
-}
-
-function parseBBox(q) {
-  // bbox=west,south,east,north
-  if (!q || !('bbox' in q)) return null;
-  const parts = String(q.bbox).split(',').map(Number);
-  if (parts.length !== 4 || parts.some((n) => Number.isNaN(n))) return null;
-  const [west, south, east, north] = parts;
-  return { west, south, east, north };
-}
-
-function withinBBox(feature, bbox) {
-  if (!feature?.geometry || feature.geometry.type !== 'Point') return false;
-  const [lng, lat] = feature.geometry.coordinates || [];
-  return (
-    typeof lng === 'number' &&
-    typeof lat === 'number' &&
-    lng >= bbox.west &&
-    lng <= bbox.east &&
-    lat >= bbox.south &&
-    lat <= bbox.north
-  );
-}
-
-function sendJson(res, status, body, extraHeaders = {}) {
-  res.writeHead(status, {
-    'Content-Type': 'application/json; charset=utf-8',
-    'Access-Control-Allow-Origin': '*',
-    'Cache-Control': 'no-store',
-    ...extraHeaders,
-  });
-  res.end(JSON.stringify(body));
-}
-
-function notFound(res) {
-  sendJson(res, 404, { error: 'Not Found' });
-}
-
-function badRequest(res, msg) {
-  sendJson(res, 400, { error: 'Bad Request', message: msg });
-}
-
-function parseQuery(url) {
-  const idx = url.indexOf('?');
-  const q = {};
-  if (idx === -1) return q;
-  const usp = new URLSearchParams(url.slice(idx + 1));
-  for (const [k, v] of usp.entries()) q[k] = v;
-  return q;
-}
-
-const server = createServer(async (req, res) => {
-  try {
-    const url = req.url || '/';
-    const path = url.split('?')[0];
-
-    if (req.method === 'GET' && path === '/api/nodes') {
-      const q = parseQuery(url);
-      const bbox = parseBBox(q);
-      const nodes = await readJsonl(NODES_FILE);
-
-      const data = bbox ? nodes.filter((f) => withinBBox(f, bbox)) : nodes;
-      return sendJson(res, 200, data);
-    }
-
-    if (req.method === 'GET' && path === '/api/edges') {
-      const edges = await readJsonl(EDGES_FILE);
-      return sendJson(res, 200, edges);
-    }
-
-    if (req.method === 'OPTIONS') {
-      // CORS preflight
-      res.writeHead(204, {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET,OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Max-Age': '600',
-      });
-      return res.end();
-    }
-
-    return notFound(res);
-  } catch (err) {
-    console.error('[demo-server] error:', err);
-    return sendJson(res, 500, { error: 'Internal Server Error' });
-  }
-});
-
-server.listen(PORT, () => {
-  console.log(`▶ Demo-API läuft:  http://127.0.0.1:${PORT}`);
-  console.log('   GET /api/nodes[?bbox=west,south,east,north]');
-  console.log('   GET /api/edges');
-});
-
+(Bis hier kann alles in einem Branch vorbereitet werden, ohne funktionale Änderungen.)
 
 ⸻
 
-2) Demo-Daten schnell anlegen (falls noch nicht vorhanden)
+Phase 2 – Technische Umbenennung: Backend „leitstand“ → „chronik“
 
-mkdir -p .gewebe/in
-cat > .gewebe/in/demo.nodes.jsonl <<'JSONL'
-{"type":"Feature","id":"n1","geometry":{"type":"Point","coordinates":[9.9937,53.5511]},"properties":{"title":"Marktplatz Hamburg","type":"Ort","updated_at":"2025-11-01T09:00:00Z"}}
-{"type":"Feature","id":"n2","geometry":{"type":"Point","coordinates":[10.0002,53.5523]},"properties":{"title":"Nachbarschaftshaus","type":"Initiative","updated_at":"2025-11-02T12:15:00Z"}}
-{"type":"Feature","id":"n3","geometry":{"type":"Point","coordinates":[9.9813,53.5456]},"properties":{"title":"Tauschbox Altona","type":"Projekt","updated_at":"2025-10-30T18:45:00Z"}}
-{"type":"Feature","id":"n4","geometry":{"type":"Point","coordinates":[10.0184,53.5631]},"properties":{"title":"Gemeinschaftsgarten","type":"Ort","updated_at":"2025-11-05T10:00:00Z"}}
-{"type":"Feature","id":"n5","geometry":{"type":"Point","coordinates":[9.9708,53.5615]},"properties":{"title":"Reparaturcafé","type":"Initiative","updated_at":"2025-11-03T16:20:00Z"}}
-JSONL
+Ziel: Das bisherige Backend-Repo sauber umbenennen, inkl. Referenzen.
 
-cat > .gewebe/in/demo.edges.jsonl <<'JSONL'
-{"id":"e1","src":"n1","dst":"n2","kind":"connection","title":"Kooperation Marktplatz ↔ Nachbarschaftshaus"}
-{"id":"e2","src":"n2","dst":"n4","kind":"support","title":"Gemeinschaftsaktion Gartenpflege"}
-{"id":"e3","src":"n1","dst":"n3","kind":"exchange","title":"Tauschbox liefert Material"}
-{"id":"e4","src":"n5","dst":"n1","kind":"support","title":"Reparaturcafé hilft Marktplatz"}
-JSONL
+Wichtig: Dieser Schritt sollte in einem eigenen Branch passieren und möglichst in einer kurzen Downtime-Phase für CI.
+
+	1.	GitHub-Repo umbenennen:
+	•	heimgewebe/leitstand → heimgewebe/chronik (über GitHub UI).
+	2.	Lokale Umbenennung (c2b):
+
+# im Heimgewebe-Workspace
+mv leitstand chronik
+cd chronik
+
+# interne Referenzen in diesem Repo
+rg "leitstand" -n
+# dann gezielt ersetzen:
+sed -i 's/leitstand/chronik/g' README.md .ai-context.yml Cargo.toml .github/workflows/*.yml docs/**/*.md || true
 
 
-⸻
+	3.	Projekt-Metadaten in chronik anpassen:
+	•	README.md:
+	•	Titel: # chronik
+	•	Beschreibung: „Event-Ingest + Persistenz/Audit (vormals leitstand)“
+	•	.ai-context.yml:
+	•	project.name: "chronik"
+	•	summary/role auf „event_ingest_persistence“ o. ä. ändern.
+	•	CI-Workflows:
+	•	Jobnamen leitstand → chronik (nur kosmetisch, aber besser konsistent).
+	4.	Referenzen in anderen Repos fixen:
+In allen Heimgewebe-Repos:
+	•	Docs:
+	•	leitstand als Backend-Dienst → chronik umbenennen.
+	•	Klarstellen, dass „Leitstand“ künftig UI ist und (noch) als geplant markiert werden kann.
+	•	.ai-context.yml:
+	•	Wo heute steht:
 
-3) just-Targets
+- name: "leitstand"
+  relationship: uses
+  interface: ...
 
-Falls ihr bereits eine Justfile habt: ergänzen. Sonst neue Justfile anlegen.
+prüfen:
+	•	Wenn es um Event-Ingest/Persistenz geht → name: "chronik".
+	•	Wenn es klar um UI/Dashboard geht → künftig leitstand (vorerst optional/„planned“).
 
-# Justfile
+	•	Metarepo Reusable-Workflows:
+	•	Falls es spezielle leitstand-Workflows gibt, passend umbenennen oder kommentieren:
+	•	z. B. leitstand-smoke → chronik-smoke.
 
-# .PHONY-ähnlich:
-set shell := ["bash", "--noprofile", "--norc", "-euo", "pipefail", "-c"]
-
-# Port überschreibbar: `just serve-demo PORT=9090`
-PORT := "8080"
-
-# Erzeugt Demo-Daten falls nicht vorhanden.
-demo-data:
-    mkdir -p .gewebe/in
-    test -s .gewebe/in/demo.nodes.jsonl || { echo "→ seeds: nodes"; cat > .gewebe/in/demo.nodes.jsonl <<'JSONL'
-    {"type":"Feature","id":"n1","geometry":{"type":"Point","coordinates":[9.9937,53.5511]},"properties":{"title":"Marktplatz Hamburg","type":"Ort","updated_at":"2025-11-01T09:00:00Z"}}
-    {"type":"Feature","id":"n2","geometry":{"type":"Point","coordinates":[10.0002,53.5523]},"properties":{"title":"Nachbarschaftshaus","type":"Initiative","updated_at":"2025-11-02T12:15:00Z"}}
-    {"type":"Feature","id":"n3","geometry":{"type":"Point","coordinates":[9.9813,53.5456]},"properties":{"title":"Tauschbox Altona","type":"Projekt","updated_at":"2025-10-30T18:45:00Z"}}
-    {"type":"Feature","id":"n4","geometry":{"type":"Point","coordinates":[10.0184,53.5631]},"properties":{"title":"Gemeinschaftsgarten","type":"Ort","updated_at":"2025-11-05T10:00:00Z"}}
-    {"type":"Feature","id":"n5","geometry":{"type":"Point","coordinates":[9.9708,53.5615]},"properties":{"title":"Reparaturcafé","type":"Initiative","updated_at":"2025-11-03T16:20:00Z"}}
-    JSONL
-    }
-    test -s .gewebe/in/demo.edges.jsonl || { echo "→ seeds: edges"; cat > .gewebe/in/demo.edges.jsonl <<'JSONL'
-    {"id":"e1","src":"n1","dst":"n2","kind":"connection","title":"Kooperation Marktplatz ↔ Nachbarschaftshaus"}
-    {"id":"e2","src":"n2","dst":"n4","kind":"support","title":"Gemeinschaftsaktion Gartenpflege"}
-    {"id":"e3","src":"n1","dst":"n3","kind":"exchange","title":"Tauschbox liefert Material"}
-    {"id":"e4","src":"n5","dst":"n1","kind":"support","title":"Reparaturcafé hilft Marktplatz"}
-    JSONL
-    }
-
-# Startet den Demo-API-Server auf :${PORT}
-serve-demo: demo-data
-    node scripts/dev/gewebe-demo-server.mjs
-
-# Schneller Smoke-Test der Endpunkte
-check-demo:
-    curl -fsS "http://127.0.0.1:{{PORT}}/api/nodes" | jq length
-    curl -fsS "http://127.0.0.1:{{PORT}}/api/edges" | jq 'length'
-
-Aufruf:
-
-just serve-demo        # startet :8080
-# oder:
-PORT=9090 just serve-demo
-
+	5.	CI-Grundlauf:
+	•	In jedem betroffenen Repo:
+	•	just smoke / just test (wenn vorhanden)
+	•	Ziel: sicherstellen, dass keine Ref mehr auf heimgewebe/leitstand zeigt.
 
 ⸻
 
-4) Makefile-Targets (optional parallel zu just)
+Phase 3 – Neues UI-Repo „leitstand“ anlegen
 
-# Makefile
+Ziel: Das echte Leitstand-Repo als UI/Dashboard starten.
+	1.	Repo anlegen:
+	•	Neues GitHub-Repo: heimgewebe/leitstand
+	•	Lokal clonen: git clone git@github.com:heimgewebe/leitstand.git
+	2.	Minimal-Scaffold (z. B. TypeScript/React oder anderes – erstmal neutral):
 
-PORT ?= 8080
+cd leitstand
+mkdir -p apps/web src docs .github/workflows
 
-.PHONY: demo-data serve-demo check-demo
-demo-data:
-	mkdir -p .gewebe/in
-	@if [ ! -s .gewebe/in/demo.nodes.jsonl ]; then \
-		echo "→ seeds: nodes"; \
-		cat > .gewebe/in/demo.nodes.jsonl <<'JSONL'; \
-{"type":"Feature","id":"n1","geometry":{"type":"Point","coordinates":[9.9937,53.5511]},"properties":{"title":"Marktplatz Hamburg","type":"Ort","updated_at":"2025-11-01T09:00:00Z"}}
-{"type":"Feature","id":"n2","geometry":{"type":"Point","coordinates":[10.0002,53.5523]},"properties":{"title":"Nachbarschaftshaus","type":"Initiative","updated_at":"2025-11-02T12:15:00Z"}}
-{"type":"Feature","id":"n3","geometry":{"type":"Point","coordinates":[9.9813,53.5456]},"properties":{"title":"Tauschbox Altona","type":"Projekt","updated_at":"2025-10-30T18:45:00Z"}}
-{"type":"Feature","id":"n4","geometry":{"type":"Point","coordinates":[10.0184,53.5631]},"properties":{"title":"Gemeinschaftsgarten","type":"Ort","updated_at":"2025-11-05T10:00:00Z"}}
-{"type":"Feature","id":"n5","geometry":{"type":"Point","coordinates":[9.9708,53.5615]},"properties":{"title":"Reparaturcafé","type":"Initiative","updated_at":"2025-11-03T16:20:00Z"}}
-JSONL \
-	fi
-	@if [ ! -s .gewebe/in/demo.edges.jsonl ]; then \
-		echo "→ seeds: edges"; \
-		cat > .gewebe/in/demo.edges.jsonl <<'JSONL'; \
-{"id":"e1","src":"n1","dst":"n2","kind":"connection","title":"Kooperation Marktplatz ↔ Nachbarschaftshaus"}
-{"id":"e2","src":"n2","dst":"n4","kind":"support","title":"Gemeinschaftsaktion Gartenpflege"}
-{"id":"e3","src":"n1","dst":"n3","kind":"exchange","title":"Tauschbox liefert Material"}
-{"id":"e4","src":"n5","dst":"n1","kind":"support","title":"Reparaturcafé hilft Marktplatz"}
-JSONL \
-	fi
+	•	README.md (Kurzversion):
 
-serve-demo: demo-data
-	node scripts/dev/gewebe-demo-server.mjs
+# leitstand
 
-check-demo:
-	curl -fsS "http://127.0.0.1:$(PORT)/api/nodes" | jq length
-	curl -fsS "http://127.0.0.1:$(PORT)/api/edges" | jq 'length'
+UI/Dashboard für das Heimgewebe.
 
+- Panels für Events aus `chronik`
+- Metrik-Views (metrics.snapshot)
+- Graph-/Insight-Ansichten über `semantAH`
+- Debug-/Replay-Tools für hausKI-Flows
+
+Backend-Eventstore: [`chronik`](https://github.com/heimgewebe/chronik)
+
+
+	•	.ai-context.yml:
+
+ai_context_version: 1.0
+
+project:
+  name: leitstand
+  summary: UI/Dashboard für das Heimgewebe
+  role: observability_control_room
+  primary_language: typescript
+  visibility: internal
+
+dependencies:
+  internal:
+    - name: chronik
+      relationship: uses
+      interface:
+        - event_query
+        - timeline_view
+    - name: semantah
+      relationship: uses
+      interface:
+        - graph_query
+        - insight_stream
+    - name: hauski
+      relationship: uses
+      interface:
+        - trace_view
+        - action_log
+  external:
+    - name: React
+    - name: Vite
+
+
+	•	CI-MVP:
+	•	.github/workflows/ai-context-guard.yml (du hast den schon im Metarepo-Template; einfach reusen).
+	•	Minimaler Build-Check (z. B. pnpm lint/test, je nach Tech-Stack – kann später verfeinert werden).
+
+	3.	Integration in metarepo:
+	•	docs/repo-matrix.md:
+	•	neue Zeile für leitstand (UI) hinzufügen.
+	•	docs/heimgewebe-gesamt.md:
+	•	in der Schichtenbeschreibung Leitstand als UI (Kontrollraum) in Schicht 4/5 einzeichnen.
+	•	Eventuell ein kleines Diagramm-Update in docs/system-overview.mmd (Node „leitstand (UI)“ → liest aus chronik, semantAH, hausKI).
 
 ⸻
 
-5) Quick-Test
+Phase 4 – Stolperfallen & Review-Schritt
 
-# Terminal 1
-just serve-demo
-# ▶ Demo-API läuft:  http://127.0.0.1:8080
+Ziel: Vermeidbare Fehler abfangen.
 
-# Terminal 2
-curl -s http://127.0.0.1:8080/api/nodes | jq length
-curl -s 'http://127.0.0.1:8080/api/nodes?bbox=9.98,53.54,10.02,53.56' | jq '.[].properties.title'
-curl -s http://127.0.0.1:8080/api/edges | jq -r '.[].title'
-
+Typische Fehlerquellen:
+	1.	Alt-Links ins Nichts:
+	•	GitHub-Links zeigen noch auf heimgewebe/leitstand (Backend).
+	•	Lösung: In allen Markdown-Dateien nach github.com/heimgewebe/leitstand suchen und anpassen:
+	•	Backend-Referenz → chronik
+	•	UI-Referenz → neues leitstand Repo
+	2.	CI-Refs:
+	•	Falls irgendwo in Workflows ein Reusable Workflow von leitstand gezogen wird, prüfen, ob das wirklich Backend war.
+	•	Ggf. auf chronik umbiegen.
+	3.	.ai-context-Konsistenz:
+	•	Producer → Consumer-Beziehungen:
+	•	Alles, was Speicher/Audit meint → chronik
+	•	Alles, was Sicht/UI meint → leitstand
+	4.	Dokumentationsdrift:
+	•	ADR anlegen:
+	•	„Rename leitstand → chronik, introduce leitstand UI“
+	•	In der ADR die Gründe festhalten: semantische Korrektheit, Klarheit im Schichtenmodell, UI vs Backend.
 
 ⸻
 
-Wenn du möchtest, passe ich dir jetzt noch den Svelte /map-Fetch so an, dass er gegen http://127.0.0.1:8080 geht, solange keine echte Backend-URL konfiguriert ist (z. B. via VITE_API_BASE + Fallback).
+Ungewissheitsursachen
+	•	Benennung im existierenden Code:
+Manche Stellen könnten „leitstand“ eher als abstraktes Konzept verwenden (z. B. im Text), nicht als Repo. Das muss Jules beim Ersetzen interpretativ prüfen.
+	•	Nicht komplett sichtbarer Stand der Repos:
+Ohne alle aktuellen Commits kann nur ein generischer Plan formuliert werden; Details (z. B. genaue Pfade) können leicht abweichen.
+	•	Zukünftige UI-Technologie:
+Ob das neue leitstand-UI React/Vite, Tauri, Svelte oder etwas anderes wird, ist hier noch offen – der Plan bleibt bewusst technisch neutral.
+
+Unsicherheitsgrad: ca. 0,4 – mittlere Unsicherheit, aber mit guter Struktur beherrschbar. Hauptquelle ist die Vielfalt der Referenzen auf „leitstand“.
+
+⸻
+
+Essenz in einem Satz
+
+Backend „leitstand“ wird zu chronik, das neue UI/Dashboard übernimmt den Namen leitstand – Jules sorgt in Metadoku, CI und .ai-context dafür, dass Begriffe und Rollen wieder zusammenpassen.
+
+⸻
+
+Kleine ironische Note
+
+Im Moment heißt dein Gedächtnis „Leitstand“ und dein künftiger Leitstand „Monitor“.
+Wir drehen es so, dass dein System nicht mehr so tut, als würde der Aktenschrank das Cockpit sein.
+
+
+
+
+also anweisung ist klar: finde alle referenzen zum bisherigen leitstand und benenne sie in chronik um, mache klar, was das repo chronik und was das geplante repo leitstand sein soll und ändere dies entsprechend in den docs.
+
+wenn dies nicht das leitstand repo ist, dann: deine aufgabe in diesem repo ist es, alle leitstand referenzen in chronik umzubenennen.
+wenn dies das metarepo ist: die docs anpassen. in allen anderen nstürlich auch die docs anpassen, wenn sinnvoll.

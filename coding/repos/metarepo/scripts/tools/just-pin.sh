@@ -52,6 +52,13 @@ detect_libc() {
 	if [ -n "${JUST_LIBC:-}" ]; then
 		echo "$JUST_LIBC"
 	elif [ "$(uname -s | tr '[:upper:]' '[:lower:]')" = "linux" ]; then
+		# just v1.43.0 only has musl builds for linux
+		local req_version_raw
+		req_version_raw="$(get_req_version_raw)"
+		if [ "${req_version_raw#v}" = "1.43.0" ]; then
+			echo "musl"
+			return
+		fi
 		if [ -e /lib/ld-musl-x86_64.so.1 ] || [ -e /lib/ld-musl-aarch64.so.1 ]; then
 			echo "musl"
 		else
@@ -86,7 +93,7 @@ compute_url() {
 	local ver_numeric="${ver_tag#v}" # strip 'v' for the filename
 	local target
 	target="$(compute_target)"
-	echo "https://github.com/casey/just/releases/download/${ver_tag}/just-${ver_numeric}-${target}.tar.gz"
+	echo "https://github.com/casey/just/releases/download/${ver_numeric}/just-${ver_numeric}-${target}.tar.gz"
 }
 
 # DRY-RUN mode for tests: only print the URL and exit 0

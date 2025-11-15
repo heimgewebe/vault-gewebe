@@ -4,3 +4,5 @@ alle parteien willigen ein, gewaltfreie kommunikation auszuprobieren.
 zwischenschritt: was hätte ich lieber anders gemacht?
 + entschuldigung
 3. ebenen: wünsche
+
+woche später: burgfrieden?

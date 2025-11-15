@@ -1,0 +1,208 @@
+name: "contracts-ajv-reusable"
+
+permissions:
+  contents: read
+
+on:
+  # Usage from a caller:
+  # uses: heimgewebe/contracts/.github/workflows/contracts-ajv-reusable.yml@contracts-v1
+  workflow_call:
+    inputs:
+      fixtures_glob:
+        description: "Glob in the CALLER repo for fixtures to validate"
+        required: false
+        type: string
+        default: "fixtures/**/*.jsonl"
+      contracts_ref:
+        description: "Ref of heimgewebe/contracts to fetch schemas from"
+        required: false
+        type: string
+        default: "contracts-v1"
+      schema_dir:
+        description: "Schema root directory inside the contracts repo"
+        required: false
+        type: string
+        default: "json"
+      schema_pattern:
+        description: "Pattern (relative to schema_dir) to detect schemas"
+        required: false
+        type: string
+        default: "**/*.schema.json"
+      node_version:
+        description: "Node.js version used to run ajv-cli"
+        required: false
+        type: string
+        default: "20.19.0"
+      ajv_version:
+        description: "ajv-cli version"
+        required: false
+        type: string
+        default: "5.0.0"
+      draft_spec:
+        description: "JSON Schema draft (e.g. draft2020, draft7)"
+        required: false
+        type: string
+        default: "draft2020"
+      strict:
+        description: "Enable AJV strict mode"
+        required: false
+        type: boolean
+        default: true
+      fail_on_missing_schema:
+        description: "Fail if a fixture has no matching <name>.schema.json"
+        required: false
+        type: boolean
+        default: false
+
+defaults:
+  run:
+    shell: bash --noprofile --norc -euo pipefail {0}
+
+jobs:
+  validate:
+    name: "AJV validate fixtures vs. contracts schemas"
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout caller (fixtures)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Checkout contracts (schemas)
+        uses: actions/checkout@v4
+        with:
+          repository: heimgewebe/contracts
+          ref: ${{ inputs.contracts_ref }}
+          path: _contracts
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node_version }}
+          check-latest: true
+          cache: "npm"
+
+      - name: Cache npm & node-gyp
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            ~/.cache/node-gyp
+          key: ${{ runner.os }}-npm-${{ inputs.node_version }}-ajv-${{ inputs.ajv_version }}
+
+      - name: Quiet npm & cap memory
+        run: |
+          npm config set audit false
+          npm config set fund false
+          npm config set update-notifier false
+          echo 'NODE_OPTIONS=--max-old-space-size=2048' >> "$GITHUB_ENV"
+
+      - name: Warm ajv-cli
+        env:
+          AJV_VER: ${{ inputs.ajv_version }}
+        run: npx --yes "ajv-cli@${AJV_VER}" --version
+
+      - name: Compile schemas
+        env:
+          SCHEMA_DIR: ${{ inputs.schema_dir }}
+          SCHEMA_PATTERN: ${{ inputs.schema_pattern }}
+          AJV_VER: ${{ inputs.ajv_version }}
+          SPEC: ${{ inputs.draft_spec }}
+          STRICT: ${{ inputs.strict }}
+        run: |
+          set -euo pipefail
+          ROOT="_contracts/${SCHEMA_DIR}"
+          [[ -d "$ROOT" ]] || { echo "::error::Schema dir not found: $ROOT"; exit 1; }
+
+          # Use find -path so wildcards in SCHEMA_PATTERN are evaluated by find
+          mapfile -t schemas < <(find "$ROOT" -type f -path "$ROOT/$SCHEMA_PATTERN" -print | sort || true)
+          (( ${#schemas[@]} > 0 )) || { echo "::error::No schemas found under $ROOT matching '$SCHEMA_PATTERN'"; exit 1; }
+
+          count=0
+          for schema in "${schemas[@]}"; do
+            echo "::group::Compile $schema"
+            args=(compile -s "$schema" --spec="$SPEC")
+            if [[ "$STRICT" == "true" ]]; then args+=(--strict=true); fi
+            npx --yes "ajv-cli@${AJV_VER}" "${args[@]}"
+            echo "::endgroup::"
+            ((count++))
+          done
+          echo "::notice::Compiled ${count} schemas."
+
+      - name: Validate fixtures
+        env:
+          FIXTURES_GLOB: ${{ inputs.fixtures_glob }}
+          SCHEMA_DIR: ${{ inputs.schema_dir }}
+          AJV_VER: ${{ inputs.ajv_version }}
+          SPEC: ${{ inputs.draft_spec }}
+          STRICT: ${{ inputs.strict }}
+          FAIL_MISSING: ${{ inputs.fail_on_missing_schema }}
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+
+          # Collect fixtures (.jsonl or .json). Fallback keeps it forgiving for callers.
+          mapfile -t fixtures < <(compgen -G "${FIXTURES_GLOB}" || true)
+          if (( ${#fixtures[@]} == 0 )); then
+            mapfile -t fixtures < <(compgen -G 'fixtures/**/*.{jsonl,json}' || true)
+          fi
+          if (( ${#fixtures[@]} == 0 )); then
+            echo "::notice::No fixtures found to validate."
+            exit 0
+          fi
+
+          ok=0; fail=0; skipped=0
+          for fixture in "${fixtures[@]}"; do
+            base="${fixture##*/}"
+            base="${base%.jsonl}"
+            base="${base%.json}"
+
+            # Look up schema by canonical name: <base>.schema.json (flat lookup under schema_dir)
+            mapfile -t candidates < <(find "_contracts/${SCHEMA_DIR}" -type f -name "${base}.schema.json" -print | sort || true)
+
+            echo "::group::Validate ${fixture}"
+            if (( ${#candidates[@]} == 0 )); then
+              echo "::warning file=${fixture}::No matching schema ('${base}.schema.json') under _contracts/${SCHEMA_DIR}"
+              if [[ "${FAIL_MISSING}" == "true" ]]; then
+                echo "::error::Missing schema and fail_on_missing_schema=true"
+                ((fail++))
+              else
+                ((skipped++))
+              fi
+            else
+              if (( ${#candidates[@]} > 1 )); then
+                printf "::notice file=%s::Multiple schema candidates found, using first:\n" "${fixture}"
+                printf "  - %s\n" "${candidates[@]}"
+              fi
+              schema="${candidates[0]}"
+              args=(validate -s "$schema" -d "$fixture" --spec="$SPEC" --all-errors --validate-formats=true --errors=line)
+              if [[ "$STRICT" == "true" ]]; then args+=(--strict=true); fi
+              if ! npx --yes "ajv-cli@${AJV_VER}" "${args[@]}"; then
+                ((fail++))
+              else
+                ((ok++))
+              fi
+            fi
+            echo "::endgroup::"
+          done
+
+          total=$((ok+fail+skipped))
+          echo "::notice::AJV summary → ok=${ok}, failed=${fail}, skipped=${skipped}, total=${total}"
+          (( fail == 0 )) || { echo "::error::One or more fixtures failed validation"; exit 1; }
+
+      - name: Summary
+        if: ${{ always() }}
+        run: |
+          echo "contracts-ref        : ${{ inputs.contracts_ref }}"
+          echo "schema-dir           : ${{ inputs.schema_dir }}"
+          echo "schema-pattern       : ${{ inputs.schema_pattern }}"
+          echo "fixtures-glob        : ${{ inputs.fixtures_glob }}"
+          echo "ajv-cli              : ${{ inputs.ajv_version }}"
+          echo "json schema draft    : ${{ inputs.draft_spec }}"
+          echo "strict               : ${{ inputs.strict }}"
+          echo "fail on missing sch. : ${{ inputs.fail_on_missing_schema }}"
