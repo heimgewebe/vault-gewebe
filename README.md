@@ -14,7 +14,7 @@ This vault is configured to collaborate with the Heimgewebe fleet by adhering to
 
 The repository is equipped with scripts to ensure compatibility:
 
-- **Contracts Sync**: Fetches the latest JSON schemas from the central `contracts` or `metarepo` repository.
+- **Contracts Sync**: Fetches the latest JSON schemas from the central `metarepo/contracts` (internal) and optionally `contracts-mirror` (external).
 - **Validation**: Checks that markdown files use valid frontmatter according to the schemas.
 
 ### Usage (WGX)
@@ -34,7 +34,7 @@ wgx run ai-context-check
 You can also run the scripts directly:
 
 ```bash
-# 1. Sync contracts (requires sibling repos 'contracts' or 'metarepo')
+# 1. Sync contracts (requires sibling repos 'metarepo' or 'contracts-mirror')
 ./scripts/sync-contracts.sh
 
 # 2. Validate frontmatter

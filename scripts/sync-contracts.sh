@@ -2,13 +2,15 @@
 set -euo pipefail
 
 # Scripts to sync contracts from sibling repositories
+# Internal contracts source: metarepo
+# External contracts source: contracts-mirror (optional)
+
 TARGET_DIR="contracts"
 mkdir -p "$TARGET_DIR"
 
 SOURCES=(
-  "../contracts"
   "../metarepo/contracts"
-  "../heimgewebe/contracts"
+  "../contracts-mirror/contracts"
 )
 
 FOUND=0
@@ -24,8 +26,8 @@ done
 
 if [[ $FOUND -eq 0 ]]; then
   echo "WARNING: No contracts repository found in sibling directories (${SOURCES[*]})."
-  echo "Ensure you have 'contracts' or 'metarepo' checked out nearby."
-  # Non-fatal for now, as we might be in an isolated env
+  echo "Ensure you have 'metarepo' (for internal) or 'contracts-mirror' (for external) checked out nearby."
+  # Non-fatal for now, as we might be in an isolated env or CI without siblings
   exit 0
 fi
 
