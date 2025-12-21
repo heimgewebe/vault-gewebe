@@ -1,23 +1,25 @@
 # WGX Profile for vault-gewebe
 # See https://github.com/heimgewebe/wgx for documentation
 
-name: vault-gewebe
-type: knowledge_base
+wgx:
+  apiVersion: v1.1
+  repoKind: generic
+  requiredWgx: ">=2.0.0"
 
-tasks:
-  sync-contracts:
-    description: "Syncs JSON schemas from metarepo/contracts"
-    cmd: ./scripts/sync-contracts.sh
+  tasks:
+    sync-contracts:
+      description: "Syncs JSON schemas from metarepo/contracts"
+      cmd: ./scripts/sync-contracts.sh
 
-  validate:
-    description: "Validates markdown frontmatter against contracts"
-    deps: [sync-contracts]
-    cmd: ./scripts/validate-frontmatter.py
+    validate:
+      description: "Validates markdown frontmatter against contracts"
+      deps: [sync-contracts]
+      cmd: ./scripts/validate-frontmatter.py
 
-  ai-context-check:
-    description: "Validates the .ai-context.yml file"
-    cmd: ./scripts/ai_context/validate_ai_context.py --file .ai-context.yml
+    ai-context-check:
+      description: "Validates the .ai-context.yml file"
+      cmd: ./scripts/ai_context/validate_ai_context.py --file .ai-context.yml
 
-  test:
-    description: "Run all validations"
-    deps: [validate, ai-context-check]
+    test:
+      description: "Run all validations"
+      deps: [validate, ai-context-check]
