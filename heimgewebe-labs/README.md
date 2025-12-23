@@ -59,6 +59,7 @@ We are moving to a "Canonical Tools" model.
     ```bash
     cd aussensensor
     # Prepend deprecation notice to script
+    # Note: On macOS, use: sed -i '' '2i ...'
     sed -i '2i # DEPRECATED – use tools/scripts/jsonl-validate.sh (canonical) statt lokaler Kopie.' scripts/jsonl-validate.sh
     ```
 
