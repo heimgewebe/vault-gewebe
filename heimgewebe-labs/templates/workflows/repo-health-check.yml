@@ -15,9 +15,13 @@ jobs:
           req=(".ai-context.yml" "README.md" ".editorconfig")
           missing=0
           for f in "${req[@]}"; do
-            [ -f "$f" ] || { echo "::warning::Missing $f"; missing=1; }
+            [ -f "$f" ] || { echo "::error::Missing required file: $f"; missing=1; }
           done
-          exit 0
+          # Fail if critical files are missing
+          if [ "$missing" -eq 1 ]; then
+            echo "Repository health check failed."
+            exit 1
+          fi
       - name: Basic workflow sanity
         run: |
           set -euo pipefail

@@ -9,6 +9,25 @@ project:
   role: "Role in Heimgewebe (fill me)"
   language: "Rust|Bash|Python|TypeScript|Mixed"
 
+heimgewebe:
+  fleet: "active"
+  wgx: "enabled"
+
+interfaces:
+  consumes: []
+  produces: []
+
+contracts:
+  # Example:
+  # - name: "os.context.intent"
+  #   type: "producer"
+  #   schema: "contracts/os.context.intent.schema.json"
+  []
+
+boundaries:
+  system: "heimgewebe"
+  container: "__REPO_NAME__"
+
 dependencies:
   internal: []
   external: []

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# === Dependencies Check ===
+# === Dependencies & Auth Check ===
 check_deps() {
   local missing=0
   for cmd in gh jq; do
@@ -14,10 +14,19 @@ check_deps() {
     echo "Please install missing dependencies before running this script."
     exit 1
   fi
+
+  # Auth Check: GH_TOKEN or gh auth status
+  if [ -n "${GH_TOKEN:-}" ]; then
+    echo "Using GH_TOKEN environment variable."
+  elif gh auth status >/dev/null 2>&1; then
+    echo "Using existing 'gh' authentication session."
+  else
+    echo "Error: No GitHub authentication found. Set GH_TOKEN or run 'gh auth login'."
+    exit 1
+  fi
 }
 
 check_deps
-: "${GH_TOKEN:?GH_TOKEN required}"
 
 # === Configuration ===
 # Default to a safe Pilot list (to prevent mass-PR accidents)
@@ -32,6 +41,14 @@ if [ -f "repos.txt" ]; then
 else
   REPOS=("${DEFAULT_REPOS[@]}")
 fi
+
+# Validation: Ensure REPOS are valid slugs
+for repo in "${REPOS[@]}"; do
+  if [[ ! "$repo" =~ ^[a-zA-Z0-9._-]+/[a-zA-Z0-9._-]+$ ]]; then
+    echo "Error: Invalid repo slug found: '$repo'. Must be in format 'owner/repo'."
+    exit 1
+  fi
+done
 
 BRANCH="optimize/ai-context-and-standards-pilot"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
