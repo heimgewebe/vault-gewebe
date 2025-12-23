@@ -37,7 +37,8 @@ DEFAULT_REPOS=(
 
 # Allow overriding REPOS via a file 'repos.txt' if present, or argument
 if [ -f "repos.txt" ]; then
-  readarray -t REPOS < repos.txt
+  # Read file, stripping comments and empty lines
+  mapfile -t REPOS < <(grep -vE '^\s*#|^\s*$' repos.txt)
 else
   REPOS=("${DEFAULT_REPOS[@]}")
 fi

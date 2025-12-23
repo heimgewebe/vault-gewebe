@@ -55,10 +55,11 @@ We are moving to a "Canonical Tools" model.
     ```
 
 2.  **Update Consumers (Deprecation):**
-    Apply deprecation headers to local scripts in other repos.
+    Apply deprecation headers to local scripts in other repos (using `sed` since content varies).
     ```bash
     cd aussensensor
-    git apply ../heimgewebe-labs/patches/consumer-jsonl-deprecation.patch
+    # Prepend deprecation notice to script
+    sed -i '2i # DEPRECATED – use tools/scripts/jsonl-validate.sh (canonical) statt lokaler Kopie.' scripts/jsonl-validate.sh
     ```
 
 ## 3. Future Architecture (WGX-First)
