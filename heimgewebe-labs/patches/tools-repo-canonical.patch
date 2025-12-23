@@ -1,0 +1,15 @@
+diff --git a/scripts/README.md b/scripts/README.md
+new file mode 100644
+index 0000000..e69de29
+--- /dev/null
++++ b/scripts/README.md
+@@ -0,0 +1,9 @@
++# JSONL Tools (canonical)
++
++Verwende diese Skripte orga-weit:
++
++- `jsonl-validate.sh <file> <schema.json>` – AJV-Zeilenprüfung
++- `jsonl-tail.sh <file>` – Live-Ansicht
++- `jsonl-compact.sh <in> <out>` – Whitespace entfernen
++
++Producer-Repos sollen NICHT eigene Kopien pflegen, sondern hierauf verlinken.

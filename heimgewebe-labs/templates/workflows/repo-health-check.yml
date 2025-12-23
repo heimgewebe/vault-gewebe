@@ -1,0 +1,27 @@
+name: Repository Health Check
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: Required files
+        run: |
+          set -euo pipefail
+          req=(".ai-context.yml" "README.md" ".editorconfig")
+          missing=0
+          for f in "${req[@]}"; do
+            [ -f "$f" ] || { echo "::warning::Missing $f"; missing=1; }
+          done
+          exit 0
+      - name: Basic workflow sanity
+        run: |
+          set -euo pipefail
+          n=$(find .github/workflows -type f \( -name "*.yml" -o -name "*.yaml" \) | wc -l || true)
+          if [ "$n" -gt 15 ]; then
+            echo "::warning::High workflow count ($n) – consider consolidation"
+          fi

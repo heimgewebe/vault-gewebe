@@ -1,0 +1,16 @@
+diff --git a/docs/roadmap.md b/docs/roadmap.md
+new file mode 100644
+index 0000000..e69de29
+--- /dev/null
++++ b/docs/roadmap.md
+@@ -0,0 +1,11 @@
++# Roadmap (Fleet)
++
++| Feature                       | Status     | Repo(s)                | Kommentar |
++|------------------------------|------------|------------------------|-----------|
++| Universal /v1/ingest         | in Arbeit  | leitstand, aussensensor| Deprecation Altpfade läuft |
++| Contracts Punkt-Notation     | aktiv      | metarepo               | Legacy bis contracts-v2 |
++| WGX metrics reusable         | aktiv      | metarepo + Consumer    | Skript-Fallback noch erlaubt |
++| JSONL Tools zentral          | aktiv      | tools + Producer       | Kopien werden entfernt |
++| Policy Feedback-Loop         | geplant    | hausKI, heimlern       | API + Events |
++| Stream/Webhook heimlern      | geplant    | leitstand, heimlern    | Ablösung Direkt-Push |

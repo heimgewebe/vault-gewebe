@@ -1,0 +1,23 @@
+name: Branch Cleanup
+on:
+  schedule:
+    - cron: "0 3 * * 0"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: Delete merged & stale branches
+        run: |
+          set -euo pipefail
+          git fetch --prune
+          # Merged
+          for b in $(git branch -r --merged origin/${{ github.event.repository.default_branch || 'main' }} | sed 's|origin/||' | grep -vE '^(main|master|trunk)$' || true); do
+            echo "Would delete (remote) $b — manual policy preferred (PR cleanup)."
+          done
+          # Local cleanup (safe):
+          git branch --merged | grep -vE '^(main|master|trunk)$' | xargs -r git branch -d || true

@@ -1,0 +1,30 @@
+AI Context Configuration for __REPO_NAME__
+Version: 1.0
+
+project:
+  name: "__REPO_NAME__"
+  description: "Short description (fill me)"
+  role: "Role in Heimgewebe (fill me)"
+  language: "Rust|Bash|Python|TypeScript|Mixed"
+
+dependencies:
+  internal: []
+  external: []
+
+architecture:
+  entry_points: []
+  key_modules: []
+  data_flow:
+    input: ""
+    processing: ""
+    output: ""
+
+conventions:
+  branching: "main + feature/* + hotfix/*"
+  commit_prefix: "__REPO_NAME__"
+  ci_platform: "GitHub Actions"
+
+documentation:
+  architecture_decisions: "docs/adr/"
+  runbook: "docs/runbook.md"
+  api_reference: ""
