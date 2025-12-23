@@ -1,5 +1,7 @@
-AI Context Configuration for __REPO_NAME__
-Version: 1.0
+# AI Context Configuration
+# Version: 1.1
+
+apiVersion: "1.1"
 
 project:
   name: "__REPO_NAME__"

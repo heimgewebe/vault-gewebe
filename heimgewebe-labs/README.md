@@ -1,65 +1,72 @@
-# Heimgewebe Labs - Umsetzungsplan
+# Heimgewebe Labs - Implementation Plan (Pilot Phase)
 
-Dieses Verzeichnis enthält konkrete Artefakte zur Standardisierung und Bereinigung der Heimgewebe-Architektur.
+This directory contains experimental artifacts for standardizing the Heimgewebe ecosystem.
 
-## 1. Übersicht
+**Status:** PROTOTYPE / PILOT
+**Caution:** Do not run fleet-wide without testing on pilot repos first.
 
-Basierend auf der Analyse des Vaults und der Architekturdokumente (`heimgewebe.md`, `allerepos.md`) konzentriert sich dieser Plan auf zwei Hauptziele:
+## 1. Overview
 
-1.  **Standardisierung der Flotte:** Rollout von `.ai-context.yml` und Standard-CI-Workflows in alle Repositories.
-2.  **Bereinigung des Toolings:** Zentralisierung von JSONL-Skripten im `tools`-Repo und Deprecation lokaler Kopien.
+The goal is to reduce configuration drift by standardizing:
+1.  **Context:** `.ai-context.yml` (Machine-readable Project Definition)
+2.  **Standards:** `.editorconfig` (Code Style)
+3.  **Tooling:** Centralized JSONL scripts in `tools`.
 
-## 2. Verwendung der Artefakte
+## 2. Usage
 
-### A. Flottenweiter Standard-Rollout
+### A. Pilot Rollout Script
 
-Das Skript `rollout.sh` klont alle relevanten Repositories (außer `weltgewebe`), erstellt Branches und PRs für die fehlenden Standarddateien.
+The `rollout.sh` script is designed to safely apply standards to a small set of pilot repositories first.
 
-**Voraussetzungen:**
-*   `gh` CLI installiert und authentifiziert.
-*   `GH_TOKEN` Umgebungsvariable gesetzt (für PR-Erstellung).
+**Prerequisites:**
+*   `gh` CLI installed & authenticated.
+*   `jq` installed.
+*   `GH_TOKEN` set.
 
-**Ausführung:**
+**Target Repositories:**
+By default, the script only targets **Pilot Repos** (e.g., `tools`, `mitschreiber`).
+To run on other repos, create a `repos.txt` file in this directory with one repo slug per line (e.g., `heimgewebe/wgx`).
+
+**Execution:**
 ```bash
-# Im Verzeichnis heimgewebe-labs/
-export GH_TOKEN= dein_token
+# Check syntax first
+bash -n rollout.sh
+
+# Run Pilot
+export GH_TOKEN=...
 ./rollout.sh
 ```
 
-**Was passiert:**
-*   Klont Repos nach `work/`.
-*   Kopiert Templates aus `templates/` (ai-context, editorconfig, workflows).
-*   Erstellt Commits und PRs auf Branch `optimize/ai-context-and-standards`.
+### B. Roadmap & Doku (Metarepo)
 
-### B. Roadmap & Doku-Update (Metarepo)
-
-Wende den Patch für das Metarepo an, um die Roadmap hinzuzufügen.
-
+Apply the roadmap patch to the metarepo:
 ```bash
-cd /pfad/zu/metarepo
-git apply /pfad/zu/vault-gewebe/heimgewebe-labs/patches/metarepo-roadmap.patch
+git apply patches/metarepo-roadmap.patch
 ```
 
-### C. JSONL Tools Zentralisierung (Tools & Producer)
+### C. JSONL Tools Consolidation
 
-1.  **Tools-Repo aktualisieren:**
-    Wende den Patch im `tools`-Repo an, um die README zu ergänzen und Skripte als "canonical" zu markieren.
+We are moving to a "Canonical Tools" model.
+
+1.  **Update Tools Repo:**
     ```bash
-    cd /pfad/zu/tools
-    git apply /pfad/zu/vault-gewebe/heimgewebe-labs/patches/tools-repo-canonical.patch
+    cd tools
+    git apply ../heimgewebe-labs/patches/tools-repo-canonical.patch
     ```
 
-2.  **Producer-Repos bereinigen:**
-    In Repos wie `aussensensor` sollten lokale Skripte (`scripts/jsonl-validate.sh` etc.) entweder gelöscht oder mit einem Deprecation-Header versehen werden.
+2.  **Update Consumers (Deprecation):**
+    Apply deprecation headers to local scripts in other repos.
     ```bash
-    # Beispiel für Aussensensor
-    cd /pfad/zu/aussensensor
-    git apply /pfad/zu/vault-gewebe/heimgewebe-labs/patches/consumer-jsonl-deprecation.patch
+    cd aussensensor
+    git apply ../heimgewebe-labs/patches/consumer-jsonl-deprecation.patch
     ```
 
-## 3. Nächste Schritte (Architektur)
+## 3. Future Architecture (WGX-First)
 
-Nach der Standardisierung stehen folgende Punkte an:
-*   **Ingest-Pfad:** Migration aller Services auf `leitstand /v1/ingest`.
-*   **Contract-Naming:** Vereinheitlichung auf Punktnotation (z.B. `os.context.intent`).
-*   **Heimlern-Datenfluss:** Umstellung von Direkt-Push auf Konsum via Leitstand.
+*   **Long-term Goal:** Move health checks and standard enforcement into `wgx` (e.g., `wgx guard` task) rather than duplicating workflows in every repo.
+*   **Current State:** These workflows serve as an interim solution to establish a baseline hygiene.
+
+## 4. Verification
+
+*   **Repo Slugs:** Ensure `repos.txt` (if used) contains valid GitHub slugs. Invalid slugs will cause the script to fail.
+*   **YAML Validity:** The `.ai-context.yml` template is strict YAML. Do not introduce unstructured text headers.
