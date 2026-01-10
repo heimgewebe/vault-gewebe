@@ -1,0 +1,41 @@
+ICF
+Internationale Klassifikation der Funktionsfähigkeit, Behinderung und Gesundheit
+
+
+Herausgegeben vom 
+Deutschen Institut für Medizinische Dokumentation und Information (DIMDI), 
+WHO-Kooperationszentrum für das System Internationaler Klassifikationen
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+LIESMICHDATEI 
+
+
+ICF 2005 (OID 2.16.840.1.113883.6.254) 
+Gesamtfassung PDF
+
+
+Stand der Klassifikationsdatei: Oktober 2005
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+INHALT DES ZIP-FILES  icfbp2005.zip:
+
+  - icf-2005_pdf_liesmich.txt
+
+  - Ordner VERTRAGSBEDINGUNGEN 
+    Nutzungrechte 
+    Impressum
+
+  - KLASSIFIKATIONSDATEI
+    icf-2005.pdf
+    
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+Die Klassifikationsdatei icf-2005.pdf ist die Gesamtfassung der ICF und enthält neben Einführung und Anhängen die Kurzversion (Klassifikation der zweiten Ebene) und die Vollversion der ICF, die detaillierte Klassifikation mit Definitionen, Inklusiva und Exklusiva. Gegenüber der Fassung icf_endfassung-2005-10-01.pdf, die bis zum 08.05.2016 im Downloadcenter bereitstand, wurden einige orthographische Fehler korrigiert und Lesezeichen ergänzt. Inhaltlich sind die Fassungen identisch. 
+
+Wir weisen an dieser Stelle noch einmal ausdrücklich auf die Nutzungrechte hin. 
+
+
+
+ 
+
+

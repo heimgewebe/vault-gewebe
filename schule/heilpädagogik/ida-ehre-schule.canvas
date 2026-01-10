@@ -1,0 +1,109 @@
+{
+	"type":"canvas",
+	"version":1,
+	"nodes":[
+		{"id":"grundlagen","type":"text","text":"## Grundlagen\n• Stadtteilschule mit Oberstufe\n• Sozialindex 3\n• Heterogene Schülerschaft\n• Ganztagsstruktur\n• Multiprofessionelles System","x":-905,"y":-380,"width":345,"height":216,"color":"gray"},
+		{"id":"warum","type":"text","text":"## Warum diese Einrichtung?\nJohannes Schwieger","x":-416,"y":-544,"width":351,"height":102,"color":"gray"},
+		{"id":"traeger","type":"text","text":"## Name & Träger\n• Ida-Ehre-Schule (Stadtteilschule)\n• Träger: Schulbehörde (staatlich)\n• BSFB = Behörde für Schule, Familie und Bildung","x":-905,"y":-599,"width":420,"height":157,"color":"5"},
+		{"id":"rolle","type":"text","text":"## Rolle der Fachkraft\n• Beziehungsanker\n• Lernbegleitung\n• Konfliktarbeit\n• Stillarbeit / Gruppenarbeit begleiten\n• Spielpartner\n• Zusatzangebote\n","x":0,"y":-402,"width":286,"height":260,"color":"3"},
+		{"id":"ressourcen","type":"text","text":"## Ressourcen vor Ort\n• Treffpunkt (Raum)\n\t- kein Toberaum\n• 10,45 Stellen\n• Externe Tagesgruppe (SME: Stadtteilbezogene, milieunahe Erziehungshilfen)\n• Mittwoch: externer Verein für Nachmittagsbetreuung ","x":-485,"y":-372,"width":409,"height":246,"color":"2"},
+		{"id":"gruppe","type":"text","text":"## Zusammensetzung der Gruppe\n• Unterschiedliche Entwicklungsstände\n• Unterschiedliche Herkunftskontexte\n• Unterschiedliche Konfliktstile\n• Unterschiedliche Bindungsmuster","x":-916,"y":-105,"width":368,"height":183,"color":"1"},
+		{"id":"therapie","type":"text","text":"## Therapieangebote?\n• Keine direkte Therapie\n• Aber: Beratung, Sozialpädagogik, externe Kooperationspartner","x":-910,"y":114,"width":357,"height":156,"color":"gray"},
+		{"id":"geschichte","type":"text","text":"## Geschichte der Ida-Ehre-Schule\n• 1929–1934: Bau (Fritz Schumacher)\n• 1934: „Jahnschule“\n• 1935: Ausschluss jüdischer Kinder\n• Nachkriegszeit: mehrere Schulformen\n• 1979: Integrierte Gesamtschule\n• 1997–1999: Debatte um Umbenennung\n• 2001: Umbenennung in „Ida-Ehre-Schule“\n• Heute: Stadtteilschule mit Oberstufe","x":-1472,"y":-293,"width":480,"height":280,"color":"gray"},
+		{"id":"jahn","type":"text","text":"## Warum Jahn problematisch war\n• Völkisch-nationalistische Ideologie\n• Fremdenfeindliche Aussagen\n• Militarisierte Körpererziehung\n• Vereinnahmung durch Nationalsozialisten\n• Unvereinbar mit modernen Werten\n• Grund für Umbenennung der Schule","x":-1454,"y":45,"width":445,"height":225,"color":"1"},
+		{"id":"sozialindex","type":"text","text":"## Sozialindex-Verteilung Hamburg\n• Skala 1–6: 1 = stark belastet, 6 = privilegiert\n• Stadtteilschulen:\n  - 8 Schulen: Index 1\n  - 18 Schulen: Index 2\n  - 12 Schulen: Index 3\n  - 9 Schulen: Index 4\n  - 12 Schulen: Index 5\n  - 0 Schulen: Index 6\n• Bedeutung: Ressourcen, Fördermittel, Lernbedingungen\n• Index kann sich ändern (Neuberechnung 2021)","x":-1472,"y":-707,"width":450,"height":374},
+		{"id":"meinerolle","type":"text","text":"## Meine Rolle\n• Ansprech-/Spielpartner in der Insel\n• Betreuung / Förderung von Ali\n• Leitung des Neigungskurses „Airbrush“","x":-210,"y":-69,"width":353,"height":157,"color":"3"},
+		{"id":"foerder","type":"text","text":"## Alis Förderschwerpunkt\n• ESU & Lernen\n• Zieldifferentes Lernen\n• Diagnostik (KME Hören ab 4. Klasse aberkannt)\n• Wichtig: Förderstatus muss 1 Jahr vorher aberkannt werden, um ESA zu ermöglichen","x":240,"y":-105,"width":435,"height":202,"color":"4"},
+		{"id":"erfolg","type":"text","text":"## Erfolgskriterien\n• Stabilere Gruppen\n• Rückgang von Konflikten\n• Lernfortschritte\n• Selbstwirksamkeit\n• Verlässliche Beziehungen","x":361,"y":-380,"width":274,"height":204,"color":"4"},
+		{"id":"innen","type":"text","text":"### Innerpsychische Ebene\n• Kinder: Selbstregulation, Überforderung, Bedürfnislagen\n• Erwachsene: Grenzgefühl, Belastung, Verantwortung","x":240,"y":-599,"width":355,"height":170,"color":"6"}
+	],
+	"edges":[
+		{"id":"edge-geschichte","fromNode":"grundlagen","fromSide":"left","toNode":"geschichte","toSide":"right"},
+		{"id":"edge-jahn","fromNode":"geschichte","fromSide":"bottom","toNode":"jahn","toSide":"top"},
+		{
+			"id":"1620196b2f5994ee",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"rolle",
+			"fromSide":"bottom",
+			"toNode":"meinerolle",
+			"toSide":"top"
+		},
+		{
+			"id":"a4edf3fb41b49c79",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"traeger",
+			"fromSide":"right",
+			"toNode":"warum",
+			"toSide":"left"
+		},
+		{
+			"id":"cae931277a2d7acf",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"traeger",
+			"fromSide":"bottom",
+			"toNode":"grundlagen",
+			"toSide":"top"
+		},
+		{
+			"id":"b698b2ca65fc8601",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"ressourcen",
+			"fromSide":"right",
+			"toNode":"rolle",
+			"toSide":"left"
+		},
+		{
+			"id":"09cb5e484b0ff754",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"warum",
+			"fromSide":"right",
+			"toNode":"rolle",
+			"toSide":"top"
+		},
+		{
+			"id":"6cf6e43323dc1e29",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"grundlagen",
+			"fromSide":"bottom",
+			"toNode":"gruppe",
+			"toSide":"top"
+		},
+		{
+			"id":"49315098cc5adf17",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"meinerolle",
+			"fromSide":"right",
+			"toNode":"foerder",
+			"toSide":"left"
+		},
+		{
+			"id":"673a0366c540eac9",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"rolle",
+			"fromSide":"right",
+			"toNode":"erfolg",
+			"toSide":"left"
+		},
+		{
+			"id":"90a84f16144f20b4",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"grundlagen",
+			"fromSide":"left",
+			"toNode":"sozialindex",
+			"toSide":"right"
+		}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

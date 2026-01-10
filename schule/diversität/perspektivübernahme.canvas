@@ -50,7 +50,7 @@
 		{"id":"e_root_mw","fromNode":"root","fromSide":"left","toNode":"mw_k","toSide":"right"},
 		{"id":"e_root_ve","fromNode":"root","fromSide":"left","toNode":"ve_k","toSide":"right"},
 		{"id":"e_root_grp","fromNode":"root","fromSide":"bottom","toNode":"gruppe","toSide":"top"},
-		{"id":"e_root_fmw","fromNode":"root","fromSide":"right","toNode":"fam_mw","toSide":"left"},
+		{"id":"e_root_fmw","toFloating":false,"fromNode":"root","fromSide":"right","toNode":"fam_mw","toSide":"left"},
 		{"id":"e_root_fve","fromFloating":false,"fromNode":"root","fromSide":"right","toNode":"fam_ve","toSide":"left"},
 		{"id":"e_root_hin","fromNode":"root","fromSide":"bottom","toNode":"hindernisse","toSide":"top"},
 		{"id":"e_root_eb","toFloating":false,"fromNode":"root","fromSide":"top","toNode":"ebenen","toSide":"bottom"},

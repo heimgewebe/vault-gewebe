@@ -30,7 +30,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "zwischenspeicher.md",
+                "file": "zwischenordner/zwischenspeicher.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": false
@@ -38,9 +38,56 @@
               "icon": "lucide-file",
               "title": "zwischenspeicher"
             }
+          },
+          {
+            "id": "6aca04e4018076e3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "music.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "music"
+            }
+          },
+          {
+            "id": "a513cbd3bf339374",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "toolchain.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": false
+              },
+              "icon": "lucide-file",
+              "title": "toolchain"
+            }
+          },
+          {
+            "id": "a7482884430508a3",
+            "type": "leaf",
+            "state": {
+              "type": "canvas",
+              "state": {
+                "file": "schule/heilpädagogik/grawe_konsistenz.canvas",
+                "viewState": {
+                  "x": 104.59978986402146,
+                  "y": 1007.2631004708783,
+                  "zoom": -0.7707531964514618
+                }
+              },
+              "icon": "lucide-layout-dashboard",
+              "title": "grawe_konsistenz"
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -229,7 +276,7 @@
         "state": {
           "type": "file-properties",
           "state": {
-            "file": "schule/theater/projektmethode.canvas"
+            "file": "zwischenordner/zwischenspeicher.md"
           },
           "icon": "lucide-info",
           "title": "Dateieigenschaften"
@@ -257,62 +304,63 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "03cd01c73ea6d80e",
+  "active": "a7482884430508a3",
   "lastOpenFiles": [
-    "heimgewebe.md",
-    "schule/konflikte/martina.canvas",
-    "orga/verträge",
-    "orga/schlüssel",
-    "orga/schule/BAFöG",
-    "orga/schule",
-    "orga/wichtige dokumente",
-    "orga",
-    "coding/repos/wgx/archiv",
-    "coding/repos/vault-gewebe/nexus",
-    "coding/repos/vault-gewebe/halde",
-    "coding/repos/vault-gewebe/orga/schule/BAFöG",
-    "repos feedback.md",
-    "schule/mathe/projektskizze.canvas",
-    "schule/mathe/projektskizze2.canvas",
+    "lhv-phase1.1.md",
+    "coding/repos/hausKi-audio/scripts/README.md",
+    "coding/repos/hausKi-audio/README.md",
+    "coding/repos/hausKi-audio/docs/runbooks/mopidy_iris_qobuz.md",
+    "coding/repos/hausKi-audio/docs/runbooks/backend_service.md",
+    "coding/repos/hausKi-audio/docs/adr/0004-recording-pw-record-helper.md",
+    "coding/repos/hausKi-audio/docs/ARCHITECTURE.md",
+    "coding/repos/hausKi-audio/scripts/ai_context/README.md",
+    "coding/repos/hausKi-audio/docs/adr/0001-player-backend-mopidy-qobuz.md",
+    "coding/repos/hausKi-audio/docs/adr/0002-audio-path-pulse-vs-alsa.md",
+    "coding/repos/hausKi-audio/docs/README_ALSA.md",
+    "coding/repos/hausKi-audio/docs/process/CONTRIBUTING.md",
+    "coding/repos/hausKi-audio/docs/adr/0003-repo-standards-docs-ci.md",
+    "coding/repos/hausKi-audio/docs/adr/README.md",
+    "coding/repos/hausKi-audio/docs/vibe-detection.md",
+    "coding/repos/hausKi-audio/docs/troubleshooting.md",
+    "coding/repos/hausKi-audio/docs/policies/SECURITY.md",
+    "coding/repos/hausKi-audio/docs/io-contracts.md",
+    "coding/repos/hausKi-audio/heimgewebe-.ai-context.yml-sammlung",
+    "coding/repos/hausKi-audio/docs/runbooks",
+    "coding/repos/hausKi-audio/docs/policies",
+    "coding/repos/hausKi-audio/docs/process",
+    "coding/repos/hausKi-audio/docs/adr",
+    "coding/repos/hausKi-audio/docs",
+    "coding/repos/hausKI-audio/scripts/README.md",
+    "coding/repos/hausKI-audio/README.md",
+    "coding/repos/hausKI-audio/docs/runbooks/mopidy_iris_qobuz.md",
+    "coding/repos/hausKI-audio/docs/runbooks/backend_service.md",
+    "coding/repos/hausKI-audio/docs/adr/0004-recording-pw-record-helper.md",
+    "coding/repos/hausKI-audio/docs/ARCHITECTURE.md",
+    "coding/repos/hausKI-audio/scripts/ai_context/README.md",
+    "coding/repos/hausKI-audio/docs/adr/0001-player-backend-mopidy-qobuz.md",
+    "coding/repos/hausKI-audio/heimgewebe-.ai-context.yml-sammlung",
+    "coding/repos/hausKI-audio/crates/backend/src/scripts",
+    "coding/repos/hausKI-audio/scripts/ai_context",
+    "coding/repos/hausKI-audio/docs/runbooks",
+    "schule/diversität/raum/kladde.canvas",
+    "schule/heilpädagogik/ida-ehre-schule.canvas",
+    "schule/heilpädagogik/inklusion.canvas",
+    "schule/diversität/situation_vielfalt_bachweg.canvas",
+    "schule/diversität/verena.canvas",
+    "schule/diversität/perspektivübernahme.canvas",
+    "schule/arbeitsfelder/senioren.canvas",
+    "schule/arbeitsfelder/senioren_perspektivübernahme.canvas",
+    "schule/arbeitsfelder/arbeitsfelder_als_erzieher.canvas",
+    "inklusion.canvas",
+    "schule/arbeitsfelder/präsi schoenheit.png",
+    "schule/arbeitsfelder/praesi_schoenheit.png",
+    "schule/konflikte/praesi_schoenheit.png",
     "Pasted image 20251106223410.png",
-    "zwischenspeicher.md",
-    "schule/theater/projektmethode.canvas",
-    "to do hauski-audio.md",
-    "to do metarepo.md",
     "schule/theater/klausur/theater klausur-4.jpg",
-    "schule/theater/freyProjektmethode.canvas",
     "schule/theater/klausur/theater klausur-7.jpg",
     "schule/theater/klausur/theater klausur-6.jpg",
     "schule/theater/klausur/theater klausur-5.jpg",
     "schule/theater/klausur/theater klausur-1.jpg",
-    "schule/theater/klausur/theater klausur-2.jpg",
-    "schule/theater/klausur/theater klausur-3.jpg",
-    "schule/theater/klausur/theater klausur-10.jpg",
-    "schule/theater/klausur/theater klausur-8.jpg",
-    "to do aussensensor.md",
-    "to do hauski 1.md",
-    "to do hauski.md",
-    "mitschreiber.md",
-    "schule/mathe/projektskizze old.canvas",
-    "schule/mathe/projektskizze.md",
-    "to do weltgewebe.md",
-    "coding/hausKI/README.md",
-    "schule/heilpädagogik/t_i_p-ziel_leitprinzipien.canvas",
-    "coding/hausKI/hauski-skizze.md",
-    "coding/hausKI/hauski-stack.md",
-    "coding/hausKI/docs/semantah.md",
-    "coding/hausKI/docs/runbooks/semantah_local.md",
-    "coding/hausKI-audio/scripts/README.md",
-    "coding/hausKI/docs/process/sprache.md",
-    "coding/hausKI/CONTRIBUTING.md",
-    "coding/hausKI-audio/docs/runbooks/mopidy_iris_qobuz.md",
-    "coding/hausKI-audio/docs/runbooks/backend_service.md",
-    "coding/hausKI-audio/README.md",
-    "coding/hausKI/docs/adr/ADR-0001__ziele-und-scope.md",
-    "coding/hausKI-audio/docs/adr/0004-recording-pw-record-helper.md",
-    "coding/hausKI-audio/docs/ARCHITECTURE.md",
-    "coding/hausKI/seeds/obsidian.sample/Canvas/overview.canvas",
-    "schule/heilpädagogik/theorie_integrativer_prozesse.canvas",
-    "schule/heilpädagogik/foerderschwerpunkt_geistige_behinderung.canvas"
+    "schule/theater/klausur/theater klausur-2.jpg"
   ]
 }

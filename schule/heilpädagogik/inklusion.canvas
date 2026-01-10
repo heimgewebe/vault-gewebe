@@ -1,0 +1,35 @@
+{
+	"nodes":[
+		{"id":"root","type":"text","text":"Inklusion vs. Integration\nKurzüberblick","x":-200,"y":-100,"width":320,"height":140,"color":"1"},
+		{"id":"integration_massnahmen","type":"text","text":"Typische Maßnahmen\n- Sprach-/Orientierungskurse\n- Anerkennung von Qualifikationen\n- Mentoring, Anti-Diskriminierung\n- Barrierearme Infrastruktur, Quoten, Förderprogramme","x":-1000,"y":80,"width":420,"height":220},
+		{"id":"inklusion","type":"text","text":"Inklusion\nStrukturen werden für Vielfalt gebaut; System passt sich an.","x":200,"y":-200,"width":360,"height":140,"color":"4"},
+		{"id":"inklusion_design","type":"text","text":"Design-Prinzipien\n- Universal Design / Design for All\n- Flexible Differenzierung (Co-Teaching, modulare Lernpfade)\n- Partizipation\n- Intersektionale Perspektive","x":560,"y":-260,"width":420,"height":220},
+		{"id":"inklusion_erfolg","type":"text","text":"Erfolgsfaktoren\n- Führung verankert Ziel + Governance\n- Ressourcen für Barrieren, Assistenz, Technik\n- Kultur der Wertschätzung, Schutzsysteme\n- Messbare Ziele (Teilnahme, Zufriedenheit, Aufstieg)","x":560,"y":40,"width":440,"height":220},
+		{"id":"vergleich","type":"text","text":"Unterschiede\n- Fokus: Anpassung der Personen (Integration) vs. der Strukturen (Inklusion)\n- Maßnahmen: Spezialprogramme vs. universelle Lösungen\n- Effekt: Reaktiv hergestellte Teilhabe vs. proaktiver Barriereabbau","x":-80,"y":120,"width":520,"height":200,"color":"5"},
+		{"id":"integration","type":"text","text":"Integration\nAnpassung an bestehende Strukturen, Zugang wird geöffnet.","x":-600,"y":-200,"width":360,"height":140,"color":"3"},
+		{"id":"formel","type":"text","text":"Kurzformel\nIntegration = Zugang ermöglichen und anschließen.\nInklusion = Strukturen so bauen, dass jeder dazugehört.","x":-200,"y":-360,"width":420,"height":160},
+		{"id":"integration_ziele","type":"text","text":"Ziele Integration\n- Teilhabe über Arbeit, Bildung, Gesundheit, Politik\n- Anschluss an bestehende Systeme","x":-960,"y":-420,"width":380,"height":160},
+		{"id":"integration_erfolg","type":"text","text":"Erfolgsfaktoren\n- Frühe Förderung (Sprache, Übergänge)\n- Lotsen, stabile Ansprechstellen\n- Beteiligung der Zielgruppe\n- Datenbasiertes Monitoring","x":-620,"y":140,"width":380,"height":200},
+		{"id":"integration_grenzen","type":"text","text":"Grenzen/Herausforderungen\n- Anpassungsdruck an Mehrheitsnorm\n- Sonderwege erzeugen Stigma\n- Fehlende Anschlüsse nach Programmen","x":-620,"y":400,"width":360,"height":200},
+		{"id":"inklusion_grenzen","type":"text","text":"Grenzen/Herausforderungen\n- Symbolpolitik ohne Strukturwandel\n- Fehlende Ressourcen/Kompetenzen\n- Unklare Zuständigkeiten, fehlendes Monitoring","x":317,"y":320,"width":420,"height":200},
+		{"id":"good_practice","type":"text","text":"Good Practices\n- Barrierearme Infrastruktur (physisch + digital)\n- Co-Design und Mitbestimmung\n- Kompetenzaufbau zu Diversität/Anti-Bias\n- Daten & Transparenz\n- Schutz- und Beschwerdewege\n- Ressourcen & Verstetigung","x":-103,"y":380,"width":420,"height":240}
+	],
+	"edges":[
+		{"id":"e_root_integration","fromNode":"root","fromSide":"left","toNode":"integration","toSide":"right"},
+		{"id":"e_root_inklusion","fromNode":"root","fromSide":"right","toNode":"inklusion","toSide":"left"},
+		{"id":"e_root_vergleich","fromNode":"root","fromSide":"bottom","toNode":"vergleich","toSide":"top"},
+		{"id":"e_root_good","fromNode":"root","fromSide":"bottom","toNode":"good_practice","toSide":"top"},
+		{"id":"e_root_formel","fromNode":"root","fromSide":"top","toNode":"formel","toSide":"bottom"},
+		{"id":"e_integration_ziele","fromNode":"integration","fromSide":"left","toNode":"integration_ziele","toSide":"right"},
+		{"id":"e_integration_massnahmen","fromNode":"integration","fromSide":"bottom","toNode":"integration_massnahmen","toSide":"top"},
+		{"id":"e_integration_erfolg","fromNode":"integration","fromSide":"bottom","toNode":"integration_erfolg","toSide":"top"},
+		{"id":"e_integration_grenzen","fromNode":"integration","fromSide":"bottom","toNode":"integration_grenzen","toSide":"top"},
+		{"id":"e_inklusion_design","fromNode":"inklusion","fromSide":"right","toNode":"inklusion_design","toSide":"left"},
+		{"id":"e_inklusion_erfolg","fromNode":"inklusion","fromSide":"bottom","toNode":"inklusion_erfolg","toSide":"top"},
+		{"id":"e_inklusion_grenzen","fromNode":"inklusion","fromSide":"bottom","toNode":"inklusion_grenzen","toSide":"top"}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

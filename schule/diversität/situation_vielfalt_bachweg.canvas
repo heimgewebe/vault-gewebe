@@ -12,7 +12,7 @@
 		{"id":"ziele","type":"text","text":"Ziele\n– Neuer Raum „Seifenblasencrew“\n– Vielfalt in Materialien, Rollen, Bildern\n– Kinderperspektiven ernst nehmen\n– Austausch mit anderen Kitas (best practice)","x":600,"y":300,"width":400,"height":200,"color":"5"},
 		{"id":"ebenen","type":"text","text":"Ebenen\n– Kind: Gefühle von Ausschluss, Frust\n– Team: Reflexion, Suche nach Lösungen\n– Institution: Raumgestaltung, konzeptionelle Öffnung","x":600,"y":-300,"width":400,"height":160,"color":"6"},
 		{"id":"essenz","type":"text","text":"Essenz: Vielfalt wird sichtbar, wenn sie fehlt.","x":-200,"y":-500,"width":420,"height":100,"color":"4"},
-		{"id":"legende","type":"text","text":"Legende\nFarben:\nBlau = Zentrum/Meta\nGrau = Grundlagen\nGelb = Prozesse\nRot = Hindernisse\nGrün = Ziele\nViolett = Ebenen\n\nAchsen:\nLinks = Grundlagen\nMitte = Prozesse\nRechts = Ziele\nVertikal: unten konkret, oben abstrakt\n\nHinweis: Meta-Knoten ohne Pfeile; Essenz frei gestaltet","x":1000,"y":-500,"width":420,"height":260,"color":"2"},
+		{"id":"legende","type":"text","text":"Legende\nFarben:\nBlau = Zentrum/Meta\nGrau = Grundlagen\nGelb = Prozesse\nRot = Hindernisse\nGrün = Ziele\nViolett = Ebenen\n\nAchsen:\nLinks = Grundlagen\nMitte = Prozesse\nRechts = Ziele\nVertikal: unten konkret, oben abstrakt\n\nHinweis: Meta-Knoten ohne Pfeile; Essenz frei gestaltet","x":1000,"y":-500,"width":444,"height":429,"color":"2"},
 		{
 			"id":"99aa311c61d56227",
 			"type":"text",
@@ -25,7 +25,7 @@
 		}
 	],
 	"edges":[
-		{"id":"e1","fromNode":"root","fromSide":"left","toNode":"mwazilinda","toSide":"right"},
+		{"id":"e1","toFloating":false,"fromNode":"root","fromSide":"left","toNode":"mwazilinda","toSide":"right"},
 		{"id":"e2","fromNode":"root","fromSide":"left","toNode":"verena","toSide":"right"},
 		{"id":"e3","fromNode":"root","fromSide":"bottom","toNode":"max","toSide":"top"},
 		{"id":"e4","fromNode":"root","fromSide":"top","toNode":"rahmen","toSide":"bottom"},

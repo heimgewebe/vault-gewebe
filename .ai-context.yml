@@ -1,4 +1,11 @@
-ai_context_version: 1.0
+# Dieses Repo ist Teil des Heimgewebes.
+# Systemweiter Kontext durch Heimgeist:
+#   metarepo/ai-contexts/heimgeist.ai-context.yml
+
+system_context:
+  heimgeist: "../metarepo/ai-contexts/heimgeist.ai-context.yml"
+
+ai_context_version: 1.1
 
 project:
   name: vault-gewebe
@@ -6,6 +13,30 @@ project:
   role: knowledge_vault
   primary_language: markdown
   visibility: internal
+
+heimgewebe:
+  axis:
+    - Events
+    - Semantik
+    - Decisions
+    - Learning
+  fleet:
+    enabled: false
+  wgx:
+    profile_expected: false
+    guard_smoke_expected: false
+
+interfaces:
+  consumes:
+    - "contracts/knowledge_graph_schemas"
+  produces:
+    - "obsidian_vault"
+    - "semantic_index"
+
+contracts:
+  schemas:
+    - path: "contracts/*.schema.json"
+      note: "Used for validating frontmatter in knowledge base."
 
 dependencies:
   internal:
@@ -43,6 +74,13 @@ architecture:
     input: notes, interviews, transcripts, project docs
     processing: tagging → linking → export
     output: semantic index and sync signals
+
+boundaries:
+  not_responsible_for:
+    - "Direct code execution of software projects (it documents them)"
+    - "Hosting services (it is a data store)"
+  dangerous_assumptions:
+    - "Assume file structure is rigid (Obsidian users move files)"
 
 conventions:
   branching: "main, feature/*"

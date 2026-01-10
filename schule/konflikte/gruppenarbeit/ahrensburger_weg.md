@@ -1,0 +1,54 @@
+Fachschule für Sozialpädagogik
+
+Semester 3
+Lernfeld 2 – 3A
+Konflikte im offenen Elementarbereich einer Kita entwicklungsgerecht und auf der Basis von Kinderrechten begleiten
+Turbulente Zeiten in der Kita „Ahrensburger Weg“ 
+Die Kita „Ahrensburger Weg“ arbeitet seit sechs Monaten nach dem offenen Konzept mit dem Schwerpunkt „Kinderrechte basierte Pädagogik“ und bietet Platz für insgesamt 80 Kinder. Vorher hatten die Kinder feste Gruppen, Gruppenräume und Bezugserzieher:innen. Die neuen Räumlichkeiten sind nun nach Krippe (von 1 bis 3 Jahren) und Elementarbereich (von 3 bis 6 Jahren) aufgeteilt. 
+Im Elementarbereich gibt es folgende Funktionsräume:
+• Ein Atelier
+• Einen Bewegungsraum, der auch als Musikraum genutzt wird
+• Einen Rollenspielraum
+• Einen Bauraum
+• Eine Kinderbibliothek
+Darüber hinaus gibt es in der Kita den Essensraum, der von beiden Bereichen übergreifend genutzt wird. 
+In den Freispielphasen dürfen die Räume jeweils von zehn Kindern genutzt werden. Lediglich für die Bibliothek gibt es eine Einschränkung auf fünf Kinder.
+Der Tagesablauf in der Kita ist so gestaltet, dass die Kinder zwischen 6 und 9.30 Uhr ankommen. Zwischen 6 und 7 Uhr findet ein gemeinsamer Frühdienst in den Krippenräumen statt. Ab 7 Uhr wird der Elementarbereich geöffnet. Bis 9.30 Uhr haben die Kinder die Möglichkeit, in den Räumen frei zu spielen. Dafür werden je nach Anzahl der anwesenden Erzieher:innen und Kinder nach und nach immer mehr Räume geöffnet. Außerdem findet zwischen 8 und 9 Uhr ein offenes Frühstück statt.
+Um 9.30 Uhr startet für die Kinder der Morgenkreis. Hierfür sind sie auf die Räume so aufgeteilt, dass sie den Morgenkreis mit ihrer jeweiligen Bezugsfachkraft gestalten.
+Nach dem Morgenkreis finden in den jeweiligen Funktionsräumen eine begleitete Freispielphase statt. Für die Funktionsräume können sich die Kinder im Morgenkreis entscheiden. Dafür gibt es für jedes Kind „Eintrittskarten“, die sie sich entsprechend der möglichen Anzahl der Kinder aussuchen können.
+Die Freispielzeit findet im Zeitraum zwischen 10 und 13 Uhr statt. Im Anschluss an die Freispielzeit findet das Mittagessen im Zeitraum zwischen 11 und 13 Uhr statt. Dafür sind die Kinder in zwei Gruppen aufgeteilt, die jeweils eine Stunde Essenszeit haben.
+Am Nachmittag finden einzelne Angebote statt, im Schwerpunkt gehen die Kinder allerdings nach draußen auf das Außengelände der Kita.
+Die Fachkräfte sind bestimmten Funktionsräumen zugeordnet und gewährleisten hier die entsprechende Betreuung, gestalten die Räume und sind für das Material verantwortlich.
+Es ist Dienstagmorgen. Die Praktikantin Selma ist seit kurzer Zeit neu in der KiTa und ist hier im Schwerpunktpraktikum im Elementarbereich tätig. Selma hat ihr erstes Praktikum in einer zweiten Klasse in einer Grundschule absolviert. Die ersten Tage im Praktikum sind geprägt davon, dass Selma sich in der Einrichtung orientiert. Sie beobachtet die Kinder und Erzieher:innen. Mit ihrem Anleiter Furkan ist abgesprochen, dass Selma nun jeden Tag in einem anderen Funktionsraum ist und so unterschiedliche Erfahrungen und Eindrücke sammelt. Besonders herausfordernd empfindet Selma die ungewohnte Struktur im Alltag. Das ist absolut neu für sie. In jedem Raum findet sie wechselnde Gruppenzusammensetzungen, die schon aktiv im Spiel sind, vor. Sie ist unsicher, wie sie sich in diese Spiele mit einbringen soll. Sie fragt sich, wie die Kinder diese neue Struktur empfinden und sich im Alltag orientieren. 
+Heute ist Selma im Bauraum. Martina ist die Fachkraft in diesem Raum. Selma hatte bis heute noch keinen Kontakt zu ihr. Am Morgen haben sie sich kurz begrüßt, danach hat sich Martina mit einer Kindergruppe einem schon halb aufgebauten Gebäudekomplex aus Holzklötzen zugewandt. Selma beobachtet die Gruppe. Die Kinder und die Erzieherin betrachten das bereits Aufgebaute und überlegen gemeinsam, wie das Gelände weiterentwickelt werden soll. 
+Martina:  „Was meint ihr, was fehlt noch in unserer Stadt?“
+Robert (4;7):  „Ein Krankenhaus!“
+Mila (4;9):  „Nein, kein Krankenhaus! Ein Gefängnis!“
+Robert (4;7):  „Doch, ich mache ein Krankenhaus. Da ist mein Opa.“
+Schon ist Robert (4;7) auf dem Bauteppich und fängt an zu Bauen.
+Nora (5;1) schreit Robert (4;7) an: „Du darfst das nicht entscheiden! Wir wollen kein Krankenhaus!“
+Martina greift ein: „Wenn Robert nun schon baut, lassen wir ihn.“ 
+Mila (4;9) und Nora (5;1) wenden sich Martina zu. „Das ist aber ungerecht! Wir wollten gestern eine Schule bauen und da hat Mehmed nein gesagt und dann haben wir das auch nicht gebaut.“
+…
+Später am Vormittag sind noch andere Kinder im Raum. Robert (4;7) ist noch am Bauen. Das Krankenhaus ist schon recht groß. Es ist wuselig und Selma fällt es schwer, den Überblick über das Geschehen zu behalten. Martina bittet Selma, kurz allein im Raum zu bleiben, da sie etwas besorgen möchte.
+Martina ist gerade aus dem Raum, da kracht es in der Bauecke. Selma schaut hin und sieht, wie Robert (4;7), Tom (4;6) und Nadya (4;2) auf dem Boden liegen. Neben ihnen ein großer Haufen Bauklötze – das zusammengestürzte Krankenhaus. Robert (4;7) richtet sich gerade auf, sein Kopf ist hochrot, er greift zu den Bauklötzen neben sich und haut damit auf Nadya ein. 
+Selma zögert nicht und geht auf die Kinder zu. Sie fasst einen der Jungen, den sie nicht kennt und Robert (4;7) an den Händen und schaut alle drei abwechselnd an. „Ihr hört mir jetzt zu: Es wird sich nicht geschlagen! Ihr geht jetzt raus und setzt euch in den Flur und denkt nach, was ihr gemacht habt!“ Robert (4;7) ist sichtlich erschrocken und sagt: „Was hab‘ ich denn gemacht?“. Er geht mit gesenkten Schultern aus dem Raum und tritt schnaufend gegen den Türrahmen. 
+Als Martina einige Minuten später wieder in den Raum kommt, erzählt Selma ihr, was passiert ist. Martina schaut Selma wütend an: „Du kannst doch Robert nicht einfach aus dem Raum schicken! Er konnte doch nichts dafür. Natürlich muss er sich wehren, wenn die anderen einfach sein Gebäude zerstören! Du kannst doch hier nicht einfach machen, was du möchtest! Wenn die Kinder hier angemeldet sind, bleiben sie auch hier. Streit musst du anders lösen!“
+Selma ist ganz beschämt, sie hatte ja nicht gesehen, was genau passiert war. In ihrer letzten Praxisstelle war es üblich, streitende Kinder aus dem Raum zu schicken.
+Am nächsten Tag ist Selma im Rollenspielraum. Hier ist sie mit ihrem Anleiter Furkan zusammen. Im Rollenspielraum war sie in ihrer ersten Woche schon ein paar Tage. Meistens kommen die gleichen Kinder seit Selma dort Praktikum macht. Es sind Rosa (5;1), Merdan (5;4), Hannah (5;9) und Marie (5;2), die schon seit mehreren Tagen ‚Restaurant‘ spielen. Sie scheinen alle fest verteilte Rollen zu haben. Letzte Woche hatte Selma ein bisschen mitgespielt, sie war der Gast. 
+Ansonsten ist die Verteilung so: Hannah (5;9) und Merdan (5;4) sind die Köche, Rosa (5;1) bedient und Marie (5;2) spielt sonst den Gast. Manchmal kommen andere Kinder dazu und wollen mitspielen, manche dürfen das und sind dann Teil des Küchenteams und haben Aufgaben wie schnippeln, abwaschen oder umrühren und erhalten überwiegend Aufträge von den Stammspieler:innen. Selma beobachtet, dass die vier nicht jede:n mitspielen lassen. Als Selma an diesem Morgen beobachtet, dass Hannah (5;9) von Jorge (3;6) gefragt wird, ob er mitspielen könne, wird sie aufmerksam. Sie hat bei Hannah (5;9) schon öfters beobachtet, dass sie die jüngeren Kinder rumkommandiert. Jorge (3;6) darf heute mitspielen. Jorge (3;6) ist offensichtlich Teil der Küchenmannschaft: Hannah (5;9) gibt Jorge (3;6) dauernd Anweisungen, der Ton wird immer strenger. Anfangs macht Jorge (3;6) anscheinend trotzdem mit Freude und Eifer mit. Nach einer Weile sieht er in Selmas Augen jedoch angestrengt aus, er läuft hin und her. Selma ist kurz abgelenkt und als sie wieder aufschaut, schimpft Hannah (5;9) mit Jorge (3;6): „Wie dumm du wieder bist. Ich feuere!“. Jorge (3;6) schubst Hannah (5;9) mit voller Wucht, da Hannah (5;9) aber größer ist, passiert nichts. Hannah (5;9) schubst zurück und sagt laut: „Hast du nicht verstanden, du sollst abhauen! Wir brauchen dich hier nicht!“. Selma beobachtet den Streit, ist verunsichert und weiß nicht, wie sie reagieren soll.
+Auf dem Heimweg reflektiert Selma den Tag. Ihr kommen viele Fragen.
+Zusatzinformationen
+Robert, 4;7 Jahre alt und seit seinem dritten Lebensjahr in der Einrichtung:
+Furkan berichtet Selma, dass die Eltern beide berufstätig sind und sich sehr liebevoll um Robert kümmern. Robert ist Einzelkind und lebt mit seinen Eltern und einem Hund in einem Einfamilienhaus. Er mag es, Fußball zu spielen und geht regelmäßig einmal die Woche zum Fußballtraining im hiesigen Verein um die Ecke. Am Wochenende baut Robert mit seinem Vater oft im Garten in der Sandkiste Burgen. Aus einem Tür- und Angelgespräch mit den Eltern weiß Furkan, dass Roberts Opa aktuell im Krankenhaus liegt. Es sei nichts Schlimmes, sondern nur eine lang geplante Sache. In der Einrichtung hat Robert bisher überwiegend mit Tom (4;6) gespielt. 
+Hannah, 5;9 Jahre alt und seit dem Krippenalter in der Einrichtung:
+Furkan berichtet, dass Hannah seit 4 ½ Jahren in der Kita ist. Er vermutet, dass sie sich mit dem neuen Konzept schwertut. Früher hatte sie eine sehr enge Beziehung zu zwei Mädchen in ihrem Alter. Diese Konstellation hat sich durch das neue Konzept aufgelöst, da die beiden anderen Mädchen vorwiegend im Atelier zu finden sind. Die Kinder, mit denen Hannah nun in Kontakt kommt, sind ihr bisher eher fremd gewesen. Hannah lebt mit ihrer Mutter und ihrer älteren Schwester in einer kleinen, gemütlichen Wohnung um die Ecke. Der Vater lebt seit zwei Jahren nicht mehr bei der Familie. Das Verhältnis ist gut und der Kontakt ist regelmäßig. 
+Team/Konzept:
+Das Team der Einrichtung ist ein altersgemischtes Team aus zwölf Erzieher:innen und SPA´s. Es gibt zwei Hauswirtschafterinnen und einen Hausmeister. Ergänzt wird das Team von einem FSJler und zwei Praktikantinnen, die eine Ausbildung zur Erzieher:in absolvieren. 
+Die Umstellung auf das offene Konzept wurde vom Träger vor einem Jahr angeordnet. Das Team hat auf diese Anweisung unterschiedlich, aber überwiegend positiv reagiert. Der nachfolgende gemeinsame Entwicklungsprozess zum neuen Konzept war dementsprechend holprig. Nicht alle Unstimmigkeiten im Team konnten bis heute ausgeräumt werden. 
+Furkan ist ein absoluter Befürworter des offenen Konzepts und hat sich sehr über die neuen Möglichkeiten gefreut. Seine Kollegin Martina ist insgesamt auch positiv gestimmt, hat aber auch Bedenken geäußert. Ihr sind von jeher die Kinderrechte wichtig. Ihre Sorge war hier, dass diese zu kurz kommen könnten.
+
+
+
+
+gib obigen text 1 zu 1 wieder

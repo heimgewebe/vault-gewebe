@@ -1,0 +1,1 @@
+partner stehen sich nach umhergehen gegenüber. grimasse (emotion) auf kommando, dann zur bühne drehen.

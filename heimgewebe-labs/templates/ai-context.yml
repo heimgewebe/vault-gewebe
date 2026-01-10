@@ -1,0 +1,51 @@
+# AI Context Configuration
+# Version: 1.1
+
+apiVersion: "1.1"
+
+project:
+  name: "__REPO_NAME__"
+  description: "Short description (fill me)"
+  role: "Role in Heimgewebe (fill me)"
+  language: "Rust|Bash|Python|TypeScript|Mixed"
+
+heimgewebe:
+  fleet: "active"
+  wgx: "enabled"
+
+interfaces:
+  consumes: []
+  produces: []
+
+contracts:
+  # Example:
+  # - name: "os.context.intent"
+  #   type: "producer"
+  #   schema: "contracts/os.context.intent.schema.json"
+  []
+
+boundaries:
+  system: "heimgewebe"
+  container: "__REPO_NAME__"
+
+dependencies:
+  internal: []
+  external: []
+
+architecture:
+  entry_points: []
+  key_modules: []
+  data_flow:
+    input: ""
+    processing: ""
+    output: ""
+
+conventions:
+  branching: "main + feature/* + hotfix/*"
+  commit_prefix: "__REPO_NAME__"
+  ci_platform: "GitHub Actions"
+
+documentation:
+  architecture_decisions: "docs/adr/"
+  runbook: "docs/runbook.md"
+  api_reference: ""

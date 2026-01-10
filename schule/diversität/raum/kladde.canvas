@@ -1,0 +1,74 @@
+{
+	"nodes":[
+		{"id":"gruppen","type":"text","text":"**Starke Gruppen / Identitäten**\n- brauchen weniger Abgrenzung / Abwertung anderer\n- Differenzlinien verliert Gewicht\n\n→ (Gruppen-)Identität stärken","x":-350,"y":-200,"width":385,"height":191},
+		{"id":"wir","type":"text","text":"**Wir-Konstruktionen**\n- wir Hamburger\n    - Lieblingsorte (Pinnwand)\n- wir Tüftler / Bastler\n    - Reparaturwerkstatt\n- share – Schrank\n- wir Individuen","x":150,"y":-220,"width":286,"height":237},
+		{"id":"foucault","type":"text","text":"**Foucault**\nNormierungsdruck durch Abgrenzung\nvom „Anderen“\n\n→ Identität entsteht auch durch Differenz","x":-848,"y":-290,"width":360,"height":180},
+		{"id":"verschiedenheit","type":"text","text":"**Gruppenringblock**\n\n- jeder hat ein Segment\n- jeder kann alles editieren","x":208,"y":67,"width":255,"height":128},
+		{"id":"antibias","type":"text","text":"**Anti-Bias**\n- Diskriminierung ist strukturell\n- Veränderung = Reflexion + Handlung\n- verinnerlichte Dominanz / Unterdrückung\n- wahrnehmbare Machtunterschiede als Anlass zur Umdeutung nehmen","x":-330,"y":67,"width":385,"height":190},
+		{"id":"praxis","type":"text","text":"\n„Haste nichts → machste dir was“\n\n","x":-206,"y":320,"width":303,"height":60},
+		{"id":"armut","type":"text","text":"**Armut (mehrdimensional)**\n- materiell\n- sozial\n- kulturell\n- gesundheitlich","x":522,"y":-200,"width":257,"height":191},
+		{"id":"folgen","type":"text","text":"**Folgen von Armut**\n- Scham\n- Ausschluss\n- Minderwert","x":549,"y":29,"width":204,"height":166}
+	],
+	"edges":[
+		{
+			"id":"0dea42ce7b5d4f41",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"foucault",
+			"fromSide":"right",
+			"toNode":"gruppen",
+			"toSide":"left"
+		},
+		{
+			"id":"0bcc2d75c3c20181",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"gruppen",
+			"fromSide":"right",
+			"toNode":"wir",
+			"toSide":"left"
+		},
+		{
+			"id":"8eefc852fa5cf608",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"antibias",
+			"fromSide":"bottom",
+			"toNode":"praxis",
+			"toSide":"top"
+		},
+		{
+			"id":"3e61a5cab00cf3a9",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"wir",
+			"fromSide":"bottom",
+			"toNode":"verschiedenheit",
+			"toSide":"top"
+		},
+		{
+			"id":"30fd0fb6482d85f3",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"armut",
+			"fromSide":"bottom",
+			"toNode":"folgen",
+			"toSide":"top"
+		},
+		{
+			"id":"71ac5a1114d17754",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromFloating":false,
+			"fromNode":"folgen",
+			"fromSide":"bottom",
+			"toNode":"praxis",
+			"toSide":"right",
+			"label":"Armut als Ressource"
+		}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}
