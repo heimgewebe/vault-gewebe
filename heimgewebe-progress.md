@@ -147,7 +147,7 @@ Nächster Schritt:
 
 ⸻
 
-1.11 tools
+1.11 lenskit (ehemals tools)
 	•	Rolle: Hilfsskripte & Shared Utilities (z. B. wc-merger, org-Assets, Checks).
 	•	Status: aktiv
 	•	Geschätzter Umsetzungsgrad: ~70 %
@@ -155,7 +155,7 @@ Begründung:
 	•	Wird bereits zur Generierung der Org-Assets eingesetzt (Tabelle aus repos.yml usw.).
 	•	wc-merger, repomerger etc. sind im Einsatz, aber du arbeitest noch aktiv an ihrer Qualität.
 Nächster Schritt:
-	•	Merger-Kanon definieren: festlegen, welche Merger (repomerger vs. wc-merger) für welche Aufgaben gelten und diese Logik im tools-Repo dokumentieren.
+	•	Merger-Kanon definieren: festlegen, welche Merger (repomerger vs. wc-merger) für welche Aufgaben gelten und diese Logik im lenskit-Repo dokumentieren.
 	•	Tests: einfache Regressionstests (Merges von Beispiel-Repos) einführen, um Layout-/Inhaltsregressionen früh zu erkennen.
 
 ⸻
