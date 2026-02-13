@@ -1,12 +1,13 @@
 {
 	"nodes":[
+		{"id":"1f9837715db52cd4","type":"group","x":160,"y":1160,"width":300,"height":300,"label":"Unbenannte Gruppe"},
 		{"id":"verhalten","type":"text","text":"# Erleben & Verhalten\n\nSichtbares Resultat der Regulation\n\n→ Rückkopplung auf Bedürfnisse & Motivation","x":420,"y":240,"width":360,"height":160},
-		{"id":"essenz","type":"text","text":"# Verdichtete Essenz\n\nPsychische Gesundheit bedeutet nicht Konfliktfreiheit,\nsondern **tragfähige Stimmigkeit unter Spannung**.","x":-420,"y":460,"width":360,"height":180},
 		{"id":"person","type":"text","text":"# Person\n\nZiel: **Konsistenz**\n\nInnere Stimmigkeit zwischen:\n- Bedürfnissen\n- Motiven\n- Erleben\n- Verhalten","x":60,"y":-180,"width":322,"height":270},
 		{"id":"beduerfnisse","type":"text","text":"# Psychische Grundbedürfnisse (Grawe)\n\n- **Bindung / Zugehörigkeit**\n- **Orientierung & Kontrolle**\n- **Selbstwert / Wertschätzung**\n- **Autonomie**\n- **Physiologische Grundlagen**\n\n→ dauerhafte Frustration erzeugt Inkonsistenz","x":-478,"y":-135,"width":394,"height":291},
+		{"id":"umwelt","type":"text","text":"# Umwelt\n\nZiel: **Kongruenz**\n\n- Reaktionen\n- Erwartungen\n- Bedingungen\n\n→ kann Konsistenz fördern oder sabotieren","x":431,"y":-45,"width":360,"height":180},
+		{"id":"essenz","type":"text","text":"# Verdichtete Essenz\n\nPsychische Gesundheit bedeutet nicht Konfliktfreiheit,\nsondern **tragfähige Stimmigkeit unter Spannung**.","x":-420,"y":460,"width":360,"height":180},
 		{"id":"inkonsistenz","type":"text","text":"# Psychische Störung (Grawe)\n\n= **chronische Inkonsistenz**\n\nTypisch:\n- widersprüchliche Motive\n- blockierte Annäherung\n- dominante Vermeidung\n\nKurzfristig entlastend,\nlangfristig dysfunktional","x":409,"y":460,"width":382,"height":293},
-		{"id":"motivation","type":"text","text":"# Motivation\n\nÜbersetzt Bedürfnisse in Handlungsenergie\n\n- Annäherung\n- Vermeidung","x":-18,"y":320,"width":320,"height":160},
-		{"id":"umwelt","type":"text","text":"# Umwelt\n\nZiel: **Kongruenz**\n\n- Reaktionen\n- Erwartungen\n- Bedingungen\n\n→ kann Konsistenz fördern oder sabotieren","x":431,"y":-45,"width":360,"height":180}
+		{"id":"motivation","type":"text","text":"# Motivation\n\nÜbersetzt Bedürfnisse in Handlungsenergie\n\n- Annäherung\n- Vermeidung","x":-18,"y":320,"width":320,"height":160}
 	],
 	"edges":[
 		{"id":"e1","fromNode":"beduerfnisse","fromSide":"right","toNode":"person","toSide":"left"},

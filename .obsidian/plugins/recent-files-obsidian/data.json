@@ -1,6 +1,30 @@
 {
   "recentFiles": [
     {
+      "basename": "gesunde ernährung",
+      "path": "schule/ernährung/gesunde ernährung.canvas"
+    },
+    {
+      "basename": "patches",
+      "path": "weltgewebe/patches.md"
+    },
+    {
+      "basename": "login-patches2",
+      "path": "weltgewebe/login-patches2.md"
+    },
+    {
+      "basename": "login-patch",
+      "path": "weltgewebe/login-patch.md"
+    },
+    {
+      "basename": "toolchain",
+      "path": "toolchain.md"
+    },
+    {
+      "basename": "privateKey",
+      "path": "privat/ssh/privateKey.md"
+    },
+    {
       "basename": "grawe_konsistenz",
       "path": "schule/heilpädagogik/grawe_konsistenz.canvas"
     },
@@ -15,10 +39,6 @@
     {
       "basename": "Unbenannt 1",
       "path": "Unbenannt 1.md"
-    },
-    {
-      "basename": "toolchain",
-      "path": "toolchain.md"
     },
     {
       "basename": "music",
@@ -179,26 +199,6 @@
     {
       "basename": "to do weltgewebe",
       "path": "to do weltgewebe.md"
-    },
-    {
-      "basename": "t_i_p-ziel_leitprinzipien",
-      "path": "schule/heilpädagogik/t_i_p-ziel_leitprinzipien.canvas"
-    },
-    {
-      "basename": "theorie_integrativer_prozesse",
-      "path": "schule/heilpädagogik/theorie_integrativer_prozesse.canvas"
-    },
-    {
-      "basename": "foerderschwerpunkt_geistige_behinderung",
-      "path": "schule/heilpädagogik/foerderschwerpunkt_geistige_behinderung.canvas"
-    },
-    {
-      "basename": "wgx myc",
-      "path": "halde/wgx myc.md"
-    },
-    {
-      "basename": "blaupause hauski-audio",
-      "path": "halde/blaupause hauski-audio.md"
     }
   ],
   "omittedPaths": [],

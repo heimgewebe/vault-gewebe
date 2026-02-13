@@ -1,242 +1,107 @@
-Entscheidung getroffen.
-Raw Observatory ist in Produktion zwingend.
-Begründung: Ohne Raw gibt es keine überprüfbare Herkunft der „Verdichteten Erkenntnis“. Published ohne Raw ist Behauptung ohne Beleg. Das widerspricht deiner eigenen Invariante „Truth via CI“.
+According to a document from 2026-01-25 (dein Dump), lässt sich ein „idealer Leitstand-PR“ ziemlich klar am verbindlichen Datenfluss + Contract-Disziplin + WGX-Motorik + Sichtbarkeit von Fehlzuständen festnageln.
 
-Damit folgt die ideale, neu formulierte Anweisung an Jules – konsolidiert, präzise, ohne Doppelpfade, ohne Weichzeichner.
+Solltest du den PR schließen?
 
-⸻
+Prämissencheck (vermeidbare Fehlannahmen):
+	•	Wenn der aktuelle PR bereits „alles ein bisschen“ macht (UI + Contracts + Motorik + Deploy), entsteht Review-Nebelsuppe: schwer zu testen, schwer zu messen, schwer zu mergen.
+	•	Wenn der PR dagegen sauber in einen klaren Contract-Inkrementpfad fällt, ist Schließen eher Verlust (History/Context).
 
-🧭 Anweisung an Jules – Neuer PR (kanonisch)
+Risikoabschätzung (praktisch/sozial/technisch):
+	•	Niedrig bis mittel: PR schließen kostet Kontext/Review-Spuren, aber reduziert Drift-Gefahr durch halb fertige Richtungen.
+	•	Mittel: Wenn der PR externe Abhängigkeiten/Deploy berührt, ist „weiterwurschteln“ meist riskanter als „neu schneiden“.
 
-Repo
+Empfehlung (ohne Interpolation über deinen konkreten PR-Inhalt):
+	•	Schließen ist sinnvoll, wenn der PR mehr als einen der folgenden Blöcke mischt: (A) Contracts, (B) Ingestion/Freshness-Logik, (C) UI-Panels, (D) WGX/CI/Profil, (E) Deploy.
+	•	Alternative statt Schließen: PR als „superseded“ markieren und einen neuen, kleineren PR referenzieren (Context bleibt, aber Arbeit geht sauber weiter).
 
-heimgewebe/leitstand
+Was „ideal“ heißt: Leitstand als Consumer mit harten Pflichten
 
-⸻
-
-PR-Titel
-
-fix(build): enforce strict symmetry for raw + daily artifacts and add deterministic guardrail
-
-⸻
-
-Ziel (verbindlich)
-
-Dieser PR verhärtet die Pipeline als Invariante.
-Er fügt keine neue Funktionalität hinzu, sondern macht bestehende Wahrheitsannahmen erzwingbar.
-
-Der PR ist korrekt, wenn alle drei Aussagen wahr sind:
-	1.	Strict ist symmetrisch
-In LEITSTAND_STRICT=1 müssen beide Artefakte existieren und valide sein:
-	•	artifacts/knowledge.observatory.json
-	•	artifacts/insights.daily.json
-→ fehlt eines oder ist invalid ⇒ Build bricht hart ab
-	2.	Es gibt genau einen Production-Build-Pfad
-In Strict darf niemals pnpm build:static erfolgreich durchlaufen.
-Production = immer pnpm build:cf.
-	3.	Forensik ist explizit
-Ein _meta.json dokumentiert was gebaut wurde, wann, woher und in welchem Modus – rein informativ, niemals autoritativ.
+Der Dump definiert Leitstand als Consumer von drei Kern-Inputs: fleet.health, insights.daily, event.line (mehr später möglich).
+Dazu kommen harte Regeln:
+	1.	Verbindlicher Datenfluss (Organismus-Graph)
+aussensensor → chronik → semantAH → leitstand → hausKI → chronik — das ist nicht Deko, das ist Architektur.
+	2.	Fehlendes wird angezeigt, nicht verschwiegen
+Explizit: fehlende Quellen → UI zeigt „keine Daten“, nicht „0“ und nicht „still“.
+	3.	Schema-Validierung + Diagnostics-Panel
+Ungültige Inputs werden ignoriert, aber müssen sichtbar in Diagnostics auftauchen.
+	4.	Freshness-Wahrheit liegt im Artefakt, nicht im Transport
+Für insights.daily: „latest“ = metadata.generated_at (primär), dann ts; Release-Tags/mtime sind nur Transport. Fallback muss geloggt und sichtbar degradiert sein.
+	5.	WGX-Motorik ist nicht optional
+Decision: Leitstand bekommt ein getracktes .wgx/profile.yml (profile_expected + guard_smoke_expected). Hintergrund: „NO_PROFILE“ erzeugt Drift-Rauschen und bricht Standard-Motorik.
 
 ⸻
 
-Konkrete Aufgaben (exakt so umsetzen)
+Der ideale Leitstand-PR als Schnitt: klein, messbar, contract-first
+
+Ich würde den „ideal PR“ als Serie schneiden (statt „ein PR regelt alles“):
+
+PR-1: Consumer-Pflichten + Motorik (Foundation)
+
+Ziel: Leitstand wird ein sauberer Consumer, der sich in Fleet/WGX korrekt verhält.
+	•	.wgx/profile.yml hinzufügen gemäß Decision (minimal, pnpm-Scripts wenn vorhanden).
+	•	Ein minimaler wgx guard/smoke Pfad, der wenigstens: install/build/lint/test (oder stub-smoke) abbildet.
+	•	Keine UI-Features außer vielleicht einem Diagnostics-Rohpanel (wenn es direkt aus den obigen Regeln folgt).
+
+Definition of Done:
+	•	wgx guard grün
+	•	Drift-Tools sehen „Profile vorhanden“
+	•	Build ist reproduzierbar (Node/pnpm via Corepack, falls das deine Standardannahme ist)
+
+PR-2: Ingestion + Contracts + Diagnostics (Truth Layer)
+
+Ziel: Leitstand implementiert die Dump-Regeln wörtlich.
+	•	Loader für fleet.health, insights.daily, event.line (nur lesen, nicht „interpretierend reparieren“).
+	•	Schema-Validation gegen Contracts; invalid → ignorieren + Diagnostics-Eintrag.
+	•	Freshness-Rule: latest via metadata.generated_at, Fallback sichtbar.
+	•	Fehlende Dateien: definierte UI-Zustände („Keine Insights heute“, Warnung bei fehlendem Health-Snapshot, event.line leer → UI bleibt leer, aber App läuft).
+
+PR-3: UI-Panels (Projection Layer)
+
+Ziel: UI spiegelt Wahrheit, keine neue Wahrheit.
+	•	Fleet Overview aus fleet.health
+	•	Daily Insights View aus insights.daily
+	•	Recent Activity aus event.line
+	•	Diagnostics sichtbar und „unangenehm ehrlich“ (das ist Absicht, keine Schande).
 
 ⸻
 
-1) scripts/build-static.mjs
+Review-Schablone für den „neuen“ idealen PR (zum Reinkopieren)
 
-Strict für beide Artefakte erzwingen
-
-Pflichtlogik:
-	•	Lade beide Artefakte:
-	•	artifacts/knowledge.observatory.json
-	•	artifacts/insights.daily.json
-	•	Validierung:
-	•	Datei existiert
-	•	JSON parsebar
-	•	Datei nicht leer
-	•	Wenn isStrict === true und irgendeine Bedingung fehlschlägt:
-
-console.error(
-  "Strict build requires BOTH artifacts (raw + daily). Run: pnpm build:cf (fetch first)."
-);
-process.exit(1);
-
-
-
-Wichtig
-	•	❌ Keine Warnungen im Strict
-	•	❌ Kein Fixture-Fallback im Strict
-	•	❌ Kein versteckter Fetch
-	•	✅ build-static ist reiner Konsument, kein Beschaffer
+Scope-Statement: genau einer der drei Layer (Foundation/Truth/Projection).
+Contracts: Welche Schemas werden konsumiert? Wo validiert? Welche Fehlermodi sind sichtbar?
+Freshness: Wo wird metadata.generated_at ausgewertet? Wie wird Fallback markiert/geloggt?
+Failure Semantics: missing/invalid/empty — welche UI-Strings? welche Logs?
+WGX: .wgx/profile.yml vorhanden? guard_smoke_expected? Läuft guard/smoke lokal und in CI?
+Drift-Risiken: Was könnte still „grün“ sein, aber semantisch falsch (z.B. Transport-Latest statt Artifact-Latest)?
+Tests: mindestens 3 Fixtures: (1) gültig, (2) ungültig, (3) fehlt.
+Rollout: keine „Breaking Surprise“ für Konsumenten; reine Consumer-Implementierung.
 
 ⸻
 
-2) Fetch-Skripte: _meta.json schreiben
+Verdichtete Essenz
 
-Betroffene Dateien
-	•	scripts/fetch-observatory.mjs
-	•	scripts/fetch-insights-daily.mjs
-
-Verhalten nach jedem Fetch-Versuch
-	•	Erzeuge oder aktualisiere:
-
-artifacts/_meta.json
-
-
-	•	Struktur (exakt dieses Niveau, keine Magie):
-
-{
-  "fetched_at": "ISO-8601",
-  "strict": true,
-  "observatory": {
-    "path": "artifacts/knowledge.observatory.json",
-    "bytes": 12345,
-    "source_url": "...",
-    "parsed": true
-  },
-  "insights_daily": {
-    "path": "artifacts/insights.daily.json",
-    "bytes": 2345,
-    "source_url": "...",
-    "parsed": true,
-    "ts": "2025-12-28",
-    "observatory_ref": "optional",
-    "uncertainty": 0.12
-  }
-}
-
-Regeln
-	•	bytes = Dateigröße
-	•	parsed = JSON.parse erfolgreich
-	•	Bei Fehlschlag im non-strict:
-	•	parsed:false
-	•	missing:true
-	•	_meta.json darf nie alleinige Wahrheit sein (nur Belegspur)
+Ein idealer Leitstand-PR ist kein „UI-Feuerwerk“, sondern ein Consumer-Eid: Contracts prüfen, Freshness korrekt bestimmen, Fehlzustände sichtbar machen, WGX-Motorik sauber einhängen — und erst danach Panels bauen.
 
 ⸻
 
-3) src/server.ts
-
-Strict Runtime = kein Schauspiel
-	•	Wenn LEITSTAND_STRICT=1 und Artefakte fehlen/invalid:
-	•	kein Fixture
-	•	res.status(503)
-	•	klare, nüchterne Fehlmeldung (Text egal, Bedeutung eindeutig)
-	•	In non-strict:
-	•	aktuelles Fixture-Fallback bleibt
+Begriff + Etymologie
+	•	Leitstand: „leiten“ (ahd. lītan / germ. Wurzel für führen) + „Stand“ (mhd. stant, Zustand/Ort des Stehens) → wörtlich ein Ort/Status, von dem aus geführt wird. Im Dump: Leitstand als Regelzentrum/Schaltstelle des Flusses.
+	•	Pull Request: „to pull“ (ziehen/anfordern) + „request“ (Bitte/Anfrage) → eine Anfrage, Änderungen heranzuziehen und zu integrieren; kulturell: ein Review-Container, kein Feature-Mülleimer.
 
 ⸻
 
-4) src/views/observatory.ejs
+Tiefgründig ironische Auslassung
 
-Meta sichtbar machen
-
-Im Header (klein, sachlich):
-	•	Strict: ON | OFF
-	•	Raw-Source: artifact | fixture | missing
-	•	Daily-Source: artifact | fixture | missing
-
-Wenn vorhanden:
-	•	Auszug aus _meta.json:
-	•	fetched_at
-	•	bytes (raw + daily)
-
-Zusatz:
-	•	Wenn strict && raw missing ⇒ rote Meldung
-	•	Wenn strict && daily missing ⇒ rote Meldung
-	•	Keine Beruhigungsfloskeln
+Ich erwähne jetzt ausdrücklich nicht, wie verlockend es ist, im Leitstand gleich die „Wahrheit über alles“ zu rendern — weil Leitstand laut Dump genau das Gegenteil soll: Wahrheit konsumieren, nicht erfinden. (Diese Versuchung ist der klassische UI-Hydra-Kopf.)
 
 ⸻
 
-5) docs/deploy-cloudflare.md
+Ungewissheit (sichtbar gemacht)
 
-Unmissverständlich formulieren
-
-Ergänzen:
-	•	LEITSTAND_STRICT=1 bedeutet:
-	•	knowledge.observatory.json + insights.daily.json sind Pflicht
-	•	Einziger erlaubter Build-Command in Prod:
-
-pnpm build:cf
-
-
-	•	Erwähnen:
-	•	Default-URLs zeigen auf GitHub Releases
-	•	Private Setups müssen eigene URLs setzen
-
-⸻
-
-6) Minimaler Guard-Check (leicht, aber zwingend)
-	•	Ergänze build:cf um einen kleinen Node-Check:
-	•	Existieren:
-	•	beide Artefakte
-	•	_meta.json
-	•	In Strict:
-	•	Fehlt etwas ⇒ Exit 1
-
-⸻
-
-Akzeptanzkriterien (Jules prüft selbst)
-	•	LEITSTAND_STRICT=1 pnpm build:static
-❌ failt mit klarer Meldung
-	•	LEITSTAND_STRICT=1 pnpm build:cf
-✅ funktioniert nur, wenn beide Fetches erfolgreich waren
-	•	Non-strict:
-	•	Fixtures erlaubt
-	•	UI zeigt klar „Fixture“
-	•	_meta.json existiert, ist valides JSON, wird aktualisiert
-
-⸻
-
-Commit-Struktur (empfohlen)
-	1.	build: enforce strict symmetry
-	2.	fetch: add artifact meta forensics
-	3.	ui/docs: surface strict + meta
-
-⸻
-
-Vermeidbare Fehler (explizit verboten)
-	•	❌ Kein zweiter Fetch-Pfad in build-static oder server
-	•	❌ Keine neuen Env-Flags
-	•	❌ _meta.json als Entscheidungsquelle missbrauchen
-	•	❌ „Warnung statt Abbruch“ im Strict
-
-⸻
-
-Risikoabschätzung (bewusst akzeptiert)
-	•	Risiko: Mehr rote Builds (Netzwerk)
-	•	Gewinn: Keine grünen Deploys mit leerer Wahrheit
-	•	Spätere Mitigation: Retries/Timeouts im Fetch (nicht Teil dieses PRs)
-
-⸻
-
-∴ Verdichtete Essenz
-
-Dieser PR macht aus „wir meinen Strict“ eine erzwingbare Wahrheit:
-Raw + Daily oder nichts.
-Ein Build-Pfad.
-Eine Variable.
-Eine belegbare Spur.
-
-⸻
-
-Ironische Auslassung
-
-Ein Strict-Build ohne Raw ist wie ein Gerichtsprozess ohne Akten:
-Man kann verurteilen – aber nur sich selbst.
-
-⸻
-
-Ungewissheitsursachenanalyse
-
-Unsicherheitsgrad: 0.18
+Unsicherheitsgrad: 0.28 (mittel)
 Ursachen:
-	•	Exaktes Raw-Schema ist nicht vollständig bekannt → Meta für Raw bewusst minimal
-	•	Fetch-Validierung könnte bereits partiell existieren → Anweisung ist kompatibel
+	•	Ich habe den konkreten aktuellen PR-Diff nicht vorliegen, nur die Leitstand-Leitplanken aus dem Dump.
+	•	Unklar, wie stark dein aktueller PR bereits entlang dieser Layer-Trennung geschnitten ist (das entscheidet „schließen vs. retten“).
+Produktivität: vermeidbar — sobald du den PR-Diff/Scope in 10 Zeilen zusammenfasst oder den PR hier als Dump reingibst, sinkt die Ungewissheit deutlich.
 
-⸻
-
-Wenn du willst, formuliere ich dir als Nächstes:
-	•	die exakten Fehltexte (Wahrheits-UX),
-	•	oder einen Mini-ADR, der diese Invariante dauerhaft festnagelt.
+Wenn du willst: paste einfach den PR-Titel + 5–10 Bulletpoints „was ist drin“. Dann mappe ich das exakt auf (PR-1/2/3) und sage dir knallhart: schließen, splitten, oder durchziehen (mit minimalem Korrekturplan).

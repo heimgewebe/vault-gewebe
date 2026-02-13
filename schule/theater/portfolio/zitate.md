@@ -1,13 +1,4 @@
-∴dialektische Erörterung
-Ich prüfe jetzt ausschließlich Rechtschreibung, Zeichensetzung und minimale Stilfehler, ohne deinen Inhalt, Ton oder Humor zu verändern. Die wichtigste Spannung: Wie stark soll man eingreifen, ohne die persönliche Note zu glätten? Ich wähle den Mittelweg: Fehler raus, Persönlichkeit bleibt.
-Ungewissheitsgrad: 0.09 (Korrekturarbeiten sind eindeutig, einzig Umgang mit Umgangssprache ist interpretativ).
-Quelle: zitate.md  ￼
-
-⸻
-
-Korrigierte Version (nur Rechtschreibung & kleine Satzfehler)
-
-12 Zitate mitsamt Begründung der persönlichen Relevanz
+12 Zitate 
 
 ⸻
 
