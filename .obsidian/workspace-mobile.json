@@ -60,19 +60,80 @@
             "state": {
               "type": "canvas",
               "state": {
-                "file": "schule/ernährung/gesunde ernährung.canvas",
+                "file": "schule/selbstbestimmung/wohngruppe.canvas",
                 "viewState": {
-                  "x": 459.6495484369087,
-                  "y": 1087.1141135312473,
-                  "zoom": -1.4333830655475412
+                  "x": 87.56449896957987,
+                  "y": 274.015315976489,
+                  "zoom": -0.7278162947026934
                 }
               },
               "icon": "lucide-layout-dashboard",
-              "title": "gesunde ernährung"
+              "title": "wohngruppe"
+            }
+          },
+          {
+            "id": "d2822034731ddfee",
+            "type": "leaf",
+            "state": {
+              "type": "canvas",
+              "state": {
+                "file": "schule/selbstbestimmung/wohngruppe_hamburg_komplett.canvas",
+                "viewState": {
+                  "x": 554.622453797047,
+                  "y": 462.79425821197174,
+                  "zoom": -1.3202099213492409
+                }
+              },
+              "icon": "lucide-layout-dashboard",
+              "title": "wohngruppe_hamburg_komplett"
+            }
+          },
+          {
+            "id": "4b997a5dc9ca8f1e",
+            "type": "leaf",
+            "state": {
+              "type": "canvas",
+              "state": {
+                "file": "schule/kindeswohl/kindeswohl_gefährdungsformen.canvas",
+                "viewState": {
+                  "x": 274.7554508817141,
+                  "y": 226.4613396139083,
+                  "zoom": -0.5261699705245122
+                }
+              },
+              "icon": "lucide-layout-dashboard",
+              "title": "kindeswohl_gefährdungsformen"
+            }
+          },
+          {
+            "id": "2bf07889853e8c57",
+            "type": "leaf",
+            "state": {
+              "type": "canvas",
+              "state": {
+                "file": "schule/ethik/ethische_religioese_bildung_mindmap.canvas",
+                "viewState": {
+                  "x": 991.8667547201476,
+                  "y": 553.328775814901,
+                  "zoom": -2.3475817342656575
+                }
+              },
+              "icon": "lucide-layout-dashboard",
+              "title": "ethische_religioese_bildung_mindmap"
+            }
+          },
+          {
+            "id": "7905a0504d8ee740",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "Neuer Tab"
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 7
       }
     ],
     "direction": "vertical"
@@ -260,9 +321,7 @@
         "type": "leaf",
         "state": {
           "type": "file-properties",
-          "state": {
-            "file": "weltgewebe/patches.md"
-          },
+          "state": {},
           "icon": "lucide-info",
           "title": "Dateieigenschaften"
         }
@@ -289,63 +348,63 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "a513cbd3bf339374",
+  "active": "7905a0504d8ee740",
   "lastOpenFiles": [
-    "weltgewebe/patches.md",
-    "weltgewebe/login-patches2.md",
-    "weltgewebe/login-patch.md",
-    "leitstand/v2.md",
-    "leitstand",
-    "coding/repos/tools/repomergers",
-    "coding/repos/tools/ordnermergers",
-    "heimgewebe/leitwerk branch.md",
-    "heimgewebe/context7.md",
-    "agent-control-surface/fix-flow.md",
-    "leitwerk-blueprint.md",
-    "agent-control-surface/leitwerk 2.md",
-    "agent-control-surface/leitwerk-blaupause.md",
-    "leitfaden.md",
-    "denKI/denK",
-    "denKI",
-    "orga/verträge",
-    "orga/schlüssel",
-    "orga/schule/BAFöG",
-    "orga/schule",
+    "privat/organisationspsychologie/organisationspsychologie.md",
+    "psychologie/arbeitspsycholgie.canvas",
+    "psychologie/organisationspsychologie.canvas",
+    "privat/organisationspsychologie",
+    "psychologie/arbeitspsycholgie.md",
+    "organisationspsychologie/organisationspsychologie.md",
+    "schule/ethik/ethische_religioese_bildung_mindmap.canvas",
+    "organisationspsychologie",
+    "lenskit/fix folge pr.md",
+    "weltgewebe/agent readyness masterplan.md",
+    "weltgewebe/Unbenannt.md",
+    "schule/kindeswohl/kindeswohl_gefährdungsformen.canvas",
+    "schule/kindeswohl/kindeswohlgefährdungsformen.png",
+    "schule/selbstbestimmung/kindeswohlgefährung_formen.png",
+    "schule/selbstbestimmung/wohngruppe_hamburg_komplett.canvas",
+    "schule/selbstbestimmung/wohngruppe.canvas",
+    "schule/selbstbestimmung/wohngruppe komplett mindmap.png",
+    "schule/selbstbestimmung/wohngruppe mindmap.png",
+    "schule/ernährung/gesunde ernährung.canvas",
+    "weltgewebe/log-in prs.md",
+    "schule/ernährung/gesunde ernährung 2.canvas",
+    "nexus",
+    "weltverschwörung",
     "steuerrückerstattung",
-    "fairschenkbox/fairschenkbox plan.md",
-    "performance prompt.md",
-    "privat/ssh/privateKey.md",
+    "weltweberei/altes weltgewebe/Homepage/Launchvsc/ui/diskurs",
+    "coding/repos/tools/repomergers",
+    "weltweberei/altes weltgewebe/Homepage/Launchvsc/ui/antrag",
+    "weltweberei/altes weltgewebe/Homepage/Webungen",
+    "coding/repos/hausKI-audio/tests",
+    "lenskit/lenskit folge.md",
+    "weltgewebe/white page.md",
+    "snippet-engine-control/kombi.md",
+    "snippet-engine-control/ide.md",
+    "snippet-engine-control/studio.md",
+    "lenskit/atlas folge 1.md",
+    "icf-tool/patch/icicle-pr.md",
+    "icf-tool/patch/meta-pr.md",
+    "icf-tool/patch/split pr.md",
+    "icf-tool/patch/view pr.md",
+    "icf-tool/patch/graph-pr.md",
+    "icf-tool/patch/architektur-pr.md",
+    "icf-tool/alternativen.md",
+    "icf-tool/ui-refactor.md",
+    "icf-tool/ui-graph.md",
+    "icf-tool/ui-cluster-icicle.md",
+    "heimserver/incident 1.md",
+    "weltgewebe/incident.md",
+    "lenskit/lenskit-upgrade-plan.md",
     "schule/heilpädagogik/grawe_konsistenz.canvas",
-    "hauski self lern follow up.md",
-    "wgx guard self model.md",
-    "lhv-phase1.1.md",
-    "coding/repos/hausKi-audio/scripts/README.md",
-    "coding/repos/hausKi-audio/README.md",
-    "coding/repos/hausKi-audio/docs/runbooks/mopidy_iris_qobuz.md",
-    "coding/repos/hausKi-audio/docs/runbooks/backend_service.md",
-    "coding/repos/hausKi-audio/docs/adr/0004-recording-pw-record-helper.md",
-    "coding/repos/hausKi-audio/docs/ARCHITECTURE.md",
-    "coding/repos/hausKi-audio/scripts/ai_context/README.md",
-    "coding/repos/hausKi-audio/docs/adr/0001-player-backend-mopidy-qobuz.md",
-    "coding/repos/hausKi-audio/docs/adr/0002-audio-path-pulse-vs-alsa.md",
     "schule/diversität/raum/kladde.canvas",
-    "schule/heilpädagogik/ida-ehre-schule.canvas",
-    "schule/heilpädagogik/inklusion.canvas",
-    "schule/diversität/situation_vielfalt_bachweg.canvas",
-    "schule/diversität/verena.canvas",
-    "schule/diversität/perspektivübernahme.canvas",
-    "schule/arbeitsfelder/senioren.canvas",
-    "schule/arbeitsfelder/senioren_perspektivübernahme.canvas",
-    "schule/arbeitsfelder/arbeitsfelder_als_erzieher.canvas",
     "schule/arbeitsfelder/präsi schoenheit.png",
     "schule/arbeitsfelder/praesi_schoenheit.png",
     "schule/konflikte/praesi_schoenheit.png",
     "Pasted image 20251106223410.png",
     "schule/theater/klausur/theater klausur-4.jpg",
-    "schule/theater/klausur/theater klausur-7.jpg",
-    "schule/theater/klausur/theater klausur-6.jpg",
-    "schule/theater/klausur/theater klausur-5.jpg",
-    "schule/theater/klausur/theater klausur-1.jpg",
-    "schule/theater/klausur/theater klausur-2.jpg"
+    "schule/theater/klausur/theater klausur-7.jpg"
   ]
 }

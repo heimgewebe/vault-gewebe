@@ -1,1 +1,0 @@
-semantah, sichter, metarepo, heimlern, mitschreiber?, chronik?, wgx, aussensensor, hauski-audio, tools

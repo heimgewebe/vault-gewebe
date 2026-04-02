@@ -1,0 +1,141 @@
+{
+	"nodes":[
+		{"id":"center","type":"text","text":"🧠 Pädagogisch betreute Wohngruppe\nHamburg","x":0,"y":0,"width":360,"height":160,"color":"1"},
+		{"id":"ziel","type":"text","text":"🎯 Zielgruppe & Zielsetzung\n• Kinder/Jugendliche (6–12, ggf. älter)\n• Belastungen, Beziehungsabbrüche\n• Rückführung ODER Verselbstständigung\n• Hilfe nach §34 SGB VIII","x":-300,"y":-460,"width":340,"height":220,"color":"2"},
+		{"id":"recht","type":"text","text":"⚖️ Recht & Aufnahme\n• Jugendamt entscheidet\n• Hilfeplanung zentral\n• Ausschluss: Suizidalität, schwere Psychosen, akute Sucht\n• Aufnahme durch ASD / Notdienst","x":-560,"y":-160,"width":340,"height":220,"color":"2"},
+		{"id":"eltern","type":"text","text":"👨‍👩‍👧 Elternarbeit\n• Beratung & Einbindung\n• Besuchsregelung\n• Rückführung vorbereiten\n• Transparenz","x":-560,"y":120,"width":340,"height":200,"color":"4"},
+		{"id":"flank","type":"text","text":"📊 Flankierende Leistungen\n• Dokumentation (Tagebuch)\n• Hilfeplangespräche (§36)\n• Kooperation Jugendamt\n• Supervision & Fortbildung","x":-560,"y":360,"width":340,"height":220,"color":"5"},
+		{"id":"betrieb","type":"text","text":"⚙️ Betriebsstruktur\n• 9–11 Plätze\n• 24h Betreuung\n• Fachkräfte + Hauswirtschaft\n• 1:1,73 / 1:2,28","x":-390,"y":640,"width":340,"height":220,"color":"5"},
+		{"id":"vers","type":"text","text":"🚀 Verselbstständigung","x":500,"y":160,"width":300,"height":120,"color":"4"},
+		{"id":"finanz","type":"text","text":"💰 Finanzierung\n• Tagessatz (§78b SGB VIII)","x":-50,"y":460,"width":280,"height":120,"color":"6"},
+		{"id":"quali","type":"text","text":"🛡️ Qualität & Schutz\n• Qualitätsmanagement\n• Hilfeplangespräche\n• Beschwerdesystem\n• Kinderschutz (§8a, §79a)","x":90,"y":640,"width":340,"height":200,"color":"6"},
+		{"id":"alltag","type":"text","text":"🏠 Betreuungsalltag","x":250,"y":-240,"width":300,"height":120,"color":"3"},
+		{"id":"zukunft","type":"text","text":"🔮 Zukunft\n• Wohnungssuche\n• Übergang in Eigenständigkeit","x":500,"y":680,"width":280,"height":140,"color":"4"},
+		{"id":"alltag2","type":"text","text":"🏡 Alltag\n• Einkaufen\n• Verträge\n• Haushalt","x":850,"y":660,"width":260,"height":160,"color":"4"},
+		{"id":"gesund","type":"text","text":"🩺 Gesundheit","x":870,"y":520,"width":260,"height":100,"color":"4"},
+		{"id":"bildung","type":"text","text":"🎓 Bildung & Beruf","x":850,"y":370,"width":260,"height":100,"color":"4"},
+		{"id":"sozkomp","type":"text","text":"🧑‍🤝‍🧑 Soziale Kompetenz","x":890,"y":230,"width":260,"height":100,"color":"4"},
+		{"id":"medizin","type":"text","text":"🏥 Medizin\n• Dokumentation\n• Arzttermine\n• Therapien (Logo, Physio etc.)","x":870,"y":-60,"width":300,"height":180,"color":"3"},
+		{"id":"pflege","type":"text","text":"🧼 Pflege & Hygiene\n• Anleitung + entwicklungsgerecht","x":880,"y":-240,"width":280,"height":120,"color":"3"},
+		{"id":"emotional","type":"text","text":"💛 Emotional & sozial\n• Traumaaufarbeitung\n• Beziehungsarbeit\n• Konfliktfähigkeit","x":110,"y":-580,"width":300,"height":180,"color":"3"},
+		{"id":"bindung","type":"text","text":"🔗 Bindung\n• Bezugspersonensystem\n• Rituale & Struktur\n• Elternbindung fördern","x":430,"y":-580,"width":300,"height":180,"color":"3"},
+		{"id":"ernaehrung","type":"text","text":"🍽️ Ernährung\n• gemeinsam essen\n• Beteiligung (Kochen etc.)\n• ausgewogen","x":880,"y":-460,"width":300,"height":180,"color":"3"},
+		{"id":"entwicklung","type":"text","text":"🧠 Entwicklung\n• Motorik (Spiel, Bewegung)\n• Kognition (Schule, Sprache)\n• Sozialraum (Vereine etc.)","x":800,"y":-690,"width":320,"height":200,"color":"3"}
+	],
+	"edges":[
+		{"id":"e1","fromNode":"center","fromSide":"top","toNode":"ziel","toSide":"right"},
+		{"id":"e2","fromNode":"center","fromSide":"left","toNode":"recht","toSide":"right"},
+		{"id":"e3","fromNode":"center","fromSide":"top","toNode":"alltag","toSide":"bottom"},
+		{"id":"e4","fromNode":"center","fromSide":"right","toNode":"vers","toSide":"left"},
+		{"id":"e5","fromNode":"center","fromSide":"left","toNode":"eltern","toSide":"right"},
+		{"id":"e7","fromNode":"center","fromSide":"bottom","toNode":"betrieb","toSide":"top"},
+		{"id":"e8","fromNode":"center","fromSide":"bottom","toNode":"finanz","toSide":"top"},
+		{"id":"e9","fromNode":"center","fromSide":"bottom","toNode":"quali","toSide":"top"},
+		{"id":"e44","fromNode":"vers","fromSide":"bottom","toNode":"zukunft","toSide":"top"},
+		{
+			"id":"5d15f256cd00adbb",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromFloating":false,
+			"fromNode":"alltag",
+			"fromSide":"top",
+			"toNode":"emotional",
+			"toSide":"bottom"
+		},
+		{
+			"id":"18e81f5ff0e0bc16",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromFloating":false,
+			"fromNode":"alltag",
+			"fromSide":"top",
+			"toNode":"bindung",
+			"toSide":"bottom"
+		},
+		{
+			"id":"38d91bba9087e430",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"alltag",
+			"fromSide":"top",
+			"toNode":"entwicklung",
+			"toSide":"left"
+		},
+		{
+			"id":"4b95e364a625b743",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"alltag",
+			"fromSide":"right",
+			"toNode":"ernaehrung",
+			"toSide":"left"
+		},
+		{
+			"id":"5e594a14b8df372d",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"alltag",
+			"fromSide":"right",
+			"toNode":"pflege",
+			"toSide":"left"
+		},
+		{
+			"id":"4b5eeca7941ed560",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"alltag",
+			"fromSide":"right",
+			"toNode":"medizin",
+			"toSide":"left"
+		},
+		{
+			"id":"b04ad9a0e682dc4a",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"vers",
+			"fromSide":"right",
+			"toNode":"sozkomp",
+			"toSide":"left"
+		},
+		{
+			"id":"750b5c4ce647ca03",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"vers",
+			"fromSide":"bottom",
+			"toNode":"bildung",
+			"toSide":"left"
+		},
+		{
+			"id":"b91862d8d5b3ba58",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"vers",
+			"fromSide":"bottom",
+			"toNode":"gesund",
+			"toSide":"left"
+		},
+		{
+			"id":"fd2d41e00e668d19",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"vers",
+			"fromSide":"bottom",
+			"toNode":"alltag2",
+			"toSide":"left"
+		},
+		{
+			"id":"215a45c709c41a3f",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"center",
+			"fromSide":"left",
+			"toNode":"flank",
+			"toSide":"right"
+		}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

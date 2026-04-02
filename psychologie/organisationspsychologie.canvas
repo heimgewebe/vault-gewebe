@@ -1,0 +1,33 @@
+{
+	"nodes":[
+		{"id":"n1","type":"text","text":"# Geschichte der Arbeits- und Organisationspsychologie\n\nZentrale Entwicklungslinie:\n- Industrialisierung erzeugt neue Organisations- und Effizienzfragen\n- Psychologie wird für Eignung, Belastung, Ermüdung und Arbeitsgestaltung relevant\n- Menschenbilder prägen jeweils das Verständnis guter Arbeit\n- Im 21. Jahrhundert verschieben Digitalisierung, Flexibilisierung und Globalisierung die Problemlage","x":0,"y":0,"width":420,"height":220},
+		{"id":"n2","type":"text","text":"## Ausgangslage\n\n- Industrialisierung\n- starker Konkurrenzdruck\n- Suche nach Produktivitätssteigerung\n- neue Organisationsformen\n- Fragen nach Eignung, Interaktion, Belastbarkeit und Ermüdung\n\nPsychologische Relevanz:\nWer ist für welche Aufgabe geeignet?\nWie muss Arbeit gestaltet sein, damit Leistung möglich bleibt?","x":-520,"y":-40,"width":360,"height":240},
+		{"id":"n3","type":"text","text":"## Frühe Einflüsse\n\n- Wilhelm Wundt / Psychophysik\n- Emil Kraepelin\n- Hugo Münsterberg\n- Walter Dill Scott\n- Yerkes: Army Alpha / Army Beta\n- 1917: Journal of Applied Psychology\n\nMünsterberg:\n- Objektpsychotechnik -> Eignungsdiagnostik\n- Subjektpsychotechnik -> menschengerechte Arbeitsgestaltung","x":-520,"y":260,"width":360,"height":260},
+		{"id":"n4","type":"text","text":"## Taylorismus / Scientific Management\n\n- Frederick Taylor\n- Frank Gilbreth\n- Bewegungs- und Zeitstudien\n- Zerlegung ganzheitlicher Arbeit in Teilhandlungen\n- Suche nach dem 'one best way'\n- Mensch wird in technisches System eingepasst\n- Fordismus als starke Umsetzung in Fließbandproduktion","x":-40,"y":-280,"width":360,"height":280},
+		{"id":"n5","type":"text","text":"## Folgen tayloristischer Arbeitsgestaltung\n\n- Arbeitsintensivierung\n- Abhängigkeit vom Maschinentakt\n- Monotonie und Ermüdung\n- einseitige körperliche Belastung\n- geringe Entscheidungsspielräume\n- sinkende Bedeutsamkeit der eigenen Tätigkeit\n- geringe Qualifikationsanforderungen\n- Gefahr der Dehumanisierung","x":380,"y":-280,"width":360,"height":300},
+		{"id":"n6","type":"text","text":"## Economic Man\n\nMenschenbild:\n- verantwortungsscheu\n- vor allem durch materielle Anreize motivierbar\n- Kontrolle nötig\n\nArbeitsgestaltung:\n- klare Arbeitsanweisungen\n- starre Hierarchien\n- strikte Kontrolle\n- leistungsnahe Entlohnung\n\nVertreter:\n- Taylor\n- Weber (Bürokratiemodell)","x":-40,"y":80,"width":320,"height":260},
+		{"id":"n7","type":"text","text":"## Social Man\n\nHintergrund:\n- Hawthorne-Studien\n- Aufmerksamkeit, Austausch und soziale Situation beeinflussen Leistung\n\nMenschenbild:\n- soziale Bedürfnisse\n- Anerkennung und Zugehörigkeit sind zentral\n\nArbeitsgestaltung:\n- Gruppenarbeit\n- mitarbeiterorientierte Führung\n- soziale Beziehungen im Betrieb\n- Pausenräume / Teamkontakte","x":320,"y":80,"width":320,"height":260},
+		{"id":"n8","type":"text","text":"## Self-Actualizing Man\n\nEinfluss:\n- humanistische Psychologie\n- Maslow\n- Herzberg\n- McGregor\n\nMenschenbild:\n- Bedürfnis nach Selbstverwirklichung\n- sinnvolle, entwicklungsförderliche Tätigkeit wichtig\n\nArbeitsgestaltung:\n- Humanisierung der Arbeit\n- komplexere Aufgaben\n- Sinnhaftigkeit\n- Anerkennung\n- Entwicklungsmöglichkeiten\n- Job Design","x":680,"y":80,"width":340,"height":300},
+		{"id":"n9","type":"text","text":"## Complex Man\n\nMenschenbild:\n- Bedürfnisse unterscheiden sich zwischen Personen\n- Bedürfnisse ändern sich über die Lebensspanne\n\nArbeitsgestaltung:\n- kein One-size-fits-all\n- Individualisierung\n- Flexibilisierung\n- altersgerechte Arbeit\n- Vereinbarkeit von Beruf und Familie\n- Mitbestimmung","x":1060,"y":80,"width":340,"height":280},
+		{"id":"n10","type":"text","text":"## Zukunftstrends / 21. Jahrhundert\n\n- Flexibilisierung von Zeit, Ort und Struktur\n- Digitalisierung / IKT / Computerisierung\n- Akzeptanz neuer Systeme als Problem\n- Technostress\n- mehr externe Kontrolle durch digitale Prozesse\n- hybride Arbeit und Verlust sozialer Ressourcen\n- Internationalisierung / Globalisierung\n- interkulturelle Anforderungen\n- Zunahme von Dienstleistungs- und Interaktionsarbeit\n- neue Führungsverständnisse\n- Employability als Kriterium","x":200,"y":440,"width":420,"height":320},
+		{"id":"n11","type":"text","text":"## Leitfrage der A&O-Psychologie\n\nWie lässt sich Arbeit so gestalten, dass sie\n- produktiv,\n- menschengerecht,\n- gesundheitlich tragfähig,\n- motivierend\nund unter neuen Bedingungen weiterhin verantwortbar bleibt?","x":680,"y":460,"width":360,"height":240},
+		{"id":"n12","type":"text","text":"## Alternative Sinnachse\n\nNicht nur fragen:\n'Wie steigert man Produktivität?'\n\nSondern auch:\n'Welches Menschenbild versteckt sich in der Arbeitsgestaltung?'\n\nDenn oft ist nicht die Methode neutral, sondern nur ihr Marketing höflich geschniegelt.","x":-360,"y":560,"width":420,"height":220}
+	],
+	"edges":[
+		{"id":"e1","fromNode":"n2","fromSide":"right","toNode":"n1","toSide":"left"},
+		{"id":"e2","fromNode":"n3","fromSide":"right","toNode":"n1","toSide":"left"},
+		{"id":"e3","fromNode":"n1","fromSide":"top","toNode":"n4","toSide":"bottom"},
+		{"id":"e4","fromNode":"n4","fromSide":"right","toNode":"n5","toSide":"left"},
+		{"id":"e5","fromNode":"n1","fromSide":"bottom","toNode":"n6","toSide":"top"},
+		{"id":"e6","fromNode":"n6","fromSide":"right","toNode":"n7","toSide":"left"},
+		{"id":"e7","fromNode":"n7","fromSide":"right","toNode":"n8","toSide":"left"},
+		{"id":"e8","fromNode":"n8","fromSide":"right","toNode":"n9","toSide":"left"},
+		{"id":"e9","fromNode":"n1","fromSide":"bottom","toNode":"n10","toSide":"top"},
+		{"id":"e10","fromNode":"n10","fromSide":"right","toNode":"n11","toSide":"left"},
+		{"id":"e11","fromNode":"n1","fromSide":"bottom","toNode":"n12","toSide":"top"}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

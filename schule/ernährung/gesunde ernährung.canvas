@@ -12,7 +12,6 @@
 		{"id":"n10","type":"text","text":"Risiken\n- Mangel\n- Überernährung\n- Essstörungen\n- Supplement-Überdosierung","x":1000,"y":250,"width":320,"height":220,"color":"#E53935"},
 		{"id":"n11","type":"text","text":"Nachhaltigkeit\n- CO2\n- Tierwohl\n- Ressourcen","x":1000,"y":-200,"width":320,"height":180,"color":"#6D4C41"},
 		{"id":"n12","type":"text","text":"Evidenz & Bewertung\n- RCTs\n- Beobachtungsstudien\n- Metaanalysen\n- Interessenkonflikte","x":-900,"y":0,"width":320,"height":220,"color":"#8E24AA"},
-		{"id":"n13","type":"text","text":"Frühe Regulation & Lernen\n- Säugling: Hunger/Durst/Sättigung (Innenreize)\n- Mit Alter: Lernen/Gewohnheit übernimmt\n- Vorbildlernen: Eltern/Geschwister/Erzieher\n- Umfeld prägt Lebensmittelwahl","x":-350,"y":-520,"width":360,"height":260,"color":"#FDD835"},
 		{"id":"n14","type":"text","text":"Energie & Brennwert\n- kcal ↔ kJ (Faust: 1 kcal ≈ 4,2 kJ)\n- Brennwert = Energiegehalt\n- Richtwert Alltag: ca. 10.000 kJ/Tag (Faustregel)\n- Lebensmittelkennzeichnung lesen","x":350,"y":520,"width":360,"height":250,"color":"#43A047"},
 		{"id":"n15","type":"text","text":"Grundumsatz vs Leistungsumsatz\n- Grundumsatz: Atmung, Herz, Gehirn, Temperatur (auch im Schlaf)\n- Erhöht: Wachstum, Schwangerschaft, Stillzeit\n- Leistungsumsatz: Aktivität/Arbeit/Sport\n- Aktivität steigert Energieverbrauch","x":750,"y":520,"width":380,"height":260,"color":"#43A047"},
 		{"id":"n16","type":"text","text":"Ballaststoffe & Sättigung\n- Unverdaulich\n- Fördern Sättigungsgefühl\n- Regen Darmtätigkeit an\n- Quellen: Vollkorn, Gemüse, Obst, Kartoffeln","x":-950,"y":280,"width":340,"height":220,"color":"#FB8C00"},
@@ -23,7 +22,8 @@
 		{"id":"n21","type":"text","text":"Wasserhaushalt\n- Körper: ca. 50–60% Wasser\n- Funktionen: Baustoff, Lösung, Transport, Wärmeregulation\n- Bilanz: Zufuhr über Getränke + Nahrung\n- Verlust: Urin, Schweiß, Atmung, Stuhl","x":700,"y":-520,"width":360,"height":260,"color":"#43A047"},
 		{"id":"n22","type":"text","text":"Portionsmaß & Pyramide (praxisnah)\n- Pyramide: Getränke > Obst/Gemüse > Getreide/Kartoffeln > Milchprodukte > Fleisch/Fisch/Ei > Fette > Süßes\n- Handmaß: Portion = eigene Hand (skalierbar)\n- Ampelidee: reichlich / mäßig / sparsam","x":1050,"y":-520,"width":380,"height":280,"color":"#FDD835"},
 		{"id":"n23","type":"text","text":"Nahrungsergänzung: Nutzen vs Risiko\n- Für Gesunde meist überflüssig\n- Risiko: Überdosierung (v. a. fettlösliche Vitamine)\n- Sinnvoll nur für Risikogruppen nach ärztlicher Anweisung","x":1350,"y":520,"width":380,"height":220,"color":"#E53935"},
-		{"id":"n24","type":"text","text":"Makro-Verteilung (Faust)\n- Empfehlung Erwachsene: 55% KH / 30% Fett / 15% Eiweiß\n- Energie pro g: KH 17,2 kJ; Eiweiß 17,2 kJ; Fett 39 kJ\n- Werte variieren nach Alter/Lebenslage","x":-600,"y":520,"width":360,"height":240,"color":"#9E9E9E"}
+		{"id":"n24","type":"text","text":"Makro-Verteilung (Faust)\n- Empfehlung Erwachsene: 55% KH / 30% Fett / 15% Eiweiß\n- Energie pro g: KH 17,2 kJ; Eiweiß 17,2 kJ; Fett 39 kJ\n- Werte variieren nach Alter/Lebenslage","x":-600,"y":520,"width":360,"height":240,"color":"#9E9E9E"},
+		{"id":"n13","type":"text","text":"Frühe Regulation & Lernen\n- Säugling: Hunger/Durst/Sättigung (Innenreize)\n- Mit Alter: Lernen/Gewohnheit übernimmt\n- Vorbildlernen: Eltern/Geschwister/Erzieher\n- Umfeld prägt Lebensmittelwahl","x":-380,"y":-610,"width":360,"height":260,"color":"#FDD835"}
 	],
 	"edges":[
 		{"id":"e1","fromNode":"n1","fromSide":"left","toNode":"n2","toSide":"right"},

@@ -1,190 +1,83 @@
-## 1. Rahmenbedingungen
+PLAN
 
-**Abmessungen**
+1. Rahmen
+	•	Fläche: ~6 m Breite × ~4 m Tiefe
+	•	Standort: vor dem Tor des Hofs rechts neben dem HdJ-Gelände (sichtbar, exponiert, öffentlich)
+	•	Nutzung: hochfrequent, unbeaufsichtigt
+	•	Logistik: Staplerfähig, da möglicherweise noch (zum Neubau hin) umgezogen wird. also: Module einzeln bewegbar
+	•	Finanzierung: in Tranchen (ungewisser Höhe) seitens örtlicher Politik zugesagt
+	•	Low-Budget / Spenden / Second-Hand dennoch erwünscht
+	•	Betrieb: Müllsystem fix (Großtonne + Entsorgung zugesagt)
 
-- Maximal ca. **3,5 m Breite × 2,3 m Tiefe**
-    
+⸻
 
-**Budget**
+2. Übergeordnete Ziele
+	•	Platz sparen ohne Übersicht zu verlieren
+	•	Sichtbarkeit vor Tiefe
+	•	Ordnung erleichtern
+	•	Pflege & Aufräumen mitdenken
 
-- Zielrahmen: **500–2.000 €**
-    
-- Finanzierung evtl. **in Tranchen** (SPD / Hr. Aydik)
-    
-- Starkes Interesse an **Low‑Budget, Spenden, Second‑Hand, Eigenleistung**
-    
+⸻
 
-**Fix zugesagt**
+3. Modullogik
+	•	mehrere Module nebeneinander
+	•	einzeln transportierbar (Stapler)
+	•	schrittweise Erweiterung möglich (Tranchenlogik)
 
-- **Große Mülltonne + Entsorgungskosten**
-    
-- → Voraussetzung für funktionierenden Betrieb
-    
+⸻
 
-**Grundannahme**
+4. Zentrale Bausteine
 
-- Öffentlicher, niedrigschwelliger Ort
-    
-- Nutzung durch viele Menschen, wenig Aufsicht
-    
-- System muss **robust, selbsterklärend und fehlertolerant** sein
-    
+Kleidung
+	•	deckengehängte Kleiderstangen
+	•	ausziehbar
+	•	hohe Traglast
+	•	separate Kinderlösung vorgesehen
 
----
+Bücher
+	•	flach
+	•	frontal sichtbar
+	•	keine Mehrreihigkeit
 
-## 2. Übergeordnete Ziele
+Regale & Gegenstände
+	•	offene Struktur
+	•	keine Schubladen
+	•	keine verdeckten Zonen
 
-- **Platz sparen**, ohne Übersicht zu verlieren
-    
-- **Sichtbarkeit vor Tiefe** (nichts soll „hinten verschwinden“)
-    
-- **Ordnung erleichtern**, nicht erzwingen
-    
-- **Pflege & Aufräumen mitdenken**
-    
-- Technik = Mittel zum Zweck, nicht Selbstzweck
-    
+Kategorisierung
+	•	feste Kategorien vorgesehen
+	•	klare Zuordnung statt Sammelbehälter
 
----
+Information
+	•	sichtbare Hinweise
+	•	Funktionsweise erklärbar
+	•	Beteiligung ansprechen
 
-## 3. Zentrale Bausteine des Konzepts
+Betrieb & Pflege
+	•	Reinigungswerkzeuge vorsehen
+	•	Müllintegration zentral
 
-### A. Kleidung (linke Seite, Kernidee)
+⸻
 
-- **3 deckengehängte Kleiderstangen**
-    
-- **Eng nebeneinander**, Inhalt erst durch **Vollauszug (~2,0 m)** gut sichtbar
-    
-- Mechanik:
-    
-    - **Linearführungen (maschinenbaulich)**
-        
-    - pro Stange **2 Führungen** (tragend + Verdrehsicherung)
-        
-- Auslegung:
-    
-    - **Nutzlast:** 80–100 kg pro Stange
-        
-    - **Systemtragfähigkeit:** ~200 kg
-        
-- **Stangenabstand:** ca. **260–300 mm** (Center‑to‑center)
-    
-- **Separate Kinder‑Kleiderstange** ausdrücklich gewünscht
-    
+5. Barrierefreiheit
+	•	Barrierefreiheit beachten
 
-### B. Bücher
+⸻
 
-- Problem: tiefe Regale → unsichtbar
-    
-- Lösung:
-    
-    - **flache Hängeregale**
-        
-    - nur **eine Reihe**, alles frontal sichtbar
-        
+6. Materialstrategie
+	•	zuerst Raum- und Funktionslogik, dann Material
+	•	bevorzugt:
+	•	Spenden
+	•	Second-Hand
+	•	vorhandene Möbel
+	•	öffentlicher Materialaufruf sinnvoll
 
-### C. Regale & Gegenstände
+⸻
 
-- Keine „toten Zonen“ hinter Möbeln
-    
-- Regale:
-    
-    - fest verschraubt **oder**
-        
-    - bewusst verschiebbar, aber kontrolliert
-        
-- **Keine Schubladen** (v. a. für Kinderkleidung ungeeignet)
-    
-
-### D. Kategorisierung
-
-- Klare Bereiche statt Kistenchaos
-    
-- **Feste Kategorien**, z. B.:
-    
-    - Kleidung (Erwachsene / Kinder)
-        
-    - Spielzeug
-        
-    - Bücher
-        
-    - Küche / Glas / Keramik
-        
-    - Deko
-        
-- **Beschilderung**, ggf. farbcodiert
-    
-- Ziel: Dinge werden **richtig einsortiert**, nicht nur abgestellt
-    
-
-### E. Information & Kommunikation
-
-- **Gut sichtbare Infos vorne**:
-    
-    - Bitte aufräumen
-        
-    - Wie das System funktioniert
-        
-    - Einladung zur Mitverantwortung
-        
-- Texte können vorbereitet werden
-    
-
-### F. Betrieb & Pflege
-
-- Bedarf für:
-    
-    - **Besen, Handfeger, evtl. Putzmittel**
-        
-- Kleiner **Service‑/Putzbereich** einzuplanen
-    
-
----
-
-## 4. Materialstrategie
-
-- **Erst Raum‑ & Funktionsplan**, dann Material
-    
-- Bevorzugt:
-    
-    - **Spenden**
-        
-    - **Second‑Hand / Restposten**
-        
-    - alte **Massivholz‑Regale**
-        
-- Öffentlicher Aufruf nach Materialien sinnvoll
-    
-
----
-
-## 5. Offene / nächste Entscheidungen
-
-1. **Querträger für die Kleiderstangen**
-    
-    - Holz (KVH / BSH, überdimensioniert) **oder**
-        
-    - Stahl (schlanker, teurer)
-        
-2. Grober **Zonenplan** für die 3,5 × 2,3 m:
-    
-    - Kleidung (Erwachsene / Kinder)
-        
-    - Bücher
-        
-    - Regale nach Kategorien
-        
-    - Müll
-        
-    - Service / Info
-        
-
----
-
-### Kurzfazit
-
-- Konzept ist **klar, realistisch und umsetzbar** im Budgetrahmen
-    
-- Erfolgsfaktor ist **Sichtbarkeit + Ordnung + Pflege**, nicht maximale Möblierung
-    
-- Die ausziehbaren Kleiderstangen sind ein **zentrales, aber eingebettetes Element**
+7. Offene Entscheidungen
+	•	Budgetrahmen
+	•	genaue Modulanzahl
+	•	konkrete Platzaufteilung
+	•	Tragstruktur (Holz vs. Stahl)
+	•	Witterung / Überdachung
+	•	Stapleranforderungen

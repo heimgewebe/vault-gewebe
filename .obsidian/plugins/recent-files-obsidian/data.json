@@ -1,8 +1,32 @@
 {
   "recentFiles": [
     {
+      "basename": "ethische_religioese_bildung_mindmap",
+      "path": "schule/ethik/ethische_religioese_bildung_mindmap.canvas"
+    },
+    {
+      "basename": "kindeswohl_gefährdungsformen",
+      "path": "schule/kindeswohl/kindeswohl_gefährdungsformen.canvas"
+    },
+    {
+      "basename": "formen der gefährdung",
+      "path": "schule/kindeswohl/formen der gefährdung.canvas"
+    },
+    {
+      "basename": "wohngruppe_hamburg_komplett",
+      "path": "schule/selbstbestimmung/wohngruppe_hamburg_komplett.canvas"
+    },
+    {
+      "basename": "wohngruppe",
+      "path": "schule/selbstbestimmung/wohngruppe.canvas"
+    },
+    {
       "basename": "gesunde ernährung",
       "path": "schule/ernährung/gesunde ernährung.canvas"
+    },
+    {
+      "basename": "gesunde ernährung 2",
+      "path": "schule/ernährung/gesunde ernährung 2.canvas"
     },
     {
       "basename": "patches",
@@ -167,38 +191,6 @@
     {
       "basename": "to do metarepo",
       "path": "to do metarepo.md"
-    },
-    {
-      "basename": "freyProjektmethode",
-      "path": "schule/theater/freyProjektmethode.canvas"
-    },
-    {
-      "basename": "projektmethode",
-      "path": "schule/theater/projektmethode.md"
-    },
-    {
-      "basename": "to do aussensensor",
-      "path": "to do aussensensor.md"
-    },
-    {
-      "basename": "to do hauski",
-      "path": "to do hauski.md"
-    },
-    {
-      "basename": "mitschreiber",
-      "path": "mitschreiber.md"
-    },
-    {
-      "basename": "projektskizze old",
-      "path": "schule/mathe/projektskizze old.canvas"
-    },
-    {
-      "basename": "projektskizze",
-      "path": "schule/mathe/projektskizze.md"
-    },
-    {
-      "basename": "to do weltgewebe",
-      "path": "to do weltgewebe.md"
     }
   ],
   "omittedPaths": [],

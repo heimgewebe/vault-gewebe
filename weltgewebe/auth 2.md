@@ -1,1 +1,0 @@
-Neuer PR (optional): Delivery-Semantik verbessern (Token erst erzeugen, wenn (a) Mailer send ok oder (b) log mode aktiv) oder Token bei Send-Fail sofort invalidieren. Das ist ein Policy-Entscheid und zieht schnell weitere Fragen nach sich (Retries, observability, user feedback).

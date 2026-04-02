@@ -1,0 +1,37 @@
+{
+	"nodes":[
+		{"id":"center","type":"text","text":"Pädagogisch betreute Wohngruppe\nSystemüberblick","x":0,"y":0,"width":360,"height":180,"color":"1"},
+		{"id":"gesetz","type":"text","text":"Gesetzliche Grundlagen\n• §34 SGB VIII\n• Hilfe zur Erziehung\n• Jugendamt steuert Hilfe\n• Aufnahmeverfahren","x":-600,"y":0,"width":320,"height":180,"color":"2"},
+		{"id":"entwicklung","type":"text","text":"Verselbstständigung\n• soziale Kompetenz\n• Bildung & Beruf\n• Gesundheit\n• Alltag (Finanzen, Haushalt)\n• Zukunftsplanung","x":400,"y":0,"width":340,"height":220,"color":"4"},
+		{"id":"eltern","type":"text","text":"Elternarbeit\n• Einbindung der Eltern\n• Besuchskontakte\n• Beratung\n• Rückführung vorbereiten","x":400,"y":250,"width":320,"height":160,"color":"4"},
+		{"id":"alltag","type":"text","text":"Betreuungsalltag\n• emotionale Unterstützung\n• Bindung\n• Entwicklung\n• Ernährung\n• Pflege\n• medizinische Betreuung","x":0,"y":-300,"width":340,"height":200,"color":"3"},
+		{"id":"ziel","type":"text","text":"Zielgruppe & Zielsetzung\n• Kinder mit Belastungen\n• Sicherung Kindeswohl\n• Rückführung oder Verbleib\n• Entwicklung fördern","x":-440,"y":-268,"width":320,"height":200,"color":"2"},
+		{"id":"qualitaet","type":"text","text":"Qualität & Schutz\n• Qualitätsstandards\n• Evaluation\n• Kinderschutzkonzept\n• Beschwerdeverfahren","x":307,"y":510,"width":340,"height":180,"color":"6"},
+		{"id":"finanz","type":"text","text":"Finanzierung\n• Tagesentgelt\n• Jugendhilfeträger\n• §78b SGB VIII","x":-30,"y":550,"width":300,"height":140,"color":"6"},
+		{"id":"struktur","type":"text","text":"Betriebsstruktur\n• 9–11 Plätze\n• 24h Betreuung\n• Fachkräfte\n• Schichtsystem","x":-600,"y":270,"width":320,"height":160,"color":"5"},
+		{"id":"doku","type":"text","text":"Dokumentation & Verfahren\n• Berichte\n• Hilfeplanung (§36)\n• Zusammenarbeit Jugendamt\n• Fallgespräche","x":-220,"y":320,"width":340,"height":180,"color":"5"}
+	],
+	"edges":[
+		{"id":"e1","fromNode":"center","fromSide":"left","toNode":"ziel","toSide":"right"},
+		{"id":"e2","fromNode":"center","fromSide":"left","toNode":"gesetz","toSide":"right"},
+		{"id":"e3","fromNode":"center","fromSide":"top","toNode":"alltag","toSide":"bottom"},
+		{"id":"e4","fromNode":"center","fromSide":"right","toNode":"entwicklung","toSide":"left"},
+		{"id":"e6","fromNode":"center","fromSide":"left","toNode":"struktur","toSide":"right"},
+		{"id":"e7","fromNode":"center","fromSide":"bottom","toNode":"doku","toSide":"top"},
+		{"id":"e8","fromNode":"center","fromSide":"bottom","toNode":"qualitaet","toSide":"top"},
+		{"id":"e9","fromNode":"center","fromSide":"bottom","toNode":"finanz","toSide":"top"},
+		{
+			"id":"92a1fc8deede55a0",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"center",
+			"fromSide":"bottom",
+			"toNode":"eltern",
+			"toSide":"left"
+		}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

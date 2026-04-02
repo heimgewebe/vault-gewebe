@@ -1,0 +1,67 @@
+{
+	"nodes":[
+		{"id":"root","type":"text","text":"Kindeswohlgefährdung (KWG)\nSystem: Formen × Kontext × Dynamik","x":0,"y":0,"width":340,"height":140,"color":"#1f2937"},
+		{"id":"formen","type":"text","text":"Klassische Formen\n• Körperliche Gewalt\n• Seelische Gewalt\n• Sexualisierte Gewalt\n• Vernachlässigung","x":-345,"y":-10,"width":300,"height":160,"color":"#b91c1c"},
+		{"id":"psychisch","type":"text","text":"Seelische Gewalt\n• Abwertung\n• Angst\n• Mobbing","x":-45,"y":-210,"width":260,"height":140,"color":"#f87171"},
+		{"id":"prinzip","type":"text","text":"Grundprinzip\nGefährdungen überlagern sich","x":271,"y":290,"width":300,"height":120,"color":"#a855f7"},
+		{"id":"vulnerabilitaet","type":"text","text":"Vulnerabilität\n• Alter\n• Herkunft\n• soziale Lage","x":271,"y":-260,"width":300,"height":140,"color":"#7c3aed"},
+		{"id":"sexuell","type":"text","text":"Sexualisierte Gewalt\n• Grenzverletzung\n• Übergriff\n• digital","x":-455,"y":250,"width":260,"height":160,"color":"#dc2626"},
+		{"id":"physisch","type":"text","text":"Körperliche Gewalt\n• Schlagen\n• Verletzungen\n• Kontrolle","x":-455,"y":-230,"width":260,"height":140,"color":"#ef4444"},
+		{"id":"kontext","type":"text","text":"Kontexte\n• Familie / soziales Umfeld\n• Institution\n• Selbstgefährdung","x":377,"y":-10,"width":300,"height":160,"color":"#1d4ed8"},
+		{"id":"erwachsenenkonflikt","type":"text","text":"Erwachsenenkonflikte\n• Trennung\n• Loyalitätskonflikte","x":707,"y":-260,"width":260,"height":140,"color":"#fb923c"},
+		{"id":"partnerschaft","type":"text","text":"Partnerschaftsgewalt\n• häusliche Gewalt\n• Mit-Erleben","x":707,"y":-90,"width":260,"height":140,"color":"#f97316"},
+		{"id":"autonomie","type":"text","text":"Autonomiekonflikte\n• Ablösung\n• Zwang","x":707,"y":90,"width":260,"height":140,"color":"#fdba74"},
+		{"id":"vernach","type":"text","text":"Vernachlässigung\n• körperlich\n• emotional\n• erzieherisch","x":-90,"y":210,"width":260,"height":160,"color":"#fca5a5"},
+		{"id":"transaktion","type":"text","text":"Gefährdung als Transaktion\n• Sucht\n• Delinquenz\n• Eskalation","x":677,"y":290,"width":280,"height":160,"color":"#ea580c"}
+	],
+	"edges":[
+		{"id":"e1","fromNode":"root","fromSide":"left","toNode":"formen","toSide":"right"},
+		{"id":"e2","fromNode":"root","fromSide":"right","toNode":"kontext","toSide":"left"},
+		{"id":"e3","fromNode":"formen","fromSide":"top","toNode":"physisch","toSide":"bottom"},
+		{"id":"e4","fromNode":"formen","fromSide":"top","toNode":"psychisch","toSide":"bottom"},
+		{"id":"e5","fromNode":"formen","fromSide":"bottom","toNode":"sexuell","toSide":"top"},
+		{"id":"e6","fromNode":"formen","fromSide":"bottom","toNode":"vernach","toSide":"top"},
+		{"id":"e11","fromNode":"root","fromSide":"top","toNode":"vulnerabilitaet","toSide":"bottom"},
+		{"id":"e12","fromNode":"root","fromSide":"bottom","toNode":"prinzip","toSide":"top"},
+		{
+			"id":"94e23ee1c0d9e439",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"kontext",
+			"fromSide":"top",
+			"toNode":"partnerschaft",
+			"toSide":"left"
+		},
+		{
+			"id":"aa04444f424c35be",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"kontext",
+			"fromSide":"top",
+			"toNode":"erwachsenenkonflikt",
+			"toSide":"left"
+		},
+		{
+			"id":"3fc130df55103e64",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"kontext",
+			"fromSide":"bottom",
+			"toNode":"transaktion",
+			"toSide":"left"
+		},
+		{
+			"id":"b7bc9e9264ada545",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"kontext",
+			"fromSide":"bottom",
+			"toNode":"autonomie",
+			"toSide":"left"
+		}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"color_legend":{"rot":"Formen (Gewaltarten)","blau":"Kontext","orange":"Dynamiken","lila":"Meta-Ebene","dunkel":"Root"}
+	}
+}

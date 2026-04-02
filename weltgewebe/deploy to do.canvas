@@ -1,0 +1,7 @@
+weltgewebe-up: version.json prüfung nur auf warn-only (kein exit 1)
+
+caddyfile.heim: cachecontrol no store
+
+test 22t und 22e
+
+browseraktualisierungsmechanismus fehlt

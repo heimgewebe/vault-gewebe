@@ -1,0 +1,137 @@
+{
+  "nodes": [
+    {
+      "id": "core",
+      "type": "text",
+      "x": 0,
+      "y": 0,
+      "width": 480,
+      "height": 240,
+      "text": "# A&O-Psychologie\n\nZentrale Frage:\nWie wird Arbeit gestaltet, damit sie\n- produktiv\n- menschengerecht\n- langfristig tragfähig\nist?\n\nSpannung:\nEffizienz vs. Menschlichkeit\nKontrolle vs. Autonomie\nStandardisierung vs. Individualität"
+    },
+
+    {
+      "id": "industrial",
+      "type": "text",
+      "x": -800,
+      "y": 0,
+      "width": 380,
+      "height": 260,
+      "text": "## Industrialisierung (Ausgangspunkt)\n\n- steigender Konkurrenzdruck\n- Massenproduktion\n- neue Organisationsformen\n\nProblem:\nWie organisiert man Menschen effizient?\n\n→ Beginn systematischer Arbeitsanalyse"
+    },
+
+    {
+      "id": "early_psy",
+      "type": "text",
+      "x": -800,
+      "y": 320,
+      "width": 380,
+      "height": 260,
+      "text": "## Frühe Psychologie\n\n- Wundt (Experiment)\n- Münsterberg (Psychotechnik)\n- Scott, Yerkes (Tests)\n\nZwei Linien:\n- Auswahl geeigneter Personen\n- Anpassung der Arbeit an den Menschen"
+    },
+
+    {
+      "id": "taylor",
+      "type": "text",
+      "x": -320,
+      "y": -260,
+      "width": 360,
+      "height": 280,
+      "text": "## Taylorismus\n\n- Zerlegung in Einzelschritte\n- Zeit- und Bewegungsstudien\n- 'One best way'\n\nLogik:\nMensch = ausführendes Element im System"
+    },
+
+    {
+      "id": "taylor_effects",
+      "type": "text",
+      "x": 120,
+      "y": -260,
+      "width": 360,
+      "height": 300,
+      "text": "## Folgen\n\n- Monotonie\n- Ermüdung\n- geringe Autonomie\n- Entfremdung\n\nParadox:\nEffizienz ↑\nSinn ↓"
+    },
+
+    {
+      "id": "economic",
+      "type": "text",
+      "x": -320,
+      "y": 120,
+      "width": 320,
+      "height": 260,
+      "text": "## Economic Man\n\n- Motivation: Geld\n- Kontrolle notwendig\n\nDesign:\n- Hierarchie\n- Kontrolle\n- klare Vorgaben"
+    },
+
+    {
+      "id": "social",
+      "type": "text",
+      "x": 80,
+      "y": 120,
+      "width": 320,
+      "height": 260,
+      "text": "## Social Man\n\n- Motivation: Zugehörigkeit\n- Hawthorne-Effekt\n\nDesign:\n- Gruppenarbeit\n- Führung\n- soziale Einbindung"
+    },
+
+    {
+      "id": "self",
+      "type": "text",
+      "x": 480,
+      "y": 120,
+      "width": 340,
+      "height": 300,
+      "text": "## Self-Actualizing Man\n\n- Motivation: Selbstverwirklichung\n\nDesign:\n- sinnvolle Aufgaben\n- Entwicklung\n- Job Enrichment"
+    },
+
+    {
+      "id": "complex",
+      "type": "text",
+      "x": 880,
+      "y": 120,
+      "width": 340,
+      "height": 300,
+      "text": "## Complex Man\n\n- Bedürfnisse variabel\n- individuell unterschiedlich\n\nDesign:\n- Flexibilität\n- Individualisierung\n- Lebensphasenorientierung"
+    },
+
+    {
+      "id": "future",
+      "type": "text",
+      "x": 480,
+      "y": 520,
+      "width": 420,
+      "height": 320,
+      "text": "## Zukunft\n\n- Digitalisierung\n- Technostress\n- Remote Work\n- Globalisierung\n\nNeue Probleme:\n- Isolation\n- Kontrollzunahme durch Technik\n- Kompetenzdruck"
+    },
+
+    {
+      "id": "axis",
+      "type": "text",
+      "x": 0,
+      "y": 520,
+      "width": 420,
+      "height": 240,
+      "text": "## Alternative Achse\n\nNicht:\n'Welche Methode ist besser?'\n\nSondern:\n'Welches Menschenbild steckt dahinter?'\n\n→ Jede Arbeitsform ist ein stilles Menschenexperiment."
+    },
+
+    {
+      "id": "critique",
+      "type": "text",
+      "x": -320,
+      "y": 520,
+      "width": 360,
+      "height": 240,
+      "text": "## Resonanz vs. Kontrast\n\nDeutung A:\nFortschritt zu mehr Menschlichkeit\n\nDeutung B:\nVerfeinerte Kontrolle mit besserer Verpackung\n\nWahrheit:\nBeides wirkt gleichzeitig"
+    }
+  ],
+
+  "edges": [
+    { "id": "e1", "fromNode": "industrial", "toNode": "core" },
+    { "id": "e2", "fromNode": "early_psy", "toNode": "industrial" },
+    { "id": "e3", "fromNode": "taylor", "toNode": "core" },
+    { "id": "e4", "fromNode": "taylor", "toNode": "taylor_effects" },
+    { "id": "e5", "fromNode": "core", "toNode": "economic" },
+    { "id": "e6", "fromNode": "economic", "toNode": "social" },
+    { "id": "e7", "fromNode": "social", "toNode": "self" },
+    { "id": "e8", "fromNode": "self", "toNode": "complex" },
+    { "id": "e9", "fromNode": "core", "toNode": "future" },
+    { "id": "e10", "fromNode": "core", "toNode": "axis" },
+    { "id": "e11", "fromNode": "axis", "toNode": "critique" }
+  ]
+}

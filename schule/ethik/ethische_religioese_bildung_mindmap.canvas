@@ -1,0 +1,263 @@
+{
+  "nodes": [
+    {
+      "id": "root",
+      "type": "text",
+      "text": "Ethische und religiöse Bildung\nals sozialpädagogische Aufgabe",
+      "x": 0,
+      "y": 0,
+      "width": 360,
+      "height": 140,
+      "color": "6"
+    },
+    {
+      "id": "religionsfreiheit",
+      "type": "text",
+      "text": "Religionsfreiheit\n• positive Freiheit: Religion ausüben\n• negative Freiheit: von Religion frei bleiben\n• Staat darf weder bevorzugen noch benachteiligen\n• gilt auch für öffentliche Einrichtungen",
+      "x": -900,
+      "y": -350,
+      "width": 340,
+      "height": 220,
+      "color": "2"
+    },
+    {
+      "id": "ethik",
+      "type": "text",
+      "text": "Ethik\n„Lehre vom guten Leben\nunter Bedingungen von Konflikten“\n• Zusammenleben braucht Aushandlung\n• Konflikte sind normal\n• Gewalt/Macht statt Dialog = Problem",
+      "x": -900,
+      "y": 50,
+      "width": 340,
+      "height": 220,
+      "color": "4"
+    },
+    {
+      "id": "werte",
+      "type": "text",
+      "text": "Werte, Normen, Urteil\n• „richtig/falsch“ = Maßstäbe\n• „gut/böse“ = Wertung\n• Werte entwickeln sich biografisch\n• Bezugspersonen und Gesellschaft prägen mit",
+      "x": -900,
+      "y": 450,
+      "width": 340,
+      "height": 220,
+      "color": "3"
+    },
+    {
+      "id": "erziehung",
+      "type": "text",
+      "text": "Erziehung ist niemals neutral\n• Kinder wachsen nie im weltanschaulichen Vakuum auf\n• Erwachsene prägen immer mit\n• Freiheit heißt nicht Abschirmung,\n  sondern sich später positionieren zu können",
+      "x": 0,
+      "y": 350,
+      "width": 360,
+      "height": 240,
+      "color": "5"
+    },
+    {
+      "id": "pluralitaet",
+      "type": "text",
+      "text": "Mit weltanschaulicher Vielfalt umgehen\n• Wissen über Religionen als Voraussetzung\n  für Religionsfreiheit\n• Vielfalt respektieren lernen\n• absolute Abwertung anderer ist unvereinbar\n  mit freier Gesellschaft",
+      "x": 900,
+      "y": -50,
+      "width": 380,
+      "height": 240,
+      "color": "2"
+    },
+    {
+      "id": "praxis",
+      "type": "text",
+      "text": "Methodisch-didaktische Leitgedanken\n• religionssensibles Klima ≠ religiöse Erziehung\n• Vielfalt in der Einrichtung sichtbar machen\n• Werte transparent halten\n• Elternforderungen ggf. begrenzen,\n  wenn Freiheit/Respekt/Achtung verletzt werden",
+      "x": 900,
+      "y": 350,
+      "width": 400,
+      "height": 260,
+      "color": "5"
+    },
+    {
+      "id": "auftrag",
+      "type": "text",
+      "text": "Öffentlicher Bildungsauftrag\n• Kita/Einrichtung ist nicht verlängerter Arm der Eltern\n• Kinder sollen kulturelle Wurzeln verstehen\n• religiöse Feiertage als Bildungsanlass nutzen",
+      "x": 0,
+      "y": -350,
+      "width": 360,
+      "height": 220,
+      "color": "4"
+    },
+    {
+      "id": "konflikt",
+      "type": "text",
+      "text": "Differenz erfahren und aushalten\n• Menschen sind auf Beziehung angewiesen\n• Verschiedenheit erzeugt Konflikte\n• Konflikte bilden Persönlichkeit mit\n• Hören, Zugehen, Aushandeln statt Durchsetzen",
+      "x": -1500,
+      "y": 50,
+      "width": 340,
+      "height": 240,
+      "color": "4"
+    },
+    {
+      "id": "neutralitaet",
+      "type": "text",
+      "text": "Neutralität richtig verstanden\n• Neutralität = keine Bevorzugung\n• Religion ausklammern verletzt Neutralität ebenfalls\n• Öffentlichkeit darf religiöse Ausdrucksformen enthalten",
+      "x": -1500,
+      "y": -350,
+      "width": 340,
+      "height": 220,
+      "color": "2"
+    },
+    {
+      "id": "kenntlichkeit",
+      "type": "text",
+      "text": "Kinder brauchen kenntliche Erwachsene\n• Kinder haben Recht zu erfahren,\n  wofür Erwachsene stehen\n• eigene Position muss sichtbar sein\n• erst dann ist Abgrenzung oder Zustimmung möglich",
+      "x": 0,
+      "y": 700,
+      "width": 360,
+      "height": 220,
+      "color": "5"
+    },
+    {
+      "id": "grenzen",
+      "type": "text",
+      "text": "Grenzen der Toleranz\n• Respekt für Verschiedenheit ja\n• patriarchale oder abwertende Muster nein\n• gleiche Würde von Mann und Frau\n• Freiheitsfeindliche Forderungen zurückweisen",
+      "x": 1500,
+      "y": 350,
+      "width": 340,
+      "height": 220,
+      "color": "1"
+    },
+    {
+      "id": "religionssensibel",
+      "type": "text",
+      "text": "Religionssensibles Klima konkret\n• Fragen und Äußerungen zulassen\n• Glaubende und Nichtglaubende sichtbar machen\n• Überblick über vertretene Religionen/Weltanschauungen\n• sprachliche Bildung anschließen",
+      "x": 1500,
+      "y": -50,
+      "width": 360,
+      "height": 240,
+      "color": "6"
+    },
+    {
+      "id": "reflexion",
+      "type": "text",
+      "text": "Reflexion für Fachkräfte\n• eigenes Wertejournal führen\n• biografische Entwicklung der Werte betrachten\n• Konflikte mit Haltungen von Kindern/Eltern reflektieren\n• eigenen Umgang mit Widersprüchen prüfen",
+      "x": 900,
+      "y": 700,
+      "width": 380,
+      "height": 220,
+      "color": "3"
+    },
+    {
+      "id": "moralentwicklung",
+      "type": "text",
+      "text": "Ausblick: Moralische Entwicklung\n• Mensch kann über bloße Naturregeln hinaus handeln\n• Schutz Schwächerer ist kulturell/moralisch lernbar\n• moralische Vorstellungen entwickeln sich stufenweise",
+      "x": -900,
+      "y": 800,
+      "width": 360,
+      "height": 220,
+      "color": "6"
+    }
+  ],
+  "edges": [
+    {
+      "id": "b4773829-13aa-46d9-ad89-6f9964803a05",
+      "fromNode": "root",
+      "toNode": "religionsfreiheit"
+    },
+    {
+      "id": "94010da7-6979-46ac-86dd-d28c616cf9cb",
+      "fromNode": "root",
+      "toNode": "ethik"
+    },
+    {
+      "id": "f7271b05-b3dc-49d1-bab6-7d8bf788addd",
+      "fromNode": "root",
+      "toNode": "werte"
+    },
+    {
+      "id": "2c169da3-311f-45dc-898c-715141f94718",
+      "fromNode": "root",
+      "toNode": "erziehung"
+    },
+    {
+      "id": "f34da26e-6e3c-42da-b136-8a1a16e21929",
+      "fromNode": "root",
+      "toNode": "pluralitaet"
+    },
+    {
+      "id": "cda6ccab-ae3b-497b-9669-6f2a9bf6fd51",
+      "fromNode": "root",
+      "toNode": "praxis"
+    },
+    {
+      "id": "5c5ac87a-b108-4924-82c1-dc32c2bb8c39",
+      "fromNode": "root",
+      "toNode": "auftrag"
+    },
+    {
+      "id": "097ef88c-2eec-4bc0-82fb-464b3145622e",
+      "fromNode": "religionsfreiheit",
+      "toNode": "neutralitaet",
+      "label": "Kern"
+    },
+    {
+      "id": "d4e20db5-94cb-4d43-b975-66376c5d7cee",
+      "fromNode": "ethik",
+      "toNode": "konflikt",
+      "label": "Folge"
+    },
+    {
+      "id": "0175ebc2-64f9-4403-b5e0-14c0f1914a4e",
+      "fromNode": "werte",
+      "toNode": "erziehung",
+      "label": "führt zu"
+    },
+    {
+      "id": "b2713947-ef52-46c9-92d2-b256dfe71926",
+      "fromNode": "erziehung",
+      "toNode": "kenntlichkeit",
+      "label": "konkret"
+    },
+    {
+      "id": "57510454-2d57-47ee-ab85-18a031e5aaaf",
+      "fromNode": "pluralitaet",
+      "toNode": "religionssensibel",
+      "label": "Praxis"
+    },
+    {
+      "id": "62ae6287-48e2-4834-9704-1277e9e63bd1",
+      "fromNode": "praxis",
+      "toNode": "grenzen",
+      "label": "wenn nötig"
+    },
+    {
+      "id": "6232289e-d793-4d6d-8d65-4cbf8c6a2f12",
+      "fromNode": "praxis",
+      "toNode": "reflexion",
+      "label": "Selbstprüfung"
+    },
+    {
+      "id": "be7d19d4-3580-4376-aff7-e0fa82993536",
+      "fromNode": "auftrag",
+      "toNode": "pluralitaet",
+      "label": "begründet"
+    },
+    {
+      "id": "340b0cef-ba8b-4a9c-b19e-c1c69efa69ce",
+      "fromNode": "werte",
+      "toNode": "moralentwicklung",
+      "label": "Ausblick"
+    },
+    {
+      "id": "5a2985e4-e894-4284-baad-d75ef1fcef3d",
+      "fromNode": "religionsfreiheit",
+      "toNode": "pluralitaet",
+      "label": "Voraussetzung"
+    },
+    {
+      "id": "dc9d753e-73a1-4f1d-b9b6-59c18d7d653c",
+      "fromNode": "erziehung",
+      "toNode": "pluralitaet",
+      "label": "statt Vakuum"
+    },
+    {
+      "id": "0fc4e74b-2475-4b79-8de0-ee4d5b77841e",
+      "fromNode": "neutralitaet",
+      "toNode": "auftrag",
+      "label": "gilt in Institutionen"
+    }
+  ]
+}

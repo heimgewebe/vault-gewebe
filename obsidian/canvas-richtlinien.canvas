@@ -1,124 +1,29 @@
 {
-  "nodes": [
-    {
-      "id": "root",
-      "type": "text",
-      "text": "Richtlinien für Canvas-Gestaltung\nQuelle: Eigene Arbeitsfassung",
-      "x": -200,
-      "y": 0,
-      "width": 480,
-      "height": 140,
-      "color": "1"
-    },
-    {
-      "id": "meta",
-      "type": "text",
-      "text": "Ziel: Klarheit + Flexibilität",
-      "x": -200,
-      "y": -250,
-      "width": 360,
-      "height": 100,
-      "color": "1"
-    },
-    {
-      "id": "grund",
-      "type": "text",
-      "text": "Kernprinzipien\n• Root mit Titel + Quelle\n• Essenz frei\n• Farben konsistent\n• Verbindungen nur bei Sinn",
-      "x": -800,
-      "y": 0,
-      "width": 500,
-      "height": 180,
-      "color": "2"
-    },
-    {
-      "id": "grund_ess",
-      "type": "text",
-      "text": "Essenz: Fundament",
-      "x": -800,
-      "y": -150,
-      "width": 260,
-      "height": 90,
-      "color": "2"
-    },
-    {
-      "id": "proz",
-      "type": "text",
-      "text": "Prozesse & Orientierung\n• Achsen-Optionen\n• Textformen offen\n• Teil-/Master-Canvas\n• Zoom + Leerräume",
-      "x": 0,
-      "y": 0,
-      "width": 500,
-      "height": 200,
-      "color": "4"
-    },
-    {
-      "id": "proz_ess",
-      "type": "text",
-      "text": "Essenz: Ordnung",
-      "x": 0,
-      "y": -160,
-      "width": 280,
-      "height": 90,
-      "color": "4"
-    },
-    {
-      "id": "hind",
-      "type": "text",
-      "text": "Hindernisse\n• Überfrachtung\n• Beliebigkeit\n• Chaos ohne Check",
-      "x": 0,
-      "y": 300,
-      "width": 420,
-      "height": 150,
-      "color": "5"
-    },
-    {
-      "id": "hind_ess",
-      "type": "text",
-      "text": "Essenz: Risiken",
-      "x": 0,
-      "y": 160,
-      "width": 260,
-      "height": 90,
-      "color": "5"
-    },
-    {
-      "id": "ziel",
-      "type": "text",
-      "text": "Ziele\n• Klarheit\n• Übersicht\n• Differenzierung\n• Kreativer Freiraum",
-      "x": 800,
-      "y": 0,
-      "width": 420,
-      "height": 160,
-      "color": "3"
-    },
-    {
-      "id": "ziel_ess",
-      "type": "text",
-      "text": "Essenz: Wirkung",
-      "x": 800,
-      "y": -160,
-      "width": 280,
-      "height": 90,
-      "color": "3"
-    },
-    { "id": "lvl1", "type": "text", "text": "Ebene: konkret", "x": -1200, "y": 200, "width": 260, "height": 90, "color": "6" },
-    { "id": "lvl2", "type": "text", "text": "Ebene: strukturell", "x": -1200, "y": 0, "width": 260, "height": 90, "color": "6" },
-    { "id": "lvl3", "type": "text", "text": "Ebene: abstrakt", "x": -1200, "y": -200, "width": 260, "height": 90, "color": "6" },
-    {
-      "id": "leg",
-      "type": "text",
-      "text": "Legende\nFarben: Blau=Root/Meta, Grau=Grundlagen, Gelb=Prozesse, Rot=Hindernisse, Grün=Ziele, Violett=Ebenen\nAchsen: X = links→rechts (Grundlagen→Ziele), Y = unten→oben (konkret→abstrakt)\nFreiheiten: Essenz frei, Verbindungen sparsam",
-      "x": -800,
-      "y": -400,
-      "width": 600,
-      "height": 200,
-      "color": "2"
-    }
-  ],
-  "edges": [
-    { "id": "e_meta_grund", "fromNode": "meta", "toNode": "grund", "label": "" },
-    { "id": "e_meta_proz", "fromNode": "meta", "toNode": "proz", "label": "" },
-    { "id": "e_meta_hind", "fromNode": "meta", "toNode": "hind", "label": "" },
-    { "id": "e_meta_ziel", "fromNode": "meta", "toNode": "ziel", "label": "" },
-    { "id": "e_proz_ziel", "fromNode": "proz", "toNode": "ziel", "label": "" }
-  ]
+	"nodes":[
+		{"id":"root","type":"text","text":"Richtlinien für Canvas-Gestaltung\nQuelle: Eigene Arbeitsfassung","x":-200,"y":0,"width":480,"height":140,"color":"1"},
+		{"id":"meta","type":"text","text":"Ziel: Klarheit + Flexibilität","x":-200,"y":-250,"width":360,"height":100,"color":"1"},
+		{"id":"grund","type":"text","text":"Kernprinzipien\n• Root mit Titel + Quelle\n• Essenz frei\n• Farben konsistent\n• Verbindungen nur bei Sinn","x":-800,"y":0,"width":500,"height":180,"color":"2"},
+		{"id":"grund_ess","type":"text","text":"Essenz: Fundament","x":-800,"y":-150,"width":260,"height":90,"color":"2"},
+		{"id":"proz","type":"text","text":"Prozesse & Orientierung\n• Achsen-Optionen\n• Textformen offen\n• Teil-/Master-Canvas\n• Zoom + Leerräume","x":0,"y":0,"width":500,"height":200,"color":"4"},
+		{"id":"proz_ess","type":"text","text":"Essenz: Ordnung","x":0,"y":-160,"width":280,"height":90,"color":"4"},
+		{"id":"hind","type":"text","text":"Hindernisse\n• Überfrachtung\n• Beliebigkeit\n• Chaos ohne Check","x":0,"y":300,"width":420,"height":150,"color":"5"},
+		{"id":"hind_ess","type":"text","text":"Essenz: Risiken","x":0,"y":160,"width":260,"height":90,"color":"5"},
+		{"id":"ziel","type":"text","text":"Ziele\n• Klarheit\n• Übersicht\n• Differenzierung\n• Kreativer Freiraum","x":800,"y":0,"width":420,"height":160,"color":"3"},
+		{"id":"ziel_ess","type":"text","text":"Essenz: Wirkung","x":800,"y":-160,"width":280,"height":90,"color":"3"},
+		{"id":"lvl1","type":"text","text":"Ebene: konkret","x":-1200,"y":200,"width":260,"height":90,"color":"6"},
+		{"id":"lvl2","type":"text","text":"Ebene: strukturell","x":-1200,"y":0,"width":260,"height":90,"color":"6"},
+		{"id":"lvl3","type":"text","text":"Ebene: abstrakt","x":-1200,"y":-200,"width":260,"height":90,"color":"6"},
+		{"id":"leg","type":"text","text":"Legende\nFarben: Blau=Root/Meta, Grau=Grundlagen, Gelb=Prozesse, Rot=Hindernisse, Grün=Ziele, Violett=Ebenen\nAchsen: X = links→rechts (Grundlagen→Ziele), Y = unten→oben (konkret→abstrakt)\nFreiheiten: Essenz frei, Verbindungen sparsam","x":-800,"y":-400,"width":600,"height":200,"color":"2"}
+	],
+	"edges":[
+		{"id":"e_meta_grund","fromNode":"meta","fromSide":"bottom","toNode":"grund","toSide":"top"},
+		{"id":"e_meta_proz","fromNode":"meta","fromSide":"bottom","toNode":"proz","toSide":"top"},
+		{"id":"e_meta_hind","fromNode":"meta","fromSide":"bottom","toNode":"hind","toSide":"top"},
+		{"id":"e_meta_ziel","fromNode":"meta","fromSide":"right","toNode":"ziel","toSide":"left"},
+		{"id":"e_proz_ziel","fromNode":"proz","fromSide":"right","toNode":"ziel","toSide":"left"}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
 }
